@@ -35,7 +35,7 @@
                 <div class="order-section">
                     <div class="card">
                         <div class="card-body overflow-auto">
-                            <table class="restaurant_tables datatable table table-striped dt-responsive nowrap ">
+                            <table class="restaurant_tables datatable table table-striped dt-responsive nowrap">
                                 <thead>
                                     <tr>
                                         <th>{{translate_title('Name')}}</th>
@@ -47,20 +47,20 @@
                                 <tbody>
                                 @foreach($allProductsData['products'] as $product)
                                     <tr>
-                                        <td class="restaurant_tables_text">
+                                        <td class="market_tables_text">
                                             <span>{{$product['name']}}</span>
                                             <span>{{$product['amount']}}</span>
                                         </td>
-                                        <td class="restaurant_tables_text">
+                                        <td class="market_tables_text">
                                             <div><span>{{$product['last_price']}}</span></div>
                                             @if($product['discount']>0)
                                                 <del>{{$product['price']}}</del>
                                             @endif
                                         </td>
-                                        <td class="restaurant_tables_text">
+                                        <td class="market_tables_text">
                                             {{$product['stock']}}
                                         </td>
-                                        <td class="restaurant_tables_text">
+                                        <td class="market_tables_text">
                                             <button onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}')" class="edit_button btn">
                                                 <b><span class="mdi mdi-basket"></span></b>
                                             </button>
@@ -131,21 +131,25 @@
                         <h4 id="total_left_sum"></h4>
                     </div>
                 </div>
-                <div class="d-flex add_to_order_buttons" id="has_items">
-                    <button class="edit_button btn me-2" data-bs-toggle="modal" data-bs-target="#din_in_modal">
-                        <b>{{translate_title('Din in')}}</b>
-                    </button>
-                    <button class="edit_button btn me-2" onclick="takeAwayFunc()" data-bs-toggle="modal" data-bs-target="#take_away_modal">
-                        <b>{{translate_title('Take away')}}</b>
-                    </button>
-                    <button class="edit_button btn" onclick="deliveryFunc()" data-bs-toggle="modal" data-bs-target="#delivery_modal">
-                        <b>{{translate_title('Delivery')}}</b>
-                    </button>
+                <div class="d-flex add_to_order_buttons_" id="has_items">
+                    <div class="width_100_percent d-flex justify-content-between">
+                        <button class="modal_close delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('product.destroy', $product['id'])}}">
+                            <b>{{translate_title('Delete')}}</b>
+                        </button>
+                        <button class="modal_confirm btn" onclick="paymentFunc()" data-bs-toggle="modal" data-bs-target="#payment_modal">
+                            <b>{{translate_title('Payment')}}</b>
+                        </button>
+                    </div>
                 </div>
-                <div class="d-flex add_to_order_buttons" id="no_items">
-                    <button class="edit_button btn me-2" disabled><b>{{translate_title('Din in')}}</b></button>
-                    <button class="edit_button btn me-2" disabled><b>{{translate_title('Take away')}}</b></button>
-                    <button class="edit_button btn" disabled><b>{{translate_title('Delivery')}}</b></button>
+                <div class="d-flex add_to_order_buttons_" id="no_items">
+                    <div class="width_100_percent d-flex justify-content-around">
+                        <button class="modal_close delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('product.destroy', $product['id'])}}" disabled>
+                            <b>{{translate_title('Delete')}}</b>
+                        </button>
+                        <button class="modal_confirm btn" onclick="paymentFunc()" data-bs-toggle="modal" data-bs-target="#payment_modal" disabled>
+                            <b>{{translate_title('Payment')}}</b>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -213,7 +217,8 @@
         let total_price_text = "{{translate_title('Total price')}}"
         let image_src = "{{asset('icon/no_photo.jpg')}}"
         let kitchen_index = "{{route('cashbox.index')}}"
-
+        let json_products = JSON.parse('{!! $allProductsData['json_products'] !!}')
+        console.log(json_products)
         let page = false
         // let current_region = ''
         // let current_district = ''

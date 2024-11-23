@@ -1792,6 +1792,9 @@ table{
 .restaurant_tables_text{
     padding: 62px 0px !important;
 }
+.market_tables_text{
+    padding: 14px 0px !important;
+}
 .bootstrap-touchspin-down, .bootstrap-touchspin-up{
     border: 1px solid #CED4DA !important;
     background-color: #F2F2F2 !important;
@@ -2033,6 +2036,11 @@ del{
     left: 60%;
     background-color: white;
 }
+.add_to_order_buttons_{
+    position: fixed;
+    width: 33%;
+    bottom: 24px;
+}
 .position_fixed_bottom{
     position: fixed;
     bottom: 24px;
@@ -2142,8 +2150,11 @@ body{
 .flatpickr-monthDropdown-months{
     color: #7E7F80!important;
 }
-textarea, textarea:focus, .form-control, .form-control:focus{
+textarea, textarea:focus, .form-control, .form-control:focus, .btn-close{
     color: #A5ACB5 !important;
+}
+.btn-close{
+    background-color: #A5ACB5 !important;
 }
 .jstree-default .jstree-icon:empty{
     display: inline-table;
@@ -2157,5 +2168,8 @@ textarea, textarea:focus, .form-control, .form-control:focus{
 }
 #dragTree .jstree-icon{
     cursor:pointer
+}
+.modal-full-width{
+    max-width: 84% !important;
 }
 

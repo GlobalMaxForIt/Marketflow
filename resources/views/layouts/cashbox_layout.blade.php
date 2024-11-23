@@ -60,7 +60,7 @@
         #wrapper{
             font-size: 12px !important;
         }
-        .container-fluid, .col-3, .col-5, .col-4, .col-sm-12{
+        .container-fluid, .col-3, .col-5, .col-4, .col-sm-12, .col-12{
             padding: 0px !important;
         }
         #dragTree>ul{
@@ -78,8 +78,50 @@
         .order-section{
             padding: 8px;
         }
-        .restaurant_tables{
+        .card{
             min-height: 100vh;
+        }
+        table{
+            border-color: transparent !important;
+        }
+        .delete_button{
+            color: #212529;
+        }
+        .btn-number {
+            font-size: 2rem;
+            min-width: 50px;
+            width: 84% !important;
+            min-height: 50px;
+            aspect-ratio: 1!important; /* Kenglik va balandlikni teng qiladi */
+        }
+        .btn-number-clear {
+            font-size: 2rem;
+            min-width: 50px;
+            width: 91% !important;
+            min-height: 50px;
+            aspect-ratio: 1!important; /* Kenglik va balandlikni teng qiladi */
+        }
+        .input-display {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            width: 95%;
+        }
+        .input-display_ {
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            width: 95%;
+        }
+
+        .cash_calculator{
+            width: 440px;
         }
     </style>
 </head>
@@ -327,17 +369,13 @@
 
         </ul>
 
-        <ul class="list-unstyled topnav-menu topnav-menu-left mb-0" style="margin-top: -150px">
+        <ul class="list-unstyled topnav-menu topnav-menu-left mb-0">
             <li>
-                <button class="button-menu-mobile disable-btn waves-effect">
-                    <i class="fe-menu"></i>
-                </button>
+                <a class="text-decoration-none" href="{{route('cashier.index')}}"><h4 class="page-title-main">{{translate_title('Back')}} <span class="mdi mdi-arrow-left-bold"></span></h4></a>
             </li>
-
             <li>
                 <h4 class="page-title-main">@yield('title')</h4>
             </li>
-
         </ul>
         <div class="clearfix"></div>
 
@@ -358,21 +396,6 @@
         </div>
 
     </div> <!-- content -->
-
-    <!-- Footer Start -->
-    <footer class="footer">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-6">
-                    <script>
-                        document.write(new Date().getFullYear())
-                    </script>
-                    {{-- &copy; Adminto theme by <a href="">Coderthemes</a> --}}
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- end Footer -->
 </div>
 
 <div class="right-bar">
@@ -505,48 +528,113 @@
     </div> <!-- end slimscroll-menu-->
 </div>
 
-
-<!-- Standard modal content -->
-<div id="standard-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+<!-- Full width modal content -->
+<div id="payment_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fullWidthModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-full-width">
+        <div class="modal-content ps-4 pe-4">
             <div class="modal-header">
-                <h4 class="modal-title" id="standard-modalLabel"></h4>
+                <div class="row width_100_percent">
+                    <div class="col-3">
+                        <div class="text-center">
+                            <strong class="me-auto">{{translate_title('Payment sum')}}</strong>
+                        </div>
+                        <div class="input-display_" id="payment_sum">0</div>
+                    </div>
+                    <div class="col-3">
+                        <div class="text-center">
+                            <strong class="me-auto">{{translate_title('Accepting sum')}}</strong>
+                        </div>
+                        <div class="input-display_" id="accepting_sum">0</div>
+                    </div>
+                    <div class="col-3">
+                        <div class="text-center">
+                            <strong class="me-auto">{{translate_title('Leaving sum')}}</strong>
+                        </div>
+                        <div class="input-display_" id="leaving_sum">0</div>
+                    </div>
+                    <div class="col-3">
+                        <div class="text-center">
+                            <strong class="me-auto">{{translate_title('Change sum')}}</strong>
+                        </div>
+                        <div class="input-display_" id="change_sum">0</div>
+                    </div>
+                </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body d-flex justify-content-start">
+                <div class="mt-4 cash_calculator">
+                    <h1>Son Kiritish</h1>
 
+                    <!-- Sonni ko'rsatish joyi -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="display" class="input-display">0</div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <!-- Raqamlar tugmalari -->
+                        <div class="row mb-2">
+                            <div class="col-4">
+                                <button class="btn btn-outline-dark btn-number" onclick="appendNumber(1)">1</button>
+                            </div>
+                            <div class="col-4">
+                                <button class="btn btn-outline-dark btn-number" onclick="appendNumber(2)">2</button>
+                            </div>
+                            <div class="col-4">
+                                <button class="btn btn-outline-dark btn-number" onclick="appendNumber(3)">3</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="row mb-2">
+                            <div class="col-4">
+                                <button class="btn btn-outline-dark btn-number" onclick="appendNumber(4)">4</button>
+                            </div>
+                            <div class="col-4">
+                                <button class="btn btn-outline-dark btn-number" onclick="appendNumber(5)">5</button>
+                            </div>
+                            <div class="col-4">
+                                <button class="btn btn-outline-dark btn-number" onclick="appendNumber(6)">6</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="row mb-2">
+                            <div class="col-4">
+                                <button class="btn btn-outline-dark btn-number" onclick="appendNumber(7)">7</button>
+                            </div>
+                            <div class="col-4">
+                                <button class="btn btn-outline-dark btn-number" onclick="appendNumber(8)">8</button>
+                            </div>
+                            <div class="col-4">
+                                <button class="btn btn-outline-dark btn-number" onclick="appendNumber(9)">9</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="row mb-2">
+                            <div class="col-4">
+                                <button class="btn btn-outline-dark btn-number" onclick="appendNumber(0)">0</button>
+                            </div>
+                            <div class="col-4">
+                                <button class="btn btn-outline-dark btn-number" onclick="clearDisplay()">Clear</button>
+                            </div>
+                            <div class="col-4">
+                                <button class="btn btn-outline-dark btn-number" onclick="backspace()">
+                                    <span class="mdi mdi-backspace"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ translate_title('Close') }}</button>
-                <button type="button" class="btn btn-primary">{{ translate_title('Save changes') }}</button>
+                <button class="btn modal_close height_50" data-bs-dismiss="modal">{{translate_title('Close')}}</button>
+                <button class="btn modal_confirm height_50">{{translate_title('Payment')}}</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-
-<!-- Standard modal content -->
-<div id="standard-modal-admin" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="standard-modalLabel"></h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ translate_title('Close') }}</button>
-                <button type="button" class="btn btn-primary">{{ translate_title('Save changes') }}</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-
 
 <div id="delete_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm">
@@ -609,6 +697,74 @@
 <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 
 <script src="{{asset('js/pusher_commands.js')}}"></script>
+<script>
+    // JavaScript
+
+    // Display element
+    let display = document.getElementById('display');
+    let entered_sum = '0'
+
+    let getTotalSum = 0
+    let payment_sum = document.getElementById('payment_sum')
+    let accepting_sum = document.getElementById('accepting_sum')
+    let leaving_sum = document.getElementById('leaving_sum')
+    let change_sum = document.getElementById('change_sum')
+
+    function format_entered_sum(numbers){
+        if(parseInt(numbers)>0){
+            return parseInt(numbers).toLocaleString()
+        }else{
+            return 0
+        }
+    }
+    // Function to append numbers to the display
+    function appendNumber(number) {
+        if (display.innerText == '0') {
+            entered_sum = parseInt(number)
+            display.innerText = String(entered_sum); // Agar dastlabki raqam 0 bo'lsa, uni o'zgartiramiz
+            accepting_sum.innerText = String(entered_sum)
+            leaving_sum.innerText = format_entered_sum(parseInt(getTotalSum) - parseInt(entered_sum))
+            change_sum.innerText = format_entered_sum(parseInt(entered_sum) - parseInt(getTotalSum))
+        } else {
+            entered_sum = String(entered_sum) + number
+            display.innerText = format_entered_sum(entered_sum); // Aks holda, raqamni qo'shamiz
+            accepting_sum.innerText = format_entered_sum(entered_sum); // Aks holda, raqamni qo'shamiz
+            leaving_sum.innerText = format_entered_sum(parseInt(getTotalSum) - parseInt(entered_sum))
+            change_sum.innerText = format_entered_sum(parseInt(entered_sum) - parseInt(getTotalSum))
+        }
+    }
+
+    // Function to clear the display
+    function clearDisplay() {
+        entered_sum = '0'
+        display.innerText = '0'; // Ekrandagi raqamni tozalash
+        accepting_sum.innerText = '0'; // Ekrandagi raqamni tozalash
+        leaving_sum.innerText = format_entered_sum(getTotalSum)
+        change_sum.innerText = '0'
+    }
+    // Function to remove the last digit (Backspace)
+    function backspace() {
+        if (display.innerText.length > 1) {
+            entered_sum = String(entered_sum).slice(0, -1)
+            display.innerText = format_entered_sum(entered_sum); // Oxirgi belgini o'chirish
+            accepting_sum.innerText = format_entered_sum(entered_sum); // Oxirgi belgini o'chirish
+            leaving_sum.innerText = format_entered_sum(parseInt(getTotalSum) - parseInt(entered_sum))
+            change_sum.innerText = format_entered_sum(parseInt(entered_sum) - parseInt(getTotalSum))
+        } else {
+            display.innerText = '0'; // Agar faqat bir raqam qolgan bo'lsa, uni 0 ga o'zgartiramiz
+            entered_sum = '0'
+            accepting_sum.innerText = '0'
+            leaving_sum.innerText = format_entered_sum(getTotalSum)
+            change_sum.innerText = '0'
+        }
+    }
+
+    function paymentFunc() {
+        getTotalSum = total_sum.innerText
+        payment_sum.innerText = format_entered_sum(getTotalSum)
+        change_sum.innerText = '0'
+    }
+</script>
 <script>
     let items_selected_text = "{{translate_title('items selected')}}"
     let search_client_text = "{{translate_title('Поиск')}}"
@@ -830,15 +986,12 @@
     })
 
 </script>
-</script>
 <script src="{{ asset('js/main.js') }}"></script>
 <script src="{{ asset('js/datatables_style.js') }}"></script>
 <!-- Vendor -->
 
-
 <script src="{{ asset('libs/jstree/jstree.min.js') }}"></script>
 <script src="{{ asset('js/pages/treeview.init.js') }}"></script>
-
 
 <script src="{{ asset('libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('libs/simplebar/simplebar.min.js') }}"></script>
@@ -853,7 +1006,6 @@
 
 <!-- Init js-->
 <script src="{{ asset('js/pages/form-xeditable.init.js') }}"></script>
-
 
 <script src="{{ asset('js/pages/form-validation.init.js') }}"></script>
 

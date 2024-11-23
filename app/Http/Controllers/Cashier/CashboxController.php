@@ -26,7 +26,7 @@ class CashboxController extends Controller
     {
         $this->clientService = $clientService;
         $this->productsCategoriesService = $productsCategoriesService;
-        $this->title = $this->getTableTitle('Menu');
+        $this->title = $this->getTableTitle('Cashbox');
     }
     /**
      * Display a listing of the resource.
@@ -70,10 +70,8 @@ class CashboxController extends Controller
             $allSubcategoriesProducts = [];
             $sub_categories = $category->subcategory;
             $productsSubCategories[$category->id] = $category->subcategory;
-            $all_sub_products = [];
             foreach($sub_categories as $sub_category){
                 $products_ = Products::orderBy('created_at', 'desc')->where('products_categories_id', $sub_category->id)->where('store_id', $user->store_id)->get();
-                $products = [];
                 $allProductsNames = [];
                 foreach ($products_ as $product) {
                     if($product->discount){
@@ -101,8 +99,6 @@ class CashboxController extends Controller
                         'stock'=>$product->stock,
                     ];
                     $allProducts[] = $array_products;
-                    $products[] = $array_products;
-                    $all_sub_products[] = $array_products;
 
 
                     $allProductsNames[] = $array_products;
@@ -124,6 +120,7 @@ class CashboxController extends Controller
         }
         $allProductsData = [
             'products'=>$allProducts,
+            'json_products'=>json_encode($allProducts),
             'quantity'=>count($allProducts),
         ];
 
