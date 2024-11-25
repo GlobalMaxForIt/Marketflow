@@ -12,10 +12,10 @@
                     <div class="tab-pane fade show active" id="employees" role="tabpanel" aria-labelledby="employees-tab">
                         <div class="card">
                             <div class="right_button_create">
-                                <button class="form_functions global-button" data-bs-toggle="modal" data-bs-target="#create_modal">
+                                <a class="form_functions global-button" data-bs-toggle="modal" data-bs-target="#create_modal">
                                     <img src="{{asset('menubar/employee_active.png')}}" alt="" height="20px">
                                     {{translate_title('Новый Сотрудник')}}
-                                </button>
+                                </a>
                             </div>
                             <div class="card-body overflow-auto">
                                 <table id="datatable-buttons" class="restaurant_tables table table-striped table-bordered dt-responsive nowrap">
@@ -50,9 +50,9 @@
                                                     <a class="edit_button btn me-2" href="{{route('stores.edit', $store['id'])}}">
                                                         <img src="{{asset('img/edit_icon.png')}}" alt="" height="18px">
                                                     </a>
-                                                    <button type="button" class="btn delete_button btn-sm waves-effect" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('stores.destroy', $store['id'])}}">
+                                                    <a type="button" class="btn delete_button btn-sm waves-effect" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('stores.destroy', $store['id'])}}">
                                                         <img src="{{asset('img/trash_icon.png')}}" alt="" height="18px">
-                                                    </button>
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -72,7 +72,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="scrollableModalTitle">{{translate_title('New store')}}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
                 </div>
                 <form class="modal-body needs-validation" action="{{route('stores.store')}}" method="POST" enctype="multipart/form-data" novalidate>
                     @csrf
@@ -131,8 +131,8 @@
                     <input type="hidden" name="region" id="region">
                     <input type="hidden" name="district" id="district">
                     <div class="width_100_percent d-flex justify-content-between mt-5">
-                        <button type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</button>
-                        <button type="submit" class="btn modal_confirm">{{translate_title('Create')}}</button>
+                        <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</a>
+                        <a type="submit" class="btn modal_confirm">{{translate_title('Create')}}</a>
                     </div>
                 </form>
             </div><!-- /.modal-content -->

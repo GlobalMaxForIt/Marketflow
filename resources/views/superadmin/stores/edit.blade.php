@@ -29,7 +29,7 @@
                                     <div class="mb-3 product_image">
                                         <div class="d-flex justify-content-between">
                                             <img src="{{$image}}" alt="">
-                                            <button class="delete_product_func">X</button>
+                                            <a class="delete_product_func">X</a>
                                         </div>
                                     </div>
                                 @endforeach
@@ -89,7 +89,7 @@
                         <input type="hidden" name="region" id="region">
                         <input type="hidden" name="district" id="district">
                         <div class="d-flex justify-content-end width_100_percent">
-                            <button type="submit" class="btn modal_confirm">{{translate_title('Update')}}</button>
+                            <a type="submit" class="btn modal_confirm">{{translate_title('Update')}}</a>
                         </div>
                     </form>
                 </div>

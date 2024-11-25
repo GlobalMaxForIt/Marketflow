@@ -48,9 +48,9 @@
                     </div>
                     <div class="col-xl-6 col-md-6">
                         <div class="form-group mt-2 text-right">
-                            <button type="button" class="btn edit_button"
-                                    onclick="copyTranslation()">{{ translate_title('Copy Translations') }}</button>
-                            <button type="submit" class="btn delete_button">{{ translate_title('Save') }}</button>
+                            <a type="button" class="btn edit_button"
+                                    onclick="copyTranslation()">{{ translate_title('Copy Translations') }}</a>
+                            <a type="submit" class="btn delete_button">{{ translate_title('Save') }}</a>
                         </div>
                     </div>
                 </div>

@@ -9,10 +9,10 @@
         <div class="order-section">
             <div class="card">
                 <div class="right_button_create">
-                    <button class="form_functions global-button" data-bs-toggle="modal" data-bs-target="#create_modal" data-url="{{route('clients.store')}}">
+                    <a class="form_functions global-button" data-bs-toggle="modal" data-bs-target="#create_modal" data-url="{{route('clients.store')}}">
                         <img src="{{asset('img/client_icon.png')}}" alt="" height="20px">
                         {{translate_title('Новый клиент')}}
-                    </button>
+                    </a>
                 </div>
                 <div class="card-body overflow-auto">
                     <table id="datatable-buttons" class="restaurant_tables table table-striped table-bordered dt-responsive nowrap mt-4">
@@ -61,9 +61,9 @@
                                             <a class="edit_button btn" href="{{route('clients.edit', $client['id'])}}">
                                                 <img src="{{asset('img/edit_icon.png')}}" alt="" height="18px">
                                             </a>
-                                            <button type="button" class="btn delete_button btn-sm waves-effect" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('clients.destroy', $client['id'])}}">
+                                            <a type="button" class="btn delete_button btn-sm waves-effect" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('clients.destroy', $client['id'])}}">
                                                 <img src="{{asset('img/trash_icon.png')}}" alt="" height="18px">
-                                            </button>
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>
@@ -80,7 +80,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="scrollableModalTitle">{{translate_title('Новый клиент')}}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
                 </div>
                 <form class="modal-body needs-validation" action="{{route('clients.store')}}" method="POST" enctype="multipart/form-data" novalidate>
                     @csrf
@@ -156,8 +156,8 @@
                     <input type="hidden" name="region" id="region">
                     <input type="hidden" name="district" id="district">
                     <div class="d-flex justify-content-between width_100_percent">
-                        <button type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</button>
-                        <button type="submit" class="btn modal_confirm">{{translate_title('Create')}}</button>
+                        <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</a>
+                        <a type="submit" class="btn modal_confirm">{{translate_title('Create')}}</a>
                     </div>
                 </form>
             </div><!-- /.modal-content -->

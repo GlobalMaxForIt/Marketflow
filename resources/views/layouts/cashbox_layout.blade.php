@@ -67,7 +67,8 @@
             padding: 0px !important;
         }
         .dataTables_filter input{
-            padding-left: 24px;
+            padding-left: 40px;
+            border: solid 1px;
         }
         .dataTables_filter div{
             margin: -38px 0px 0px 14px;
@@ -84,25 +85,18 @@
         table{
             border-color: transparent !important;
         }
-        .delete_button{
-            color: #212529;
-        }
         .btn-number {
             font-size: 2rem;
             min-width: 50px;
             width: 84% !important;
-            min-height: 50px;
-            aspect-ratio: 1!important; /* Kenglik va balandlikni teng qiladi */
         }
-        .btn-number-clear {
+        .btn-number-password {
             font-size: 2rem;
             min-width: 50px;
-            width: 91% !important;
-            min-height: 50px;
-            aspect-ratio: 1!important; /* Kenglik va balandlikni teng qiladi */
+            width: 94% !important;
         }
         .input-display {
-            font-size: 2rem;
+            font-size: 24px;
             margin-bottom: 20px;
             text-align: center;
             padding: 10px;
@@ -119,9 +113,52 @@
             border-radius: 10px;
             width: 95%;
         }
+        .input-display_ {
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            width: 95%;
+        }
+        .input-display_password {
+            font-size: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            width: 98%;
+        }
+        #change_cashier select{
+            width: 98%;
+        }
 
         .cash_calculator{
-            width: 440px;
+            max-width: 440px;
+            width: 45%;
+        }
+        .modal_close{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .navbar-custom ul, .navbar-custom ul li{
+            height: 100%;
+        }
+        .navbar-custom ul li{
+            display: flex;
+            align-items: center;
+        }
+        .topnav-menu li{
+            margin-left: 14px;
+        }
+        .btn-outline-secondary{
+            width: 30%;
+            height: 50px;
+            border-radius: 10px;
+            border: solid 1px #ccc;
         }
     </style>
 </head>
@@ -152,8 +189,8 @@
                         <form class="d-flex justify-content-between" action="#" method="POST" id="perform_order">
                             @csrf
                             @method('POST')
-                            <button type="button" class="btn btn-danger my-2" data-bs-dismiss="modal"> {{ translate_title('No')}}</button>
-                            <button type="submit" class="btn btn-success my-2"> {{ translate_title('Yes')}} </button>
+                            <a type="button" class="btn btn-danger my-2" data-bs-dismiss="modal"> {{ translate_title('No')}}</a>
+                            <a type="submit" class="btn btn-success my-2"> {{ translate_title('Yes')}} </a>
                         </form>
                     </div>
                 </div>
@@ -165,79 +202,12 @@
     <!-- Topbar Start -->
     <div class="navbar-custom">
         <ul class="list-unstyled topnav-menu float-end mb-0">
-            <li class="d-none d-lg-block">
-
-                <form class="app-search">
-                    <div class="app-search-box">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search..." id="top-search">
-                            <button class="btn" type="submit">
-                                <i class="fe-search"></i>
-                            </button>
-                        </div>
-                        <div class="dropdown-menu dropdown-lg" id="search-dropdown">
-                            <!-- item-->
-                            <div class="dropdown-header noti-title">
-                                <h5 class="text-overflow mb-2">{{translate_title('Found 22 results')}}</h5>
-                            </div>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <i class="fe-home me-1"></i>
-                                <span>{{translate_title('Analytics Report')}}</span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <i class="fe-aperture me-1"></i>
-                                <span>{{translate_title('How can I help you?')}}</span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <i class="fe-settings me-1"></i>
-                                <span>{{translate_title('User profile settings')}}</span>
-                            </a>
-
-                            <!-- item-->
-                            <div class="dropdown-header noti-title">
-                                <h6 class="text-overflow mb-2 text-uppercase">{{translate_title('Users')}}</h6>
-                            </div>
-
-                            <div class="notification-list">
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <div class="d-flex align-items-start">
-                                        <img class="d-flex me-2 rounded-circle" src="{{ asset('assets/images/user/user-2.jpg') }}"
-                                             alt="Generic placeholder image" height="32">
-                                        <div class="w-100">
-                                            <h5 class="m-0 font-14">Erwin E. Brown</h5>
-                                            <span class="font-12 mb-0">{{translate_title('UI Designer')}}</span>
-                                        </div>
-                                    </div>
-                                </a>
-
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <div class="d-flex align-items-start">
-                                        <img class="d-flex me-2 rounded-circle" src="{{ asset('assets/images/user/user-5.jpg') }}"
-                                             alt="Generic placeholder image" height="32">
-                                        <div class="w-100">
-                                            <h5 class="m-0 font-14">Jacob Deo</h5>
-                                            <span class="font-12 mb-0">{{translate_title('Developer')}}</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-
-                        </div>
-                    </div>
-                </form>
+            <li>
+                <a class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#change_cashier"><h4>{{translate_title('Change cashier')}} <span class="mdi mdi-logout"></span></h4></a>
             </li>
-            <li class="">
+            <li>
                 <div>
-
-                    <div class="align-items-center d-flex mt-4" id="lang-change">
+                    <div class="align-items-center d-flex" id="lang-change">
                         <a class="buttonUzbDropDownHeader" type="button" id="dropdownMenuButton" role="button"
                            data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="javascript:void(0);">
                             @switch($locale)
@@ -256,7 +226,7 @@
                                      src="{{ asset('/images/language/RU.png') }}" alt="region">
                                 @break
                             @endswitch
-                            <span>{{strtoupper($locale)}}</span>
+                            <h6 class="ms-1">{{strtoupper($locale)}}</h6>
                         </a>
                         <div id="language_flag" class="language_flag display-none"
                              aria-labelledby="dropdownMenuButton">
@@ -290,92 +260,23 @@
                     </div>
                 </div>
             </li>
-            <li class="dropdown d-inline-block d-lg-none">
-                <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-bs-toggle="dropdown"
-                   href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <i class="fe-search noti-icon"></i>
-                </a>
-                <div class="dropdown-menu dropdown-lg dropdown-menu-end p-0">
-                    <form class="p-3">
-                        <input type="text" class="form-control" placeholder="Search ..."
-                               aria-label="Recipient's username">
-                    </form>
-                </div>
-            </li>
-            <li class="dropdown notification-list topbar-dropdown">
-                <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown"
-                   href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <i class="fe-bell noti-icon"></i>
-                    @if(count($current_user->unreadnotifications)>0)
-                        <span class="badge bg-danger rounded-circle noti-icon-badge">{{count($current_user->unreadnotifications)}}</span>
-                    @endif
-                </a>
-                <div class="dropdown-menu dropdown-menu-end dropdown-lg">
-
-                    <!-- item-->
-                    <div class="dropdown-item noti-title">
-                        <h5 class="m-0">
-                                <span class="float-end">
-                                    <a class="text-dark" data-bs-toggle="modal" data-bs-target="#clear_all_notifications">
-                                        <small>{{translate_title('Clear All')}}</small>
-                                    </a>
-                                </span>{{translate_title('Notification')}}
-                        </h5>
-                    </div>
-
-                    <div class="noti-scroll" data-simplebar>
-                        @forelse($current_user->unreadnotifications as $notification)
-                            @if($notification->type == "App\Notifications\OrderNotification")
-                                @if(!empty($notification->data))
-                                    <a href="#" class="dropdown-item notify-item">
-                                        <div class="notify-icon" style="background-image: url({{isset($notification->data['product_images'])?$notification->data['product_images']:''}})"></div>
-                                        <p class="notify-details">
-                                            @if(isset($notification->data['product_name']))
-                                                {{strlen($notification->data['product_name'])>24?substr($notification->data['product_name'], 0, 24):$notification->data['product_name']}}...  <b>{{$notification->data['order_all_price']}}</b>
-                                            @endif
-                                        </p>
-                                        <p class="text-muted mb-0 user-msg">
-                                            @if(isset($notification->data['user']))
-                                                <small>{{$notification->data['user']?$notification->data['user']:''}}</small>
-                                            @endif
-                                        </p>
-                                    </a>
-                                    <hr style="margin: 0px">
-                                @endif
-                            @endif
-                        @empty
-                            <a href="javascript:void(0);"
-                               class="dropdown-item text-center text-primary notify-item notify-all">
-                                {{ translate_title('No notifications')}}
-                                <i class="fe-arrow-right"></i>
-                            </a>
-                        @endforelse
-                    </div>
-                    <!-- All-->
-                    <a href="#"
-                       class="dropdown-item text-center text-primary notify-item notify-all">
-                        {{ translate_title('View all')}}
-                        <i class="fe-arrow-right"></i>
-                    </a>
-
-                </div>
-            </li>
-
             <li class="dropdown notification-list">
                 <a href="javascript:void(0);" class="nav-link right-bar-toggle waves-effect waves-light">
                     <i class="fe-settings noti-icon"></i>
                 </a>
             </li>
-
         </ul>
 
         <ul class="list-unstyled topnav-menu topnav-menu-left mb-0">
             <li>
-                <a class="text-decoration-none" href="{{route('cashier.index')}}"><h4 class="page-title-main">{{translate_title('Back')}} <span class="mdi mdi-arrow-left-bold"></span></h4></a>
+                <a class="text-decoration-none" href="{{route('cashier.index')}}"><h4>{{translate_title('Back')}} <span class="mdi mdi-arrow-left-bold"></span></h4></a>
             </li>
             <li>
-                <h4 class="page-title-main">@yield('title')</h4>
+                <h4>@yield('title')</h4>
             </li>
+        </ul>
+        <ul class="list-unstyled topnav-menu float-end mb-0">
+            <li><h6>{{$user->name}} {{$user->surname}}</h6></li>
         </ul>
         <div class="clearfix"></div>
 
@@ -516,7 +417,7 @@
                     </div>
 
                     <div class="d-grid mt-4">
-                        <button class="btn btn-primary" id="resetBtn">{{ translate_title('Reset to Default')}}</button>
+                        <a class="btn btn-primary" id="resetBtn">{{ translate_title('Reset to Default')}}</a>
                         {{-- <a href="https://1.envato.market/admintoadmin" class="btn btn-danger mt-3" target="_blank"><i class="mdi mdi-basket me-1"></i> Purchase Now</a> --}}
                     </div>
 
@@ -559,12 +460,16 @@
                         <div class="input-display_" id="change_sum">0</div>
                     </div>
                 </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
             </div>
-            <div class="modal-body d-flex justify-content-start">
-                <div class="mt-4 cash_calculator">
-                    <h1>Son Kiritish</h1>
-
+            <div class="modal-header d-flex justify-content-between">
+                <button type="button" class="btn btn-outline-secondary waves-effect active" onclick="setCash(this)">{{translate_title('Наличные')}}</button>
+                <button type="button" class="btn btn-outline-secondary waves-effect" onclick="setCard(this)">{{translate_title('Безналичные')}}</button>
+                <button type="button" class="btn btn-outline-secondary waves-effect" onclick="setMixed(this)">{{translate_title('Смешанные')}}</button>
+            </div>
+            <div class="modal-body d-flex justify-content-between" id="calculators">
+                <div class="mt-2 cash_calculator" id="cashCalculator">
+                    <h4>{{translate_title('Ввод сумма наличие')}}</h4>
                     <!-- Sonni ko'rsatish joyi -->
                     <div class="row">
                         <div class="col-12">
@@ -575,62 +480,129 @@
                         <!-- Raqamlar tugmalari -->
                         <div class="row mb-2">
                             <div class="col-4">
-                                <button class="btn btn-outline-dark btn-number" onclick="appendNumber(1)">1</button>
+                                <a class="btn btn-outline-dark btn-number" onclick="appendNumber(1)">1</a>
                             </div>
                             <div class="col-4">
-                                <button class="btn btn-outline-dark btn-number" onclick="appendNumber(2)">2</button>
+                                <a class="btn btn-outline-dark btn-number" onclick="appendNumber(2)">2</a>
                             </div>
                             <div class="col-4">
-                                <button class="btn btn-outline-dark btn-number" onclick="appendNumber(3)">3</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-2">
-                        <div class="row mb-2">
-                            <div class="col-4">
-                                <button class="btn btn-outline-dark btn-number" onclick="appendNumber(4)">4</button>
-                            </div>
-                            <div class="col-4">
-                                <button class="btn btn-outline-dark btn-number" onclick="appendNumber(5)">5</button>
-                            </div>
-                            <div class="col-4">
-                                <button class="btn btn-outline-dark btn-number" onclick="appendNumber(6)">6</button>
+                                <a class="btn btn-outline-dark btn-number" onclick="appendNumber(3)">3</a>
                             </div>
                         </div>
                     </div>
                     <div class="mb-2">
                         <div class="row mb-2">
                             <div class="col-4">
-                                <button class="btn btn-outline-dark btn-number" onclick="appendNumber(7)">7</button>
+                                <a class="btn btn-outline-dark btn-number" onclick="appendNumber(4)">4</a>
                             </div>
                             <div class="col-4">
-                                <button class="btn btn-outline-dark btn-number" onclick="appendNumber(8)">8</button>
+                                <a class="btn btn-outline-dark btn-number" onclick="appendNumber(5)">5</a>
                             </div>
                             <div class="col-4">
-                                <button class="btn btn-outline-dark btn-number" onclick="appendNumber(9)">9</button>
+                                <a class="btn btn-outline-dark btn-number" onclick="appendNumber(6)">6</a>
                             </div>
                         </div>
                     </div>
                     <div class="mb-2">
                         <div class="row mb-2">
                             <div class="col-4">
-                                <button class="btn btn-outline-dark btn-number" onclick="appendNumber(0)">0</button>
+                                <a class="btn btn-outline-dark btn-number" onclick="appendNumber(7)">7</a>
                             </div>
                             <div class="col-4">
-                                <button class="btn btn-outline-dark btn-number" onclick="clearDisplay()">Clear</button>
+                                <a class="btn btn-outline-dark btn-number" onclick="appendNumber(8)">8</a>
                             </div>
                             <div class="col-4">
-                                <button class="btn btn-outline-dark btn-number" onclick="backspace()">
+                                <a class="btn btn-outline-dark btn-number" onclick="appendNumber(9)">9</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="row mb-2">
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number" onclick="appendNumber(0)">0</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number" onclick="clearDisplay()">Clear</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number" onclick="backspace()">
                                     <span class="mdi mdi-backspace"></span>
-                                </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2 cash_calculator d-none" id="cardCalculator">
+                    <h4>{{translate_title('Ввод сумма безналичие')}}</h4>
+                    <!-- Sonni ko'rsatish joyi -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="display_card" class="input-display">0</div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <!-- Raqamlar tugmalari -->
+                        <div class="row mb-2">
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(1)">1</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(2)">2</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(3)">3</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="row mb-2">
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(4)">4</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(5)">5</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(6)">6</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="row mb-2">
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(7)">7</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(8)">8</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(9)">9</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="row mb-2">
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(0)">0</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number" onclick="clearDisplayCard()">Clear</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number" onclick="backspaceCard()">
+                                    <span class="mdi mdi-backspace"></span>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="modal-body d-flex justify-content-center d-none" id="cardContent">
+                <input class="input-display" type="text" id="card_payment_" readonly>
+            </div>
             <div class="modal-footer">
-                <button class="btn modal_close height_50" data-bs-dismiss="modal">{{translate_title('Close')}}</button>
-                <button class="btn modal_confirm height_50">{{translate_title('Payment')}}</button>
+                <a class="btn modal_close height_50" data-bs-dismiss="modal">{{translate_title('Close')}}</a>
+                <a class="btn modal_confirm height_50">{{translate_title('Payment')}}</a>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -647,8 +619,8 @@
                         @csrf
                         @method('DELETE')
                         <div class="d-flex justify-content-between width_100_percent">
-                            <button type="button" class="btn delete_modal_close my-2" data-bs-dismiss="modal"> {{ translate_title('No')}}</button>
-                            <button type="submit" class="btn delete_modal_confirm my-2"> {{ translate_title('Yes')}} </button>
+                            <a type="button" class="btn delete_modal_close my-2" data-bs-dismiss="modal"> {{ translate_title('No')}}</a>
+                            <a type="submit" class="btn delete_modal_confirm my-2"> {{ translate_title('Yes')}} </a>
                         </div>
                     </form>
                 </div>
@@ -676,13 +648,13 @@
                     <h4 class="mt-2">{{translate_title('Logout')}}</h4>
                     <p class="mt-3">{{translate_title('Confirm to logout')}}</p>
                     <div class="d-flex justify-content-around">
-                        <button type="button" class="btn btn-danger my-2" data-bs-dismiss="modal">{{translate_title('No')}}</button>
+                        <a type="button" class="btn btn-danger my-2" data-bs-dismiss="modal">{{translate_title('No')}}</a>
                         <form action="{{route('logout')}}" method="POST">
                             @csrf
                             @method("POST")
-                            <button type="submit" class="btn btn-warning my-2" data-bs-dismiss="modal">
+                            <a type="submit" class="btn btn-warning my-2" data-bs-dismiss="modal">
                                 {{translate_title('Yes')}}
-                            </button>
+                            </a>
                         </form>
                     </div>
                 </div>
@@ -690,7 +662,98 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+<div class="modal fade" tabindex="-1" role="dialog" id="change_cashier"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header card-header">
+                <h4>{{translate_title('Do you want to change cashier')}}</h4>
+            </div>
+            <form class="modal-body card-body" action="{{route('changeCashier')}}" method="POST">
+                @csrf
+                @method('POST')
+                <div class="form-floating mb-3">
+                    <select class="form-select" name="cashier_id" id="floatingSelect" aria-label="Floating label select example">
+                        @foreach($cashiers as $cashier)
+                            <option value="{{$cashier['id']}}">{{$cashier['name']}}{{$cashier['surname']}}</option>
+                        @endforeach
+                    </select>
+                    <label for="floatingSelect">{{translate_title('Select a cashier')}}</label>
+                </div>
+                <input type="hidden" id="cashier_password" name="password">
+                <div class="mt-2">
+                    <h4>{{translate_title('Parol kiritish')}}</h4>
 
+                    <!-- Sonni ko'rsatish joyi -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="display_password" class="input-display_password">0</div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <!-- Raqamlar tugmalari -->
+                        <div class="row mb-2">
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendPassword(1)">1</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendPassword(2)">2</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendPassword(3)">3</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="row mb-2">
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendPassword(4)">4</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendPassword(5)">5</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendPassword(6)">6</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="row mb-2">
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendPassword(7)">7</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendPassword(8)">8</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendPassword(9)">9</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="row mb-2">
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendPassword(0)">0</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="clearDisplayPassword()">Clear</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="backspacePassword()">
+                                    <span class="mdi mdi-backspace"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between width_100_percent mt-4">
+                    <a class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</a>
+                    <a type="submit" class="btn modal_confirm">{{translate_title('Confirm')}}</a>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 <div class="rightbar-overlay"></div>
 </body>
 
@@ -702,13 +765,24 @@
 
     // Display element
     let display = document.getElementById('display');
+    let display_card = document.getElementById('display_card');
+    let display_password = document.getElementById('display_password');
+    let cashier_password = document.getElementById('cashier_password')
     let entered_sum = '0'
+    let cash_sum = 0
+    let card_sum = 0
 
     let getTotalSum = 0
     let payment_sum = document.getElementById('payment_sum')
     let accepting_sum = document.getElementById('accepting_sum')
     let leaving_sum = document.getElementById('leaving_sum')
     let change_sum = document.getElementById('change_sum')
+
+    let calculators = document.getElementById('calculators')
+    let cashCalculator = document.getElementById('cashCalculator')
+    let cardCalculator = document.getElementById('cardCalculator')
+    let cardContent = document.getElementById('cardContent')
+    let card_payment_ = document.getElementById('card_payment_')
 
     function format_entered_sum(numbers){
         if(parseInt(numbers)>0){
@@ -717,17 +791,39 @@
             return 0
         }
     }
+
     // Function to append numbers to the display
     function appendNumber(number) {
         if (display.innerText == '0') {
             entered_sum = parseInt(number)
+            cash_sum = entered_sum
             display.innerText = String(entered_sum); // Agar dastlabki raqam 0 bo'lsa, uni o'zgartiramiz
             accepting_sum.innerText = String(entered_sum)
             leaving_sum.innerText = format_entered_sum(parseInt(getTotalSum) - parseInt(entered_sum))
             change_sum.innerText = format_entered_sum(parseInt(entered_sum) - parseInt(getTotalSum))
         } else {
             entered_sum = String(entered_sum) + number
+            cash_sum = parseInt(entered_sum)
             display.innerText = format_entered_sum(entered_sum); // Aks holda, raqamni qo'shamiz
+            accepting_sum.innerText = format_entered_sum(entered_sum); // Aks holda, raqamni qo'shamiz
+            leaving_sum.innerText = format_entered_sum(parseInt(getTotalSum) - parseInt(entered_sum))
+            change_sum.innerText = format_entered_sum(parseInt(entered_sum) - parseInt(getTotalSum))
+        }
+    }
+
+    // Function to append numbers to the display
+    function appendNumberCard(number) {
+        if (display_card.innerText == '0') {
+            entered_sum = parseInt(number)
+            card_sum = entered_sum
+            display_card.innerText = String(entered_sum); // Agar dastlabki raqam 0 bo'lsa, uni o'zgartiramiz
+            accepting_sum.innerText = String(entered_sum)
+            leaving_sum.innerText = format_entered_sum(parseInt(getTotalSum) - parseInt(entered_sum))
+            change_sum.innerText = format_entered_sum(parseInt(entered_sum) - parseInt(getTotalSum))
+        } else {
+            entered_sum = String(entered_sum) + number
+            card_sum = parseInt(entered_sum)
+            display_card.innerText = format_entered_sum(entered_sum); // Aks holda, raqamni qo'shamiz
             accepting_sum.innerText = format_entered_sum(entered_sum); // Aks holda, raqamni qo'shamiz
             leaving_sum.innerText = format_entered_sum(parseInt(getTotalSum) - parseInt(entered_sum))
             change_sum.innerText = format_entered_sum(parseInt(entered_sum) - parseInt(getTotalSum))
@@ -736,8 +832,25 @@
 
     // Function to clear the display
     function clearDisplay() {
-        entered_sum = '0'
+        if(card_sum != 0){
+            entered_sum = card_sum
+        }else{
+            entered_sum = '0'
+        }
         display.innerText = '0'; // Ekrandagi raqamni tozalash
+        accepting_sum.innerText = '0'; // Ekrandagi raqamni tozalash
+        leaving_sum.innerText = format_entered_sum(getTotalSum)
+        change_sum.innerText = '0'
+    }
+
+    // Function to clear the display
+    function clearDisplayCard() {
+        if(display.innerText != '0'){
+            entered_sum = '0'
+        }else{
+            entered_sum = display.innerText
+        }
+        display_card.innerText = '0'; // Ekrandagi raqamni tozalash
         accepting_sum.innerText = '0'; // Ekrandagi raqamni tozalash
         leaving_sum.innerText = format_entered_sum(getTotalSum)
         change_sum.innerText = '0'
@@ -759,10 +872,116 @@
         }
     }
 
+    // Function to remove the last digit (Backspace)
+    function backspaceCard() {
+        if (display_card.innerText.length > 1) {
+            entered_sum = String(entered_sum).slice(0, -1)
+            display_card.innerText = format_entered_sum(entered_sum); // Oxirgi belgini o'chirish
+            accepting_sum.innerText = format_entered_sum(entered_sum); // Oxirgi belgini o'chirish
+            leaving_sum.innerText = format_entered_sum(parseInt(getTotalSum) - parseInt(entered_sum))
+            change_sum.innerText = format_entered_sum(parseInt(entered_sum) - parseInt(getTotalSum))
+        } else {
+            display_card.innerText = '0'; // Agar faqat bir raqam qolgan bo'lsa, uni 0 ga o'zgartiramiz
+            entered_sum = '0'
+            accepting_sum.innerText = '0'
+            leaving_sum.innerText = format_entered_sum(getTotalSum)
+            change_sum.innerText = '0'
+        }
+    }
+
+    // Function to append numbers to the display
+    function appendPassword(number) {
+        if (display_password.innerText == '0') {
+            cashier_password.value = String(number)
+            display_password.innerText = String(number); // Agar dastlabki raqam 0 bo'lsa, uni o'zgartiramiz
+        } else {
+            cashier_password.value = String(cashier_password.value) + String(number)
+            display_password.innerText = cashier_password.value; // Aks holda, raqamni qo'shamiz
+        }
+    }
+
+    // Function to clear the display
+    function clearDisplayPassword() {
+        cashier_password.value = '0'
+        display_password.innerText = '0'; // Ekrandagi raqamni tozalash
+    }
+    // Function to remove the last digit (Backspace)
+    function backspacePassword() {
+        if (display_password.innerText.length > 1) {
+            cashier_password.value = String(cashier_password.value).slice(0, -1)
+            display_password.innerText = String(cashier_password.value); // Oxirgi belgini o'chirish
+        } else {
+            display_password.innerText = '0'; // Agar faqat bir raqam qolgan bo'lsa, uni 0 ga o'zgartiramiz
+            cashier_password.value = '0'
+        }
+    }
+
     function paymentFunc() {
         getTotalSum = total_sum.innerText
         payment_sum.innerText = format_entered_sum(getTotalSum)
         change_sum.innerText = '0'
+    }
+
+    let payment_types = document.querySelectorAll('#payment_modal .btn-outline-secondary')
+
+    function setPaymentTypes(button_){
+        for(let ij = 0;ij<payment_types.length; ij++){
+            if(payment_types[ij].classList.contains('active')){
+                payment_types[ij].classList.remove('active')
+            }
+        }
+        if(!button_.classList.contains('active')){
+            button_.classList.add('active')
+        }
+    }
+    function setCash(button__) {
+        // calculators
+        // cashCalculator
+        // cardCalculator
+        if(!cardContent.classList.contains('d-none')){
+            cardContent.classList.add('d-none')
+        }
+        if(!cardCalculator.classList.contains('d-none')){
+            cardCalculator.classList.add('d-none')
+        }
+        if(cashCalculator.classList.contains('d-none')){
+            cashCalculator.classList.remove('d-none')
+        }
+        if(calculators.classList.contains('d-none')){
+            calculators.classList.remove('d-none')
+        }
+        setPaymentTypes(button__)
+    }
+    function setCard(button__) {
+        if(cardContent.classList.contains('d-none')){
+            cardContent.classList.remove('d-none')
+        }
+        if(!cashCalculator.classList.contains('d-none')){
+            cashCalculator.classList.add('d-none')
+        }
+        if(!cardCalculator.classList.contains('d-none')){
+            cardCalculator.classList.add('d-none')
+        }
+        if(!calculators.classList.contains('d-none')){
+            calculators.classList.add('d-none')
+        }
+        card_payment_.value = format_entered_sum(getTotalSum)
+        setPaymentTypes(button__)
+    }
+    function setMixed(button__) {
+        if(!cardContent.classList.contains('d-none')){
+            cardContent.classList.add('d-none')
+        }
+        if(cashCalculator.classList.contains('d-none')){
+            cashCalculator.classList.remove('d-none')
+        }
+        if(cardCalculator.classList.contains('d-none')){
+            cardCalculator.classList.remove('d-none')
+        }
+        if(calculators.classList.contains('d-none')){
+            calculators.classList.remove('d-none')
+        }
+        setPaymentTypes(button__)
     }
 </script>
 <script>

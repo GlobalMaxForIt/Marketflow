@@ -40,7 +40,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <button type="submit" class="btn edit_button mt-2">{{ translate_title('Save') }}</button>
+                                        <a type="submit" class="btn edit_button mt-2">{{ translate_title('Save') }}</a>
                                     </div>
                                 </div>
 
@@ -68,19 +68,19 @@
                                             <td>
                                                 <a href="{{ route('language.show', $value->id) }}"
                                                    title="{{ translate_title('Translation') }}"  >
-                                                    <button type="button" class="btn edit_button waves-effect waves-light">
+                                                    <a type="button" class="btn edit_button waves-effect waves-light">
                                                         <i class="fa fa-language"></i>
-                                                    </button>
+                                                    </a>
                                                 </a>
                                                 <a href="{{ route('language.edit', encrypt($value->id)) }}">
-                                                    <button type="button" class="btn edit_button waves-effect waves-light">
+                                                    <a type="button" class="btn edit_button waves-effect waves-light">
                                                         <img src="{{asset('img/edit_icon.png')}}" alt="" height="18px">
-                                                    </button>
+                                                    </a>
                                                 </a>
                                                 @if ($value->code != 'en')
-                                                    <button type="button" class="btn delete_button" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{ route('language.destroy', $language->id) }}">
+                                                    <a type="button" class="btn delete_button" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{ route('language.destroy', $language->id) }}">
                                                         <img src="{{asset('img/trash_icon.png')}}" alt="" height="18px">
-                                                    </button>
+                                                    </a>
                                                 @endif
                                             </td>
                                         </tr>

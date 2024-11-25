@@ -27,7 +27,7 @@
                     <td>
                         <a href="{{ route('table.tableShow', ['language_id' => $value->id, 'type' => $type]) }}"
                            title="{{ translate_title('Translation') }}"  >
-                            <button type="button" class="btn edit_button"><i class="fa fa-language"></i></button>
+                            <a type="button" class="btn edit_button"><i class="fa fa-language"></i></a>
                         </a>
                     </td>
                 </tr>

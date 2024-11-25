@@ -1,7 +1,7 @@
 @extends('layouts.cashbox_layout')
 
 @section('title')
-    {{translate_title('Orders')}}
+    {{translate_title('Checkout')}}
 @endsection
 @section('content')
     <div class="row">
@@ -61,9 +61,9 @@
                                             {{$product['stock']}}
                                         </td>
                                         <td class="market_tables_text">
-                                            <button onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}')" class="edit_button btn">
+                                            <a onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}')" class="edit_button btn">
                                                 <b><span class="mdi mdi-basket"></span></b>
-                                            </button>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -120,9 +120,9 @@
                             <span id="clientFullName" class="font_size_12"></span>
                         </div>
                         <div class="d-flex">
-                            <button type="button" class="btn delete_button btn-sm waves-effect me-2" id="removeClientDiscount">
+                            <a type="button" class="btn delete_button btn-sm waves-effect me-2" id="removeClientDiscount">
                                 <img src="{{asset('img/trash_icon.png')}}" alt="" height="18px">
-                            </button>
+                            </a>
                             <h6 id="clientDiscount" class="color_red"></h6>
                         </div>
                     </div>
@@ -133,22 +133,22 @@
                 </div>
                 <div class="d-flex add_to_order_buttons_" id="has_items">
                     <div class="width_100_percent d-flex justify-content-between">
-                        <button class="modal_close delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('product.destroy', $product['id'])}}">
+                        <a class="modal_close delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('product.destroy', $product['id'])}}">
                             <b>{{translate_title('Delete')}}</b>
-                        </button>
-                        <button class="modal_confirm btn" onclick="paymentFunc()" data-bs-toggle="modal" data-bs-target="#payment_modal">
+                        </a>
+                        <a class="modal_confirm btn" onclick="paymentFunc()" data-bs-toggle="modal" data-bs-target="#payment_modal">
                             <b>{{translate_title('Payment')}}</b>
-                        </button>
+                        </a>
                     </div>
                 </div>
                 <div class="d-flex add_to_order_buttons_" id="no_items">
                     <div class="width_100_percent d-flex justify-content-around">
-                        <button class="modal_close delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('product.destroy', $product['id'])}}" disabled>
+                        <a class="modal_close delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('product.destroy', $product['id'])}}" disabled>
                             <b>{{translate_title('Delete')}}</b>
-                        </button>
-                        <button class="modal_confirm btn" onclick="paymentFunc()" data-bs-toggle="modal" data-bs-target="#payment_modal" disabled>
+                        </a>
+                        <a class="modal_confirm btn" onclick="paymentFunc()" data-bs-toggle="modal" data-bs-target="#payment_modal" disabled>
                             <b>{{translate_title('Payment')}}</b>
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -166,8 +166,8 @@
 
                     </div>
                     <div class="d-flex justify-content-between width_100_percent mt-4">
-                        <button type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</button>
-                        <button onclick="takeAwayConfirm()" class="btn modal_confirm">{{translate_title('Confirm')}}</button>
+                        <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</a>
+                        <a onclick="takeAwayConfirm()" class="btn modal_confirm">{{translate_title('Confirm')}}</a>
                     </div>
                 </div>
             </div><!-- /.modal-content -->
@@ -195,8 +195,8 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-between width_100_percent mt-4">
-                        <button type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</button>
-                        <button class="btn modal_confirm" data-bs-dismiss="modal" id="confirm_client_discount">{{translate_title('Confirm')}}</button>
+                        <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</a>
+                        <a class="btn modal_confirm" data-bs-dismiss="modal" id="confirm_client_discount">{{translate_title('Confirm')}}</a>
                     </div>
                 </div>
             </div><!-- /.modal-content -->

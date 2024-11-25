@@ -485,7 +485,7 @@ class ThemeCustomizer {
     }
 
 
-    
+
     init() {
         this.initConfig();
         this.initSwitchListener();

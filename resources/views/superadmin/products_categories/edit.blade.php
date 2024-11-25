@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-end width_100_percent">
-                            <button type="submit" class="btn modal_confirm">{{translate_title('Update')}}</button>
+                            <a type="submit" class="btn modal_confirm">{{translate_title('Update')}}</a>
                         </div>
                     </form>
                 </div>

@@ -14,6 +14,7 @@ use App\Service\ProductsCategoriesService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class CashboxController extends Controller
 {
@@ -34,6 +35,7 @@ class CashboxController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $cashiers = User::select('id','name', 'surname')->where('store_id', $user->store_id)->get();
         $clients_ = Clients::all();
         $language = App::getLocale();
         $clients = [];
@@ -116,7 +118,6 @@ class CashboxController extends Controller
                 'category_name'=>$category_name,
                 'sub_categories'=>$allSubcategoriesProducts
             ];
-
         }
         $allProductsData = [
             'products'=>$allProducts,
@@ -128,7 +129,9 @@ class CashboxController extends Controller
             'allProductsData'=>$allProductsData,
             'allCategriesSubcategoriesProducts'=>$allCategriesSubcategoriesProducts,
             'title'=>$this->title,
+            'user'=>$user,
             'clients'=>$clients,
+            'cashiers'=>$cashiers,
             'clients_for_discount'=>$clients_for_discount,
             'clients_discount'=>$clients_discount,
         ]);
@@ -180,5 +183,33 @@ class CashboxController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function changeCashier(Request $request)
+    {
+        $currentUser = Auth::user(); // Hozirgi foydalanuvchi
+        $newUser = User::find($request->cashier_id); // Yangi foydalanuvchi
+
+        // Tekshiruv: Foydalanuvchi mavjudligi va bir xil do'konga tegishliligi
+        if (!$newUser || $currentUser->store_id !== $newUser->store_id) {
+            return redirect()->back()->with('error', translate_title('This user is not found or does not belong to your store.'));
+        }
+
+        // Parolni tekshirish
+        if (!Hash::check($request->password, $newUser->password)) {
+            return redirect()->back()->with('error', translate_title('Invalid password for the new cashier.'));
+        }
+
+        // Hozirgi foydalanuvchini logout qilish
+        Auth::logout();
+
+        // Yangi foydalanuvchini login qilish
+        Auth::login($newUser);
+
+        // Sessiyani tozalash va qayta autentifikatsiya qilish
+        $request->session()->regenerate();
+
+        // Middleware orqali o'tkazish yoki kerakli sahifaga yo'naltirish
+        return redirect()->route('cashier.index')->with('success', translate_title('Cashier successfully switched.'));
     }
 }

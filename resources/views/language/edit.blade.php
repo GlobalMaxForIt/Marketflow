@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-md-3">
                     <div style="margin-top: 30px;">
-                        <button type="submit" class="btn edit_button">{{translate_title('Submit')}}</button>
+                        <a type="submit" class="btn edit_button">{{translate_title('Submit')}}</a>
                     </div>
                 </div>
             </div>

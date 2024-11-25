@@ -28,10 +28,10 @@
                 <div class="tab-pane fade show active" id="products_categories" role="tabpanel" aria-labelledby="products_categories-tab">
                     <div class="card">
                         <div class="right_button_create">
-                            <button class="form_functions mt-3 global-button" data-bs-toggle="modal" data-bs-target="#create_category_modal" data-url="{{route('products-categories.store')}}">
+                            <a class="form_functions mt-3 global-button" data-bs-toggle="modal" data-bs-target="#create_category_modal" data-url="{{route('products-categories.store')}}">
                                 <img src="{{asset('img/client_icon.png')}}" alt="" height="20px">
                                 {{translate_title('New products category')}}
-                            </button>
+                            </a>
                         </div>
                         <div class="card-body overflow-auto">
                             <table class="restaurant_tables datatable table table-striped table-bordered dt-responsive nowrap">
@@ -54,7 +54,7 @@
                                         <td>
                                             <div class="d-flex justify-content-around align-items-center height_100">
                                                 <a class="btn edit_button " href="{{route('products-categories.edit', $products_category['id'])}}"><i class="fe-edit-2"></i></a>
-                                                <button type="button" class="btn delete_button btn-sm waves-effect" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('products-categories.destroy', $products_category['id'])}}"><i class="fe-trash-2"></i></button>
+                                                <a type="button" class="btn delete_button btn-sm waves-effect" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('products-categories.destroy', $products_category['id'])}}"><i class="fe-trash-2"></i></a>
                                             </div>
                                         </td>
                                     </tr>
@@ -67,10 +67,10 @@
                 <div class="tab-pane fade" id="products_sub_categories" role="tabpanel" aria-labelledby="products_sub_categories-tab">
                     <div class="card">
                         <div class="right_button_create">
-                            <button class="form_functions mt-3 global-button" data-bs-toggle="modal" data-bs-target="#create_sub_category_modal" data-url="{{route('products-sub-categories.store')}}">
+                            <a class="form_functions mt-3 global-button" data-bs-toggle="modal" data-bs-target="#create_sub_category_modal" data-url="{{route('products-sub-categories.store')}}">
                                 <img src="{{asset('img/client_icon.png')}}" alt="" height="20px">
                                 {{translate_title('New products category')}}
-                            </button>
+                            </a>
                         </div>
                         <div class="card-body overflow-auto">
                             <table class="restaurant_tables datatable table table-striped table-bordered dt-responsive nowrap">
@@ -93,7 +93,7 @@
                                         <td>
                                             <div class="d-flex justify-content-around align-items-center height_100">
                                                 <a class="btn edit_button" href="{{route('products-sub-categories.edit', $products_sub_category['id'])}}"><i class="fe-edit-2"></i></a>
-                                                <button type="button" class="btn delete_button btn-sm waves-effect" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('products-sub-categories.destroy', $products_sub_category['id'])}}"><i class="fe-trash-2"></i></button>
+                                                <a type="button" class="btn delete_button btn-sm waves-effect" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('products-sub-categories.destroy', $products_sub_category['id'])}}"><i class="fe-trash-2"></i></a>
                                             </div>
                                         </td>
                                     </tr>
@@ -112,7 +112,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="scrollableModalTitle">{{translate_title('New products category')}}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
                 </div>
                 <form class="modal-body needs-validation" action="{{route('products-categories.store')}}" method="POST" enctype="multipart/form-data" novalidate>
                     @csrf
@@ -135,8 +135,8 @@
                         <input type="file" id="image_input_" name="image" class="form-control d-none">
                     </div>
                     <div class="d-flex justify-content-between width_100_percent">
-                        <button type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</button>
-                        <button type="submit" class="btn modal_confirm">{{translate_title('Create')}}</button>
+                        <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</a>
+                        <a type="submit" class="btn modal_confirm">{{translate_title('Create')}}</a>
                     </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -148,7 +148,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="scrollableModalTitle">{{translate_title('New products sub category')}}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
                 </div>
                 <form class="modal-body needs-validation" action="{{route('products-sub-categories.store')}}" method="POST" enctype="multipart/form-data" novalidate>
                     @csrf
@@ -183,8 +183,8 @@
                         <input type="file" id="image_input__" name="image" class="form-control d-none">
                     </div>
                     <div class="d-flex justify-content-between width_100_percent">
-                        <button type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</button>
-                        <button type="submit" class="btn modal_confirm">{{translate_title('Create')}}</button>
+                        <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</a>
+                        <a type="submit" class="btn modal_confirm">{{translate_title('Create')}}</a>
                     </div>
                 </form>
             </div><!-- /.modal-content -->

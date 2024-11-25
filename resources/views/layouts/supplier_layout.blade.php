@@ -228,8 +228,8 @@
                         @csrf
                         @method('DELETE')
                         <div class="d-flex justify-content-between width_100_percent">
-                            <button type="button" class="btn delete_modal_close my-2" data-bs-dismiss="modal"> {{ translate_title('No')}}</button>
-                            <button type="submit" class="btn delete_modal_confirm my-2"> {{ translate_title('Yes')}} </button>
+                            <a type="button" class="btn delete_modal_close my-2" data-bs-dismiss="modal"> {{ translate_title('No')}}</a>
+                            <a type="submit" class="btn delete_modal_confirm my-2"> {{ translate_title('Yes')}} </a>
                         </div>
                     </form>
                 </div>
@@ -257,13 +257,13 @@
                     <h4 class="mt-2">{{translate_title('Logout')}}</h4>
                     <p class="mt-3">{{translate_title('Confirm to logout')}}</p>
                     <div class="d-flex justify-content-around">
-                        <button type="button" class="btn btn-danger my-2" data-bs-dismiss="modal">{{translate_title('No')}}</button>
+                        <a type="button" class="btn btn-danger my-2" data-bs-dismiss="modal">{{translate_title('No')}}</a>
                         <form action="{{route('logout')}}" method="POST">
                             @csrf
                             @method("POST")
-                            <button type="submit" class="btn btn-warning my-2" data-bs-dismiss="modal">
+                            <a type="submit" class="btn btn-warning my-2" data-bs-dismiss="modal">
                                 {{translate_title('Yes')}}
-                            </button>
+                            </a>
                         </form>
                     </div>
                 </div>

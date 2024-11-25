@@ -96,7 +96,7 @@
                                         <div class="mb-3 product_image">
                                             <div class="d-flex justify-content-between">
                                                 <img src="{{asset('storage/products/'.$image)}}" alt="">
-                                                <button class="delete_product_func">X</button>
+                                                <a class="delete_product_func">X</a>
                                             </div>
                                         </div>
                                     @endif
@@ -147,7 +147,7 @@
                             </div>
                         </div>
                         <div class="d-flex mt-4 justify-content-end width_100_percent">
-                            <button type="submit" class="btn modal_confirm">{{translate_title('Update')}}</button>
+                            <a type="submit" class="btn modal_confirm">{{translate_title('Update')}}</a>
                         </div>
                     </form>
                 </div>

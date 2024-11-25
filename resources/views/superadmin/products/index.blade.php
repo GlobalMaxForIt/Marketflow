@@ -33,10 +33,10 @@
                         <div class="tab-pane fade show active" id="all_category" role="tabpanel" aria-labelledby="all_category-tab">
                             <div class="card">
                                 <div class="right_button_create">
-                                    <button class="form_functions global-button" data-bs-toggle="modal" data-bs-target="#create_modal" data-url="{{route('product.store')}}">
+                                    <a class="form_functions global-button" data-bs-toggle="modal" data-bs-target="#create_modal" data-url="{{route('product.store')}}">
                                         <img src="{{asset('menubar/products_active.png')}}" alt="" height="20px">
                                         {{translate_title('Новый продукт')}}
-                                    </button>
+                                    </a>
                                 </div>
                                 <div class="card-body overflow-auto">
                                     <table id="datatable-buttons" class="restaurant_tables table table-striped dt-responsive nowrap">
@@ -73,9 +73,9 @@
                                                         <a class="edit_button btn me-2" href="{{route('product.show', $product['id'])}}">
                                                             <span class="fa fa-eye height_18"></span>
                                                         </a>
-                                                        <button type="button" class="btn delete_button btn-sm waves-effect" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('product.destroy', $product['id'])}}">
+                                                        <a type="button" class="btn delete_button btn-sm waves-effect" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('product.destroy', $product['id'])}}">
                                                             <img src="{{asset('img/trash_icon.png')}}" alt="" height="18px">
-                                                        </button>
+                                                        </a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -101,10 +101,10 @@
                                 </ul>
                                 <div class="card">
                                     <div class="right_button_create">
-                                        <button class="form_functions global-button" data-bs-toggle="modal" data-bs-target="#create_modal" data-url="{{route('product.store')}}">
+                                        <a class="form_functions global-button" data-bs-toggle="modal" data-bs-target="#create_modal" data-url="{{route('product.store')}}">
                                             <img src="{{asset('menubar/products_active.png')}}" alt="" height="20px">
                                             {{translate_title('Новый продукт')}}
-                                        </button>
+                                        </a>
                                     </div>
                                     <div class="card-body overflow-auto">
                                         <table class="restaurant_tables table datatable table-striped dt-responsive nowrap">
@@ -142,9 +142,9 @@
                                                                 <a class="edit_button btn me-2" href="{{route('product.show', $product['id'])}}">
                                                                     <span class="fa fa-eye height_18"></span>
                                                                 </a>
-                                                                <button type="button" class="btn delete_button btn-sm waves-effect" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('product.destroy', $product['id'])}}">
+                                                                <a type="button" class="btn delete_button btn-sm waves-effect" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('product.destroy', $product['id'])}}">
                                                                     <img src="{{asset('img/trash_icon.png')}}" alt="" height="18px">
-                                                                </button>
+                                                                </a>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -168,7 +168,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="scrollableModalTitle">{{translate_title('New product')}}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
                 </div>
                 <form class="modal-body needs-validation" action="{{route('product.store')}}" method="POST" enctype="multipart/form-data" novalidate>
                     @csrf
@@ -264,8 +264,8 @@
                         <label for="floatingSelect">{{translate_title('Status')}}</label>
                     </div>
                     <div class="d-flex justify-content-between width_100_percent">
-                        <button type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</button>
-                        <button type="submit" class="btn modal_confirm">{{translate_title('Create')}}</button>
+                        <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</a>
+                        <a type="submit" class="btn modal_confirm">{{translate_title('Create')}}</a>
                     </div>
                 </form>
             </div>

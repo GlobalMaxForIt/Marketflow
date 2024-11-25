@@ -1337,6 +1337,7 @@ input[type=number]::-webkit-outer-spin-button {
     font-weight: 350;
     line-height: 18.72px;
     color: #adb5bd !important;
+    display: flex;
 }
 .buttonUzbDropDownHeader img{
     height: 18px;
@@ -1643,12 +1644,11 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .delete_button{
     border: 1px solid #FB850E;
-    background-color: #FB850E26;
-    color: #FB850E;
+    color: black !important;
     transition: 0.14s;
 }
-.delete_button:hover{
-    color: #FB850E;
+
+.delete_button:hover, .modal_confirm:hover, .modal_close:hover{
     transform: scale(1.104);
 }
 .bill_edit_button{
@@ -1703,10 +1703,17 @@ input[type=number]::-webkit-outer-spin-button {
 .modal_close{
     width: 200px;
     background-color: #FB850E;
+    transition: 0.14s;
+    color: black;
+    margin-right: 4px;
 }
 .modal_confirm{
     width: 200px;
     background-color: #3EB944;
+    transition: 0.14s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .buttons-pdf, .buttons-excel{
     margin-left: 14px !important;
@@ -1746,7 +1753,7 @@ table{
     color: transparent !important;
 }
 .card-body .dataTables_wrapper .dataTables_filter input{
-    margin-left: -48px !important;
+    margin-left: -40px !important;
 }
 .translation_content{
     list-style: none;
@@ -1829,6 +1836,9 @@ table{
 }
 a, td>img{
     cursor: pointer;
+}
+a{
+    text-decoration: none;
 }
 del{
     opacity: 0.4;
@@ -2131,6 +2141,7 @@ del{
 }
 body{
     color: #adb5bd !important;
+    background-color: #EBEFF2 !important;
 }
 .dropdown-toggle:after{
  display: none;

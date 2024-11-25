@@ -92,8 +92,8 @@
                     </div>
                 </div>
                 <div>
-                    <button type="submit" class="btn btn-primary waves-effect waves-light">{{translate_title('Create')}}</button>
-                    <button type="reset" class="btn btn-secondary waves-effect">{{translate_title('Cancel')}}</button>
+                    <a type="submit" class="btn btn-primary waves-effect waves-light">{{translate_title('Create')}}</a>
+                    <a type="reset" class="btn btn-secondary waves-effect">{{translate_title('Cancel')}}</a>
                 </div>
             </form>
         </div>

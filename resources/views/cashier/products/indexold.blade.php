@@ -11,7 +11,7 @@
                 <div class="card-header">
                     <h4 class="mt-0 header-title">{{translate_title('Products lists')}}</h4>
                     <div class="dropdown float-end">
-                        <button class="form_functions btn btn-success"  href="{{route('product.create')}}"  data-bs-toggle="modal" data-bs-target="#create_modal" data-url="{{route('product.store')}}">{{translate_title('Create')}}</button>
+                        <a class="form_functions btn btn-success"  href="{{route('product.create')}}"  data-bs-toggle="modal" data-bs-target="#create_modal" data-url="{{route('product.store')}}">{{translate_title('Create')}}</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -96,7 +96,7 @@
                                         <td>
                                             <div class="d-flex justify-content-around align-items-center height_50">
                                                 <a class="form_functions btn btn-info" href="{{route('product.edit', $product['id'])}}"><i class="fe-edit-2"></i></a>
-                                                <button type="button" class="btn btn-danger delete_button btn-sm waves-effect" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('product.destroy', $product['id'])}}"><i class="fe-trash-2"></i></button>
+                                                <a type="button" class="btn btn-danger delete_button btn-sm waves-effect" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('product.destroy', $product['id'])}}"><i class="fe-trash-2"></i></a>
                                             </div>
                                         </td>
                                     </tr>
@@ -164,7 +164,7 @@
                                             <td>
                                                 <div class="d-flex justify-content-around align-items-center height_50">
                                                     <a class="form_functions btn btn-info" href="{{route('product.edit', $product['id'])}}"><i class="fe-edit-2"></i></a>
-                                                    <button type="button" class="btn btn-danger delete_button btn-sm waves-effect" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('product.destroy', $product['id'])}}"><i class="fe-trash-2"></i></button>
+                                                    <a type="button" class="btn btn-danger delete_button btn-sm waves-effect" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('product.destroy', $product['id'])}}"><i class="fe-trash-2"></i></a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -184,7 +184,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="scrollableModalTitle">{{translate_title('Product create')}}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
                 </div>
                 <form class="modal-body" action="{{route('product.store')}}" method="POST">
                     @csrf
@@ -228,8 +228,8 @@
                         </select>
                         <label for="floatingSelect">{{translate_title('Products categories')}}</label>
                     </div>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{translate_title('Close')}}</button>
-                    <button type="submit" class="btn btn-primary">{{translate_title('Create')}}</button>
+                    <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{translate_title('Close')}}</a>
+                    <a type="submit" class="btn btn-primary">{{translate_title('Create')}}</a>
                 </form>
             </div>
         </div><!-- /.modal-content -->

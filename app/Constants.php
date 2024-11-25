@@ -20,6 +20,13 @@ class Constants{
     const SUPPLIERS = 5;  // suppliers
 
 
+    #user role uchun ['cash', 'card', 'other']
+
+    const CASH = 0;  // cash
+    const CARD = 1;  // card
+    const OTHER = 2;  // other
+
+
     #inventory types
 
     const INVENTORY_DELIVERY = 1; //(Yetkazib berish) Mahsulotning bir kompaniya yoki do'kondan boshqa joyga yoki do'konga yetkazib berilishi.
@@ -36,16 +43,16 @@ class Constants{
     #adjustment – bu umumiy tuzatishlar, masalan, narxlar, miqdorlar yoki boshqa parametrlarni tuzatish uchun ishlatiladi.
     #DAMAGE - damage transfer_type yordamida zararlangan mahsulotlar tizimda rasmiylashtiriladi va inventarizatsiya bilan bog'liq o'zgarishlar amalga oshiriladi.
         //Bu turdagi harakatlarni ajratib qo'yish, audit va hisob-kitob jarayonlarida zararni aniqlash va undan samarali foydalanishga yordam beradi.
-    
+
     # consignment_records // company tomonidan yetkazib berilgan mahsulot to'langan yoki qisman to'lngan va umuman to'lanmaganlik uchun statuslar
     const UNPAID = 1; // to'lanmagan
     const PARTIALLY_PAID = 2; // qisman to'langan
     const PAID = 3; // to'langan
-    
+
     # gender
     const MALE = 0;
     const FEMALE = 1;
-    
+
     # gender
     const NOT_ACTIVE = 0;
     const ACTIVE = 1;

@@ -528,9 +528,9 @@
                                         <i class="fab fa-cc-mastercard me-1"></i> Mastercard
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
+                                        <a type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
                                             View Details
-                                        </button>
+                                        </a>
                                     </td>
                                 </tr>
 
@@ -556,9 +556,9 @@
                                         <i class="fab fa-cc-visa me-1"></i> Visa
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
+                                        <a type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
                                             View Details
-                                        </button>
+                                        </a>
                                     </td>
                                 </tr>
 
@@ -584,9 +584,9 @@
                                         <i class="fab fa-cc-paypal me-1"></i> Paypal
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
+                                        <a type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
                                             View Details
-                                        </button>
+                                        </a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -611,9 +611,9 @@
                                         <i class="fab fa-cc-mastercard me-1"></i> Mastercard
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
+                                        <a type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
                                             View Details
-                                        </button>
+                                        </a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -638,9 +638,9 @@
                                         <i class="fab fa-cc-visa me-1"></i> Visa
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
+                                        <a type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
                                             View Details
-                                        </button>
+                                        </a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -665,9 +665,9 @@
                                         <i class="fab fa-cc-paypal me-1"></i> Paypal
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
+                                        <a type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
                                             View Details
-                                        </button>
+                                        </a>
                                     </td>
                                 </tr>
                                 </tbody>

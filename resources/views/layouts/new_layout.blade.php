@@ -92,8 +92,8 @@
                         <form class="d-flex justify-content-between" action="{{route('order.make_all_notifications_as_read')}}" method="POST" id="perform_order">
                             @csrf
                             @method('POST')
-                            <button type="button" class="btn btn-danger my-2" data-bs-dismiss="modal"> {{ translate_title('No')}}</button>
-                            <button type="submit" class="btn btn-success my-2"> {{ translate_title('Yes')}} </button>
+                            <a type="button" class="btn btn-danger my-2" data-bs-dismiss="modal"> {{ translate_title('No')}}</a>
+                            <a type="submit" class="btn btn-success my-2"> {{ translate_title('Yes')}} </a>
                         </form>
                     </div>
                 </div>
@@ -108,16 +108,16 @@
                 {{--                        <form action="{{route('test')}}" method="POST">--}}
                 {{--                            @csrf--}}
                 {{--                            @method('POST')--}}
-                {{--                            <button type="submit">submit</button>--}}
+                {{--                            <a type="submit">submit</a>--}}
                 {{--                        </form>--}}
 
                 <form class="app-search">
                     <div class="app-search-box">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search..." id="top-search">
-                            <button class="btn input-group-text" type="submit">
+                            <a class="btn input-group-text" type="submit">
                                 <i class="fe-search"></i>
-                            </button>
+                            </a>
                         </div>
                         <div class="dropdown-menu dropdown-lg" id="search-dropdown">
                             <!-- item-->
@@ -315,9 +315,9 @@
 
         <ul class="list-unstyled topnav-menu topnav-menu-left mb-0" style="margin-top: -150px">
             <li>
-                <button class="button-menu-mobile disable-btn waves-effect">
+                <a class="button-menu-mobile disable-btn waves-effect">
                     <i class="fe-menu"></i>
-                </button>
+                </a>
             </li>
 
             <li>
@@ -380,10 +380,10 @@
                         {{--                            <form action="{{route('logout')}}" method="POST">--}}
                         {{--                                @csrf--}}
                         {{--                                @method("POST")--}}
-                        {{--                                <button class="dropdown-item notify-item" type="submit">--}}
+                        {{--                                <a class="dropdown-item notify-item" type="submit">--}}
                         {{--                                    <i class="fe-log-out me-1"></i>--}}
                         {{--                                    <span>{{translate_title('Logout')}}</span>--}}
-                        {{--                                </button>--}}
+                        {{--                                </a>--}}
                         {{--                            </form>--}}
                     </div>
                 </div>
@@ -419,17 +419,17 @@
                             {{--                                <form action="{{route('logout')}}" method="POST">--}}
                             {{--                                    @csrf--}}
                             {{--                                    @method("POST")--}}
-                            {{--                                    <button class="dropdown-item notify-item" type="submit">--}}
+                            {{--                                    <a class="dropdown-item notify-item" type="submit">--}}
                             {{--                                        <i class="fe-log-out"></i>--}}
                             {{--                                        <span>{{translate_title('Logout')}}</span>--}}
-                            {{--                                    </button>--}}
+                            {{--                                    </a>--}}
                             {{--                                </form>--}}
                         </div>
                     </li>
                     <li class="list-inline-item">
-                        <button  type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#logout-alert-modal" data-url="{{ route('logout') }}" style="border: 0px; background-color: transparent; color: #98a6ad">
+                        <a  type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#logout-alert-modal" data-url="{{ route('logout') }}" style="border: 0px; background-color: transparent; color: #98a6ad">
                             <i class="mdi mdi-power" style="color: red"></i>
-                        </button>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -608,13 +608,13 @@
                     <h4 class="mt-2">{{translate_title('Logout')}}</h4>
                     <p class="mt-3">{{translate_title('Confirm to logout')}}</p>
                     <div class="d-flex justify-content-around">
-                        <button type="button" class="btn btn-danger my-2" data-bs-dismiss="modal">{{translate_title('No')}}</button>
+                        <a type="button" class="btn btn-danger my-2" data-bs-dismiss="modal">{{translate_title('No')}}</a>
                         <form action="{{route('logout')}}" method="POST">
                             @csrf
                             @method("POST")
-                            <button type="submit" class="btn btn-warning my-2" data-bs-dismiss="modal">
+                            <a type="submit" class="btn btn-warning my-2" data-bs-dismiss="modal">
                                 {{translate_title('Yes')}}
-                            </button>
+                            </a>
                         </form>
                     </div>
                 </div>
@@ -747,7 +747,7 @@
                     </div>
 
                     <div class="d-grid mt-4">
-                        <button class="btn btn-primary" id="resetBtn">{{ translate_title('Reset to Default')}}</button>
+                        <a class="btn btn-primary" id="resetBtn">{{ translate_title('Reset to Default')}}</a>
                         {{-- <a href="https://1.envato.market/admintoadmin" class="btn btn-danger mt-3" target="_blank"><i class="mdi mdi-basket me-1"></i> Purchase Now</a> --}}
                     </div>
 
@@ -772,12 +772,12 @@
                     <form style="display: inline-block;" action="" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="button" class="btn btn-danger my-2" data-bs-dismiss="modal"> {{ translate_title('No')}}</button>
-                        {{-- <button type="button" class="btn btn-danger my-2" data-bs-dismiss="modal">{{ translate_title('No') }}</button> --}}
-                        <button type="submit" class="btn btn-success my-2"> {{ translate_title('Yes')}} </button>
-                        {{-- <button type="submit" class="btn btn-warning my-2">{{ translate_title('Yes') }}</button> --}}
+                        <a type="button" class="btn btn-danger my-2" data-bs-dismiss="modal"> {{ translate_title('No')}}</a>
+                        {{-- <a type="button" class="btn btn-danger my-2" data-bs-dismiss="modal">{{ translate_title('No') }}</a> --}}
+                        <a type="submit" class="btn btn-success my-2"> {{ translate_title('Yes')}} </a>
+                        {{-- <a type="submit" class="btn btn-warning my-2">{{ translate_title('Yes') }}</a> --}}
                     </form>
-                    {{-- <button type="button" class="btn btn-warning my-2" data-bs-dismiss="modal">Continue</button> --}}
+                    {{-- <a type="button" class="btn btn-warning my-2" data-bs-dismiss="modal">Continue</a> --}}
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -791,14 +791,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="standard-modalLabel"></h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
             </div>
             <div class="modal-body">
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ translate_title('Close') }}</button>
-                <button type="button" class="btn btn-primary">{{ translate_title('Save changes') }}</button>
+                <a type="button" class="btn btn-light" data-bs-dismiss="modal">{{ translate_title('Close') }}</a>
+                <a type="button" class="btn btn-primary">{{ translate_title('Save changes') }}</a>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -811,14 +811,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="standard-modalLabel"></h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
             </div>
             <div class="modal-body">
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ translate_title('Close') }}</button>
-                <button type="button" class="btn btn-primary">{{ translate_title('Save changes') }}</button>
+                <a type="button" class="btn btn-light" data-bs-dismiss="modal">{{ translate_title('Close') }}</a>
+                <a type="button" class="btn btn-primary">{{ translate_title('Save changes') }}</a>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -844,13 +844,13 @@
                     <h4 class="mt-2">{{translate_title('Logout')}}</h4>
                     <p class="mt-3">{{translate_title('Confirm to logout')}}</p>
                     <div class="d-flex justify-content-around">
-                        <button type="button" class="btn btn-danger my-2" data-bs-dismiss="modal">{{translate_title('No')}}</button>
+                        <a type="button" class="btn btn-danger my-2" data-bs-dismiss="modal">{{translate_title('No')}}</a>
                         <form action="{{route('logout')}}" method="POST">
                             @csrf
                             @method("POST")
-                            <button type="submit" class="btn btn-warning my-2" data-bs-dismiss="modal">
+                            <a type="submit" class="btn btn-warning my-2" data-bs-dismiss="modal">
                                 {{translate_title('Yes')}}
-                            </button>
+                            </a>
                         </form>
                     </div>
                 </div>
