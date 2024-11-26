@@ -69,7 +69,6 @@ Route::group(['middleware'=>['isSuperAdmin', 'language'], 'prefix'=>'super-admin
         Route::get('/', [LanguageController::class, 'index'])->name('language.index');
         Route::get('/language/show/{id}', [LanguageController::class, 'show'])->name('language.show');
         Route::post('/translation/save/', [LanguageController::class, 'translation_save'])->name('translation.save');
-        Route::post('/language/change/', [LanguageController::class, 'changeLanguage'])->name('language.change');
         Route::post('/env_key_update', [LanguageController::class, 'env_key_update'])->name('env_key_update.update');
         Route::get('/language/create/', [LanguageController::class, 'create'])->name('languages.create');
         Route::post('/language/added/', [LanguageController::class, 'store'])->name('languages.store');
@@ -79,6 +78,8 @@ Route::group(['middleware'=>['isSuperAdmin', 'language'], 'prefix'=>'super-admin
         Route::post('/language/update/value', [LanguageController::class, 'updateValue'])->name('languages.update_value');
     });
 });
+
+Route::post('/language/change/', [LanguageController::class, 'changeLanguage'])->name('language.change');
 
 Route::group(['middleware'=>['isCashier', 'language'], 'prefix'=>'cashier'], function(){
     Route::get('/', [\App\Http\Controllers\Cashier\IndexController::class, 'index'])->name('cashier.index');
