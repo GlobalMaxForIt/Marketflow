@@ -2184,6 +2184,3 @@ textarea, textarea:focus, .form-control, .form-control:focus, .btn-close{
 .modal-full-width{
     max-width: 84% !important;
 }
-input{
-    border: solid 1px grey !important;
-}
