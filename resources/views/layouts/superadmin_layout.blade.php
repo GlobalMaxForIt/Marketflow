@@ -1,6 +1,5 @@
 @php
     $current_user = \Illuminate\Support\Facades\Auth::user();
-    $locale = app()->getLocale();
 @endphp
     <!doctype html>
 <html lang="en">
@@ -170,7 +169,7 @@
                     <div class="align-items-center d-flex mt-4" id="lang-change">
                         <a class="buttonUzbDropDownHeader" type="button" id="dropdownMenuButton" role="button"
                            data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="javascript:void(0);">
-                            @switch($locale)
+                            @switch($lang)
                                 @case('uz')
                                 <img class="notifRegion2" id="selected_language"
                                      src="{{ asset('/images/language/region.png') }}" alt="region">
@@ -186,7 +185,7 @@
                                      src="{{ asset('/images/language/RU.png') }}" alt="region">
                                 @break
                             @endswitch
-                            <span>{{strtoupper($locale)}}</span>
+                            <span>{{strtoupper($lang)}}</span>
                         </a>
                         <div id="language_flag" class="language_flag display-none"
                              aria-labelledby="dropdownMenuButton">
@@ -194,7 +193,7 @@
                             <div class="dropdownMenyApplyUzbFlag">
                                 @foreach (\App\Models\Language::all() as $key => $language)
                                     <a href="javascript:void(0)" data-flag="{{ $language->code??'' }}"
-                                       class="dropdown-item dropdown-item dropdownLanguageItem @if ($locale == $language->code??'') active @endif" >
+                                       class="dropdown-item dropdown-item dropdownLanguageItem @if ($lang == $language->code??'') active @endif" >
                                         @switch($language->code)
                                             @case('uz')
                                             <img class="dropdownRegionBayroq me-2" id="lang_uz" src="{{asset('/images/language/region.png')}}" alt="region">

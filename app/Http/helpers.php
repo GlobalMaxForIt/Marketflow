@@ -13,13 +13,10 @@ if (!function_exists('default_language')) {
     }
 }
 if (!function_exists('translate_title')) {
-    function translate_title($key, $lang_)
+    function translate_title($key, $lang)
     {
-        dd($key, $lang_, 'sdfsdf');
         $language = app()->getLocale();
-        if ($language) {
-            $lang = $language;
-        }elseif($lang){
+        if (!$language) {
             $lang = env('DEFAULT_LANGUAGE','ru');
         }
         $translate = Translation::where('lang_key', $key)

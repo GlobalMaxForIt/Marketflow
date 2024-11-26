@@ -1,7 +1,6 @@
 @extends('layouts.superadmin_layout')
 
 @section('title')
-    @dd($lang)
     {{translate_title('Products', $lang)}}
 @endsection
 @section('content')

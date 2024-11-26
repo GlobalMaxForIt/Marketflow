@@ -40,7 +40,6 @@ class ProductsController extends Controller
     public function index()
     {
         $language = App::getLocale();
-        translate_title('elyor', $language);
         $products_categories = ProductsCategories::where('step', 0)->get();
         $productsSubCategories = [];
         $all_products = [];
