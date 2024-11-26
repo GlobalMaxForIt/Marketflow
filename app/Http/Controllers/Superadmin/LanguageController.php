@@ -253,7 +253,7 @@ class LanguageController extends Controller
     public function updateValue(Request $request)
     {
         $tr = new GoogleTranslate;
-        return GoogleTranslate::trans($request->status, $request->code);
+        return response()->json(GoogleTranslate::trans($request->status, $request->code));
     }
 
     protected function Paginate($items, $perPage = 10, $page = null, $options = [])

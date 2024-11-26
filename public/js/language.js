@@ -7,7 +7,7 @@ function copyTranslation() {
                     _token: $('input[name=_token]').val(),
                     id: index,
                     code: document.getElementById("language_code").value,
-                    status: $(this).text()
+                    status: _this.text()
                 }, function(data) {
                     const tsestQ = document.getElementsByClassName("value");
                     _this.siblings('.lang_value').find('input').val(data);
