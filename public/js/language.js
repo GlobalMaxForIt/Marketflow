@@ -6,7 +6,8 @@ function copyTranslation() {
         setTimeout(function() {
             // Yangi shart qo'yish: Agar status o'zgarmagan bo'lsa, so'rov yubormaslik
             var currentStatus = _this.text();
-            if (currentStatus !== _this.siblings('.lang_value').find('input').val()) {
+            console.log([currentStatus, _this.siblings('.lang_value').find('input').val()])
+            if (currentStatus != _this.siblings('.lang_value').find('input').val()) {
                 $.post(languages_url, {
                     _token: $('input[name=_token]').val(),
                     id: index,
