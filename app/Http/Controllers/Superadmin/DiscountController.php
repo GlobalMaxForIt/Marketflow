@@ -61,16 +61,13 @@ class DiscountController extends Controller
             ];
         }
 
-        return view('discount.index', [
+        return view('superadmin.discount.index', [
             'discounts_data'=> $discounts_data,
             'discounts_client_data'=> $discounts_client_data,
             'products_categories'=>$products_categories,
             'title'=>$this->title,
             'clients'=>$clients,
             'clients_for_discount'=>$clients_for_discount,
-            'current_page'=>$this->current_page,
-            'pending_orders_quantity'=>$this->getQuantityPendingOrders(),
-            'open_debt_bills_quantity'=>$this->getQuantityBills()
         ]);
     }
 
@@ -135,10 +132,8 @@ class DiscountController extends Controller
     public function create()
     {
         $categories = ProductsCategories::where('step', 0)->orderBy('id', 'asc')->get();
-        return view('discount.create', [
+        return view('superadmin.discount.create', [
             'categories'=>$categories,
-            'pending_orders_quantity'=>$this->getQuantityPendingOrders(),
-            'open_debt_bills_quantity'=>$this->getQuantityBills()
         ]);
     }
 
@@ -277,7 +272,7 @@ class DiscountController extends Controller
             $subcategory_id = '';
         }
 
-        return view('discount.edit', [
+        return view('superadmin.discount.edit', [
             'discount'=> $discount,
             'categories'=>$categories,
             'clients'=>$clients,
@@ -287,9 +282,6 @@ class DiscountController extends Controller
             'start_end_date'=>$start_end_date,
             'quantity'=>$quantity,
             'title'=>$this->title,
-            'current_page'=>$this->current_page,
-            'pending_orders_quantity'=>$this->getQuantityPendingOrders(),
-            'open_debt_bills_quantity'=>$this->getQuantityBills()
         ]);
     }
 

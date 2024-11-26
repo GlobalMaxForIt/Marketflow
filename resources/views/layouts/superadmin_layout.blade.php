@@ -451,27 +451,6 @@
                             </ul>
                         </div>
                     </li>
-                    <li>
-                        <a href="#settings" data-bs-toggle="collapse">
-                            <i class="fe-settings noti-icon"></i>
-
-                            <span> {{translate_title('Settings')}} </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="settings">
-                            <ul class="nav-second-level">
-                                <li>
-                                    <a href="{{route('language.index')}}"> {{translate_title('Language')}}  </a>
-                                </li>
-                                <li>
-                                    <a href="{{route('table.index')}}"> {{translate_title('Table translations')}}  </a>
-                                </li>
-                                <li>
-                                    <a href="#">{{translate_title('Payment status')}}</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
                 </ul>
 
             </div>

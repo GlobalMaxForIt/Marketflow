@@ -26,8 +26,8 @@
                     <td>{{ $value->code??'' }}</td>
                     <td>
                         <a href="{{ route('table.tableShow', ['language_id' => $value->id, 'type' => $type]) }}"
-                           title="{{ translate_title('Translation') }}"  >
-                            <a type="button" class="btn edit_button"><i class="fa fa-language"></i></a>
+                           title="{{ translate_title('Translation') }}">
+                            <button type="button" class="btn edit_button"><i class="fa fa-language"></i></button>
                         </a>
                     </td>
                 </tr>

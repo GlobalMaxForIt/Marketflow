@@ -1107,7 +1107,7 @@ input[type=number]::-webkit-outer-spin-button {
     background-color: #FB850E;
 }
 .order-section .nav-link{
-    width: max-content;
+    width: auto;
     padding: 4px 14px;
     gap: 10px;
     border-radius: 10px;

@@ -4,8 +4,7 @@
     {{ translate_title("Language translate") }}
 @endsection
 @section('content')
-    <div id="loader"></div>
-    <div class="main-content-section d-none" id="myDiv">
+    <div class="main-content-section">
         <div class="order-section">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item ms-2 mb-2" role="presentation">
