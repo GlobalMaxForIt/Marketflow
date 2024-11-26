@@ -1,23 +1,27 @@
 let languages_url="/super-admin/language/language/update/value"
 function copyTranslation() {
     $('.lang_key').each(function(index) {
-        var _this = $(this)
-            setTimeout(function () {
+        var _this = $(this); // "this" ni saqlaymiz
+
+        setTimeout(function() {
+            // Yangi shart qo'yish: Agar status o'zgarmagan bo'lsa, so'rov yubormaslik
+            var currentStatus = _this.text();
+            if (currentStatus !== _this.siblings('.lang_value').find('input').val()) {
                 $.post(languages_url, {
                     _token: $('input[name=_token]').val(),
                     id: index,
                     code: document.getElementById("language_code").value,
-                    status: _this.text()
+                    status: currentStatus // statusni yuboramiz
                 }, function(data) {
-                    const tsestQ = document.getElementsByClassName("value");
-                    _this.siblings('.lang_value').find('input').val(data);
+                    _this.siblings('.lang_value').find('input').val(data); // Javobni o'zgartiramiz
                 });
-            }, 1444)
-        });
-    }
+            }
+        }, 444 * index);  // Har bir key uchun intervalni uzaytirish
+    });
+}
 
-    function sort_keys(el) {
-        // formni submit qilishni oldini olish
-        el.preventDefault();
-        $('#sort_keys').submit();
-    }
+function sort_keys(el) {
+    // formni submit qilishni oldini olish
+    el.preventDefault();
+    $('#sort_keys').submit();
+}
