@@ -6,18 +6,14 @@ function copyTranslation() {
         setTimeout(function() {
             // Yangi shart qo'yish: Agar status o'zgarmagan bo'lsa, so'rov yubormaslik
             var currentStatus = _this.text();
-            console.log([currentStatus, _this.siblings('.lang_value').find('input').val()])
-            if (currentStatus != old_value) {
-                $.post(languages_url, {
-                    _token: $('input[name=_token]').val(),
-                    id: index,
-                    code: document.getElementById("language_code").value,
-                    status: currentStatus // statusni yuboramiz
-                }, function(data) {
-                    old_value =  data
-                    _this.siblings('.lang_value').find('input').val(data); // Javobni o'zgartiramiz
-                });
-            }
+            $.post(languages_url, {
+                _token: $('input[name=_token]').val(),
+                id: index,
+                code: document.getElementById("language_code").value,
+                status: currentStatus // statusni yuboramiz
+            }, function(data) {
+                _this.siblings('.lang_value').find('input').val(data); // Javobni o'zgartiramiz
+            });
         }, 444);  // Har bir key uchun intervalni uzaytirish
     });
 }
