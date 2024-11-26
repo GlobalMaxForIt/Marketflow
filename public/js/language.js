@@ -16,5 +16,7 @@ function copyTranslation() {
     }
 
     function sort_keys(el) {
+        // formni submit qilishni oldini olish
+        el.preventDefault();
         $('#sort_keys').submit();
     }
