@@ -1,17 +1,17 @@
 @extends('layouts.superadmin_layout')
 
 @section('title')
-    {{ translate_title("Language translate") }}
+    {{ translate_title("Language translate", $lang) }}
 @endsection
 @section('content')
     <div class="main-content-section">
         <div class="order-section">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item ms-2 mb-2" role="presentation">
-                    <a class="nav-link active" id="language-tab" data-bs-toggle="tab" href="#language" role="tab" aria-controls="language" aria-selected="true">{{translate_title('Translate')}}</a>
+                    <a class="nav-link active" id="language-tab" data-bs-toggle="tab" href="#language" role="tab" aria-controls="language" aria-selected="true">{{translate_title('Translate', $lang)}}</a>
                 </li>
                 <li class="nav-item ms-2 mb-2" role="presentation">
-                    <a class="nav-link" id="table-translate-tab" data-bs-toggle="tab" href="#table-translate" role="tab" aria-controls="table-translate" aria-selected="false">{{translate_title('Table translate')}}</a>
+                    <a class="nav-link" id="table-translate-tab" data-bs-toggle="tab" href="#table-translate" role="tab" aria-controls="table-translate" aria-selected="false">{{translate_title('Table translate', $lang)}}</a>
                 </li>
             </ul>
             <div class="card mt-4">
@@ -22,7 +22,7 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <h2>{{ translate_title('Default language') }}</h2>
+                                        <h2>{{ translate_title('Default language', $lang) }}</h2>
                                     </div>
                                     <div class="col-md-2 ">
                                         <div class=" mt-2">
@@ -39,7 +39,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <button type="submit" class="btn edit_button mt-2">{{ translate_title('Save') }}</button>
+                                        <button type="submit" class="btn edit_button mt-2">{{ translate_title('Save', $lang) }}</button>
                                     </div>
                                 </div>
 
@@ -48,9 +48,9 @@
                                 <thead >
                                     <tr>
                                         <th scope="row">№</th>
-                                        <td>{{ translate_title('Language') }}</td>
-                                        <td>{{ translate_title('Code') }}</td>
-                                        <td>{{ translate_title('Action') }}</td>
+                                        <td>{{ translate_title('Language', $lang) }}</td>
+                                        <td>{{ translate_title('Code', $lang) }}</td>
+                                        <td>{{ translate_title('Action', $lang) }}</td>
                                     </tr>
                                 </thead>
                                 <tbody class="text-align:center !important">
@@ -66,7 +66,7 @@
                                             <td>{{ $value->code??'' }}</td>
                                             <td>
                                                 <a href="{{ route('language.show', $value->id) }}"
-                                                   title="{{ translate_title('Translation') }}"  >
+                                                   title="{{ translate_title('Translation', $lang) }}"  >
                                                     <button type="button" class="btn edit_button waves-effect waves-light">
                                                         <i class="fa fa-language"></i>
                                                     </button>
@@ -92,28 +92,28 @@
                             <div class="justify-content-center">
                                 <ul class="translation_content">
                                     <li class="translation_list">
-                                        <a href="{{ route('table.show', 'city') }}"><div class="translation_menu">{{translate_title('City translate')}}</div></a>
+                                        <a href="{{ route('table.show', 'city') }}"><div class="translation_menu">{{translate_title('City translate', $lang)}}</div></a>
                                     </li>
                                     <li class="translation_list">
-                                        <a href="{{ route('table.show', 'product') }}"><div class="translation_menu">{{translate_title('Product translate')}}</div></a>
+                                        <a href="{{ route('table.show', 'product') }}"><div class="translation_menu">{{translate_title('Product translate', $lang)}}</div></a>
                                     </li>
                                     <li class="translation_list">
-                                        <a href="{{ route('table.show', 'product_category') }}"><div class="translation_menu">{{translate_title('Product category translate')}}</div></a>
+                                        <a href="{{ route('table.show', 'product_category') }}"><div class="translation_menu">{{translate_title('Product category translate', $lang)}}</div></a>
                                     </li>
                                     <li class="translation_list">
-                                        <a href="{{ route('table.show', 'product_description') }}"><div class="translation_menu">{{translate_title('Product description translate')}}</div></a>
+                                        <a href="{{ route('table.show', 'product_description') }}"><div class="translation_menu">{{translate_title('Product description translate', $lang)}}</div></a>
                                     </li>
                                     <li class="translation_list">
-                                        <a href="{{ route('table.show', 'product_amount') }}"><div class="translation_menu">{{translate_title('Product amount translate')}}</div></a>
+                                        <a href="{{ route('table.show', 'product_amount') }}"><div class="translation_menu">{{translate_title('Product amount translate', $lang)}}</div></a>
                                     </li>
                                     <li class="translation_list">
-                                        <a href="{{ route('table.show', 'hall') }}"><div class="translation_menu">{{translate_title('Hall translate')}}</div></a>
+                                        <a href="{{ route('table.show', 'hall') }}"><div class="translation_menu">{{translate_title('Hall translate', $lang)}}</div></a>
                                     </li>
                                     <li class="translation_list">
-                                        <a href="{{ route('table.show', 'hall_description') }}"><div class="translation_menu">{{translate_title('Hall description translate')}}</div></a>
+                                        <a href="{{ route('table.show', 'hall_description') }}"><div class="translation_menu">{{translate_title('Hall description translate', $lang)}}</div></a>
                                     </li>
                                     <li class="translation_list">
-                                        <a href="{{ route('table.show', 'stuff_category') }}"><div class="translation_menu">{{translate_title('Stuff category translate')}}</div></a>
+                                        <a href="{{ route('table.show', 'stuff_category') }}"><div class="translation_menu">{{translate_title('Stuff category translate', $lang)}}</div></a>
                                     </li>
                                 </ul>
                             </div>

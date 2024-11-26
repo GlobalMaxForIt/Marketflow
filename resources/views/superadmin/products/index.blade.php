@@ -1,7 +1,8 @@
 @extends('layouts.superadmin_layout')
 
 @section('title')
-    {{translate_title('Products')}}
+    @dd($lang)
+    {{translate_title('Products', $lang)}}
 @endsection
 @section('content')
 {{--    <script src="{{ asset('node_modules/html2pdf.js/dist/html2pdf.bundle.js') }}"></script>--}}
@@ -12,7 +13,7 @@
                     <ul class="nav nav-tabs mb-2">
                         <li class="nav-item ms-2 mb-2">
                             <a href="#all_category" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
-                                {{translate_title("All products")}}
+                                {{translate_title("All products", $lang)}}
                                 @if($allProductsData['quantity']>0)
                                     <span class="badge bg-danger_">{{$allProductsData['quantity']}}</span>
                                 @endif
@@ -35,20 +36,20 @@
                                 <div class="right_button_create">
                                     <a class="form_functions global-button" data-bs-toggle="modal" data-bs-target="#create_modal" data-url="{{route('product.store')}}">
                                         <img src="{{asset('menubar/products_active.png')}}" alt="" height="20px">
-                                        {{translate_title('Новый продукт')}}
+                                        {{translate_title('Новый продукт', $lang)}}
                                     </a>
                                 </div>
                                 <div class="card-body overflow-auto">
                                     <table id="datatable-buttons" class="restaurant_tables table table-striped dt-responsive nowrap">
                                         <thead>
                                             <tr>
-                                                <th>{{translate_title('Id')}}</th>
-                                                <th>{{translate_title('Name')}}</th>
-                                                <th>{{translate_title('Amount')}}</th>
-                                                <th>{{translate_title('Barcode')}}</th>
-                                                <th>{{translate_title('Stock')}}</th>
-                                                <th>{{translate_title('Price')}}</th>
-                                                <th>{{translate_title('Functions')}}</th>
+                                                <th>{{translate_title('Id', $lang)}}</th>
+                                                <th>{{translate_title('Name', $lang)}}</th>
+                                                <th>{{translate_title('Amount', $lang)}}</th>
+                                                <th>{{translate_title('Barcode', $lang)}}</th>
+                                                <th>{{translate_title('Stock', $lang)}}</th>
+                                                <th>{{translate_title('Price', $lang)}}</th>
+                                                <th>{{translate_title('Functions', $lang)}}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -103,20 +104,20 @@
                                     <div class="right_button_create">
                                         <a class="form_functions global-button" data-bs-toggle="modal" data-bs-target="#create_modal" data-url="{{route('product.store')}}">
                                             <img src="{{asset('menubar/products_active.png')}}" alt="" height="20px">
-                                            {{translate_title('Новый продукт')}}
+                                            {{translate_title('Новый продукт', $lang)}}
                                         </a>
                                     </div>
                                     <div class="card-body overflow-auto">
                                         <table class="restaurant_tables table datatable table-striped dt-responsive nowrap">
                                             <thead>
                                                 <tr>
-                                                    <th>{{translate_title('Id')}}</th>
-                                                    <th>{{translate_title('Name')}}</th>
-                                                    <th>{{translate_title('Amount')}}</th>
-                                                    <th>{{translate_title('Barcode')}}</th>
-                                                    <th>{{translate_title('Stock')}}</th>
-                                                    <th>{{translate_title('Price')}}</th>
-                                                    <th>{{translate_title('Functions')}}</th>
+                                                    <th>{{translate_title('Id', $lang)}}</th>
+                                                    <th>{{translate_title('Name', $lang)}}</th>
+                                                    <th>{{translate_title('Amount', $lang)}}</th>
+                                                    <th>{{translate_title('Barcode', $lang)}}</th>
+                                                    <th>{{translate_title('Stock', $lang)}}</th>
+                                                    <th>{{translate_title('Price', $lang)}}</th>
+                                                    <th>{{translate_title('Functions', $lang)}}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -167,7 +168,7 @@
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="scrollableModalTitle">{{translate_title('New product')}}</h5>
+                    <h5 class="modal-title" id="scrollableModalTitle">{{translate_title('New product', $lang)}}</h5>
                     <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
                 </div>
                 <form class="modal-body needs-validation" action="{{route('product.store')}}" method="POST" enctype="multipart/form-data" novalidate>
@@ -175,63 +176,63 @@
                     @method('POST')
                     <div class="position-relative form-floating mb-3">
                         <select class="form-select" name="products_categories_id" id="category_id" aria-label="Floating label select example" required>
-                            <option value="" selected disabled>{{translate_title('Select category')}}</option>
+                            <option value="" selected disabled>{{translate_title('Select category', $lang)}}</option>
                             @foreach($products_categories as $products_category)
                                 <option value="{{$products_category['id']}}">{{$products_category['name']}}</option>
                             @endforeach
                         </select>
                         <div class="invalid-tooltip">
-                            {{translate_title('Please select category')}}
+                            {{translate_title('Please select category', $lang)}}
                         </div>
-                        <label for="category_id">{{translate_title('Products categories')}}</label>
+                        <label for="category_id">{{translate_title('Products categories', $lang)}}</label>
                     </div>
                     <div class="position-relative form-floating mb-3 d-none" id="subcategory_exists">
                         <select class="form-select" name="products_sub_categories_id" id="subcategory_id" aria-label="Floating label select example" required>
 
                         </select>
                         <div class="invalid-tooltip">
-                            {{translate_title('Please select subcategory')}}
+                            {{translate_title('Please select subcategory', $lang)}}
                         </div>
-                        <label for="subcategory_id">{{translate_title('Products sub categories')}}</label>
+                        <label for="subcategory_id">{{translate_title('Products sub categories', $lang)}}</label>
                     </div>
                     <div class="position-relative mb-3">
-                        <label for="name" class="form-label">{{translate_title('Name')}}</label>
+                        <label for="name" class="form-label">{{translate_title('Name', $lang)}}</label>
                         <input type="text" id="name" class="form-control" name="name" required>
                         <div class="invalid-tooltip">
-                            {{translate_title('Please enter name')}}
+                            {{translate_title('Please enter name', $lang)}}
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="amount" class="form-label">{{translate_title('Amount')}}</label>
+                        <label for="amount" class="form-label">{{translate_title('Amount', $lang)}}</label>
                         <input type="text" id="amount" class="form-control" name="amount">
                     </div>
                     <div class="position-relative mb-3">
-                        <label for="price" class="form-label">{{translate_title('Price')}}</label>
+                        <label for="price" class="form-label">{{translate_title('Price', $lang)}}</label>
                         <input type="text" id="price" class="form-control" name="price" required>
                         <div class="invalid-tooltip">
-                            {{translate_title('Please enter price')}}
+                            {{translate_title('Please enter price', $lang)}}
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="description" class="form-label">{{translate_title('Description')}}</label>
+                        <label for="description" class="form-label">{{translate_title('Description', $lang)}}</label>
                         <textarea id="description" class="form-control" name="description" cols="30" rows="10"></textarea>
                     </div>
                     <div class="position-relative mb-3">
-                        <label for="barcode" class="form-label">{{translate_title('Barcode')}}</label>
+                        <label for="barcode" class="form-label">{{translate_title('Barcode', $lang)}}</label>
                         <input type="text" id="barcode" class="form-control" name="barcode" required>
                         <div class="invalid-tooltip">
-                            {{translate_title('Please enter barcode')}}
+                            {{translate_title('Please enter barcode', $lang)}}
                         </div>
                     </div>
                     <div class="position-relative mb-3">
-                        <label for="stock" class="form-label">{{translate_title('Stock')}}</label>
+                        <label for="stock" class="form-label">{{translate_title('Stock', $lang)}}</label>
                         <input type="number" id="stock" class="form-control" name="stock" required>
                         <div class="invalid-tooltip">
-                            {{translate_title('Please enter stock')}}
+                            {{translate_title('Please enter stock', $lang)}}
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="image_input" class="form-label">{{translate_title('Images')}}</label>
+                        <label for="image_input" class="form-label">{{translate_title('Images', $lang)}}</label>
                         <div class="d-flex">
                             <div class="default_image_content">
                                 <img src="{{asset('img/default_image_plus.png')}}" alt="">
@@ -246,26 +247,26 @@
                                 <option value="{{$unit->id}}">{{$unit->name}}</option>
                             @endforeach
                         </select>
-                        <label for="unit">{{translate_title('Unit')}}</label>
+                        <label for="unit">{{translate_title('Unit', $lang)}}</label>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">{{translate_title('Manufactured date')}}</label>
+                        <label class="form-label">{{translate_title('Manufactured date', $lang)}}</label>
                         <input type="text" name="manufactured_date" class="form-control basic-datepicker" placeholder="Date and Time">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">{{translate_title('Expired date')}}</label>
+                        <label class="form-label">{{translate_title('Expired date', $lang)}}</label>
                         <input type="text" name="expired_date" class="form-control basic-datepicker" placeholder="Date and Time">
                     </div>
                     <div class="form-floating mb-3">
                         <select class="form-select" name="status" id="floatingSelect" aria-label="Floating label select example">
-                            <option value="0">{{translate_title('Active')}}</option>
-                            <option value="1">{{translate_title('Not active')}}</option>
+                            <option value="0">{{translate_title('Active', $lang)}}</option>
+                            <option value="1">{{translate_title('Not active', $lang)}}</option>
                         </select>
-                        <label for="floatingSelect">{{translate_title('Status')}}</label>
+                        <label for="floatingSelect">{{translate_title('Status', $lang)}}</label>
                     </div>
                     <div class="d-flex justify-content-between width_100_percent">
-                        <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</a>
-                        <button type="submit" class="btn modal_confirm">{{translate_title('Create')}}</button>
+                        <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
+                        <button type="submit" class="btn modal_confirm">{{translate_title('Create', $lang)}}</button>
                     </div>
                 </form>
             </div>
@@ -280,11 +281,11 @@
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
+                        <span class="visually-hidden">{{translate_title('Previous', $lang)}}</span>
                     </a>
                     <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
+                        <span class="visually-hidden">{{translate_title('Next', $lang)}}</span>
                     </a>
                 </div>
             </div><!-- /.modal-content -->
@@ -295,7 +296,7 @@
     let category_id = document.getElementById('category_id')
     let subcategory_id = document.getElementById('subcategory_id')
 
-    let disabled_text = "{{translate_title('Select sub category')}}"
+    let disabled_text = "{{translate_title('Select sub category', $lang)}}"
 
     category_id.addEventListener('change', function () {
         getSubcategory(subcategory_exists, category_id, subcategory_id, disabled_text)

@@ -1,7 +1,7 @@
 @extends('layouts.superadmin_layout')
 
 @section('title')
-    {{ translate_title(" $type Translation") }}
+    {{ translate_title(" $type Translation", $lang) }}
 @endsection
 @section('content')
     <form class="form-horizontal mb-2" action="{{ route('table_translation.save') }}" method="POST">
@@ -14,8 +14,8 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th>{{ translate_title('Key') }}</th>
-                <th> {{ translate_title('Translation') }}</th>
+                <th>{{ translate_title('Key', $lang) }}</th>
+                <th> {{ translate_title('Translation', $lang) }}</th>
 
             </tr>
             </thead>
@@ -111,8 +111,8 @@
             <div class="col-xl-6 col-md-6">
                 <div class="form-group mt-2 text-right">
                     <a type="button" class="btn edit_button me-2"
-                            onclick="copyTranslation()">{{ translate_title('Copy Translations') }}</a>
-                    <button type="submit" class="btn delete_button">{{ translate_title('Save') }}</button>
+                            onclick="copyTranslation()">{{ translate_title('Copy Translations', $lang) }}</a>
+                    <button type="submit" class="btn delete_button">{{ translate_title('Save', $lang) }}</button>
                 </div>
             </div>
         </div>

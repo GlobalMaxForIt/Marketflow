@@ -10,11 +10,13 @@ use App\Service\ProductsCategoriesService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 class ProductsCategoriesController extends Controller
 {
     public $title;
     public $productsCategoriesService;
+    public $lang;
 
     public function __construct(ProductsCategoriesService $productsCategoriesService)
     {
@@ -39,6 +41,7 @@ class ProductsCategoriesController extends Controller
             'products_sub_categories'=>$products_sub_categories,
             'products_categories'=>$products_categories,
             'title'=>$this->title,
+            'lang'=>$language
         ]);
     }
 
@@ -74,7 +77,7 @@ class ProductsCategoriesController extends Controller
                 $product_category_translations->save();
             }
         }
-        return redirect()->route('products-categories.index')->with('success', translate_title('Successfully created'));
+        return redirect()->route('products-categories.index')->with('success', translate_title('Successfully created', $this->lang));
     }
 
     /**
@@ -82,10 +85,12 @@ class ProductsCategoriesController extends Controller
      */
     public function edit(string $id)
     {
+        $lang = App::getLocale();
         $products_category = ProductsCategories::where('step', 0)->find($id);
         return view('superadmin.products_categories.edit', [
             'products_category'=>$products_category,
             'title'=>$this->title,
+            'lang'=>$lang
         ]);
     }
 
@@ -126,7 +131,7 @@ class ProductsCategoriesController extends Controller
         }
         $products_category->step = 0;
         $products_category->save();
-        return redirect()->route('products-categories.index')->with('success', translate_title('Successfully updated'));
+        return redirect()->route('products-categories.index')->with('success', translate_title('Successfully updated', $this->lang));
     }
 
     /**
@@ -144,11 +149,11 @@ class ProductsCategoriesController extends Controller
         if($products_category){
             if(!$products_category->subcategory->isEmpty()){
                 if(!$products_category->subcategory->isEmpty()){
-                    return redirect()->back()->with('error', translate_title('You cannot delete this category because it has subcategories'));
+                    return redirect()->back()->with('error', translate_title('You cannot delete this category because it has subcategories', $this->lang));
                 }
             }
             if($products_category->product){
-                return redirect()->back()->with('error', translate_title('You cannot delete this category because it has products'));
+                return redirect()->back()->with('error', translate_title('You cannot delete this category because it has products', $this->lang));
             }
             if(!$products_category->image){
                 $products_category->image = 'no';
@@ -159,7 +164,7 @@ class ProductsCategoriesController extends Controller
             }
             $products_category->delete();
         }
-        return redirect()->route('products-categories.index')->with('success', translate_title('Successfully deleted'));
+        return redirect()->route('products-categories.index')->with('success', translate_title('Successfully deleted', $this->lang));
     }
 
     public function getSubcategory($id)

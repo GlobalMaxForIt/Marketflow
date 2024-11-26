@@ -73,7 +73,7 @@
                             <img src="{{asset('menubar/employee.png')}}" alt="">
                         @endif
                     </div>
-                    <span class="main-menu-top-buttons-link_text @if(isset($current_page)) {{$current_page == 'employees'?'active':''}} @endif">{{translate_title('Employees')}}</span>
+                    <span class="main-menu-top-buttons-link_text @if(isset($current_page)) {{$current_page == 'employees'?'active':''}} @endif">{{translate_title('Employees', $lang)}}</span>
                 </a>
                 <a class="main-menu-top-buttons_link" href="{{route('product.index')}}">
                     <div class="main-menu-buttons_link-img">
@@ -87,7 +87,7 @@
                             <img src="{{asset('menubar/products.png')}}" alt="">
                         @endif
                     </div>
-                    <span class="main-menu-top-buttons-link_text @if(isset($current_page)) {{$current_page == 'products'?'active':''}} @endif">{{translate_title('Products')}}</span>
+                    <span class="main-menu-top-buttons-link_text @if(isset($current_page)) {{$current_page == 'products'?'active':''}} @endif">{{translate_title('Products', $lang)}}</span>
                 </a>
                 <a class="main-menu-top-buttons_link" href="{{route('discount.index')}}">
                     <div class="main-menu-buttons_link-img">
@@ -101,7 +101,7 @@
                             <img src="{{asset('menubar/discount.png')}}" alt="">
                         @endif
                     </div>
-                    <span class="main-menu-top-buttons-link_text @if(isset($current_page)) {{$current_page == 'discount'?'active':''}} @endif">{{translate_title('Discount')}}</span>
+                    <span class="main-menu-top-buttons-link_text @if(isset($current_page)) {{$current_page == 'discount'?'active':''}} @endif">{{translate_title('Discount', $lang)}}</span>
                 </a>
                 <a class="main-menu-top-buttons_link mb-1" href="{{route('language.index')}}">
                     <div class="main-menu-buttons_link-img">
@@ -115,7 +115,7 @@
                             <img src="{{asset('menubar/settings.png')}}" alt="">
                         @endif
                     </div>
-                    <span class="main-menu-top-buttons-link_text @if(isset($current_page)) {{$current_page == 'settings'?'active':''}} @endif">{{translate_title('Settings')}}</span>
+                    <span class="main-menu-top-buttons-link_text @if(isset($current_page)) {{$current_page == 'settings'?'active':''}} @endif">{{translate_title('Settings', $lang)}}</span>
                 </a>
             </div>
             <div class="main-menu-bottom_buttons">
@@ -223,13 +223,13 @@
             <div class="modal-body">
                 <div class="text-center">
                     <img src="{{asset('img/delete_icon.png')}}" alt="" height="100px">
-                    <h4 class="mt-2 delete_text_content">{{ translate_title('Вы уверены, что хотите удалить это?')}}</h4>
+                    <h4 class="mt-2 delete_text_content">{{ translate_title('Вы уверены, что хотите удалить это?', $lang)}}</h4>
                     <form action="" method="POST" id="delete_form">
                         @csrf
                         @method('DELETE')
                         <div class="d-flex justify-content-between width_100_percent">
-                            <a type="button" class="btn delete_modal_close my-2" data-bs-dismiss="modal"> {{ translate_title('No')}}</a>
-                            <button type="submit" class="btn delete_modal_confirm my-2"> {{ translate_title('Yes')}} </a>
+                            <a type="button" class="btn delete_modal_close my-2" data-bs-dismiss="modal"> {{ translate_title('No', $lang)}}</a>
+                            <button type="submit" class="btn delete_modal_confirm my-2"> {{ translate_title('Yes', $lang)}} </button>
                         </div>
                     </form>
                 </div>
@@ -254,16 +254,16 @@
             <div class="modal-body">
                 <div class="text-center">
                     <i class="dripicons-warning h1 text-warning"></i>
-                    <h4 class="mt-2">{{translate_title('Logout')}}</h4>
-                    <p class="mt-3">{{translate_title('Confirm to logout')}}</p>
+                    <h4 class="mt-2">{{translate_title('Logout', $lang)}}</h4>
+                    <p class="mt-3">{{translate_title('Confirm to logout', $lang)}}</p>
                     <div class="d-flex justify-content-around">
-                        <a type="button" class="btn btn-danger my-2" data-bs-dismiss="modal">{{translate_title('No')}}</a>
+                        <a type="button" class="btn btn-danger my-2" data-bs-dismiss="modal">{{translate_title('No', $lang)}}</a>
                         <form action="{{route('logout')}}" method="POST">
                             @csrf
                             @method("POST")
                             <button type="submit" class="btn btn-warning my-2" data-bs-dismiss="modal">
-                                {{translate_title('Yes')}}
-                            </a>
+                                {{translate_title('Yes', $lang)}}
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -275,8 +275,8 @@
 <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 <script src="{{asset('js/pusher_commands.js')}}"></script>
 <script>
-    let items_selected_text = "{{translate_title('items selected')}}"
-    let search_client_text = "{{translate_title('Поиск')}}"
+    let items_selected_text = "{{translate_title('items selected', $lang)}}"
+    let search_client_text = "{{translate_title('Поиск', $lang)}}"
 
     $(document).ready(function() {
 

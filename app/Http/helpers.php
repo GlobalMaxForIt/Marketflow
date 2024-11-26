@@ -13,16 +13,15 @@ if (!function_exists('default_language')) {
     }
 }
 if (!function_exists('translate_title')) {
-    function translate_title($key, $lang = null)
+    function translate_title($key, $lang_)
     {
-        if ($lang == null) {
-            if(session()->has('locale')){
-                $lang = session('locale');
-            }else{
-                $lang = env('DEFAULT_LANGUAGE','ru');
-            }
+        dd($key, $lang_, 'sdfsdf');
+        $language = app()->getLocale();
+        if ($language) {
+            $lang = $language;
+        }elseif($lang){
+            $lang = env('DEFAULT_LANGUAGE','ru');
         }
-
         $translate = Translation::where('lang_key', $key)
             ->where('lang', $lang)
             ->first();
@@ -49,9 +48,12 @@ if (!function_exists('translate_title')) {
 if (!function_exists('translate_api')) {
     function translate_api($key, $lang = null)
     {
+        $user = \Illuminate\Support\Facades\Auth::user();
 
         if ($lang === null) {
             $lang = App::getLocale();
+        }elseif($user){
+            $lang = $user->language;
         }
 
         $translate = Translation::where('lang_key', $key)

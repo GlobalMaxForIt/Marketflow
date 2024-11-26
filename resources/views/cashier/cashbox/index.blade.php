@@ -1,7 +1,7 @@
 @extends('layouts.cashbox_layout')
 
 @section('title')
-    {{translate_title('Checkout')}}
+    {{translate_title('Checkout', $lang)}}
 @endsection
 @section('content')
     <div class="row">
@@ -38,10 +38,10 @@
                             <table class="restaurant_tables datatable table table-striped dt-responsive nowrap">
                                 <thead>
                                     <tr>
-                                        <th>{{translate_title('Name')}}</th>
-                                        <th>{{translate_title('Price')}}</th>
-                                        <th>{{translate_title('Stock')}}</th>
-                                        <th>{{translate_title('Functions')}}</th>
+                                        <th>{{translate_title('Name', $lang)}}</th>
+                                        <th>{{translate_title('Price', $lang)}}</th>
+                                        <th>{{translate_title('Stock', $lang)}}</th>
+                                        <th>{{translate_title('Functions', $lang)}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -99,11 +99,11 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>{{translate_title('Product name')}}</th>
-                                <th>{{translate_title('Qty')}}</th>
-                                <th>{{translate_title('Price')}}</th>
-                                <th>{{translate_title('Total sum')}}</th>
-                                <th>{{translate_title('Functions')}}</th>
+                                <th>{{translate_title('Product name', $lang)}}</th>
+                                <th>{{translate_title('Qty', $lang)}}</th>
+                                <th>{{translate_title('Price', $lang)}}</th>
+                                <th>{{translate_title('Total sum', $lang)}}</th>
+                                <th>{{translate_title('Functions', $lang)}}</th>
                             </tr>
                         </thead>
                         <tbody id="order_data_content">
@@ -111,12 +111,12 @@
                         </tbody>
                     </table>
                     <div class="d-flex justify-content-between padding_20">
-                        <h4>{{translate_title('Total:')}}</h4>
+                        <h4>{{translate_title('Total:', $lang)}}</h4>
                         <h4 id="total_sum"></h4>
                     </div>
                     <div class="d-flex justify-content-between d-none padding_20 mb-2" id="clientDiscountContent">
                         <div class="d-flex">
-                            <h6>{{translate_title('Client discount:')}}</h6>&nbsp;
+                            <h6>{{translate_title('Client discount:', $lang)}}</h6>&nbsp;
                             <span id="clientFullName" class="font_size_12"></span>
                         </div>
                         <div class="d-flex">
@@ -127,27 +127,27 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-between d-none padding_20" id="totalLeftSum">
-                        <h4>{{translate_title('Total left sum:')}}</h4>
+                        <h4>{{translate_title('Total left sum:', $lang)}}</h4>
                         <h4 id="total_left_sum"></h4>
                     </div>
                 </div>
                 <div class="d-flex add_to_order_buttons_" id="has_items">
                     <div class="width_100_percent d-flex justify-content-between">
                         <a class="modal_close delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('product.destroy', $product['id'])}}">
-                            <b>{{translate_title('Delete')}}</b>
+                            <b>{{translate_title('Delete', $lang)}}</b>
                         </a>
                         <a class="modal_confirm btn" onclick="paymentFunc()" data-bs-toggle="modal" data-bs-target="#payment_modal">
-                            <b>{{translate_title('Payment')}}</b>
+                            <b>{{translate_title('Payment', $lang)}}</b>
                         </a>
                     </div>
                 </div>
                 <div class="d-flex add_to_order_buttons_" id="no_items">
                     <div class="width_100_percent d-flex justify-content-around">
                         <a class="modal_close delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('product.destroy', $product['id'])}}" disabled>
-                            <b>{{translate_title('Delete')}}</b>
+                            <b>{{translate_title('Delete', $lang)}}</b>
                         </a>
                         <a class="modal_confirm btn" onclick="paymentFunc()" data-bs-toggle="modal" data-bs-target="#payment_modal" disabled>
-                            <b>{{translate_title('Payment')}}</b>
+                            <b>{{translate_title('Payment', $lang)}}</b>
                         </a>
                     </div>
                 </div>
@@ -159,15 +159,15 @@
         <div class="modal-dialog card" role="document">
             <div class="modal-content">
                 <div class="modal-header card-header">
-                    <h4>{{translate_title('Do you order takeout?')}}</h4>
+                    <h4>{{translate_title('Do you order takeout?', $lang)}}</h4>
                 </div>
                 <div class="modal-body card-body">
                     <div class="tab-content overflow-auto" id="take_away_content">
 
                     </div>
                     <div class="d-flex justify-content-between width_100_percent mt-4">
-                        <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</a>
-                        <a onclick="takeAwayConfirm()" class="btn modal_confirm">{{translate_title('Confirm')}}</a>
+                        <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
+                        <a onclick="takeAwayConfirm()" class="btn modal_confirm">{{translate_title('Confirm', $lang)}}</a>
                     </div>
                 </div>
             </div><!-- /.modal-content -->
@@ -178,12 +178,12 @@
         <div class="modal-dialog card" role="document">
             <div class="modal-content">
                 <div class="modal-header card-header">
-                    <h4>{{translate_title('Do you want to select client with discount ?')}}</h4>
+                    <h4>{{translate_title('Do you want to select client with discount ?', $lang)}}</h4>
                 </div>
                 <div class="modal-body card-body">
                     <div class="position-relative mb-4">
                         <select class="form-control" name="client_id" data-toggle="select2" data-width="100%" required id="client_select_id_2">
-                            <option value="" selected disabled>{{translate_title('Select a client')}}</option>
+                            <option value="" selected disabled>{{translate_title('Select a client', $lang)}}</option>
                             <optgroup label="Clients">
                                 @foreach($clients_for_discount as $client_for_discount)
                                     <option value="{{$client_for_discount['client_id']}} {{$client_for_discount['percent']}} /{{$client_for_discount['client_full_name']}}">{{$client_for_discount['client_full_name']}}</option>
@@ -191,32 +191,32 @@
                             </optgroup>
                         </select>
                         <div class="invalid-tooltip">
-                            {{translate_title('Select a client')}}
+                            {{translate_title('Select a client', $lang)}}
                         </div>
                     </div>
                     <div class="d-flex justify-content-between width_100_percent mt-4">
-                        <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</a>
-                        <a class="btn modal_confirm" data-bs-dismiss="modal" id="confirm_client_discount">{{translate_title('Confirm')}}</a>
+                        <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
+                        <a class="btn modal_confirm" data-bs-dismiss="modal" id="confirm_client_discount">{{translate_title('Confirm', $lang)}}</a>
                     </div>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>
     <script>
-        let sum_text =  "{{translate_title('sum')}}"
-        let items_text =  "{{translate_title('items')}}"
-        let not_found =  "{{translate_title('Not found')}}"
-        let phone_text =  "{{translate_title('Phone')}}"
-        let image_text =  "{{translate_title('Image')}}"
-        let address_text =  "{{translate_title('Address')}}"
-        let email_text =  "{{translate_title('Email')}}"
-        let gender_text =  "{{translate_title('Gender')}}"
-        let notes_text =  "{{translate_title('Notes')}}"
-        let ordered_fail_text = "{{translate_title('Something got wrong. Try again')}}"
-        let service_price_text = "{{translate_title('Service price')}}"
-        let total_price_text = "{{translate_title('Total price')}}"
-        let image_src = "{{asset('icon/no_photo.jpg')}}"
-        let kitchen_index = "{{route('cashbox.index')}}"
+        let sum_text =  "{{translate_title('sum', $lang)}}"
+        let items_text =  "{{translate_title('items', $lang)}}"
+        let not_found =  "{{translate_title('Not found', $lang)}}"
+        let phone_text =  "{{translate_title('Phone', $lang)}}"
+        let image_text =  "{{translate_title('Image', $lang)}}"
+        let address_text =  "{{translate_title('Address', $lang)}}"
+        let email_text =  "{{translate_title('Email', $lang)}}"
+        let gender_text =  "{{translate_title('Gender', $lang)}}"
+        let notes_text =  "{{translate_title('Notes', $lang)}}"
+        let ordered_fail_text = "{{translate_title('Something got wrong. Try again', $lang)}}"
+        let service_price_text = "{{translate_title('Service price', $lang)}}"
+        let total_price_text = "{{translate_title('Total price', $lang)}}"
+        let image_src = "{{asset('icon/no_photo.jpg', $lang)}}"
+        let kitchen_index = "{{route('cashbox.index', $lang)}}"
         let json_products = JSON.parse('{!! $allProductsData['json_products'] !!}')
         console.log(json_products)
         let page = false

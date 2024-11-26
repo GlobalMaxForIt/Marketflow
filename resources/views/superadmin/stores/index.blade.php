@@ -1,7 +1,7 @@
 @extends('layouts.superadmin_layout')
 
 @section('title')
-    {{translate_title('Employees')}}
+    {{translate_title('Employees', $lang)}}
 @endsection
 @section('content')
     <div class="main-content-section">
@@ -14,19 +14,19 @@
                             <div class="right_button_create">
                                 <a class="form_functions global-button" data-bs-toggle="modal" data-bs-target="#create_modal">
                                     <img src="{{asset('menubar/employee_active.png')}}" alt="" height="20px">
-                                    {{translate_title('Новый Сотрудник')}}
+                                    {{translate_title('Новый Сотрудник', $lang)}}
                                 </a>
                             </div>
                             <div class="card-body overflow-auto">
                                 <table id="datatable-buttons" class="restaurant_tables table table-striped table-bordered dt-responsive nowrap">
                                     <thead>
                                         <tr>
-                                            <th>{{translate_title('Id')}}</th>
-                                            <th>{{translate_title('Name')}}</th>
-                                            <th>{{translate_title('Address')}}</th>
-                                            <th>{{translate_title('Images')}}</th>
-                                            <th>{{translate_title('Organization')}}</th>
-                                            <th>{{translate_title('Functions')}}</th>
+                                            <th>{{translate_title('Id', $lang)}}</th>
+                                            <th>{{translate_title('Name', $lang)}}</th>
+                                            <th>{{translate_title('Address', $lang)}}</th>
+                                            <th>{{translate_title('Images', $lang)}}</th>
+                                            <th>{{translate_title('Organization', $lang)}}</th>
+                                            <th>{{translate_title('Functions', $lang)}}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -71,21 +71,21 @@
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="scrollableModalTitle">{{translate_title('New store')}}</h5>
+                    <h5 class="modal-title" id="scrollableModalTitle">{{translate_title('New store', $lang)}}</h5>
                     <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
                 </div>
                 <form class="modal-body needs-validation" action="{{route('stores.store')}}" method="POST" enctype="multipart/form-data" novalidate>
                     @csrf
                     @method('POST')
                     <div class="position-relative mb-3">
-                        <label for="name" class="form-label">{{translate_title('Name')}}</label>
+                        <label for="name" class="form-label">{{translate_title('Name', $lang)}}</label>
                         <input type="text" id="name" class="form-control" name="name" required>
                         <div class="invalid-tooltip">
-                            {{translate_title('Please enter name.')}}
+                            {{translate_title('Please enter name.', $lang)}}
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="image_input" class="form-label">{{translate_title('Images')}}</label>
+                        <label for="image_input" class="form-label">{{translate_title('Images', $lang)}}</label>
                         <div class="d-flex">
                             <div class="default_image_content">
                                 <img src="{{asset('img/default_image_plus.png')}}" alt="">
@@ -95,44 +95,44 @@
                         <input type="file" id="image_input" name="images[]" class="form-control d-none" multiple>
                     </div>
                     <div class="position-relative mb-3">
-                        <label class="form-label">{{translate_title('Region')}}</label>
+                        <label class="form-label">{{translate_title('Region', $lang)}}</label>
                         <select name="region_id" class="form-control" id="region_id" required>
-                            <option value="" disabled selected>{{translate_title('Select region')}}</option>
+                            <option value="" disabled selected>{{translate_title('Select region', $lang)}}</option>
                         </select>
                         <div class="invalid-tooltip">
-                            {{translate_title('Please enter percent.')}}
+                            {{translate_title('Please enter percent.', $lang)}}
                         </div>
                     </div>
                     <div class="position-relative mb-3">
-                        <label class="form-label">{{translate_title('District')}}</label>
+                        <label class="form-label">{{translate_title('District', $lang)}}</label>
                         <select name="district_id" class="form-control" id="district_id" required>
-                            <option value="" disabled selected>{{translate_title('Select district')}}</option>
+                            <option value="" disabled selected>{{translate_title('Select district', $lang)}}</option>
                         </select>
                         <div class="invalid-tooltip">
-                            {{translate_title('Please enter percent.')}}
+                            {{translate_title('Please enter percent.', $lang)}}
                         </div>
                     </div>
                     <div class="position-relative mb-3">
-                        <label class="form-label" id="organization_id">{{translate_title('Organization')}}</label>
+                        <label class="form-label" id="organization_id">{{translate_title('Organization', $lang)}}</label>
                         <select name="organization_id" class="form-control" id="organization_id" required>
-                            <option value="" disabled selected>{{translate_title('Select organization')}}</option>
+                            <option value="" disabled selected>{{translate_title('Select organization', $lang)}}</option>
                             @foreach($organizations as $organization)
                                 <option value="{{$organization['id']}}">{{$organization['name']}}</option>
                             @endforeach
                         </select>
                         <div class="invalid-tooltip">
-                            {{translate_title('Please select organization.')}}
+                            {{translate_title('Please select organization.', $lang)}}
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="address" class="form-label">{{translate_title('Address')}}</label>
+                        <label for="address" class="form-label">{{translate_title('Address', $lang)}}</label>
                         <input type="text" id="address" class="form-control" name="address">
                     </div>
                     <input type="hidden" name="region" id="region">
                     <input type="hidden" name="district" id="district">
                     <div class="width_100_percent d-flex justify-content-between mt-5">
-                        <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</a>
-                        <button type="submit" class="btn modal_confirm">{{translate_title('Create')}}</button>
+                        <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
+                        <button type="submit" class="btn modal_confirm">{{translate_title('Create', $lang)}}</button>
                     </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -148,11 +148,11 @@
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
+                        <span class="visually-hidden">{{translate_title('Previous', $lang)}}</span>
                     </a>
                     <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
+                        <span class="visually-hidden">{{translate_title('Next', $lang)}}</span>
                     </a>
                 </div>
             </div><!-- /.modal-content -->

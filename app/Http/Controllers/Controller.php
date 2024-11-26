@@ -6,6 +6,8 @@ use App\Constants;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 class Controller extends BaseController
 {
@@ -19,7 +21,7 @@ class Controller extends BaseController
     }
 
     public function getTableTitle($title){
-        $data = translate_title($title);
+        $data = translate_title($title, 'ru');
         return $data;
     }
 
@@ -50,5 +52,4 @@ class Controller extends BaseController
         ], 200, [], JSON_INVALID_UTF8_SUBSTITUTE); // $error_type
 
     }
-
 }

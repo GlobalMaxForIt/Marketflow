@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Superadmin;
 use App\Models\ProductsCategories;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 class ProductsSubCategoriesController extends Controller
 {
     public $title;
+    public $lang;
 
     public function __construct()
     {
@@ -41,7 +44,7 @@ class ProductsSubCategoriesController extends Controller
         $products_categories->parent_id = $request->products_categories_id;
         $products_categories->step = 1;
         $products_categories->save();
-        return redirect()->route('products-categories.index')->with('success', translate_title('Successfully created'));
+        return redirect()->route('products-categories.index')->with('success', translate_title('Successfully created', $this->lang));
     }
 
     /**
@@ -51,10 +54,12 @@ class ProductsSubCategoriesController extends Controller
     {
         $products_sub_category = ProductsCategories::where('step', 1)->find($id);
         $products_categories = ProductsCategories::where('step', 0)->get();
+        $lang = App::getLocale();
         return view('superadmin.products_sub_categories.edit', [
             'products_sub_category'=>$products_sub_category,
             'products_categories'=>$products_categories,
             'title'=>$this->title,
+            'lang'=>$lang
         ]);
     }
 
@@ -87,7 +92,7 @@ class ProductsSubCategoriesController extends Controller
         $products_category->parent_id = $request->products_categories_id;
         $products_category->step = 1;
         $products_category->save();
-        return redirect()->route('products-categories.index')->with('success', translate_title('Successfully updated'));
+        return redirect()->route('products-categories.index')->with('success', translate_title('Successfully updated', $this->lang));
     }
 
     /**
@@ -98,7 +103,7 @@ class ProductsSubCategoriesController extends Controller
         $products_category = ProductsCategories::find($id);
         if($products_category){
             if($products_category->product) {
-                return redirect()->back()->with('error', translate_title('You cannot delete this category because here is product in this category.'));
+                return redirect()->back()->with('error', translate_title('You cannot delete this category because here is product in this category.', $this->lang));
             }
             if(!$products_category->image){
                 $products_category->image = 'no';
@@ -109,6 +114,6 @@ class ProductsSubCategoriesController extends Controller
             }
             $products_category->delete();
         }
-        return redirect()->route('products-categories.index')->with('success', translate_title('Successfully deleted'));
+        return redirect()->route('products-categories.index')->with('success', translate_title('Successfully deleted', $this->lang));
     }
 }

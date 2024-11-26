@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Service\ProductsService;
 use App\Service\SaveImages;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class OrganizationController extends Controller
@@ -16,6 +18,7 @@ class OrganizationController extends Controller
     public $title;
     public $saveImages;
     public $productsService;
+    public $lang;
 
     public function __construct(SaveImages $saveImages, ProductsService $productsService)
     {
@@ -26,6 +29,7 @@ class OrganizationController extends Controller
 
     public function index()
     {
+        $lang = App::getLocale();
         $organizations_ = Organization::all();
         $organizations = [];
         foreach($organizations_ as $organization) {
@@ -60,6 +64,7 @@ class OrganizationController extends Controller
         return view('superadmin.organizations.index', [
             'organizations'=>$organizations,
             'title'=>$this->title,
+            'lang'=>$lang
         ]);
     }
 
@@ -75,10 +80,10 @@ class OrganizationController extends Controller
             $address->city_id = $request->region;
         }
         if($request->new_password && $request->new_password != $request->password_confirmation){
-            return redirect()->back()->with('error', translate_title('Your new password confirmation is incorrect'));
+            return redirect()->back()->with('error', translate_title('Your new password confirmation is incorrect', $this->lang));
         }
         if($request->new_password && !$request->email){
-            return redirect()->back()->with('error', translate_title('Your don\'t have email'));
+            return redirect()->back()->with('error', translate_title('Your don\'t have email', $this->lang));
         }
         $address->name = $request->address;
         $address->save();
@@ -88,7 +93,7 @@ class OrganizationController extends Controller
         $images = $request->file('images');
         $organization->images = $this->saveImages->imageSave($organization, $images, 'update', 'organizations');
         $organization->save();
-        return redirect()->route('organizations.index')->with('success', translate_title('Successfully created'));
+        return redirect()->route('organizations.index')->with('success', translate_title('Successfully created', $this->lang));
     }
 
     /**
@@ -96,6 +101,7 @@ class OrganizationController extends Controller
      */
     public function edit(string $id)
     {
+        $lang = App::getLocale();
         $organization_ = Organization::find($id);
         $images = [];
         $images_ = [];
@@ -129,6 +135,7 @@ class OrganizationController extends Controller
             'organization'=>$organization,
             'images'=>$images_,
             'title'=>$this->title,
+            'lang'=>$lang
         ]);
     }
 
@@ -160,7 +167,7 @@ class OrganizationController extends Controller
         $organization->images = $this->saveImages->imageSave($organization, $images, 'update', 'organizations');
         $organization->address_id = $address->id;
         $organization->save();
-        return redirect()->route('organizations.index')->with('success', translate_title('Successfully updated'));
+        return redirect()->route('organizations.index')->with('success', translate_title('Successfully updated', $this->lang));
     }
 
     public function deleteOrganizationImage(Request $request){
@@ -188,6 +195,6 @@ class OrganizationController extends Controller
             }
         }
         $organization->delete();
-        return redirect()->route('organizations.index')->with('success', translate_title('Successfully deleted'));
+        return redirect()->route('organizations.index')->with('success', translate_title('Successfully deleted', $this->lang));
     }
 }

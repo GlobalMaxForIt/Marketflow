@@ -181,7 +181,7 @@
                     <div class="card-header">
                         <div class="text-center">
                             <i class="dripicons-warning h1 text-warning"></i>
-                            <h4 class="mt-2">{{ translate_title('Are you sure you want to make all notifications as read')}}</h4>
+                            <h4 class="mt-2">{{ translate_title('Are you sure you want to make all notifications as read', $lang)}}</h4>
                         </div>
                     </div>
                     <div class="card-footer">
@@ -189,8 +189,8 @@
                         <form class="d-flex justify-content-between" action="#" method="POST" id="perform_order">
                             @csrf
                             @method('POST')
-                            <a type="button" class="btn btn-danger my-2" data-bs-dismiss="modal"> {{ translate_title('No')}}</a>
-                            <button type="submit" class="btn btn-success my-2"> {{ translate_title('Yes')}} </a>
+                            <a type="button" class="btn btn-danger my-2" data-bs-dismiss="modal"> {{ translate_title('No', $lang)}}</a>
+                            <button type="submit" class="btn btn-success my-2"> {{ translate_title('Yes', $lang)}} </a>
                         </form>
                     </div>
                 </div>
@@ -203,7 +203,7 @@
     <div class="navbar-custom">
         <ul class="list-unstyled topnav-menu float-end mb-0">
             <li>
-                <a class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#change_cashier"><h4>{{translate_title('Change cashier')}} <span class="mdi mdi-logout"></span></h4></a>
+                <a class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#change_cashier"><h4>{{translate_title('Change cashier', $lang)}} <span class="mdi mdi-logout"></span></h4></a>
             </li>
             <li>
                 <div>
@@ -269,7 +269,7 @@
 
         <ul class="list-unstyled topnav-menu topnav-menu-left mb-0">
             <li>
-                <a class="text-decoration-none" href="{{route('cashier.index')}}"><h4>{{translate_title('Back')}} <span class="mdi mdi-arrow-left-bold"></span></h4></a>
+                <a class="text-decoration-none" href="{{route('cashier.index')}}"><h4>{{translate_title('Back', $lang)}} <span class="mdi mdi-arrow-left-bold"></span></h4></a>
             </li>
             <li>
                 <h4>@yield('title')</h4>
@@ -305,7 +305,7 @@
             <a href="javascript:void(0);" class="right-bar-toggle float-end">
                 <i class="mdi mdi-close"></i>
             </a>
-            <h4 class="font-16 m-0 text-white">{{ translate_title('Theme Customizer')}}</h4>
+            <h4 class="font-16 m-0 text-white">{{ translate_title('Theme Customizer', $lang)}}</h4>
         </div>
         <!-- Tab panes -->
         <div class="tab-content pt-0">
@@ -313,111 +313,111 @@
             <div class="tab-pane active" id="settings-tab" role="tabpanel">
 
                 <div class="p-3">
-                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">{{ translate_title('Color Scheme')}}</h6>
+                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">{{ translate_title('Color Scheme', $lang)}}</h6>
                     <div class="form-check form-switch mb-1">
                         <input type="checkbox" class="form-check-input" name="layout-color" value="light"
                                id="light-mode-check" />
-                        <label class="form-check-label" for="light-mode-check">{{ translate_title('Light Mode')}}</label>
+                        <label class="form-check-label" for="light-mode-check">{{ translate_title('Light Mode', $lang)}}</label>
                     </div>
 
                     <div class="form-check form-switch mb-1">
                         <input type="checkbox" class="form-check-input" name="layout-color" value="dark"
                                id="dark-mode-check" checked/>
-                        <label class="form-check-label" for="dark-mode-check">{{ translate_title('Dark Mode')}}</label>
+                        <label class="form-check-label" for="dark-mode-check">{{ translate_title('Dark Mode', $lang)}}</label>
                     </div>
 
                     <!-- Width -->
-                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">{{ translate_title('Width')}}</h6>
+                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">{{ translate_title('Width', $lang)}}</h6>
                     <div class="form-check form-switch mb-1">
                         <input type="checkbox" class="form-check-input" name="layout-size" value="fluid"
                                id="fluid" checked />
-                        <label class="form-check-label" for="fluid-check">{{ translate_title('Fluid')}}</label>
+                        <label class="form-check-label" for="fluid-check">{{ translate_title('Fluid', $lang)}}</label>
                     </div>
                     <div class="form-check form-switch mb-1">
                         <input type="checkbox" class="form-check-input" name="layout-size" value="boxed"
                                id="boxed" />
-                        <label class="form-check-label" for="boxed-check">{{ translate_title('Boxed')}}</label>
+                        <label class="form-check-label" for="boxed-check">{{ translate_title('Boxed', $lang)}}</label>
                     </div>
 
                     <!-- Menu positions -->
-                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">{{ translate_title('Menus (Leftsidebar and Topbar) Positon')}}</h6>
+                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">{{ translate_title('Menus (Leftsidebar and Topbar) Positon', $lang)}}</h6>
 
                     <div class="form-check form-switch mb-1">
                         <input type="checkbox" class="form-check-input" name="leftbar-position" value="fixed"
                                id="fixed-check" checked />
-                        <label class="form-check-label" for="fixed-check">{{ translate_title('Fixed')}}</label>
+                        <label class="form-check-label" for="fixed-check">{{ translate_title('Fixed', $lang)}}</label>
                     </div>
 
                     <div class="form-check form-switch mb-1">
                         <input type="checkbox" class="form-check-input" name="leftbar-position"
                                value="scrollable" id="scrollable-check" />
-                        <label class="form-check-label" for="scrollable-check">{{ translate_title('Scrollable')}}</label>
+                        <label class="form-check-label" for="scrollable-check">{{ translate_title('Scrollable', $lang)}}</label>
                     </div>
 
                     <!-- Left Sidebar-->
-                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">{{ translate_title('Left Sidebar Color')}}</h6>
+                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">{{ translate_title('Left Sidebar Color', $lang)}}</h6>
 
                     <div class="form-check form-switch mb-1">
                         <input type="checkbox" class="form-check-input" name="leftbar-color" value="light"
                                id="light" />
-                        <label class="form-check-label" for="light-check">{{ translate_title('Light')}}</label>
+                        <label class="form-check-label" for="light-check">{{ translate_title('Light', $lang)}}</label>
                     </div>
 
                     <div class="form-check form-switch mb-1">
                         <input type="checkbox" class="form-check-input" name="leftbar-color" value="dark"
                                id="dark" checked />
-                        <label class="form-check-label" for="dark-check">{{ translate_title('Dark')}}</label>
+                        <label class="form-check-label" for="dark-check">{{ translate_title('Dark', $lang)}}</label>
                     </div>
 
                     <div class="form-check form-switch mb-1">
                         <input type="checkbox" class="form-check-input" name="leftbar-color" value="brand"
                                id="brand" />
-                        <label class="form-check-label" for="brand-check">{{ translate_title('Brand')}}</label>
+                        <label class="form-check-label" for="brand-check">{{ translate_title('Brand', $lang)}}</label>
                     </div>
 
                     <div class="form-check form-switch mb-3">
                         <input type="checkbox" class="form-check-input" name="leftbar-color" value="gradient"
                                id="gradient" />
-                        <label class="form-check-label" for="gradient-check">{{ translate_title('Gradient')}}</label>
+                        <label class="form-check-label" for="gradient-check">{{ translate_title('Gradient', $lang)}}</label>
                     </div>
 
                     <!-- size -->
-                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">{{ translate_title('Left Sidebar Size')}}</h6>
+                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">{{ translate_title('Left Sidebar Size', $lang)}}</h6>
 
                     <div class="form-check form-switch mb-1">
                         <input type="checkbox" class="form-check-input" name="leftbar-size" value="default"
                                id="default-size-check" checked />
-                        <label class="form-check-label" for="default-size-check">{{ translate_title('Default')}}</label>
+                        <label class="form-check-label" for="default-size-check">{{ translate_title('Default', $lang)}}</label>
                     </div>
 
                     <div class="form-check form-switch mb-1">
                         <input type="checkbox" class="form-check-input" name="leftbar-size" value="condensed"
                                id="condensed-check" />
-                        <label class="form-check-label" for="condensed-check">{{ translate_title('Condensed')}} <small>{{ translate_title('(Extra Small size)')}}</small></label>
+                        <label class="form-check-label" for="condensed-check">{{ translate_title('Condensed', $lang)}} <small>{{ translate_title('(Extra Small size)', $lang)}}</small></label>
                     </div>
 
                     <div class="form-check form-switch mb-1">
                         <input type="checkbox" class="form-check-input" name="leftbar-size" value="compact"
                                id="compact-check" />
-                        <label class="form-check-label" for="compact-check">{{ translate_title('Compact')}} <small>{{ translate_title('(Small size)')}}</small></label>
+                        <label class="form-check-label" for="compact-check">{{ translate_title('Compact', $lang)}} <small>{{ translate_title('(Small size)', $lang)}}</small></label>
                     </div>
                     <!-- Topbar -->
-                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">{{ translate_title('Topbar')}}</h6>
+                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">{{ translate_title('Topbar', $lang)}}</h6>
 
                     <div class="form-check form-switch mb-1">
                         <input type="checkbox" class="form-check-input" name="topbar-color" value="dark"
                                id="darktopbar-check" checked />
-                        <label class="form-check-label" for="darktopbar-check">{{ translate_title('Dark')}}</label>
+                        <label class="form-check-label" for="darktopbar-check">{{ translate_title('Dark', $lang)}}</label>
                     </div>
 
                     <div class="form-check form-switch mb-1">
                         <input type="checkbox" class="form-check-input" name="topbar-color" value="light"
                                id="lighttopbar-check" />
-                        <label class="form-check-label" for="lighttopbar-check">{{ translate_title('Light')}}</label>
+                        <label class="form-check-label" for="lighttopbar-check">{{ translate_title('Light', $lang)}}</label>
                     </div>
 
                     <div class="d-grid mt-4">
-                        <a class="btn btn-primary" id="resetBtn">{{ translate_title('Reset to Default')}}</a>
+                        <a class="btn btn-primary" id="resetBtn">{{ translate_title('Reset to Default', $lang)}}</a>
                         {{-- <a href="https://1.envato.market/admintoadmin" class="btn btn-danger mt-3" target="_blank"><i class="mdi mdi-basket me-1"></i> Purchase Now</a> --}}
                     </div>
 
@@ -437,25 +437,25 @@
                 <div class="row width_100_percent">
                     <div class="col-3">
                         <div class="text-center">
-                            <strong class="me-auto">{{translate_title('Payment sum')}}</strong>
+                            <strong class="me-auto">{{translate_title('Payment sum', $lang)}}</strong>
                         </div>
                         <div class="input-display_" id="payment_sum">0</div>
                     </div>
                     <div class="col-3">
                         <div class="text-center">
-                            <strong class="me-auto">{{translate_title('Accepting sum')}}</strong>
+                            <strong class="me-auto">{{translate_title('Accepting sum', $lang)}}</strong>
                         </div>
                         <div class="input-display_" id="accepting_sum">0</div>
                     </div>
                     <div class="col-3">
                         <div class="text-center">
-                            <strong class="me-auto">{{translate_title('Leaving sum')}}</strong>
+                            <strong class="me-auto">{{translate_title('Leaving sum', $lang)}}</strong>
                         </div>
                         <div class="input-display_" id="leaving_sum">0</div>
                     </div>
                     <div class="col-3">
                         <div class="text-center">
-                            <strong class="me-auto">{{translate_title('Change sum')}}</strong>
+                            <strong class="me-auto">{{translate_title('Change sum', $lang)}}</strong>
                         </div>
                         <div class="input-display_" id="change_sum">0</div>
                     </div>
@@ -463,13 +463,13 @@
                 <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
             </div>
             <div class="modal-header d-flex justify-content-between">
-                <button type="button" class="btn btn-outline-secondary waves-effect active" onclick="setCash(this)">{{translate_title('Наличные')}}</button>
-                <button type="button" class="btn btn-outline-secondary waves-effect" onclick="setCard(this)">{{translate_title('Безналичные')}}</button>
-                <button type="button" class="btn btn-outline-secondary waves-effect" onclick="setMixed(this)">{{translate_title('Смешанные')}}</button>
+                <button type="button" class="btn btn-outline-secondary waves-effect active" onclick="setCash(this)">{{translate_title('Наличные', $lang)}}</button>
+                <button type="button" class="btn btn-outline-secondary waves-effect" onclick="setCard(this)">{{translate_title('Безналичные', $lang)}}</button>
+                <button type="button" class="btn btn-outline-secondary waves-effect" onclick="setMixed(this)">{{translate_title('Смешанные', $lang)}}</button>
             </div>
             <div class="modal-body d-flex justify-content-between" id="calculators">
                 <div class="mt-2 cash_calculator" id="cashCalculator">
-                    <h4>{{translate_title('Ввод сумма наличие')}}</h4>
+                    <h4>{{translate_title('Ввод сумма наличие', $lang)}}</h4>
                     <!-- Sonni ko'rsatish joyi -->
                     <div class="row">
                         <div class="col-12">
@@ -533,7 +533,7 @@
                     </div>
                 </div>
                 <div class="mt-2 cash_calculator d-none" id="cardCalculator">
-                    <h4>{{translate_title('Ввод сумма безналичие')}}</h4>
+                    <h4>{{translate_title('Ввод сумма безналичие', $lang)}}</h4>
                     <!-- Sonni ko'rsatish joyi -->
                     <div class="row">
                         <div class="col-12">
@@ -601,8 +601,8 @@
                 <input class="input-display" type="text" id="card_payment_" readonly>
             </div>
             <div class="modal-footer">
-                <a class="btn modal_close height_50" data-bs-dismiss="modal">{{translate_title('Close')}}</a>
-                <a class="btn modal_confirm height_50">{{translate_title('Payment')}}</a>
+                <a class="btn modal_close height_50" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
+                <a class="btn modal_confirm height_50">{{translate_title('Payment', $lang)}}</a>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -614,13 +614,13 @@
             <div class="modal-body">
                 <div class="text-center">
                     <img src="{{asset('img/delete_icon.png')}}" alt="" height="100px">
-                    <h4 class="mt-2 delete_text_content">{{ translate_title('Вы уверены, что хотите удалить это?')}}</h4>
+                    <h4 class="mt-2 delete_text_content">{{ translate_title('Вы уверены, что хотите удалить это?', $lang)}}</h4>
                     <form action="" method="POST" id="delete_form">
                         @csrf
                         @method('DELETE')
                         <div class="d-flex justify-content-between width_100_percent">
-                            <a type="button" class="btn delete_modal_close my-2" data-bs-dismiss="modal"> {{ translate_title('No')}}</a>
-                            <button type="submit" class="btn delete_modal_confirm my-2"> {{ translate_title('Yes')}} </a>
+                            <a type="button" class="btn delete_modal_close my-2" data-bs-dismiss="modal"> {{ translate_title('No', $lang)}}</a>
+                            <button type="submit" class="btn delete_modal_confirm my-2"> {{ translate_title('Yes', $lang)}} </a>
                         </div>
                     </form>
                 </div>
@@ -645,16 +645,16 @@
             <div class="modal-body">
                 <div class="text-center">
                     <i class="dripicons-warning h1 text-warning"></i>
-                    <h4 class="mt-2">{{translate_title('Logout')}}</h4>
-                    <p class="mt-3">{{translate_title('Confirm to logout')}}</p>
+                    <h4 class="mt-2">{{translate_title('Logout', $lang)}}</h4>
+                    <p class="mt-3">{{translate_title('Confirm to logout', $lang)}}</p>
                     <div class="d-flex justify-content-around">
-                        <a type="button" class="btn btn-danger my-2" data-bs-dismiss="modal">{{translate_title('No')}}</a>
+                        <a type="button" class="btn btn-danger my-2" data-bs-dismiss="modal">{{translate_title('No', $lang)}}</a>
                         <form action="{{route('logout')}}" method="POST">
                             @csrf
                             @method("POST")
                             <button type="submit" class="btn btn-warning my-2" data-bs-dismiss="modal">
-                                {{translate_title('Yes')}}
-                            </a>
+                                {{translate_title('Yes', $lang)}}
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -667,7 +667,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header card-header">
-                <h4>{{translate_title('Do you want to change cashier')}}</h4>
+                <h4>{{translate_title('Do you want to change cashier', $lang)}}</h4>
             </div>
             <form class="modal-body card-body" action="{{route('changeCashier')}}" method="POST">
                 @csrf
@@ -678,11 +678,11 @@
                             <option value="{{$cashier['id']}}">{{$cashier['name']}}{{$cashier['surname']}}</option>
                         @endforeach
                     </select>
-                    <label for="floatingSelect">{{translate_title('Select a cashier')}}</label>
+                    <label for="floatingSelect">{{translate_title('Select a cashier', $lang)}}</label>
                 </div>
                 <input type="hidden" id="cashier_password" name="password">
                 <div class="mt-2">
-                    <h4>{{translate_title('Parol kiritish')}}</h4>
+                    <h4>{{translate_title('Parol kiritish', $lang)}}</h4>
 
                     <!-- Sonni ko'rsatish joyi -->
                     <div class="row">
@@ -747,8 +747,8 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-between width_100_percent mt-4">
-                    <a class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</a>
-                    <button type="submit" class="btn modal_confirm">{{translate_title('Confirm')}}</button>
+                    <a class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
+                    <button type="submit" class="btn modal_confirm">{{translate_title('Confirm', $lang)}}</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -985,8 +985,8 @@
     }
 </script>
 <script>
-    let items_selected_text = "{{translate_title('items selected')}}"
-    let search_client_text = "{{translate_title('Поиск')}}"
+    let items_selected_text = "{{translate_title('items selected', $lang)}}"
+    let search_client_text = "{{translate_title('Поиск', $lang)}}"
 
     // $(document).ready(function() {
     //     $('.basic-datepicker').flatpickr();
@@ -1271,14 +1271,14 @@
 
 <script>
     "use strict";
-    let orders_ordered = {name:"{{translate_title('Orders active')}}", count:"1"}
-    let orders_performed = {name:"{{translate_title('Orders performed')}}", count:"2"}
-    let order_cancelled = {name:"{{translate_title('Cancelled orders')}}", count:"5"}
-    let orders_accepted = {name:"{{translate_title('Completed orders')}}", count:"4"}
+    let orders_ordered = {name:"{{translate_title('Orders active', $lang)}}", count:"1"}
+    let orders_performed = {name:"{{translate_title('Orders performed', $lang)}}", count:"2"}
+    let order_cancelled = {name:"{{translate_title('Cancelled orders', $lang)}}", count:"5"}
+    let orders_accepted = {name:"{{translate_title('Completed orders', $lang)}}", count:"4"}
     {{--let monthly_orders_count = {!! 74??0 !!}--}}
     {{--let monthly_offers_count = {!! 12??0 !!}--}}
-    {{--let order_created = "{{translate_title('Order created')}}"--}}
-    {{--let offer_created = "{{translate_title('Offer created')}}"--}}
+    {{--let order_created = "{{translate_title('Order created', $lang)}}"--}}
+    {{--let offer_created = "{{translate_title('Offer created', $lang)}}"--}}
     const month_names = ["","January","February","March","April","May","June","July",
         "August","September","October","November","December"];
     !function(e){

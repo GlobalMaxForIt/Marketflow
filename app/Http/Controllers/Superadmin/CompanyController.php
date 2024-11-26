@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Service\ProductsService;
 use App\Service\SaveImages;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class CompanyController extends Controller
@@ -16,6 +18,7 @@ class CompanyController extends Controller
     public $title;
     public $saveImages;
     public $productsService;
+    public $lang;
 
     public function __construct(SaveImages $saveImages, ProductsService $productsService)
     {
@@ -26,6 +29,7 @@ class CompanyController extends Controller
 
     public function index()
     {
+        $lang = App::getLocale();
         $companies_ = Company::all();
         $companies = [];
         foreach($companies_ as $company) {
@@ -59,6 +63,7 @@ class CompanyController extends Controller
         return view('superadmin.companies.index', [
             'companies'=>$companies,
             'title'=>$this->title,
+            'lang'=>$lang
         ]);
     }
 
@@ -74,10 +79,10 @@ class CompanyController extends Controller
             $address->city_id = $request->region;
         }
         if($request->new_password && $request->new_password != $request->password_confirmation){
-            return redirect()->back()->with('error', translate_title('Your new password confirmation is incorrect'));
+            return redirect()->back()->with('error', translate_title('Your new password confirmation is incorrect', $this->lang));
         }
         if($request->new_password && !$request->email){
-            return redirect()->back()->with('error', translate_title('Your don\'t have email'));
+            return redirect()->back()->with('error', translate_title('Your don\'t have email', $this->lang));
         }
         $address->name = $request->address;
         $address->save();
@@ -87,7 +92,7 @@ class CompanyController extends Controller
         $images = $request->file('images');
         $company->images = $this->saveImages->imageSave($company, $images, 'update', 'companies');
         $company->save();
-        return redirect()->route('companies.index')->with('success', translate_title('Successfully created'));
+        return redirect()->route('companies.index')->with('success', translate_title('Successfully created', $this->lang));
     }
 
     /**
@@ -95,6 +100,7 @@ class CompanyController extends Controller
      */
     public function edit(string $id)
     {
+        $lang = App::getLocale();
         $company_ = Company::find($id);
         $images = [];
         $images_ = [];
@@ -128,6 +134,7 @@ class CompanyController extends Controller
             'company'=>$company,
             'images'=>$images_,
             'title'=>$this->title,
+            'lang'=>$lang
         ]);
     }
 
@@ -159,7 +166,7 @@ class CompanyController extends Controller
         $company->images = $this->saveImages->imageSave($company, $images, 'update', 'companies');
         $company->address_id = $address->id;
         $company->save();
-        return redirect()->route('companies.index')->with('success', translate_title('Successfully updated'));
+        return redirect()->route('companies.index')->with('success', translate_title('Successfully updated', $this->lang));
     }
 
     public function deleteCompanyImage(Request $request){
@@ -187,6 +194,6 @@ class CompanyController extends Controller
             }
         }
         $company->delete();
-        return redirect()->route('companies.index')->with('success', translate_title('Successfully deleted'));
+        return redirect()->route('companies.index')->with('success', translate_title('Successfully deleted', $this->lang));
     }
 }

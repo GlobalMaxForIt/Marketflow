@@ -10,9 +10,9 @@
             <div class="row">
                 <div class="col-md-7">
                     <div class="">
-                        <label class="form-label">{{translate_title('Name')}}</label>
+                        <label class="form-label">{{translate_title('Name', $lang)}}</label>
 
-                        <input type="text" name="name" value="{{$language->name??''}}" class="form-control" required placeholder="{{translate_title('Type something')}}" />
+                        <input type="text" name="name" value="{{$language->name??''}}" class="form-control" required placeholder="{{translate_title('Type something', $lang)}}" />
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-md-3">
                     <div style="margin-top: 30px;">
-                        <button type="submit" class="btn edit_button">{{translate_title('Submit')}}</button>
+                        <button type="submit" class="btn edit_button">{{translate_title('Submit', $lang)}}</button>
                     </div>
                 </div>
             </div>

@@ -10,12 +10,15 @@ use App\Models\User;
 use App\Service\UserService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     public $title;
     public $user_service;
+    public $lang;
 
     public function __construct(UserService $user_service)
     {
@@ -27,7 +30,7 @@ class UserController extends Controller
     {
         $users_ = User::all();
         $users = [];
-
+        $lang = App::getLocale();
         $roles = [
             ['value'=>1, 'name'=>'superadmin'],
             ['value'=>2, 'name'=>'admin'],
@@ -37,31 +40,31 @@ class UserController extends Controller
         ];
         foreach($users_ as $user) {
             if ($user['gender'] == \App\Constants::MALE) {
-                $gender = translate_title('Male');
+                $gender = translate_title('Male', $this->lang);
             }elseif ($user['gender'] == \App\Constants::FEMALE){
-                $gender = translate_title('Female');
+                $gender = translate_title('Female', $this->lang);
             }
 
             if ($user['status'] == \App\Constants::NOT_ACTIVE) {
-                $status = translate_title('Not active');
+                $status = translate_title('Not active', $this->lang);
             }elseif($user['status'] == \App\Constants::ACTIVE){
-                $status = translate_title('Active');
+                $status = translate_title('Active', $this->lang);
             }
             switch($user['role']){
                 case \App\Constants::SUPERADMIN:
-                    $role = translate_title('Superadmin');
+                    $role = translate_title('Superadmin', $this->lang);
                     break;
                 case \App\Constants::ADMIN:
-                    $role = translate_title('Admin');
+                    $role = translate_title('Admin', $this->lang);
                     break;
                 case \App\Constants::MANAGER:
-                    $role = translate_title('Manager');
+                    $role = translate_title('Manager', $this->lang);
                     break;
                 case \App\Constants::CASHIER:
-                    $role = translate_title('Cashier');
+                    $role = translate_title('Cashier', $this->lang);
                     break;
                 case \App\Constants::SUPPLIERS:
-                    $role = translate_title('Suppliers');
+                    $role = translate_title('Suppliers', $this->lang);
                     break;
                 default:
                     $role = '';
@@ -117,7 +120,8 @@ class UserController extends Controller
             'companies'=>$companies,
             'organizations'=>$organizations,
             'title'=>$this->title,
-            'roles'=>$roles
+            'roles'=>$roles,
+            'lang'=>$lang
         ]);
     }
 
@@ -133,10 +137,10 @@ class UserController extends Controller
             $address->city_id = $request->region;
         }
         if($request->new_password && $request->new_password != $request->password_confirmation){
-            return redirect()->back()->with('error', translate_title('Your new password confirmation is incorrect'));
+            return redirect()->back()->with('error', translate_title('Your new password confirmation is incorrect', $this->lang));
         }
         if($request->new_password && !$request->email){
-            return redirect()->back()->with('error', translate_title('Your don\'t have email'));
+            return redirect()->back()->with('error', translate_title('Your don\'t have email', $this->lang));
         }
         $address->name = $request->address;
         $address->save();
@@ -168,7 +172,7 @@ class UserController extends Controller
             $users->image =  $product_image_name;
         }
         $users->save();
-        return redirect()->route('users.index')->with('success', translate_title('Successfully created'));
+        return redirect()->route('users.index')->with('success', translate_title('Successfully created', $this->lang));
     }
 
     /**
@@ -177,7 +181,7 @@ class UserController extends Controller
     public function edit(string $id)
     {
         $user = User::find($id);
-
+        $lang = App::getLocale();
         $roles = [
             ['value'=>1, 'name'=>'superadmin'],
             ['value'=>2, 'name'=>'admin'],
@@ -208,7 +212,8 @@ class UserController extends Controller
             'roles'=>$roles,
             'companies'=>$companies,
             'organizations'=>$organizations,
-            'title'=>$this->title
+            'title'=>$this->title,
+            'lang'=>$lang
         ]);
     }
 
@@ -229,16 +234,16 @@ class UserController extends Controller
                     $users->password = Hash::make($request->new_password);
                 }else{
                     if(!Hash::check($request->password, $users->password)){
-                        return redirect()->back()->with('error', translate_title('Your password is incorrect'));
+                        return redirect()->back()->with('error', translate_title('Your password is incorrect', $this->lang));
                     }elseif($request->new_password != $request->password_confirmation){
-                        return redirect()->back()->with('error', translate_title('Your new password confirmation is incorrect'));
+                        return redirect()->back()->with('error', translate_title('Your new password confirmation is incorrect', $this->lang));
                     }
                 }
             }else{
-                return redirect()->back()->with('error', translate_title('Your don\'t have email'));
+                return redirect()->back()->with('error', translate_title('Your don\'t have email', $this->lang));
             }
         }elseif($request->password && $request->new_password && !$request->password_confirmation){
-            return redirect()->back()->with('error', translate_title('Your new password confirmation is incorrect'));
+            return redirect()->back()->with('error', translate_title('Your new password confirmation is incorrect', $this->lang));
         }
         if($users->address){
             $address = $users->address;
@@ -285,7 +290,7 @@ class UserController extends Controller
         }
         $users->address_id = $address->id;
         $users->save();
-        return redirect()->route('users.index')->with('success', translate_title('Successfully updated'));
+        return redirect()->route('users.index')->with('success', translate_title('Successfully updated', $this->lang));
     }
 
     /**
@@ -302,6 +307,6 @@ class UserController extends Controller
             unlink($old_image);
         }
         $users->forceDelete();
-        return redirect()->route('users.index')->with('success', translate_title('Successfully deleted'));
+        return redirect()->route('users.index')->with('success', translate_title('Successfully deleted', $this->lang));
     }
 }

@@ -11,12 +11,14 @@ use App\Models\ProductsCategories;
 use App\Service\ClientService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class DiscountController extends Controller
 {
     public $title;
     public $clientService;
+    public $lang;
 
     public function __construct(ClientService $clientService)
     {
@@ -26,6 +28,7 @@ class DiscountController extends Controller
 
     public function index()
     {
+        $lang = App::getLocale();
         $products_categories = ProductsCategories::where('step', 0)->orderBy('id', 'asc')->get();
         $discounts_distinct = Discount::distinct('discount_number')->whereNull('client_id')->get();
         $discounts_client_distinct = Discount::distinct('discount_number')->whereNotNull('client_id')->get();
@@ -68,6 +71,7 @@ class DiscountController extends Controller
             'title'=>$this->title,
             'clients'=>$clients,
             'clients_for_discount'=>$clients_for_discount,
+            'lang'=>$lang
         ]);
     }
 
@@ -105,7 +109,7 @@ class DiscountController extends Controller
         if(count($category) == 1){
             $category = [$category[0]];
         }elseif(count($category) > 1){
-            $category = [translate_title('All categories')];
+            $category = [translate_title('All categories', $this->lang)];
         }else{
             $category = [''];
         }
@@ -113,7 +117,7 @@ class DiscountController extends Controller
         if(count($subcategory) == 1){
             $subcategory = [$subcategory[0]];
         }elseif(count($subcategory) > 1){
-            $subcategory = [translate_title('All subcategories')];
+            $subcategory = [translate_title('All subcategories', $this->lang)];
         }else{
             $subcategory = [''];
         }
@@ -131,9 +135,11 @@ class DiscountController extends Controller
      */
     public function create()
     {
+        $lang = App::getLocale();
         $categories = ProductsCategories::where('step', 0)->orderBy('id', 'asc')->get();
         return view('superadmin.discount.create', [
             'categories'=>$categories,
+            'lang'=>$lang
         ]);
     }
 
@@ -145,7 +151,7 @@ class DiscountController extends Controller
     {
         $current_discount = new Discount();
         $this->saveDiscount($request, $current_discount, 'store');
-        return redirect()->route('discount.index')->with('success', translate_title('Successfully created'));
+        return redirect()->route('discount.index')->with('success', translate_title('Successfully created', $this->lang));
     }
 
     public function getProducts($request){
@@ -208,6 +214,7 @@ class DiscountController extends Controller
      */
     public function edit(string $id)
     {
+        $lang = App::getLocale();
         $discount = Discount::find($id);
         $clients = [];
         $clients_ = Clients::all();
@@ -282,6 +289,7 @@ class DiscountController extends Controller
             'start_end_date'=>$start_end_date,
             'quantity'=>$quantity,
             'title'=>$this->title,
+            'lang'=>$lang
         ]);
     }
 
@@ -292,7 +300,7 @@ class DiscountController extends Controller
     {
         $current_discount = Discount::find($id);
         $this->saveDiscount($request, $current_discount, 'update');
-        return redirect()->route('discount.index')->with('success', translate_title('Successfully updated'));
+        return redirect()->route('discount.index')->with('success', translate_title('Successfully updated', $this->lang));
     }
 
     /**
@@ -305,7 +313,7 @@ class DiscountController extends Controller
         foreach ($current_discount_group as $currentDiscount){
             $currentDiscount->delete();
         }
-        return redirect()->route('discount.index')->with('success', translate_title('Successfully created'));
+        return redirect()->route('discount.index')->with('success', translate_title('Successfully created', $this->lang));
     }
 
     public function saveDiscount($request, $current_discount, $type){
@@ -334,7 +342,7 @@ class DiscountController extends Controller
         }else{
             $products = $this->getProducts($request);
             if($products->isEmpty()){
-                return redirect()->back()->with('error', translate_title('There is no product in this category'));
+                return redirect()->back()->with('error', translate_title('There is no product in this category', $this->lang));
             }
             if($type == 'update'){
                 $current_discount_group = Discount::where('discount_number', $current_discount->discount_number)->get();

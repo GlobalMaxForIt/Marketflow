@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 use App\Models\Language;
@@ -21,6 +22,7 @@ class LanguageController extends Controller
 {
     public $title;
     public $current_page = 'settings';
+    public $lang;
     /**
      * Display a listing of the resource.
      * @return Renderable
@@ -93,16 +95,18 @@ class LanguageController extends Controller
     //     $request->session()->put('locale', $request->locale);
     //     $language = Language::where('code', $request->locale)->first();
     //     return redirect()->back();
-    //     //  flash(translate_title('Language changed to ') . $language->name)->success();
+    //     //  flash(translate_title('Language changed to ', $this->lang) . $language->name)->success();
     // }
 
     public function index()
     {
         $languages = Language::orderBy('id', 'ASC')->get();
+        $lang = App::getLocale();
         return view('language.index', [
             'languages' => $languages,
             'title'=>$this->title,
-            'current_page' => $this->current_page
+            'current_page' => $this->current_page,
+            'lang'=>$lang
         ]);
 
 
@@ -120,6 +124,7 @@ class LanguageController extends Controller
         // $lang_keys = $lang_keys->paginate(10);
         // $lang_keys = $lang_keys->orderByDesc()->paginate(10);
 
+        $lang = App::getLocale();
 
 
         return view('language.show', [
@@ -127,7 +132,8 @@ class LanguageController extends Controller
             'lang_keys' => $lang_keys,
             'sort_search' => $sort_search,
             'title'=>$this->title,
-            'current_page' => $this->current_page
+            'current_page' => $this->current_page,
+            'lang'=>$lang
         ]);
     }
 
@@ -164,11 +170,13 @@ class LanguageController extends Controller
     public function create()
     {
 
+        $lang = App::getLocale();
         $languages = Language::get();
         return view('language.create', [
             'languages'=>$languages,
             'title'=>$this->title,
-            'current_page' => $this->current_page
+            'current_page' => $this->current_page,
+            'lang'=>$lang
             ]);
     }
 
@@ -205,12 +213,14 @@ class LanguageController extends Controller
     public function languageEdit($id)
     {
 
+        $lang = App::getLocale();
         // $languages = Language::get();
         $language = Language::findOrFail(decrypt($id));
         return view('language.edit', [
             'language'=>$language,
             'title'=>$this->title,
-            'current_page' => $this->current_page
+            'current_page' => $this->current_page,
+            'lang'=>$lang
         ]);
 
     }

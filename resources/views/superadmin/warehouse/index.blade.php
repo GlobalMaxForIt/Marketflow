@@ -22,31 +22,31 @@
                 </div>
             @endif
             <p class="text-muted font-14">
-                {{translate_title('Characterized ')}} {{$product->name?$product->name :''}} {{translate_title(' product create')}}
+                {{translate_title('Characterized ', $lang)}} {{$product->name?$product->name :''}} {{translate_title(' product create', $lang)}}
             </p>
             <form action="{{route('characterizedProducts.store')}}" class="parsley-examples" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method("POST")
                 <div class="mb-3 d-flex justify-content-between">
                     <div style="width: 45%">
-                        <label class="form-label">{{translate_title('Product')}}</label>
+                        <label class="form-label">{{translate_title('Product', $lang)}}</label>
                         <input name="product_id" value="{{$product->id}}" type="hidden" class="form-control" id="product_id">
                         <input  value="{{$product->name??''}}" class="form-control" readonly>
                     </div>
                     <div style="width: 45%">
-                        <label class="form-label">{{translate_title('Sum')}}</label>
+                        <label class="form-label">{{translate_title('Sum', $lang)}}</label>
                         <input name="sum" required class="form-control" id="sum" value="{{$product->sum??''}}">
                     </div>
                 </div>
                 <div class="mb-3 d-flex justify-content-between">
                     <div style="width: 45%">
-                        <label class="form-label">{{translate_title('Category')}}</label>
+                        <label class="form-label">{{translate_title('Category', $lang)}}</label>
                         <input name="category_id" value="{{$product->category_id??''}}" type="hidden" class="form-control" id="category_id">
                         <input value="{{$product->getCategory->name??''}}" class="form-control" readonly>
                     </div>
                     <div style="width: 45%">
                         @if(!$current_category->sizes->isEmpty())
-                            <label class="form-label">{{translate_title('Sizes')}}</label>
+                            <label class="form-label">{{translate_title('Sizes', $lang)}}</label>
                             <select name="size_id" required class="form-control" id="size_types">
                                 @foreach($current_category->sizes as $size)
                                     <option value="{{$size->id}}">{{$size->name}}</option>
@@ -54,7 +54,7 @@
                             </select>
                         @else
                             <div class="d-flex">
-                                <label class="form-label me-1">{{translate_title('Add size')}}</label>
+                                <label class="form-label me-1">{{translate_title('Add size', $lang)}}</label>
                                 <a class="btn btn-success me-1" onclick="showSizeInput()">+</a>
                                 <a class="btn btn-danger" onclick="hideSizeInput()">-</a>
                             </div>
@@ -65,21 +65,21 @@
                 <div class="mb-3 d-flex justify-content-between">
                     <div style="width: 45%">
                         @if(!$current_category->sizes->isEmpty())
-                            <label class="form-label">{{translate_title('Color')}}</label>
+                            <label class="form-label">{{translate_title('Color', $lang)}}</label>
                             <select name="color_id" class="form-control" @if(in_array($current_category->id, [1, 2])) required @endif id="colors_id">
-                                <option value="">{{translate_title('Choose product color')}}</option>
+                                <option value="">{{translate_title('Choose product color', $lang)}}</option>
                                 @foreach($colors as $color)
                                     <option value="{{$color->id}}" style="background-color: {{$color->code}}; color:{{strtolower($color->name)=='white'?'black':'white'}}">{{$color->name}}</option>
                                 @endforeach
                             </select>
                         @else
                             <div class="d-flex">
-                                <label class="form-label me-1">{{translate_title('Add color')}}</label>
+                                <label class="form-label me-1">{{translate_title('Add color', $lang)}}</label>
                                 <a class="btn btn-success me-1" onclick="showColorInput()">+</a>
                                 <a class="btn btn-danger" onclick="hideColorInput()">-</a>
                             </div>
                             <select name="color_id" class="form-control d-none" id="select_colors_id">
-                                <option value="">{{translate_title('Choose product color')}}</option>
+                                <option value="">{{translate_title('Choose product color', $lang)}}</option>
                                 @foreach($colors as $color)
                                     <option value="{{$color->id}}" style="background-color: {{$color->code}}; color:{{strtolower($color->name)=='white'?'black':'white'}}">{{$color->name}}</option>
                                 @endforeach
@@ -87,13 +87,13 @@
                         @endif
                     </div>
                     <div style="width: 45%">
-                        <label class="form-label">{{translate_title('Count')}}</label>
+                        <label class="form-label">{{translate_title('Count', $lang)}}</label>
                         <input type="number" name="count" class="form-control" required value="{{old('count')}}"/>
                     </div>
                 </div>
                 <div>
-                    <button type="submit" class="btn btn-primary waves-effect waves-light">{{translate_title('Create')}}</button>
-                    <a type="reset" class="btn btn-secondary waves-effect">{{translate_title('Cancel')}}</a>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light">{{translate_title('Create', $lang)}}</button>
+                    <a type="reset" class="btn btn-secondary waves-effect">{{translate_title('Cancel', $lang)}}</a>
                 </div>
             </form>
         </div>

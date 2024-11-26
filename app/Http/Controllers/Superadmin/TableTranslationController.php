@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Language;
 use App\Models\CityTranslations;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
@@ -19,6 +21,7 @@ class TableTranslationController extends Controller
 
     public $title;
     public $current_page = 'settings';
+    public $lang;
     /**
      * Display a listing of the resource.
      */
@@ -30,25 +33,30 @@ class TableTranslationController extends Controller
 
     public function index()
     {
+        $lang = App::getLocale();
         return view('language.tables', [
             'current_page'=>$this->current_page,
-            'title'=>$this->title
+            'title'=>$this->title,
+            'lang'=>$lang
         ]);
     }
 
     public function show($type){
         $languages = Language::orderBy('id', 'ASC')->get();
+        $lang = App::getLocale();
         return view('language.table_lang', [
             'type'=>$type,
             'languages'=>$languages,
             'current_page'=>$this->current_page,
-            'title'=>$this->title
+            'title'=>$this->title,
+            'lang'=>$lang
         ]);
     }
 
     public function tableShow(Request $request ){
         $type=$request->type;
         $id=$request->language_id;
+        $lang = App::getLocale();
         $language = Language::findOrFail($id);
        // $lang_keys = Translation::where('lang', env('DEFAULT_LANGUAGE', 'en'))->get();
         $sort_search = null;
@@ -65,7 +73,8 @@ class TableTranslationController extends Controller
                     'sort_search' => $sort_search,
                     'type'=>$type,
                     'current_page'=>$this->current_page,
-                    'title'=>$this->title
+                    'title'=>$this->title,
+                    'lang'=>$lang
                 ]);
                 break;
             case 'product':
@@ -80,7 +89,8 @@ class TableTranslationController extends Controller
                     'sort_search' => $sort_search,
                     'type'=>$type,
                     'current_page'=>$this->current_page,
-                    'title'=>$this->title
+                    'title'=>$this->title,
+                    'lang'=>$lang
                 ]);
                 break;
             case 'product_category':
@@ -95,7 +105,8 @@ class TableTranslationController extends Controller
                     'sort_search' => $sort_search,
                     'type'=>$type,
                     'current_page'=>$this->current_page,
-                    'title'=>$this->title
+                    'title'=>$this->title,
+                    'lang'=>$lang
                 ]);
                 break;
             case 'product_description':
@@ -110,7 +121,8 @@ class TableTranslationController extends Controller
                     'sort_search' => $sort_search,
                     'type'=>$type,
                     'current_page'=>$this->current_page,
-                    'title'=>$this->title
+                    'title'=>$this->title,
+                    'lang'=>$lang
                 ]);
                 break;
             case 'product_amount':
@@ -125,7 +137,8 @@ class TableTranslationController extends Controller
                     'sort_search' => $sort_search,
                     'type'=>$type,
                     'current_page'=>$this->current_page,
-                    'title'=>$this->title
+                    'title'=>$this->title,
+                    'lang'=>$lang
                 ]);
                 break;
             default:

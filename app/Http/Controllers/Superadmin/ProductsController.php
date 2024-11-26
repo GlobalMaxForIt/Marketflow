@@ -27,6 +27,7 @@ class ProductsController extends Controller
     public $productsCategoriesService;
     public $productsService;
     public $saveImages;
+    public $lang;
 
     public function __construct(ProductsCategoriesService $productsCategoriesService, SaveImages $saveImages, ProductsService $productsService)
     {
@@ -39,6 +40,7 @@ class ProductsController extends Controller
     public function index()
     {
         $language = App::getLocale();
+        translate_title('elyor', $language);
         $products_categories = ProductsCategories::where('step', 0)->get();
         $productsSubCategories = [];
         $all_products = [];
@@ -105,6 +107,7 @@ class ProductsController extends Controller
             'productsSubCategories'=>$productsSubCategories,
             'title'=>$this->title,
             'current_page'=>$this->current_page,
+            'lang'=>$language
         ]);
     }
 
@@ -116,7 +119,7 @@ class ProductsController extends Controller
         $user = Auth::user();
         if($request->expired_date && $request->manufactured_date){
             if($request->manufactured_date >= $request->expired_date){
-             return redirect()->back()->with('status', translate_title('Expired date must be bigger than manufactured date'));
+             return redirect()->back()->with('status', translate_title('Expired date must be bigger than manufactured date', $this->lang));
             }
         }
         $products = new Products();
@@ -148,7 +151,7 @@ class ProductsController extends Controller
         $product_info->manufactured_date = $request->manufactured_date;
         $product_info->expired_date =  $request->expired_date;
         $product_info->save();
-        return redirect()->route('product.index')->with('success', translate_title('Successfully created'));
+        return redirect()->route('product.index')->with('success', translate_title('Successfully created', $this->lang));
     }
 
     /**
@@ -174,6 +177,7 @@ class ProductsController extends Controller
             }
         }
 
+        $lang = App::getLocale();
         $products_categories = ProductsCategories::where('step', 0)->get();
         return view('superadmin.products.edit', [
             'product'=>$product,
@@ -183,7 +187,8 @@ class ProductsController extends Controller
             'products_categories'=>$products_categories,
             'images'=>$images, 'title'=>$this->title,
             'current_page'=>$this->current_page,
-            'units'=>$units
+            'units'=>$units,
+            'lang'=>$lang
         ]);
     }
 
@@ -222,11 +227,11 @@ class ProductsController extends Controller
                     $images = [asset('storage/icon/no_photo.jpg')];
                 }
                 if($product_info->status == 0) {
-                    $status = translate_title('Active');
+                    $status = translate_title('Active', $this->lang);
                 }elseif($product_info->status == 1) {
-                    $status = translate_title('Not active');
+                    $status = translate_title('Not active', $this->lang);
                 }else{
-                    $status = translate_title('Active');
+                    $status = translate_title('Active', $this->lang);
                 }
                 $description = $product_info->description;
                 if($product_info->unit){
@@ -281,7 +286,7 @@ class ProductsController extends Controller
         }else{
             return redirect()->back()->with('status', 'array_products');
         }
-        return view('superadmin.products.show', ['array_product'=>$array_product]);
+        return view('superadmin.products.show', ['array_product'=>$array_product, 'lang'=>$language]);
     }
 
     /**
@@ -293,7 +298,7 @@ class ProductsController extends Controller
         $user = Auth::user();
         if($request->expired_date && $request->manufactured_date){
             if($request->manufactured_date >= $request->expired_date){
-                return redirect()->back()->with('status', translate_title('Expired date must be bigger than manufactured date'));
+                return redirect()->back()->with('status', translate_title('Expired date must be bigger than manufactured date', $this->lang));
             }
         }
         $products = Products::find($id);
@@ -328,7 +333,7 @@ class ProductsController extends Controller
             $product_info->save();
         }
 
-        return redirect()->route('product.index')->with('success', translate_title('Successfully updated'));
+        return redirect()->route('product.index')->with('success', translate_title('Successfully updated', $this->lang));
     }
 
     /**
@@ -351,7 +356,7 @@ class ProductsController extends Controller
             $product_info->delete();
         }
         $products->delete();
-        return redirect()->route('product.index')->with('success', translate_title('Successfully deleted'));
+        return redirect()->route('product.index')->with('success', translate_title('Successfully deleted', $this->lang));
     }
 
     public function deleteProductImage(Request $request){

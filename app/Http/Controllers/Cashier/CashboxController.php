@@ -22,6 +22,7 @@ class CashboxController extends Controller
     public $title;
     public $clientService;
     public $productsCategoriesService;
+    public $lang;
 
     public function __construct(ClientService $clientService, ProductsCategoriesService $productsCategoriesService,)
     {
@@ -34,6 +35,7 @@ class CashboxController extends Controller
      */
     public function index()
     {
+        $lang = App::getLocale();
         $user = Auth::user();
         $cashiers = User::select('id','name', 'surname')->where('store_id', $user->store_id)->get();
         $clients_ = Clients::all();
@@ -134,6 +136,7 @@ class CashboxController extends Controller
             'cashiers'=>$cashiers,
             'clients_for_discount'=>$clients_for_discount,
             'clients_discount'=>$clients_discount,
+            'lang'=>$lang
         ]);
     }
 
@@ -192,12 +195,12 @@ class CashboxController extends Controller
 
         // Tekshiruv: Foydalanuvchi mavjudligi va bir xil do'konga tegishliligi
         if (!$newUser || $currentUser->store_id !== $newUser->store_id) {
-            return redirect()->back()->with('error', translate_title('This user is not found or does not belong to your store.'));
+            return redirect()->back()->with('error', translate_title('This user is not found or does not belong to your store.', $this->lang));
         }
 
         // Parolni tekshirish
         if (!Hash::check($request->password, $newUser->password)) {
-            return redirect()->back()->with('error', translate_title('Invalid password for the new cashier.'));
+            return redirect()->back()->with('error', translate_title('Invalid password for the new cashier.', $this->lang));
         }
 
         // Hozirgi foydalanuvchini logout qilish
@@ -210,6 +213,6 @@ class CashboxController extends Controller
         $request->session()->regenerate();
 
         // Middleware orqali o'tkazish yoki kerakli sahifaga yo'naltirish
-        return redirect()->route('cashier.index')->with('success', translate_title('Cashier successfully switched.'));
+        return redirect()->route('cashier.index')->with('success', translate_title('Cashier successfully switched.', $this->lang));
     }
 }

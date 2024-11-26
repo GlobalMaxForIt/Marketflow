@@ -26,13 +26,13 @@
             <div class="col-xl-3 col-md-6">
                 <div class="card common_statistics">
                     <div class="card-body">
-                        <h4 class="header-title mt-0 mb-4">{{translate_title('Orders status ordered')}}</h4>
+                        <h4 class="header-title mt-0 mb-4">{{translate_title('Orders status ordered', $lang)}}</h4>
                         <div>
                             <h1>{{$ordered_orders}}</h1>
                         </div>
                         {{--                        <div>--}}
-                        {{--                            <span>{{translate_title('Active')}}: 14</span> <br>--}}
-                        {{--                            <span>{{translate_title('Not active')}}: 24</span>--}}
+                        {{--                            <span>{{translate_title('Active', $lang)}}: 14</span> <br>--}}
+                        {{--                            <span>{{translate_title('Not active', $lang)}}: 24</span>--}}
                         {{--                        </div>--}}
                     </div>
                 </div>
@@ -41,13 +41,13 @@
             <div class="col-xl-3 col-md-6">
                 <div class="card common_statistics">
                     <div class="card-body">
-                        <h4 class="header-title mt-0 mb-4">{{translate_title('Orders status performed')}}</h4>
+                        <h4 class="header-title mt-0 mb-4">{{translate_title('Orders status performed', $lang)}}</h4>
                         <div>
                             <h1>{{$performed_orders}}</h1>
                         </div>
                         {{--                        <div>--}}
-                        {{--                            <span>{{translate_title('Active')}}: 14</span> <br>--}}
-                        {{--                            <span>{{translate_title('Not active')}}: 24</span>--}}
+                        {{--                            <span>{{translate_title('Active', $lang)}}: 14</span> <br>--}}
+                        {{--                            <span>{{translate_title('Not active', $lang)}}: 24</span>--}}
                         {{--                        </div>--}}
                     </div>
                 </div>
@@ -57,13 +57,13 @@
             <div class="col-xl-3 col-md-6">
                 <div class="card common_statistics">
                     <div class="card-body">
-                        <h4 class="header-title mt-0 mb-4">{{translate_title('Orders status cancelled')}}</h4>
+                        <h4 class="header-title mt-0 mb-4">{{translate_title('Orders status cancelled', $lang)}}</h4>
                         <div>
                             <h1>{{$cancelled_orders}}</h1>
                         </div>
                         {{--                        <div>--}}
-                        {{--                            <span>{{translate_title('Active')}}: 14</span> <br>--}}
-                        {{--                            <span>{{translate_title('Not active')}}: 24</span>--}}
+                        {{--                            <span>{{translate_title('Active', $lang)}}: 14</span> <br>--}}
+                        {{--                            <span>{{translate_title('Not active', $lang)}}: 24</span>--}}
                         {{--                        </div>--}}
                     </div>
                 </div>
@@ -72,13 +72,13 @@
             <div class="col-xl-3 col-md-6">
                 <div class="card common_statistics">
                     <div class="card-body">
-                        <h4 class="header-title mt-0 mb-4">{{translate_title('Orders status accepted')}}</h4>
+                        <h4 class="header-title mt-0 mb-4">{{translate_title('Orders status accepted', $lang)}}</h4>
                         <div>
                             <h1>{{$accepted_orders}}</h1>
                         </div>
                         {{--                        <div>--}}
-                        {{--                            <span>{{translate_title('Active')}}: 14</span> <br>--}}
-                        {{--                            <span>{{translate_title('Not active')}}: 24</span>--}}
+                        {{--                            <span>{{translate_title('Active', $lang)}}: 14</span> <br>--}}
+                        {{--                            <span>{{translate_title('Not active', $lang)}}: 24</span>--}}
                         {{--                        </div>--}}
                     </div>
                 </div>
@@ -91,23 +91,23 @@
             <div class="col-xl-4">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title mt-0">{{translate_title('Orders by status')}}</h4>
+                        <h4 class="header-title mt-0">{{translate_title('Orders by status', $lang)}}</h4>
                         <div class="widget-chart text-center">
                             <div id="morris-donut-example" dir="ltr" style="height: 245px;" class="morris-chart"></div>
                             <ul class="list-inline chart-detail-list mb-0">
                                 <li class="list-inline-item">
-                                    <h5 style="color: #FF6C37;"><i class="fa fa-circle me-1"></i>{{translate_title('Orders active')}}</h5>
+                                    <h5 style="color: #FF6C37;"><i class="fa fa-circle me-1"></i>{{translate_title('Orders active', $lang)}}</h5>
                                 </li>
                                 <li class="list-inline-item">
-                                    <h5 style="color: #10C469;"><i class="fa fa-circle me-1"></i>{{translate_title('Orders performed')}}</h5>
+                                    <h5 style="color: #10C469;"><i class="fa fa-circle me-1"></i>{{translate_title('Orders performed', $lang)}}</h5>
                                 </li>
                             {{--                            </ul>--}}
                             {{--                            <ul class="list-inline chart-detail-list mb-0">--}}
                             {{--                                <li class="list-inline-item">--}}
-                            {{--                                    <h5 style="color: #00ADD7;"><i class="fa fa-circle me-1"></i>{{translate_title('Completed orders')}}</h5>--}}
+                            {{--                                    <h5 style="color: #00ADD7;"><i class="fa fa-circle me-1"></i>{{translate_title('Completed orders', $lang)}}</h5>--}}
                             {{--                                </li>--}}
                             {{--                                <li class="list-inline-item">--}}
-                            {{--                                    <h5 style="color: #FF0000;"><i class="fa fa-circle me-1"></i>{{translate_title('Cancelled orders')}}</h5>--}}
+                            {{--                                    <h5 style="color: #FF0000;"><i class="fa fa-circle me-1"></i>{{translate_title('Cancelled orders', $lang)}}</h5>--}}
                             {{--                                </li>--}}
                             {{--                            </ul>--}}
                         </div>
@@ -119,23 +119,23 @@
             <div class="col-xl-4">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title mt-0">{{translate_title('Orders by status')}}</h4>
+                        <h4 class="header-title mt-0">{{translate_title('Orders by status', $lang)}}</h4>
                         <div class="widget-chart text-center">
                             <div id="morris-donut-example-1" dir="ltr" style="height: 245px;" class="morris-chart"></div>
                             <ul class="list-inline chart-detail-list mb-0">
                                 <li class="list-inline-item">
-                                    <h5 style="color: #FF6C37;"><i class="fa fa-circle me-1"></i>{{translate_title('Orders active')}}</h5>
+                                    <h5 style="color: #FF6C37;"><i class="fa fa-circle me-1"></i>{{translate_title('Orders active', $lang)}}</h5>
                                 </li>
                                 <li class="list-inline-item">
-                                    <h5 style="color: #10C469;"><i class="fa fa-circle me-1"></i>{{translate_title('Orders performed')}}</h5>
+                                    <h5 style="color: #10C469;"><i class="fa fa-circle me-1"></i>{{translate_title('Orders performed', $lang)}}</h5>
                                 </li>
                             </ul>
                             <ul class="list-inline chart-detail-list mb-0">
                                 <li class="list-inline-item">
-                                    <h5 style="color: #00ADD7;"><i class="fa fa-circle me-1"></i>{{translate_title('Completed orders')}}</h5>
+                                    <h5 style="color: #00ADD7;"><i class="fa fa-circle me-1"></i>{{translate_title('Completed orders', $lang)}}</h5>
                                 </li>
                                 <li class="list-inline-item">
-                                    <h5 style="color: #FF0000;"><i class="fa fa-circle me-1"></i>{{translate_title('Cancelled orders')}}</h5>
+                                    <h5 style="color: #FF0000;"><i class="fa fa-circle me-1"></i>{{translate_title('Cancelled orders', $lang)}}</h5>
                                 </li>
                             </ul>
                         </div>
@@ -145,23 +145,23 @@
             <div class="col-xl-4">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title mt-0">{{translate_title('Orders by status')}}</h4>
+                        <h4 class="header-title mt-0">{{translate_title('Orders by status', $lang)}}</h4>
                         <div class="widget-chart text-center">
                             <div id="morris-donut-example-2" dir="ltr" style="height: 245px;" class="morris-chart"></div>
                             {{--                            <ul class="list-inline chart-detail-list mb-0">--}}
                             {{--                                <li class="list-inline-item">--}}
-                            {{--                                    <h5 style="color: #FF6C37;"><i class="fa fa-circle me-1"></i>{{translate_title('Orders active')}}</h5>--}}
+                            {{--                                    <h5 style="color: #FF6C37;"><i class="fa fa-circle me-1"></i>{{translate_title('Orders active', $lang)}}</h5>--}}
                             {{--                                </li>--}}
                             {{--                                <li class="list-inline-item">--}}
-                            {{--                                    <h5 style="color: #10C469;"><i class="fa fa-circle me-1"></i>{{translate_title('Orders performed')}}</h5>--}}
+                            {{--                                    <h5 style="color: #10C469;"><i class="fa fa-circle me-1"></i>{{translate_title('Orders performed', $lang)}}</h5>--}}
                             {{--                                </li>--}}
                             {{--                            </ul>--}}
                             <ul class="list-inline chart-detail-list mb-0">
                                 <li class="list-inline-item">
-                                    <h5 style="color: #00ADD7;"><i class="fa fa-circle me-1"></i>{{translate_title('Completed orders')}}</h5>
+                                    <h5 style="color: #00ADD7;"><i class="fa fa-circle me-1"></i>{{translate_title('Completed orders', $lang)}}</h5>
                                 </li>
                                 <li class="list-inline-item">
-                                    <h5 style="color: #FF0000;"><i class="fa fa-circle me-1"></i>{{translate_title('Cancelled orders')}}</h5>
+                                    <h5 style="color: #FF0000;"><i class="fa fa-circle me-1"></i>{{translate_title('Cancelled orders', $lang)}}</h5>
                                 </li>
                             </ul>
                         </div>

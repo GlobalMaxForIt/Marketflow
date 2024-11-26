@@ -3,7 +3,7 @@
     <div class="welcome welcome_login">
         <div class="welcome_header text-center">
             <img class="welcome-header_img" src="img/img_logo.jpg" alt="">
-            <p class="welcome-header_title">С возвращением!</p>
+            <p class="welcome-header_title">{{ translate_title('С возвращением!', 'ru') }}</p>
         </div>
         <form class="welcome-header_content"  method="POST" action="{{ route('login') }}">
             @csrf
@@ -22,19 +22,19 @@
             @enderror
             <div class="welcome-header-content-link welcome-header-content-link_login">
                 {{--            <a class="welcome-header-content_button welcome-header-content-button_register text-center" href="register.html">Регистрация</a>--}}
-                <button type="submit" class="welcome-header-content_button welcome-header-content-button_login text-center">Вход</button>
+                <button type="submit" class="welcome-header-content_button welcome-header-content-button_login text-center">{{ translate_title('Вход', 'ru') }}</button>
             </div>
             <div class="d-flex justify-content-between mt-2">
                 @if (Route::has('password.request'))
                     <a class="btn btn-link" href="{{ route('password.request') }}">
-                        {{ translate_title('Forgot Your Password?') }}
+                        {{ translate_title('Forgot Your Password?', 'ru') }}
                     </a>
                 @endif
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                     <label class="form-check-label" for="remember">
-                        {{ translate_title('Remember Me') }}
+                        {{ translate_title('Remember Me', 'ru') }}
                     </label>
                 </div>
             </div>

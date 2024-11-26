@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cities;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -62,8 +63,13 @@ class HomeController extends Controller
     }
 
     public function getCities(Request $request){
-        if(session()->has('locale')){
-            $language = session('locale');
+        $user = Auth::user();
+        if($user){
+            if($user->language){
+                $language = $user->language;
+            }else{
+                $language = env('DEFAULT_LANGUAGE','ru');
+            }
         }else{
             $language = env('DEFAULT_LANGUAGE','ru');
         }

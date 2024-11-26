@@ -10,6 +10,8 @@ use App\Models\Store;
 use App\Service\ProductsService;
 use App\Service\SaveImages;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class StoreController extends Controller
@@ -17,6 +19,7 @@ class StoreController extends Controller
     public $title;
     public $saveImages;
     public $productsService;
+    public $lang;
 
     public function __construct(SaveImages $saveImages, ProductsService $productsService)
     {
@@ -29,6 +32,7 @@ class StoreController extends Controller
     {
         $stores_ = Store::all();
         $stores = [];
+        $lang = App::getLocale();
         foreach($stores_ as $store) {
             $images = [];
             if ($store->images) {
@@ -71,6 +75,7 @@ class StoreController extends Controller
             'stores'=>$stores,
             'organizations'=>$organizations,
             'title'=>$this->title,
+            'lang'=>$lang
         ]);
     }
 
@@ -86,10 +91,10 @@ class StoreController extends Controller
             $address->city_id = $request->region;
         }
         if($request->new_password && $request->new_password != $request->password_confirmation){
-            return redirect()->back()->with('error', translate_title('Your new password confirmation is incorrect'));
+            return redirect()->back()->with('error', translate_title('Your new password confirmation is incorrect', $this->lang));
         }
         if($request->new_password && !$request->email){
-            return redirect()->back()->with('error', translate_title('Your don\'t have email'));
+            return redirect()->back()->with('error', translate_title('Your don\'t have email', $this->lang));
         }
         $address->name = $request->address;
         $address->save();
@@ -100,7 +105,7 @@ class StoreController extends Controller
         $images = $request->file('images');
         $store->images = $this->saveImages->imageSave($store, $images, 'update', 'stores');
         $store->save();
-        return redirect()->route('stores.index')->with('success', translate_title('Successfully created'));
+        return redirect()->route('stores.index')->with('success', translate_title('Successfully created', $this->lang));
     }
 
     /**
@@ -108,6 +113,7 @@ class StoreController extends Controller
      */
     public function edit(string $id)
     {
+        $lang = App::getLocale();
         $store_ = Store::find($id);
         $images = [];
         $images_ = [];
@@ -152,6 +158,7 @@ class StoreController extends Controller
             'images'=>$images_,
             'organizations'=>$organizations,
             'title'=>$this->title,
+            'lang'=>$lang
         ]);
     }
 
@@ -184,7 +191,7 @@ class StoreController extends Controller
         $store->address_id = $address->id;
         $store->organization_id = $request->organization_id;
         $store->save();
-        return redirect()->route('stores.index')->with('success', translate_title('Successfully updated'));
+        return redirect()->route('stores.index')->with('success', translate_title('Successfully updated', $this->lang));
     }
 
     public function deleteStoreImage(Request $request){
@@ -212,7 +219,7 @@ class StoreController extends Controller
             }
         }
         $store->delete();
-        return redirect()->route('stores.index')->with('success', translate_title('Successfully deleted'));
+        return redirect()->route('stores.index')->with('success', translate_title('Successfully deleted', $this->lang));
     }
 
 

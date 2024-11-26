@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Suppliers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller
 {
     public $title;
+    public $lang;
 
     public function __construct()
     {
@@ -15,8 +18,10 @@ class IndexController extends Controller
     }
 
     public function index(){
+        $lang = App::getLocale();
         return view('suppliers.index', [
-            'title'=>$this->title
+            'title'=>$this->title,
+            'lang'=>$lang
         ]);
     }
 }

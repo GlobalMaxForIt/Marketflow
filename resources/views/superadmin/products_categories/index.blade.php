@@ -1,7 +1,7 @@
 @extends('layouts.superadmin_layout')
 
 @section('title')
-     {{translate_title('Products categories')}}
+     {{translate_title('Products categories', $lang)}}
 @endsection
 @section('content')
     <div class="main-content-section">
@@ -9,7 +9,7 @@
             <ul class="nav nav-tabs mb-4" id="myCategory" role="tablist">
                 <li class="nav-item ms-2 width_20_percent">
                     <a href="#products_categories" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
-                        {{translate_title("Категории продуктов")}}
+                        {{translate_title("Категории продуктов", $lang)}}
                         @if($products_categories)
                             <span class="badge bg-danger_">{{count($products_categories)}}</span>
                         @endif
@@ -17,7 +17,7 @@
                 </li>
                 <li class="nav-item ms-2 width_20_percent">
                     <a href="#products_sub_categories" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
-                        {{translate_title("Подкатегории продуктов")}}
+                        {{translate_title("Подкатегории продуктов", $lang)}}
                         @if($products_sub_categories)
                             <span class="badge bg-danger_">{{count($products_sub_categories)}}</span>
                         @endif
@@ -30,17 +30,17 @@
                         <div class="right_button_create">
                             <a class="form_functions mt-3 global-button" data-bs-toggle="modal" data-bs-target="#create_category_modal" data-url="{{route('products-categories.store')}}">
                                 <img src="{{asset('img/client_icon.png')}}" alt="" height="20px">
-                                {{translate_title('New products category')}}
+                                {{translate_title('New products category', $lang)}}
                             </a>
                         </div>
                         <div class="card-body overflow-auto">
                             <table class="restaurant_tables datatable table table-striped table-bordered dt-responsive nowrap">
                                 <thead>
                                 <tr>
-                                    <th>{{translate_title('Id')}}</th>
-                                    <th>{{translate_title('Name')}}</th>
-                                    <th>{{translate_title('Image')}}</th>
-                                    <th>{{translate_title('Functions')}}</th>
+                                    <th>{{translate_title('Id', $lang)}}</th>
+                                    <th>{{translate_title('Name', $lang)}}</th>
+                                    <th>{{translate_title('Image', $lang)}}</th>
+                                    <th>{{translate_title('Functions', $lang)}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -69,17 +69,17 @@
                         <div class="right_button_create">
                             <a class="form_functions mt-3 global-button" data-bs-toggle="modal" data-bs-target="#create_sub_category_modal" data-url="{{route('products-sub-categories.store')}}">
                                 <img src="{{asset('img/client_icon.png')}}" alt="" height="20px">
-                                {{translate_title('New products category')}}
+                                {{translate_title('New products category', $lang)}}
                             </a>
                         </div>
                         <div class="card-body overflow-auto">
                             <table class="restaurant_tables datatable table table-striped table-bordered dt-responsive nowrap">
                                 <thead>
                                 <tr>
-                                    <th>{{translate_title('Id')}}</th>
-                                    <th>{{translate_title('Name')}}</th>
-                                    <th>{{translate_title('Image')}}</th>
-                                    <th>{{translate_title('Functions')}}</th>
+                                    <th>{{translate_title('Id', $lang)}}</th>
+                                    <th>{{translate_title('Name', $lang)}}</th>
+                                    <th>{{translate_title('Image', $lang)}}</th>
+                                    <th>{{translate_title('Functions', $lang)}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -111,21 +111,21 @@
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="scrollableModalTitle">{{translate_title('New products category')}}</h5>
+                    <h5 class="modal-title" id="scrollableModalTitle">{{translate_title('New products category', $lang)}}</h5>
                     <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
                 </div>
                 <form class="modal-body needs-validation" action="{{route('products-categories.store')}}" method="POST" enctype="multipart/form-data" novalidate>
                     @csrf
                     @method('POST')
                     <div class="position-relative mb-3">
-                        <label for="name" class="form-label">{{translate_title('Name')}}</label>
+                        <label for="name" class="form-label">{{translate_title('Name', $lang)}}</label>
                         <input type="text" id="name" class="form-control" name="name" required>
                         <div class="invalid-tooltip">
-                            {{translate_title('Please enter category name.')}}
+                            {{translate_title('Please enter category name.', $lang)}}
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="image_input_" class="form-label">{{translate_title('Image')}}</label>
+                        <label for="image_input_" class="form-label">{{translate_title('Image', $lang)}}</label>
                         <div class="d-flex">
                             <div class="default_image_content_ default_image_content">
                                 <img src="{{asset('img/default_image_plus.png')}}" alt="">
@@ -135,8 +135,8 @@
                         <input type="file" id="image_input_" name="image" class="form-control d-none">
                     </div>
                     <div class="d-flex justify-content-between width_100_percent">
-                        <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</a>
-                        <button type="submit" class="btn modal_confirm">{{translate_title('Create')}}</button>
+                        <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
+                        <button type="submit" class="btn modal_confirm">{{translate_title('Create', $lang)}}</button>
                     </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -147,7 +147,7 @@
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="scrollableModalTitle">{{translate_title('New products sub category')}}</h5>
+                    <h5 class="modal-title" id="scrollableModalTitle">{{translate_title('New products sub category', $lang)}}</h5>
                     <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
                 </div>
                 <form class="modal-body needs-validation" action="{{route('products-sub-categories.store')}}" method="POST" enctype="multipart/form-data" novalidate>
@@ -155,25 +155,25 @@
                     @method('POST')
                     <div class="position-relative form-floating mb-3">
                         <select class="form-select" name="products_categories_id" id="category_id_" aria-label="Floating label select example" required>
-                            <option value="" selected disabled>{{translate_title('Select category')}}</option>
+                            <option value="" selected disabled>{{translate_title('Select category', $lang)}}</option>
                             @foreach($products_categories as $products_category)
                                 <option value="{{$products_category['id']}}">{{$products_category['name']}}</option>
                             @endforeach
                         </select>
                         <div class="invalid-tooltip">
-                            {{translate_title('Please select category.')}}
+                            {{translate_title('Please select category.', $lang)}}
                         </div>
-                        <label for="category_id_">{{translate_title('Products categories')}}</label>
+                        <label for="category_id_">{{translate_title('Products categories', $lang)}}</label>
                     </div>
                     <div class="position-relative mb-3">
-                        <label for="name" class="form-label">{{translate_title('Name')}}</label>
+                        <label for="name" class="form-label">{{translate_title('Name', $lang)}}</label>
                         <input type="text" id="name" class="form-control" name="name" required>
                         <div class="invalid-tooltip">
-                            {{translate_title('Please enter subcategory name.')}}
+                            {{translate_title('Please enter subcategory name.', $lang)}}
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="image_input__" class="form-label">{{translate_title('Image')}}</label>
+                        <label for="image_input__" class="form-label">{{translate_title('Image', $lang)}}</label>
                         <div class="d-flex">
                             <div class="default_image_content__ default_image_content">
                                 <img src="{{asset('img/default_image_plus.png')}}" alt="">
@@ -183,8 +183,8 @@
                         <input type="file" id="image_input__" name="image" class="form-control d-none">
                     </div>
                     <div class="d-flex justify-content-between width_100_percent">
-                        <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</a>
-                        <button type="submit" class="btn modal_confirm">{{translate_title('Create')}}</button>
+                        <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
+                        <button type="submit" class="btn modal_confirm">{{translate_title('Create', $lang)}}</button>
                     </div>
                 </form>
             </div><!-- /.modal-content -->

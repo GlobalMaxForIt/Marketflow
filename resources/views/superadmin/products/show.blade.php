@@ -11,77 +11,77 @@
     </style>
     <div class="card">
         <div class="card-body">
-            <h4 class="mt-0 header-title">{{translate_title('Products lists')}}</h4>
+            <h4 class="mt-0 header-title">{{translate_title('Products lists', $lang)}}</h4>
             <table class="tablesaw table mb-0" data-tablesaw-mode="stack">
                 <thead>
                     <tr>
-                        <th scope="col">{{translate_title('Attributes')}}</th>
-                        <th scope="col">{{translate_title('Informations')}}</th>
+                        <th scope="col">{{translate_title('Attributes', $lang)}}</th>
+                        <th scope="col">{{translate_title('Informations', $lang)}}</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <th>{{translate_title('Products categories')}}</th>
+                        <th>{{translate_title('Products categories', $lang)}}</th>
                         <td>{{$array_product['products_categories']??''}}</td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Name')}}</th>
+                        <th>{{translate_title('Name', $lang)}}</th>
                         <td>{{$array_product['name']??''}}</td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Amount')}}</th>
+                        <th>{{translate_title('Amount', $lang)}}</th>
                         <td>{{$array_product['amount']??''}}</td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Price')}}</th>
+                        <th>{{translate_title('Price', $lang)}}</th>
                         <td>{{$array_product['price']??''}}</td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Discount')}}</th>
+                        <th>{{translate_title('Discount', $lang)}}</th>
                         <td>{{$array_product['discount']??''}}</td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Last price')}}</th>
+                        <th>{{translate_title('Last price', $lang)}}</th>
                         <td>{{$array_product['last_price']??''}}</td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Description')}}</th>
+                        <th>{{translate_title('Description', $lang)}}</th>
                         <td>{{$array_product['description']??''}}</td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Barcode')}}</th>
+                        <th>{{translate_title('Barcode', $lang)}}</th>
                         <td>{{$array_product['barcode']??''}}</td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Stock')}}</th>
+                        <th>{{translate_title('Stock', $lang)}}</th>
                         <td>{{$array_product['stock']??''}}</td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Manufactured date')}}</th>
+                        <th>{{translate_title('Manufactured date', $lang)}}</th>
                         <td>{{$array_product['manufactured_date']??''}}</td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Expired date')}}</th>
+                        <th>{{translate_title('Expired date', $lang)}}</th>
                         <td>{{$array_product['expired_date']??''}}</td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Status')}}</th>
-                        <td>{{$array_product['status'] == 1?translate_title('Active'):translate_title('No active') }}</td>
+                        <th>{{translate_title('Status', $lang)}}</th>
+                        <td>{{$array_product['status'] == 1?translate_title('Active', $lang):translate_title('No active', $lang) }}</td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Store')}}</th>
+                        <th>{{translate_title('Store', $lang)}}</th>
                         <td>{{$array_product['store']??''}}</td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Company')}}</th>
+                        <th>{{translate_title('Company', $lang)}}</th>
                         <td>{{$array_product['company']??''}}</td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Unit')}}</th>
+                        <th>{{translate_title('Unit', $lang)}}</th>
                         <td>{{$array_product['unit']??''}}</td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('image')}}</th>
+                        <th>{{translate_title('image', $lang)}}</th>
                         <td>
                             <a class="productImages_column" onclick='getImages("{{implode(" ", $array_product['images'])}}")' data-bs-toggle="modal" data-bs-target="#carousel-modal">
                                 @foreach($array_product['images'] as $image)
@@ -93,7 +93,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Updated at')}}</th>
+                        <th>{{translate_title('Updated at', $lang)}}</th>
                         <td>{{$array_product['updated_at']??''}}</td>
                     </tr>
                 </tbody>
@@ -109,11 +109,11 @@
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
+                        <span class="visually-hidden">{{translate_title('Previous', $lang)}}</span>
                     </a>
                     <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
+                        <span class="visually-hidden">{{translate_title('Next', $lang)}}</span>
                     </a>
                 </div>
             </div><!-- /.modal-content -->

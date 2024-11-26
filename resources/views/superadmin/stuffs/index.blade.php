@@ -1,7 +1,7 @@
 @extends('layouts.superadmin_layout')
 
 @section('title')
-    {{translate_title('Employees')}}
+    {{translate_title('Employees', $lang)}}
 @endsection
 @section('content')
     <div class="main-content-section">
@@ -14,7 +14,7 @@
                             <div class="right_button_create">
                                 <a class="form_functions global-button" data-bs-toggle="modal" data-bs-target="#create_modal" data-url="{{route('users.store')}}">
                                     <img src="{{asset('menubar/employee_active.png')}}" alt="" height="20px">
-                                    {{translate_title('Новый Сотрудник')}}
+                                    {{translate_title('Новый Сотрудник', $lang)}}
                                 </a>
                             </div>
                             <div class="card-body overflow-auto">
@@ -22,14 +22,14 @@
                                 <table id="datatable-buttons" class="restaurant_tables table table-striped table-bordered dt-responsive nowrap">
                                     <thead>
                                         <tr>
-                                            <th>{{translate_title('Id')}}</th>
-                                            <th>{{translate_title('Name')}}</th>
-                                            <th>{{translate_title('Surname')}}</th>
-                                            <th>{{translate_title('Image')}}</th>
-                                            <th>{{translate_title('Old')}}</th>
-                                            <th>{{translate_title('Role')}}</th>
-                                            <th>{{translate_title('Status')}}</th>
-                                            <th>{{translate_title('Functions')}}</th>
+                                            <th>{{translate_title('Id', $lang)}}</th>
+                                            <th>{{translate_title('Name', $lang)}}</th>
+                                            <th>{{translate_title('Surname', $lang)}}</th>
+                                            <th>{{translate_title('Image', $lang)}}</th>
+                                            <th>{{translate_title('Old', $lang)}}</th>
+                                            <th>{{translate_title('Role', $lang)}}</th>
+                                            <th>{{translate_title('Status', $lang)}}</th>
+                                            <th>{{translate_title('Functions', $lang)}}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -92,36 +92,36 @@
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="scrollableModalTitle">{{translate_title('New user')}}</h5>
+                    <h5 class="modal-title" id="scrollableModalTitle">{{translate_title('New user', $lang)}}</h5>
                     <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
                 </div>
                 <form class="modal-body needs-validation" action="{{route('users.store')}}" method="POST" enctype="multipart/form-data" novalidate>
                     @csrf
                     @method('POST')
                     <div class="position-relative mb-3">
-                        <label for="name" class="form-label">{{translate_title('Name')}}</label>
+                        <label for="name" class="form-label">{{translate_title('Name', $lang)}}</label>
                         <input type="text" id="name" class="form-control" name="name" required>
                         <div class="invalid-tooltip">
-                            {{translate_title('Please enter name.')}}
+                            {{translate_title('Please enter name.', $lang)}}
                         </div>
                     </div>
                     <div class="position-relative mb-3">
-                        <label for="surname" class="form-label">{{translate_title('Surname')}}</label>
+                        <label for="surname" class="form-label">{{translate_title('Surname', $lang)}}</label>
                         <input type="text" id="surname" class="form-control" name="surname" required>
                         <div class="invalid-tooltip">
-                            {{translate_title('Please enter surname.')}}
+                            {{translate_title('Please enter surname.', $lang)}}
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="middlename" class="form-label">{{translate_title('Middlename')}}</label>
+                        <label for="middlename" class="form-label">{{translate_title('Middlename', $lang)}}</label>
                         <input type="text" id="middlename" class="form-control" name="middlename">
                     </div>
                     <div class="mb-3">
-                        <label for="phone" class="form-label">{{translate_title('Phone')}}</label>
+                        <label for="phone" class="form-label">{{translate_title('Phone', $lang)}}</label>
                         <input type="text" id="phone" class="form-control" name="phone">
                     </div>
                     <div class="mb-3">
-                        <label for="image_input" class="form-label">{{translate_title('Image')}}</label>
+                        <label for="image_input" class="form-label">{{translate_title('Image', $lang)}}</label>
                         <div class="d-flex">
                             <div class="default_image_content">
                                 <img src="{{asset('img/default_image_plus.png')}}" alt="">
@@ -131,71 +131,71 @@
                         <input type="file" id="image_input" name="image" class="form-control d-none">
                     </div>
                     <div class="mb-3">
-                        <label for="email" class="form-label">{{translate_title('Email')}}</label>
+                        <label for="email" class="form-label">{{translate_title('Email', $lang)}}</label>
                         <input type="email" id="email" class="form-control" name="email">
                     </div>
                     <div class="mb-3">
-                        <label for="male">{{translate_title('Male')}}</label>
+                        <label for="male">{{translate_title('Male', $lang)}}</label>
                         <input type="radio" name="gender" id="male" value="{{\App\Constants::MALE}}" checked class="me-4">
-                        <label for="female">{{translate_title('Female')}}</label>
+                        <label for="female">{{translate_title('Female', $lang)}}</label>
                         <input type="radio" name="gender" id="female" value="{{\App\Constants::FEMALE}}">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label" for="status_">{{translate_title('Status')}}</label>
+                        <label class="form-label" for="status_">{{translate_title('Status', $lang)}}</label>
                         <input type="checkbox" name="status" id="status_">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label" for="status_">{{translate_title('Birth date')}}</label>
+                        <label class="form-label" for="status_">{{translate_title('Birth date', $lang)}}</label>
                         <input type="text" name="birth_date" id="basic-datepicker" class="form-control" placeholder="Birth date">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label" for="passport">{{translate_title('Passport')}}</label>
+                        <label class="form-label" for="passport">{{translate_title('Passport', $lang)}}</label>
                         <input type="text" name="passport" id="passport" class="form-control" placeholder="AA1234567">
                     </div>
                     <div class="position-relative mb-3">
-                        <label class="form-label">{{translate_title('Region')}}</label>
+                        <label class="form-label">{{translate_title('Region', $lang)}}</label>
                         <select name="region_id" class="form-control" id="region_id" required>
-                            <option value="" disabled selected>{{translate_title('Select region')}}</option>
+                            <option value="" disabled selected>{{translate_title('Select region', $lang)}}</option>
                         </select>
                         <div class="invalid-tooltip">
-                            {{translate_title('Please select region.')}}
+                            {{translate_title('Please select region.', $lang)}}
                         </div>
                     </div>
                     <div class="position-relative mb-3">
-                        <label class="form-label">{{translate_title('District')}}</label>
+                        <label class="form-label">{{translate_title('District', $lang)}}</label>
                         <select name="district_id" class="form-control" id="district_id" required>
-                            <option value="" disabled selected>{{translate_title('Select district')}}</option>
+                            <option value="" disabled selected>{{translate_title('Select district', $lang)}}</option>
                         </select>
                         <div class="invalid-tooltip">
-                            {{translate_title('Please select district.')}}
+                            {{translate_title('Please select district.', $lang)}}
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="address" class="form-label">{{translate_title('Address')}}</label>
+                        <label for="address" class="form-label">{{translate_title('Address', $lang)}}</label>
                         <input type="text" id="address" class="form-control" name="address">
                     </div>
                     <div class="mb-3">
-                        <label for="new_password" class="form-label">{{translate_title('Password')}}</label>
+                        <label for="new_password" class="form-label">{{translate_title('Password', $lang)}}</label>
                         <div class="input-group input-group-merge">
                             <input type="password" id="new_password" class="form-control" placeholder="Enter new password" name="new_password" required>
                             <div class="input-group-text" data-password="false">
                                 <span class="password-eye"></span>
                             </div>
                             <div class="invalid-tooltip">
-                                {{translate_title('Please enter password.')}}
+                                {{translate_title('Please enter password.', $lang)}}
                             </div>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="password_confirm" class="form-label">{{translate_title('Password confirmation')}}</label>
+                        <label for="password_confirm" class="form-label">{{translate_title('Password confirmation', $lang)}}</label>
                         <div class="input-group input-group-merge">
                             <input type="password" id="password_confirm" class="form-control" placeholder="Confirm password" name="password_confirmation" required>
                             <div class="input-group-text" data-password="false">
                                 <span class="password-eye"></span>
                             </div>
                             <div class="invalid-tooltip">
-                                {{translate_title('Please enter password confirmation.')}}
+                                {{translate_title('Please enter password confirmation.', $lang)}}
                             </div>
                         </div>
                     </div>
@@ -205,46 +205,46 @@
                                 <option value="{{$role['value']}}">{{$role['name']}}</option>
                             @endforeach
                         </select>
-                        <label for="floatingSelect">{{translate_title('Role')}}</label>
+                        <label for="floatingSelect">{{translate_title('Role', $lang)}}</label>
                     </div>
                     <div class="mb-3 d-none position-relative" id="company_content">
-                        <label for="company" class="form-label">{{translate_title('Company')}}</label>
+                        <label for="company" class="form-label">{{translate_title('Company', $lang)}}</label>
                         <select name="company" class="form-control" id="company">
-                            <option value="" disabled selected>{{translate_title('Select company')}}</option>
+                            <option value="" disabled selected>{{translate_title('Select company', $lang)}}</option>
                             @foreach($companies as $company)
                                 <option value="{{$company['id']}}">{{$company['name']}}</option>
                             @endforeach
                         </select>
                         <div class="invalid-tooltip">
-                            {{translate_title('Please select company.')}}
+                            {{translate_title('Please select company.', $lang)}}
                         </div>
                     </div>
                     <div class="position-relative mb-3 d-none" id="organization_content">
-                        <label for="organization" class="form-label">{{translate_title('Organization')}}</label>
+                        <label for="organization" class="form-label">{{translate_title('Organization', $lang)}}</label>
                         <select name="organization" class="form-control" id="organization">
-                            <option value="" disabled selected>{{translate_title('Select Organization')}}</option>
+                            <option value="" disabled selected>{{translate_title('Select Organization', $lang)}}</option>
                             @foreach($organizations as $organization)
                                 <option value="{{$organization['id']}}">{{$organization['name']}}</option>
                             @endforeach
                         </select>
                         <div class="invalid-tooltip">
-                            {{translate_title('Please select organization.')}}
+                            {{translate_title('Please select organization.', $lang)}}
                         </div>
                     </div>
                     <div class="position-relative mb-3 d-none" id="store_content">
-                        <label for="store" class="form-label">{{translate_title('Store')}}</label>
+                        <label for="store" class="form-label">{{translate_title('Store', $lang)}}</label>
                         <select name="store" class="form-control" id="store">
-                            <option value="" disabled selected>{{translate_title('Select store')}}</option>
+                            <option value="" disabled selected>{{translate_title('Select store', $lang)}}</option>
                         </select>
                         <div class="invalid-tooltip">
-                            {{translate_title('Please select store.')}}
+                            {{translate_title('Please select store.', $lang)}}
                         </div>
                     </div>
                     <input type="hidden" name="region" id="region">
                     <input type="hidden" name="district" id="district">
                     <div class="width_100_percent d-flex justify-content-between mt-5">
-                        <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</a>
-                        <button type="submit" class="btn modal_confirm">{{translate_title('Create')}}</button>
+                        <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
+                        <button type="submit" class="btn modal_confirm">{{translate_title('Create', $lang)}}</button>
                     </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -255,7 +255,7 @@
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="scrollableModalTitle">{{translate_title('')}}</h5>
+                    <h5 class="modal-title" id="scrollableModalTitle">{{translate_title('Stuff full info', $lang)}}</h5>
                     <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
                 </div>
                 <div class="modal-body">
@@ -272,63 +272,63 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{{translate_title('id')}}</td>
+                                <td>{{translate_title('id', $lang)}}</td>
                                 <td id="user_info_id"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('name')}}</td>
+                                <td>{{translate_title('name', $lang)}}</td>
                                 <td id="user_info_name"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('surname')}}</td>
+                                <td>{{translate_title('surname', $lang)}}</td>
                                 <td id="user_info_surname"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('middlename')}}</td>
+                                <td>{{translate_title('middlename', $lang)}}</td>
                                 <td id="user_info_middlename"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('phone')}}</td>
+                                <td>{{translate_title('phone', $lang)}}</td>
                                 <td id="user_info_phone"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('image')}}</td>
+                                <td>{{translate_title('image', $lang)}}</td>
                                 <td id="user_info_image"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('email')}}</td>
+                                <td>{{translate_title('email', $lang)}}</td>
                                 <td id="user_info_email"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('old')}}</td>
+                                <td>{{translate_title('old', $lang)}}</td>
                                 <td id="user_info_old"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('gender')}}</td>
+                                <td>{{translate_title('gender', $lang)}}</td>
                                 <td id="user_info_gender"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('role')}}</td>
+                                <td>{{translate_title('role', $lang)}}</td>
                                 <td id="user_info_role"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('passport')}}</td>
+                                <td>{{translate_title('passport', $lang)}}</td>
                                 <td id="user_info_passport"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('status')}}</td>
+                                <td>{{translate_title('status', $lang)}}</td>
                                 <td id="user_info_status"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('address')}}</td>
+                                <td>{{translate_title('address', $lang)}}</td>
                                 <td id="user_info_address"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('company')}}</td>
+                                <td>{{translate_title('company', $lang)}}</td>
                                 <td id="user_info_company"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('organization')}}</td>
+                                <td>{{translate_title('organization', $lang)}}</td>
                                 <td id="user_info_organization"></td>
                             </tr>
                         </tbody>

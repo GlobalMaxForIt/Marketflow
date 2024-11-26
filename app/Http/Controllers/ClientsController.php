@@ -7,12 +7,15 @@ use App\Models\Address;
 use App\Models\Clients;
 use App\Service\ClientService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 class ClientsController extends Controller
 {
     public $title;
     public $current_page = 'clients';
     public $clientService;
+    public $lang;
 
     public function __construct(ClientService $clientService)
     {
@@ -24,6 +27,7 @@ class ClientsController extends Controller
     {
         $clients_ = Clients::all();
         $clients = [];
+        $lang = App::getLocale();
         foreach($clients_ as $client){
             $clients[] = $this->clientService->getClientFullInfo($client);
         }
@@ -32,7 +36,8 @@ class ClientsController extends Controller
             'title'=>$this->title,
             'current_page'=>$this->current_page,
             'pending_orders_quantity'=>$this->getQuantityPendingOrders(),
-            'open_debt_bills_quantity'=>$this->getQuantityBills()
+            'open_debt_bills_quantity'=>$this->getQuantityBills(),
+            'lang'=>$lang
         ]);
     }
 
@@ -70,7 +75,7 @@ class ClientsController extends Controller
             $clients->image =  $product_image_name;
         }
         $clients->save();
-        return redirect()->route('clients.index')->with('success', translate_title('Successfully created'));
+        return redirect()->route('clients.index')->with('success', translate_title('Successfully created', $this->lang));
     }
 
     /**
@@ -78,13 +83,15 @@ class ClientsController extends Controller
      */
     public function edit(string $id)
     {
+        $lang = App::getLocale();
         $client = Clients::find($id);
         return view('clients.edit', [
             'client'=>$client,
             'title'=>$this->title,
             'current_page'=>$this->current_page,
             'pending_orders_quantity'=>$this->getQuantityPendingOrders(),
-            'open_debt_bills_quantity'=>$this->getQuantityBills()
+            'open_debt_bills_quantity'=>$this->getQuantityBills(),
+            'lang'=>$lang
         ]);
     }
 
@@ -136,7 +143,7 @@ class ClientsController extends Controller
             $clients->address_id = $address->id;
         }
         $clients->save();
-        return redirect()->route('clients.index')->with('success', translate_title('Successfully updated'));
+        return redirect()->route('clients.index')->with('success', translate_title('Successfully updated', $this->lang));
     }
 
     /**
@@ -153,7 +160,7 @@ class ClientsController extends Controller
             unlink($old_image);
         }
         $clients->delete();
-        return redirect()->route('clients.index')->with('success', translate_title('Successfully deleted'));
+        return redirect()->route('clients.index')->with('success', translate_title('Successfully deleted', $this->lang));
     }
 
     public function ajaxStore(Request $request)
