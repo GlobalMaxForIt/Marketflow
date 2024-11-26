@@ -3,9 +3,11 @@ function copyTranslation() {
     let old_value = ''
     $('.lang_key').each(function(index) {
         var _this = $(this); // "this" ni saqlaymiz
+        var currentStatus = _this.text();
+
         setTimeout(function() {
             // Yangi shart qo'yish: Agar status o'zgarmagan bo'lsa, so'rov yubormaslik
-            var currentStatus = _this.text();
+            console.log(currentStatus)
             $.post(languages_url, {
                 _token: $('input[name=_token]').val(),
                 id: index,
