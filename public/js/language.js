@@ -12,7 +12,7 @@ function copyTranslation() {
                     const tsestQ = document.getElementsByClassName("value");
                     _this.siblings('.lang_value').find('input').val(data);
                 });
-            }, 444)
+            }, 744)
         });
     }
 
