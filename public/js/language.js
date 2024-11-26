@@ -1,9 +1,7 @@
 let languages_url="/super-admin/language/language/update/value"
 function copyTranslation() {
     let old_value = ''
-    let inum = 0
     $('.lang_key').each(function(index) {
-        inum = inum + 1
         var _this = $(this); // "this" ni saqlaymiz
         var currentStatus = _this.text();
         setTimeout(function() {
@@ -17,7 +15,7 @@ function copyTranslation() {
             }, function(data) {
                 _this.siblings('.lang_value').find('input').val(data); // Javobni o'zgartiramiz
             });
-        }, 444 + inum);  // Har bir key uchun intervalni uzaytirish
+        }, 444 * index);  // Har bir key uchun intervalni uzaytirish
     });
 }
 
