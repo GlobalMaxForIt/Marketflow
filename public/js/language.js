@@ -16,7 +16,7 @@ function copyTranslation() {
             }, function(data) {
                 _this.siblings('.lang_value').find('input').val(data); // Javobni o'zgartiramiz
             });
-        }, 444);  // Har bir key uchun intervalni uzaytirish
+        }, 444 + parseInt(index));  // Har bir key uchun intervalni uzaytirish
     });
 }
 
