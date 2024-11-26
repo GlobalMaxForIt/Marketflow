@@ -9,7 +9,7 @@ function copyTranslation() {
                     code: document.getElementById("language_code").value,
                     status: $(this).text()
                 }, function(data) {
-                    _thias.siblings('.lang_value').find('input').val(data);
+                    _this.siblings('.lang_value').find('input').val(data);
                 });
             }, 444)
         });
