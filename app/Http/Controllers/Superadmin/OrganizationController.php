@@ -57,7 +57,7 @@ class OrganizationController extends Controller
             ];
         }
 
-        return view('Superadmin.organizations.index', [
+        return view('superadmin.organizations.index', [
             'organizations'=>$organizations,
             'title'=>$this->title,
         ]);

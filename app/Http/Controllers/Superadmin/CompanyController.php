@@ -56,7 +56,7 @@ class CompanyController extends Controller
                 'images'=>$images,
             ];
         }
-        return view('Superadmin.companies.index', [
+        return view('superadmin.companies.index', [
             'companies'=>$companies,
             'title'=>$this->title,
         ]);

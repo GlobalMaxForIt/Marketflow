@@ -112,7 +112,7 @@ class UserController extends Controller
 //                'address'=>$organization->address_id
 //            ];
 //        }
-        return view('Superadmin.stuffs.index', [
+        return view('superadmin.stuffs.index', [
             'users'=>$users,
             'companies'=>$companies,
             'organizations'=>$organizations,
@@ -203,7 +203,7 @@ class UserController extends Controller
                 'name'=>$organization->name
             ];
         }
-        return view('Superadmin.stuffs.edit', [
+        return view('superadmin.stuffs.edit', [
             'user'=>$user,
             'roles'=>$roles,
             'companies'=>$companies,

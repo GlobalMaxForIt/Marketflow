@@ -67,7 +67,7 @@ class StoreController extends Controller
                 'name'=>$organization->name
             ];
         }
-        return view('Superadmin.stores.index', [
+        return view('superadmin.stores.index', [
             'stores'=>$stores,
             'organizations'=>$organizations,
             'title'=>$this->title,
