@@ -95,15 +95,6 @@
                                     @if (($translate_lang) != null) value="{{ $translate_lang->name }}" @endif>
 
                                     @break
-                                @case('stuff_category')
-                                    @php
-                                        $translate_lang = \App\Models\StuffsCategoriesTranslation::where('lang', $language->code??'')->where('stuffs_categories_id', $translation->stuffs_categories_id??'')->first();
-                                    @endphp
-                                    <input type="text" class="form-control value" id="input"
-                                    style="width:100%" name="values[{{ $translation->stuffs_categories_id }}]"
-                                    @if (($translate_lang) != null) value="{{ $translate_lang->name }}" @endif>
-
-                                    @break
                                 @default
                                     <span>Something went wrong, please try again</span>
                             @endswitch
