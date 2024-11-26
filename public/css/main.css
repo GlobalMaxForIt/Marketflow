@@ -3,6 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: center !important;
+    background-color: #ffffff !important;
 }
 .welcome{
     Width: 454px;

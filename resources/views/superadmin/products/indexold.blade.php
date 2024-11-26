@@ -229,7 +229,7 @@
                         <label for="floatingSelect">{{translate_title('Products categories')}}</label>
                     </div>
                     <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{translate_title('Close')}}</a>
-                    <a type="submit" class="btn btn-primary">{{translate_title('Create')}}</a>
+                    <button type="submit" class="btn btn-primary">{{translate_title('Create')}}</button>
                 </form>
             </div>
         </div><!-- /.modal-content -->

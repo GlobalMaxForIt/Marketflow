@@ -50,7 +50,7 @@
                         <div class="form-group mt-2 text-right">
                             <a type="button" class="btn edit_button"
                                     onclick="copyTranslation()">{{ translate_title('Copy Translations') }}</a>
-                            <a type="submit" class="btn delete_button">{{ translate_title('Save') }}</a>
+                            <button type="submit" class="btn delete_button">{{ translate_title('Save') }}</button>
                         </div>
                     </div>
                 </div>

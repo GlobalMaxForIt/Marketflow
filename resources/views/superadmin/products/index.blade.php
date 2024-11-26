@@ -265,7 +265,7 @@
                     </div>
                     <div class="d-flex justify-content-between width_100_percent">
                         <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</a>
-                        <a type="submit" class="btn modal_confirm">{{translate_title('Create')}}</a>
+                        <button type="submit" class="btn modal_confirm">{{translate_title('Create')}}</button>
                     </div>
                 </form>
             </div>

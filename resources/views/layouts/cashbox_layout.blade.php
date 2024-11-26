@@ -190,7 +190,7 @@
                             @csrf
                             @method('POST')
                             <a type="button" class="btn btn-danger my-2" data-bs-dismiss="modal"> {{ translate_title('No')}}</a>
-                            <a type="submit" class="btn btn-success my-2"> {{ translate_title('Yes')}} </a>
+                            <button type="submit" class="btn btn-success my-2"> {{ translate_title('Yes')}} </a>
                         </form>
                     </div>
                 </div>
@@ -620,7 +620,7 @@
                         @method('DELETE')
                         <div class="d-flex justify-content-between width_100_percent">
                             <a type="button" class="btn delete_modal_close my-2" data-bs-dismiss="modal"> {{ translate_title('No')}}</a>
-                            <a type="submit" class="btn delete_modal_confirm my-2"> {{ translate_title('Yes')}} </a>
+                            <button type="submit" class="btn delete_modal_confirm my-2"> {{ translate_title('Yes')}} </a>
                         </div>
                     </form>
                 </div>
@@ -652,7 +652,7 @@
                         <form action="{{route('logout')}}" method="POST">
                             @csrf
                             @method("POST")
-                            <a type="submit" class="btn btn-warning my-2" data-bs-dismiss="modal">
+                            <button type="submit" class="btn btn-warning my-2" data-bs-dismiss="modal">
                                 {{translate_title('Yes')}}
                             </a>
                         </form>
@@ -748,7 +748,7 @@
                 </div>
                 <div class="d-flex justify-content-between width_100_percent mt-4">
                     <a class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close')}}</a>
-                    <a type="submit" class="btn modal_confirm">{{translate_title('Confirm')}}</a>
+                    <button type="submit" class="btn modal_confirm">{{translate_title('Confirm')}}</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->

@@ -40,7 +40,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <a type="submit" class="btn edit_button mt-2">{{ translate_title('Save') }}</a>
+                                        <button type="submit" class="btn edit_button mt-2">{{ translate_title('Save') }}</button>
                                     </div>
                                 </div>
 

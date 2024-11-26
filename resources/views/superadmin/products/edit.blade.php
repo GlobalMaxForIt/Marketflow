@@ -147,7 +147,7 @@
                             </div>
                         </div>
                         <div class="d-flex mt-4 justify-content-end width_100_percent">
-                            <a type="submit" class="btn modal_confirm">{{translate_title('Update')}}</a>
+                            <button type="submit" class="btn modal_confirm">{{translate_title('Update')}}</button>
                         </div>
                     </form>
                 </div>

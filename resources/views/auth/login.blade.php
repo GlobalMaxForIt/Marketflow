@@ -22,7 +22,7 @@
             @enderror
             <div class="welcome-header-content-link welcome-header-content-link_login">
                 {{--            <a class="welcome-header-content_button welcome-header-content-button_register text-center" href="register.html">Регистрация</a>--}}
-                <a type="submit" class="welcome-header-content_button welcome-header-content-button_login text-center">Вход</a>
+                <button type="submit" class="welcome-header-content_button welcome-header-content-button_login text-center">Вход</button>
             </div>
             <div class="d-flex justify-content-between mt-2">
                 @if (Route::has('password.request'))

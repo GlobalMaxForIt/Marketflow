@@ -84,7 +84,7 @@
                             @csrf
                             @method('POST')
                             <a type="button" class="btn btn-danger my-2" data-bs-dismiss="modal"> {{ translate_title('No')}}</a>
-                            <a type="submit" class="btn btn-success my-2"> {{ translate_title('Yes')}} </a>
+                            <button type="submit" class="btn btn-success my-2"> {{ translate_title('Yes')}} </a>
                         </form>
                     </div>
                 </div>
@@ -100,7 +100,7 @@
                 {{--                        <form action="{{route('test')}}" method="POST">--}}
                 {{--                            @csrf--}}
                 {{--                            @method('POST')--}}
-                {{--                            <a type="submit">submit</a>--}}
+                {{--                            <button type="submit">submit</a>--}}
                 {{--                        </form>--}}
 
                 <form class="app-search">
@@ -655,7 +655,7 @@
                         @method('DELETE')
                         <div class="d-flex justify-content-between width_100_percent">
                             <a type="button" class="btn delete_modal_close my-2" data-bs-dismiss="modal"> {{ translate_title('No')}}</a>
-                            <a type="submit" class="btn delete_modal_confirm my-2"> {{ translate_title('Yes')}} </a>
+                            <button type="submit" class="btn delete_modal_confirm my-2"> {{ translate_title('Yes')}} </a>
                         </div>
                     </form>
                 </div>
@@ -687,7 +687,7 @@
                         <form action="{{route('logout')}}" method="POST">
                             @csrf
                             @method("POST")
-                            <a type="submit" class="btn btn-warning my-2" data-bs-dismiss="modal">
+                            <button type="submit" class="btn btn-warning my-2" data-bs-dismiss="modal">
                                 {{translate_title('Yes')}}
                             </a>
                         </form>
