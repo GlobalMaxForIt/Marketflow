@@ -67,19 +67,19 @@
                                             <td>
                                                 <a href="{{ route('language.show', $value->id) }}"
                                                    title="{{ translate_title('Translation') }}"  >
-                                                    <a type="button" class="btn edit_button waves-effect waves-light">
+                                                    <button type="button" class="btn edit_button waves-effect waves-light">
                                                         <i class="fa fa-language"></i>
-                                                    </a>
+                                                    </button>
                                                 </a>
                                                 <a href="{{ route('language.edit', encrypt($value->id)) }}">
-                                                    <a type="button" class="btn edit_button waves-effect waves-light">
+                                                    <button type="button" class="btn edit_button waves-effect waves-light">
                                                         <img src="{{asset('img/edit_icon.png')}}" alt="" height="18px">
-                                                    </a>
+                                                    </button>
                                                 </a>
                                                 @if ($value->code != 'en')
-                                                    <a type="button" class="btn delete_button" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{ route('language.destroy', $language->id) }}">
+                                                    <button type="button" class="btn delete_button" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{ route('language.destroy', $language->id) }}">
                                                         <img src="{{asset('img/trash_icon.png')}}" alt="" height="18px">
-                                                    </a>
+                                                    </button>
                                                 @endif
                                             </td>
                                         </tr>
