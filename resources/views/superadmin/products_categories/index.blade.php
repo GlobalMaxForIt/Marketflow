@@ -52,7 +52,7 @@
                                             <img onclick="showImage('{{$products_category['image']}}')" data-bs-toggle="modal" data-bs-target="#images-modal" src="{{$products_category['image']}}" alt="" height="100px">
                                         </td>
                                         <td>
-                                            <div class="d-flex justify-content-around align-items-center height_100">
+                                            <div class="d-flex justify-content-around align-items-center">
                                                 <a class="btn edit_button " href="{{route('products-categories.edit', $products_category['id'])}}"><i class="fe-edit-2"></i></a>
                                                 <a type="button" class="btn delete_button btn-sm waves-effect" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('products-categories.destroy', $products_category['id'])}}"><i class="fe-trash-2"></i></a>
                                             </div>
@@ -91,7 +91,7 @@
                                             <img onclick="showImage('{{$products_sub_category['image']}}')" data-bs-toggle="modal" data-bs-target="#images-modal" src="{{$products_sub_category['image']}}" alt="" height="100px">
                                         </td>
                                         <td>
-                                            <div class="d-flex justify-content-around align-items-center height_100">
+                                            <div class="d-flex justify-content-around align-items-center">
                                                 <a class="btn edit_button" href="{{route('products-sub-categories.edit', $products_sub_category['id'])}}"><i class="fe-edit-2"></i></a>
                                                 <a type="button" class="btn delete_button btn-sm waves-effect" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('products-sub-categories.destroy', $products_sub_category['id'])}}"><i class="fe-trash-2"></i></a>
                                             </div>
