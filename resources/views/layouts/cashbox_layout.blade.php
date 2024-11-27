@@ -620,7 +620,7 @@
                         @method('DELETE')
                         <div class="d-flex justify-content-between width_100_percent">
                             <a type="button" class="btn delete_modal_close my-2" data-bs-dismiss="modal"> {{ translate_title('No', $lang)}}</a>
-                            <button type="submit" class="btn delete_modal_confirm my-2"> {{ translate_title('Yes', $lang)}} </a>
+                            <button type="submit" class="btn delete_modal_confirm my-2"> {{ translate_title('Yes', $lang)}} </button>
                         </div>
                     </form>
                 </div>
@@ -768,9 +768,14 @@
     let display_card = document.getElementById('display_card');
     let display_password = document.getElementById('display_password');
     let cashier_password = document.getElementById('cashier_password')
-    let entered_sum = '0'
+    let entered_cash_sum = '0'
+    let entered_card_sum = '0'
     let cash_sum = 0
     let card_sum = 0
+    let only_card_sum = 0
+    let accepting_sum_int = 0
+    let leaving_sum_int = 0
+    let change_sum_int = 0
 
     let getTotalSum = 0
     let payment_sum = document.getElementById('payment_sum')
@@ -792,100 +797,89 @@
         }
     }
 
+    function setValues(cash_sum_, card_sum_){
+        display.innerText = format_entered_sum(cash_sum_); // Aks holda, raqamni qo'shamiz
+        display_card.innerText = format_entered_sum(card_sum_); // Aks holda, raqamni qo'shamiz
+        if(parseInt(getTotalSum) > (cash_sum_ + card_sum_)){
+            accepting_sum.innerText = format_entered_sum(cash_sum_ + card_sum_); // Aks holda, raqamni qo'shamiz
+            accepting_sum_int = cash_sum_ + card_sum_
+            leaving_sum.innerText = format_entered_sum(parseInt(getTotalSum) - accepting_sum_int)
+            leaving_sum_int = parseInt(getTotalSum) - accepting_sum_int
+            change_sum.innerText = '0'
+            change_sum_int = 0
+        }else if(parseInt(getTotalSum) == (cash_sum_ + card_sum_)){
+            accepting_sum.innerText = format_entered_sum(parseInt(getTotalSum)); // Aks holda, raqamni qo'shamiz
+            accepting_sum_int = parseInt(getTotalSum)
+            leaving_sum.innerText = '0'
+            leaving_sum_int = 0
+            change_sum.innerText = '0'
+            change_sum_int = 0
+        }else{
+            accepting_sum.innerText = format_entered_sum(parseInt(getTotalSum)); // Aks holda, raqamni qo'shamiz
+            accepting_sum_int = parseInt(getTotalSum)
+            leaving_sum.innerText = '0'
+            leaving_sum_int = 0
+            change_sum.innerText = format_entered_sum(cash_sum_ + card_sum_ - parseInt(getTotalSum))
+            change_sum_int = cash_sum_ + card_sum_ - parseInt(getTotalSum)
+        }
+    }
+
     // Function to append numbers to the display
     function appendNumber(number) {
         if (display.innerText == '0') {
-            entered_sum = parseInt(number)
-            cash_sum = entered_sum
-            display.innerText = String(entered_sum); // Agar dastlabki raqam 0 bo'lsa, uni o'zgartiramiz
-            accepting_sum.innerText = String(entered_sum)
-            leaving_sum.innerText = format_entered_sum(parseInt(getTotalSum) - parseInt(entered_sum))
-            change_sum.innerText = format_entered_sum(parseInt(entered_sum) - parseInt(getTotalSum))
+            entered_cash_sum = parseInt(number)
         } else {
-            entered_sum = String(entered_sum) + number
-            cash_sum = parseInt(entered_sum)
-            display.innerText = format_entered_sum(entered_sum); // Aks holda, raqamni qo'shamiz
-            accepting_sum.innerText = format_entered_sum(entered_sum); // Aks holda, raqamni qo'shamiz
-            leaving_sum.innerText = format_entered_sum(parseInt(getTotalSum) - parseInt(entered_sum))
-            change_sum.innerText = format_entered_sum(parseInt(entered_sum) - parseInt(getTotalSum))
+            entered_cash_sum = String(entered_cash_sum) + number
         }
+        cash_sum = parseInt(entered_cash_sum)
+        setValues(cash_sum, card_sum)
     }
 
     // Function to append numbers to the display
     function appendNumberCard(number) {
         if (display_card.innerText == '0') {
-            entered_sum = parseInt(number)
-            card_sum = entered_sum
-            display_card.innerText = String(entered_sum); // Agar dastlabki raqam 0 bo'lsa, uni o'zgartiramiz
-            accepting_sum.innerText = String(entered_sum)
-            leaving_sum.innerText = format_entered_sum(parseInt(getTotalSum) - parseInt(entered_sum))
-            change_sum.innerText = format_entered_sum(parseInt(entered_sum) - parseInt(getTotalSum))
+            entered_card_sum = parseInt(number)
         } else {
-            entered_sum = String(entered_sum) + number
-            card_sum = parseInt(entered_sum)
-            display_card.innerText = format_entered_sum(entered_sum); // Aks holda, raqamni qo'shamiz
-            accepting_sum.innerText = format_entered_sum(entered_sum); // Aks holda, raqamni qo'shamiz
-            leaving_sum.innerText = format_entered_sum(parseInt(getTotalSum) - parseInt(entered_sum))
-            change_sum.innerText = format_entered_sum(parseInt(entered_sum) - parseInt(getTotalSum))
+            entered_card_sum = String(entered_card_sum) + number
         }
+        card_sum = parseInt(entered_card_sum)
+        setValues(cash_sum, card_sum)
     }
 
     // Function to clear the display
     function clearDisplay() {
-        if(card_sum != 0){
-            entered_sum = card_sum
-        }else{
-            entered_sum = '0'
-        }
-        display.innerText = '0'; // Ekrandagi raqamni tozalash
-        accepting_sum.innerText = '0'; // Ekrandagi raqamni tozalash
-        leaving_sum.innerText = format_entered_sum(getTotalSum)
-        change_sum.innerText = '0'
+        cash_sum = 0
+        setValues(cash_sum, card_sum)
     }
 
     // Function to clear the display
     function clearDisplayCard() {
-        if(display.innerText != '0'){
-            entered_sum = '0'
-        }else{
-            entered_sum = display.innerText
-        }
-        display_card.innerText = '0'; // Ekrandagi raqamni tozalash
-        accepting_sum.innerText = '0'; // Ekrandagi raqamni tozalash
-        leaving_sum.innerText = format_entered_sum(getTotalSum)
-        change_sum.innerText = '0'
+        card_sum = 0
+        setValues(cash_sum, card_sum)
     }
     // Function to remove the last digit (Backspace)
     function backspace() {
         if (display.innerText.length > 1) {
-            entered_sum = String(entered_sum).slice(0, -1)
-            display.innerText = format_entered_sum(entered_sum); // Oxirgi belgini o'chirish
-            accepting_sum.innerText = format_entered_sum(entered_sum); // Oxirgi belgini o'chirish
-            leaving_sum.innerText = format_entered_sum(parseInt(getTotalSum) - parseInt(entered_sum))
-            change_sum.innerText = format_entered_sum(parseInt(entered_sum) - parseInt(getTotalSum))
+            entered_cash_sum = String(entered_cash_sum).slice(0, -1)
+            cash_sum = parseInt(entered_cash_sum)
+            setValues(cash_sum, card_sum)
         } else {
-            display.innerText = '0'; // Agar faqat bir raqam qolgan bo'lsa, uni 0 ga o'zgartiramiz
-            entered_sum = '0'
-            accepting_sum.innerText = '0'
-            leaving_sum.innerText = format_entered_sum(getTotalSum)
-            change_sum.innerText = '0'
+            entered_cash_sum = '0'
+            cash_sum = parseInt(entered_cash_sum)
+            setValues(cash_sum, card_sum)
         }
     }
 
     // Function to remove the last digit (Backspace)
     function backspaceCard() {
         if (display_card.innerText.length > 1) {
-            entered_sum = String(entered_sum).slice(0, -1)
-            display_card.innerText = format_entered_sum(entered_sum); // Oxirgi belgini o'chirish
-            accepting_sum.innerText = format_entered_sum(entered_sum); // Oxirgi belgini o'chirish
-            leaving_sum.innerText = format_entered_sum(parseInt(getTotalSum) - parseInt(entered_sum))
-            change_sum.innerText = format_entered_sum(parseInt(entered_sum) - parseInt(getTotalSum))
+            entered_card_sum = String(entered_card_sum).slice(0, -1)
+            card_sum = parseInt(entered_card_sum)
+            setValues(cash_sum, card_sum)
         } else {
-            display_card.innerText = '0'; // Agar faqat bir raqam qolgan bo'lsa, uni 0 ga o'zgartiramiz
-            entered_sum = '0'
-            accepting_sum.innerText = '0'
-            leaving_sum.innerText = format_entered_sum(getTotalSum)
-            change_sum.innerText = '0'
+            entered_card_sum = '0'
+            card_sum = parseInt(entered_card_sum)
+            setValues(cash_sum, card_sum)
         }
     }
 
@@ -935,9 +929,6 @@
         }
     }
     function setCash(button__) {
-        // calculators
-        // cashCalculator
-        // cardCalculator
         if(!cardContent.classList.contains('d-none')){
             cardContent.classList.add('d-none')
         }
@@ -950,6 +941,10 @@
         if(calculators.classList.contains('d-none')){
             calculators.classList.remove('d-none')
         }
+        entered_cash_sum = '0'
+        cash_sum = parseInt(entered_cash_sum)
+        card_sum = 0
+        setValues(cash_sum, card_sum)
         setPaymentTypes(button__)
     }
     function setCard(button__) {
@@ -966,6 +961,11 @@
             calculators.classList.add('d-none')
         }
         card_payment_.value = format_entered_sum(getTotalSum)
+        entered_card_sum = getTotalSum
+        entered_cash_sum = '0'
+        card_sum = parseInt(entered_card_sum)
+        cash_sum = 0
+        setValues(cash_sum, card_sum)
         setPaymentTypes(button__)
     }
     function setMixed(button__) {
@@ -981,8 +981,33 @@
         if(calculators.classList.contains('d-none')){
             calculators.classList.remove('d-none')
         }
+
+        setValues(cash_sum, card_sum)
         setPaymentTypes(button__)
     }
+
+    $(document).ready(function () {
+        if($('#client_select_id_2') != undefined && $('#client_select_id_2') != null){
+            $('#client_select_id_2').select2({
+                dropdownParent: $('#client_with_discount') // modal ID ni kiriting
+            });
+        }
+
+        if($('#client_select_id_2').val()){
+            confirm_client_discount.disabled = false
+        }else{
+            confirm_client_discount.disabled = true
+        }
+
+        $('#client_select_id_2').select2().on('change', function (e) {
+            if($(this).val()){
+                confirm_client_discount.disabled = false
+            }else{
+                confirm_client_discount.disabled = true
+            }
+        })
+    })
+
 </script>
 <script>
     let items_selected_text = "{{translate_title('items selected', $lang)}}"
@@ -1034,177 +1059,7 @@
         }
     })
 </script>
-<script>
-
-    //light mode or dark mode
-    let light_mode = document.getElementById('light-mode-check')
-    let dark_mode = document.getElementById('dark-mode-check')
-    let body_layout = document.getElementById('body_layout')
-    let wrapper = document.getElementById('wrapper')
-    let content_page = document.querySelector('.content-page')
-    let modal_content = document.querySelector('.modal-content')
-    let layout_local = localStorage.getItem('layout_local')
-    light_mode.addEventListener('click', function (){
-        localStorage.setItem('layout_local', 'light')
-        removeDarkContainer(content_page)
-        removeDarkContainer(modal_content)
-    })
-    dark_mode.addEventListener('click', function (){
-        localStorage.setItem('layout_local', 'dark')
-        setDarkContainer(content_page)
-        setDarkContainer(modal_content)
-    })
-    if(layout_local == undefined || layout_local == null){
-        body_layout.setAttribute('data-layout-color', 'default')
-    }else{
-        body_layout.setAttribute('data-layout-color', layout_local)
-        if(layout_local == 'light'){
-            removeDarkContainer(content_page)
-            removeDarkContainer(modal_content)
-        }else if(layout_local == 'dark'){
-            setDarkContainer(content_page)
-            setDarkContainer(modal_content)
-        }
-    }
-
-    function removeDarkContainer(modal_container){
-        if(modal_container != undefined && modal_container != null){
-            if(modal_container.classList.contains('back_dark')){
-                modal_container.classList.remove('back_dark')
-            }
-        }
-        if(wrapper != undefined && wrapper != null){
-            if(wrapper.classList.contains('back_dark')){
-                wrapper.classList.remove('back_dark')
-            }
-        }
-    }
-    function setDarkContainer(modal_container){
-        if(modal_container != undefined && modal_container != null){
-            if(!modal_container.classList.contains('back_dark')){
-                modal_container.classList.add('back_dark')
-            }
-        }
-        if(wrapper != undefined && wrapper != null){
-            if(!wrapper.classList.contains('back_dark')){
-                wrapper.classList.add('back_dark')
-            }
-        }
-    }
-
-
-    //fluid or boxed
-    let fluid = document.getElementById('fluid')
-    let boxed = document.getElementById('boxed')
-    fluid.addEventListener('click', function (){
-        localStorage.setItem('fluid_or_boxed', 'fluid')
-    })
-    boxed.addEventListener('click', function (){
-        localStorage.setItem('fluid_or_boxed', 'boxed')
-    })
-    if(localStorage.getItem('fluid_or_boxed') == undefined || localStorage.getItem('fluid_or_boxed') == null){
-        body_layout.setAttribute('data-layout-size', 'fluid')
-    }else{
-        body_layout.setAttribute('data-layout-size', localStorage.getItem('fluid_or_boxed'))
-    }
-
-    //fixed or scrollable
-    let fixed_check = document.getElementById('fixed-check')
-    let scrollable_check = document.getElementById('scrollable-check')
-    fixed_check.addEventListener('click', function (){
-        localStorage.setItem('fixed_or_scrollable', 'fixed')
-    })
-    scrollable_check.addEventListener('click', function (){
-        localStorage.setItem('fixed_or_scrollable', 'scrollable')
-    })
-    if(localStorage.getItem('fixed_or_scrollable') == undefined || localStorage.getItem('fixed_or_scrollable') == null){
-        body_layout.setAttribute('data-leftbar-positione', 'fixed')
-    }else{
-        body_layout.setAttribute('data-leftbar-position', localStorage.getItem('fixed_or_scrollable'))
-    }
-
-    //fixed or scrollable
-    let light = document.getElementById('light')
-    let dark = document.getElementById('dark')
-    let brand = document.getElementById('brand')
-    let gradient = document.getElementById('gradient')
-    light.addEventListener('click', function (){
-        localStorage.setItem('leftbar_color', 'light')
-    })
-    dark.addEventListener('click', function (){
-        localStorage.setItem('leftbar_color', 'dark')
-    })
-    brand.addEventListener('click', function (){
-        localStorage.setItem('leftbar_color', 'brand')
-    })
-    gradient.addEventListener('click', function (){
-        localStorage.setItem('leftbar_color', 'gradient')
-    })
-    if(localStorage.getItem('leftbar_color') == undefined || localStorage.getItem('leftbar_color') == null){
-        body_layout.setAttribute('data-leftbar-color', 'light')
-    }else{
-        body_layout.setAttribute('data-leftbar-color', localStorage.getItem('leftbar_color'))
-    }
-
-    //fixed or scrollable
-    let default_size_check = document.getElementById('default-size-check')
-    let condensed_check = document.getElementById('condensed-check')
-    let compact_check = document.getElementById('compact-check')
-    default_size_check.addEventListener('click', function (){
-        localStorage.setItem('leftbar_size', 'default')
-    })
-    condensed_check.addEventListener('click', function (){
-        localStorage.setItem('leftbar_size', 'condensed')
-    })
-    compact_check.addEventListener('click', function (){
-        localStorage.setItem('leftbar_size', 'compact')
-    })
-    if(localStorage.getItem('leftbar_size') == undefined || localStorage.getItem('leftbar_size') == null){
-        body_layout.setAttribute('data-leftbar-size', 'default')
-    }else{
-        body_layout.setAttribute('data-leftbar-size', localStorage.getItem('leftbar_size'))
-    }
-
-    //Topbar color
-    let darktopbar_check = document.getElementById('darktopbar-check')
-    let lighttopbar_check = document.getElementById('lighttopbar-check')
-    darktopbar_check.addEventListener('click', function (){
-        localStorage.setItem('topbar_color', 'dark')
-    })
-    lighttopbar_check.addEventListener('click', function (){
-        localStorage.setItem('topbar_color', 'light')
-    })
-    if(localStorage.getItem('topbar_color') == undefined || localStorage.getItem('topbar_color') == null){
-        body_layout.setAttribute('data-topbar-color', 'light')
-    }else{
-        body_layout.setAttribute('data-topbar-color', localStorage.getItem('topbar_color'))
-    }
-
-    // Reset to default
-    let resetBtn = document.getElementById('resetBtn')
-    resetBtn.addEventListener('click', function (){
-        if(localStorage.getItem('topbar_color') != undefined || localStorage.getItem('topbar_color') != null){
-            localStorage.removeItem('topbar_color')
-        }
-        if(localStorage.getItem('leftbar_size') != undefined || localStorage.getItem('leftbar_size') != null){
-            localStorage.removeItem('leftbar_size')
-        }
-        if(localStorage.getItem('leftbar_color') != undefined || localStorage.getItem('leftbar_color') != null){
-            localStorage.removeItem('leftbar_color')
-        }
-        if(localStorage.getItem('fixed_or_scrollable') != undefined || localStorage.getItem('fixed_or_scrollable') != null){
-            localStorage.removeItem('fixed_or_scrollable')
-        }
-        if(localStorage.getItem('fluid_or_boxed') != undefined || localStorage.getItem('fluid_or_boxed') != null){
-            localStorage.removeItem('fluid_or_boxed')
-        }
-        if(localStorage.getItem('layout_local') != undefined || localStorage.getItem('layout_local') != null){
-            localStorage.removeItem('layout_local')
-        }
-        location.reload();
-    })
-
-</script>
+<script src="{{ asset('js/dark-light.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
 <script src="{{ asset('js/datatables_style.js') }}"></script>
 <!-- Vendor -->

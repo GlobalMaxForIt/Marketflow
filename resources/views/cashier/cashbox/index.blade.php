@@ -82,11 +82,11 @@
                             </div>
                             <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
+                                <span class="visually-hidden">{{translate_title('Previous', $lang)}}</span>
                             </a>
                             <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-bs-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
+                                <span class="visually-hidden">{{translate_title('Next', $lang)}}</span>
                             </a>
                         </div>
                     </div><!-- /.modal-content -->
@@ -94,6 +94,11 @@
             </div><!-- /.modal -->
         </div>
         <div class="col-4">
+            <div class="d-flex justify-content-center mb-2">
+                <button class="edit_button btn me-2" data-bs-toggle="modal" data-bs-target="#client_with_discount" id="client_with_discount_button">
+                    <b>{{translate_title('Select client with discount', $lang)}}</b>
+                </button>
+            </div>
             <div class="main-content-section">
                 <div class="right_options" role="presentation">
                     <table class="table table-striped">
@@ -143,12 +148,12 @@
                 </div>
                 <div class="d-flex add_to_order_buttons_" id="no_items">
                     <div class="width_100_percent d-flex justify-content-around">
-                        <a class="modal_close delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('product.destroy', $product['id'])}}" disabled>
+                        <button class="modal_close delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('product.destroy', $product['id'])}}" disabled>
                             <b>{{translate_title('Delete', $lang)}}</b>
-                        </a>
-                        <a class="modal_confirm btn" onclick="paymentFunc()" data-bs-toggle="modal" data-bs-target="#payment_modal" disabled>
+                        </button>
+                        <button class="modal_confirm btn" onclick="paymentFunc()" data-bs-toggle="modal" data-bs-target="#payment_modal" disabled>
                             <b>{{translate_title('Payment', $lang)}}</b>
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -175,10 +180,10 @@
     </div>
     <div class="modal fade" tabindex="-1" role="dialog" id="client_with_discount"
          aria-labelledby="staticBackdropLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog card" role="document">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header card-header">
-                    <h4>{{translate_title('Do you want to select client with discount ?', $lang)}}</h4>
+                    <h5>{{translate_title('Do you want to select client with discount ?', $lang)}}</h5>
                 </div>
                 <div class="modal-body card-body">
                     <div class="position-relative mb-4">
@@ -203,6 +208,7 @@
         </div><!-- /.modal-dialog -->
     </div>
     <script>
+
         let sum_text =  "{{translate_title('sum', $lang)}}"
         let items_text =  "{{translate_title('items', $lang)}}"
         let not_found =  "{{translate_title('Not found', $lang)}}"
@@ -218,8 +224,8 @@
         let image_src = "{{asset('icon/no_photo.jpg', $lang)}}"
         let kitchen_index = "{{route('cashbox.index', $lang)}}"
         let json_products = JSON.parse('{!! $allProductsData['json_products'] !!}')
-        console.log(json_products)
         let page = false
+
         // let current_region = ''
         // let current_district = ''
         // if(localStorage.getItem('region_id') != undefined && localStorage.getItem('region_id') != null){
@@ -248,25 +254,6 @@
         //     localStorage.removeItem('delivery_district')
         // }
 
-        $(document).ready(function () {
-            if($('#client_select_id') != undefined && $('#client_select_id') != null){
-                $('#client_select_id').select2({
-                    dropdownParent: $('#select_client') // modal ID ni kiriting
-                });
-            }
-            if($('#client_select_id_2').val()){
-                confirm_client_discount.disabled = false
-            }else{
-                confirm_client_discount.disabled = true
-            }
-            $('#client_select_id_2').select2().on('change', function (e) {
-                if($(this).val()){
-                    confirm_client_discount.disabled = false
-                }else{
-                    confirm_client_discount.disabled = true
-                }
-            })
-        })
 
     </script>
 {{--    <script src="{{asset('js/cities.js')}}"></script>--}}
