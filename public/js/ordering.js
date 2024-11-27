@@ -64,6 +64,7 @@ function hideHasItems() {
     }
 }
 
+
 function showClientDiscount(){
     if(clientDiscountContent != undefined && clientDiscountContent != null){
         if(clientDiscountContent.classList.contains('d-none')){
@@ -164,7 +165,6 @@ function removeClientDiscountFunc(){
     clientDiscount.innerText = ''
     total_left_sum.innerText = ''
     percent_v = 0
-    deliveryFunc()
     takeAwayFunc()
     hideClientDiscount()
 }
@@ -208,69 +208,6 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
     }
 }
 
-function orderDinIn(id, name, surname) {
-    if(loader != undefined && loader != null){
-        if(loader.classList.contains("d-none")){
-            loader.classList.remove("d-none")
-        }
-    }
-    if(myDiv != undefined && myDiv != null){
-        if(!myDiv.classList.contains("d-none")){
-            myDiv.classList.add("d-none")
-        }
-    }
-    $(document).ready(function () {
-        if(order_data.length>0 && table_id != '' && id){
-            try{
-                $.ajax({
-                    url: "/../api/din-in",
-                    method: 'POST',
-                    data:{
-                        'order_data':order_data,
-                        'client_dicount_price':clientDicountPrice,
-                        'table_id':table_id,
-                        'client_id':client_id,
-                        'user':{
-                            'id':id
-                        }
-                    },
-                    success: function (data) {
-                        hideHasItems()
-                        if(loader != undefined && loader != null){
-                            if(!loader.classList.contains("d-none")){
-                                loader.classList.add("d-none")
-                            }
-                        }
-                        if(myDiv != undefined && myDiv != null){
-                            if(myDiv.classList.contains("d-none")){
-                                myDiv.classList.remove("d-none")
-                            }
-                        }
-                        if(data.status == true){
-                            if(localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null){
-                                localStorage.removeItem('order_data')
-                            }
-                            window.location.href = kitchen_index+'?id='+data.order_id
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        // Handle errors here
-                        console.log(xhr.responseText); // Log the error response from the server
-                        toastr.error('An error occurred: ' + xhr.status + ' ' + error); // Show error message
-                    }
-                })
-            }catch (e) {
-                console.log(e)
-            }
-        }else{
-            toastr.warning(ordered_fail_text)
-        }
-    })
-}
-
-function getTableId(tableId) {
-    table_id = tableId
-}
 function plusProduct(id) {
     if(order_data.length>0) {
         for (let i = 0; i < order_data.length; i++) {
@@ -316,10 +253,6 @@ function minusProduct(id) {
     }
 }
 
-function notifyTableReserved(text) {
-    toastr.warning(text)
-}
-
 function setOrderHtml(order_data_){
     all_sum = 0
     servicePrice = 0
@@ -359,10 +292,6 @@ let html = ''
 function takeAwayFunc() {
     let take_away_content = document.getElementById('take_away_content')
     setTakeAwayHtml(take_away_content)
-}
-function deliveryFunc() {
-    let delivery_content = document.getElementById('delivery_content')
-    setTakeAwayHtml(delivery_content)
 }
 function setTakeAwayHtml(content) {
     setClientPrices()

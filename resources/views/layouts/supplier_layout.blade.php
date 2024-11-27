@@ -315,6 +315,7 @@
     })
 </script>
 
+<script src="{{ asset('js/dark-light.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
 <script src="{{ asset('js/datatables_style.js') }}"></script>
 <script>
