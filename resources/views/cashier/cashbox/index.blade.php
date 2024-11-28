@@ -138,7 +138,7 @@
                 </div>
                 <div class="d-flex add_to_order_buttons_" id="has_items">
                     <div class="width_100_percent d-flex justify-content-between">
-                        <a class="modal_close delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('product.destroy', $product['id'])}}">
+                        <a class="modal_close delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal">
                             <b>{{translate_title('Delete', $lang)}}</b>
                         </a>
                         <a class="modal_confirm btn" onclick="paymentFunc()" data-bs-toggle="modal" data-bs-target="#payment_modal">
@@ -148,7 +148,7 @@
                 </div>
                 <div class="d-flex add_to_order_buttons_" id="no_items">
                     <div class="width_100_percent d-flex justify-content-around">
-                        <button class="modal_close delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('product.destroy', $product['id'])}}" disabled>
+                        <button class="modal_close delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal" disabled>
                             <b>{{translate_title('Delete', $lang)}}</b>
                         </button>
                         <button class="modal_confirm btn" onclick="paymentFunc()" data-bs-toggle="modal" data-bs-target="#payment_modal" disabled>
