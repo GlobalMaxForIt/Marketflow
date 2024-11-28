@@ -4,6 +4,11 @@
     {{translate_title('Checkout', $lang)}}
 @endsection
 @section('content')
+    <style>
+        .select2-container {
+            z-index: 1055 !important; /* Bootstrap modal uchun z-indexdan yuqori qiymat */
+        }
+    </style>
     <div class="row">
         <div class="col-3">
             <div id="dragTree">
@@ -95,6 +100,9 @@
         </div>
         <div class="col-4">
             <div class="d-flex justify-content-center mb-2">
+                <button class="edit_button btn me-2" data-bs-toggle="modal" data-bs-target="#client_with_discount" id="client_with_discount_button">
+                    <b>{{translate_title('Select client with discount', $lang)}}</b>
+                </button>
                 <button class="edit_button btn me-2" data-bs-toggle="modal" data-bs-target="#client_with_discount" id="client_with_discount_button">
                     <b>{{translate_title('Select client with discount', $lang)}}</b>
                 </button>
@@ -225,6 +233,16 @@
         let kitchen_index = "{{route('cashbox.index', $lang)}}"
         let json_products = JSON.parse('{!! $allProductsData['json_products'] !!}')
         let page = false
+
+
+        $(document).ready(function () {
+            if($('#client_select_id_2') != undefined && $('#client_select_id_2') != null){
+                $('#client_select_id_2').select2({
+                    dropdownParent: $('#client_with_discount'), // Modal ID
+                    width: '100%' // Select2 dropdownni kengligini moslashtiradi
+                });
+            }
+        })
 
         // let current_region = ''
         // let current_district = ''

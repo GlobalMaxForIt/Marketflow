@@ -159,6 +159,7 @@ function setClientPrices(){
         clientDicountPrice = all_sum*(1-percent_v)
         total_all_left_sum = all_sum*percent_v
     }
+    total_left_sum.innerText = total_all_left_sum
 }
 function removeClientDiscountFunc(){
     discountValue = 0

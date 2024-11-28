@@ -2185,5 +2185,5 @@ textarea, textarea:focus, .form-control, .form-control:focus, .btn-close{
     max-width: 84% !important;
 }
 .navbar-custom{
-    box-shadow: 1px 4px 8px;
+    box-shadow: 1px 4px 8px rgb(0, 0, 0, 0.4);
 }
