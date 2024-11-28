@@ -1,7 +1,7 @@
-@extends('layouts.admin_layout')
+@extends('layouts.cashier_layout')
 
 @section('title')
-    {{translate_title('Edit client')}}
+    {{translate_title('Edit client', $lang)}}
 @endsection
 @section('content')
     <div class="main-content-section">

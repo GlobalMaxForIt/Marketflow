@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 class ClientsController extends Controller
 {
     public $title;
-    public $current_page = 'clients';
     public $clientService;
     public $lang;
 
@@ -34,9 +33,6 @@ class ClientsController extends Controller
         return view('clients.index', [
             'clients'=>$clients,
             'title'=>$this->title,
-            'current_page'=>$this->current_page,
-            'pending_orders_quantity'=>$this->getQuantityPendingOrders(),
-            'open_debt_bills_quantity'=>$this->getQuantityBills(),
             'lang'=>$lang
         ]);
     }
@@ -88,9 +84,6 @@ class ClientsController extends Controller
         return view('clients.edit', [
             'client'=>$client,
             'title'=>$this->title,
-            'current_page'=>$this->current_page,
-            'pending_orders_quantity'=>$this->getQuantityPendingOrders(),
-            'open_debt_bills_quantity'=>$this->getQuantityBills(),
             'lang'=>$lang
         ]);
     }

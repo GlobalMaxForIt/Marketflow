@@ -55,10 +55,16 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function address(){
-        return $this->hasOne(Address::class, 'id', 'address_id');
-    }
     public function store(){
         return $this->hasOne(Store::class, 'id', 'store_id');
+    }
+    public function personalInfo(){
+        return $this->hasOne(PersonalInfo::class, 'id', 'personal_info_id');
+    }
+    public function company(){
+        return $this->hasOne(Company::class, 'id', 'company_id');
+    }
+    public function organization(){
+        return $this->hasOne(PersonalInfo::class, 'id', 'organization_id');
     }
 }

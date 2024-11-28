@@ -25,6 +25,8 @@
                                             <th>{{translate_title('Id', $lang)}}</th>
                                             <th>{{translate_title('Name', $lang)}}</th>
                                             <th>{{translate_title('Surname', $lang)}}</th>
+                                            <th>{{translate_title('Image', $lang)}}</th>
+                                            <th>{{translate_title('Old', $lang)}}</th>
                                             <th>{{translate_title('Role', $lang)}}</th>
                                             <th>{{translate_title('Status', $lang)}}</th>
                                             <th>{{translate_title('Functions', $lang)}}</th>
@@ -36,6 +38,10 @@
                                             <td class="show_page">{{$user['id']}}</td>
                                             <td>{{$user['name']}}</td>
                                             <td>{{$user['surname']}}</td>
+                                            <td>
+                                                <img onclick="showImage('{{$user['image']?asset("storage/users/".$user['image']):asset('icon/no_photo.jpg')}}')" data-bs-toggle="modal" data-bs-target="#images-modal" src="{{$user['image']?asset("storage/users/".$user['image']):asset('icon/no_photo.jpg')}}" alt="" height="50px">
+                                            </td>
+                                            <td>{{$user['old']}}</td>
                                             <td>{{$user['role']}}</td>
                                             <td>{{$user['status']}}</td>
                                             <td>
@@ -43,7 +49,26 @@
                                                     <a class="edit_button btn me-2" href="{{route('users.edit', $user['id'])}}">
                                                         <img src="{{asset('img/edit_icon.png')}}" alt="" height="18px">
                                                     </a>
-                                                    <a class="edit_button btn me-2" href="{{route('users.show', $user['id'])}}">
+                                                    <a class="edit_button btn me-2" data-bs-toggle="modal" data-bs-target="#full_info_modal" onclick="showFullInfo(
+                                                        '{{$user['id']}}',
+                                                        '{{$user['name']}}',
+                                                        '{{$user['surname']}}',
+                                                        '{{$user['middlename']}}',
+                                                        '{{$user['phone']}}',
+                                                        '{{$user['image']?asset("storage/users/".$user['image']):asset('icon/no_photo.jpg')}}',
+                                                        '{{$user['email']}}',
+                                                        '{{$user['old']}}',
+                                                        '{{$user['gender']}}',
+                                                        '{{$user['role']}}',
+                                                        '{{$user['status']}}',
+                                                        @if($user['address'])
+                                                        '{{$user['address']->name??''}}',
+                                                        @else
+                                                        '',
+                                                        @endif
+                                                        '{{$user['company']}}',
+                                                        '{{$user['organization']}}',
+                                                        '{{$user['passport']}}')">
                                                         <span class="fa fa-eye height_18"></span>
                                                     </a>
                                                     <a type="button" class="btn delete_button btn-sm waves-effect" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('users.destroy', $user['id'])}}">
@@ -225,6 +250,93 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="full_info_modal"
+         aria-labelledby="scrollableModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="scrollableModalTitle">{{translate_title('Stuff full info', $lang)}}</h5>
+                    <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
+                </div>
+                <div class="modal-body">
+                    <table class="tablesaw">
+                        <thead>
+                            <tr>
+                                <th scope="col">
+                                    Title
+                                </th>
+                                <th scope="col"
+                                    data-tablesaw-priority="3">value
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{translate_title('id', $lang)}}</td>
+                                <td id="user_info_id"></td>
+                            </tr>
+                            <tr>
+                                <td>{{translate_title('name', $lang)}}</td>
+                                <td id="user_info_name"></td>
+                            </tr>
+                            <tr>
+                                <td>{{translate_title('surname', $lang)}}</td>
+                                <td id="user_info_surname"></td>
+                            </tr>
+                            <tr>
+                                <td>{{translate_title('middlename', $lang)}}</td>
+                                <td id="user_info_middlename"></td>
+                            </tr>
+                            <tr>
+                                <td>{{translate_title('phone', $lang)}}</td>
+                                <td id="user_info_phone"></td>
+                            </tr>
+                            <tr>
+                                <td>{{translate_title('image', $lang)}}</td>
+                                <td id="user_info_image"></td>
+                            </tr>
+                            <tr>
+                                <td>{{translate_title('email', $lang)}}</td>
+                                <td id="user_info_email"></td>
+                            </tr>
+                            <tr>
+                                <td>{{translate_title('old', $lang)}}</td>
+                                <td id="user_info_old"></td>
+                            </tr>
+                            <tr>
+                                <td>{{translate_title('gender', $lang)}}</td>
+                                <td id="user_info_gender"></td>
+                            </tr>
+                            <tr>
+                                <td>{{translate_title('role', $lang)}}</td>
+                                <td id="user_info_role"></td>
+                            </tr>
+                            <tr>
+                                <td>{{translate_title('passport', $lang)}}</td>
+                                <td id="user_info_passport"></td>
+                            </tr>
+                            <tr>
+                                <td>{{translate_title('status', $lang)}}</td>
+                                <td id="user_info_status"></td>
+                            </tr>
+                            <tr>
+                                <td>{{translate_title('address', $lang)}}</td>
+                                <td id="user_info_address"></td>
+                            </tr>
+                            <tr>
+                                <td>{{translate_title('company', $lang)}}</td>
+                                <td id="user_info_company"></td>
+                            </tr>
+                            <tr>
+                                <td>{{translate_title('organization', $lang)}}</td>
+                                <td id="user_info_organization"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
     <script src="{{asset('js/stuffs.js')}}"></script>
     <script>
         let page = false
@@ -250,6 +362,39 @@
         let sessionError ="{{session('error')}}";
         if(sessionError){
             toastr.warning(sessionError)
+        }
+        let user_info_id = document.getElementById('user_info_id')
+        let user_info_name = document.getElementById('user_info_name')
+        let user_info_surname = document.getElementById('user_info_surname')
+        let user_info_middlename = document.getElementById('user_info_middlename')
+        let user_info_phone = document.getElementById('user_info_phone')
+        let user_info_image = document.getElementById('user_info_image')
+        let user_info_email = document.getElementById('user_info_email')
+        let user_info_old = document.getElementById('user_info_old')
+        let user_info_gender = document.getElementById('user_info_gender')
+        let user_info_role = document.getElementById('user_info_role')
+        let user_info_status = document.getElementById('user_info_status')
+        let user_info_address = document.getElementById('user_info_address')
+        let user_info_company = document.getElementById('user_info_company')
+        let user_info_organization = document.getElementById('user_info_organization')
+        let user_info_passport = document.getElementById('user_info_passport')
+        function showFullInfo(this_id, this_name, this_surname, this_middlename, this_phone, this_image, this_email, this_old, this_gender, this_role, this_status, this_address, this_company, this_organization, this_passport) {
+            user_info_id.innerText = this_id
+            user_info_name.innerText = this_name
+            user_info_surname.innerText = this_surname
+            user_info_middlename.innerText = this_middlename
+            user_info_phone.innerText = this_phone
+            user_info_image.innerText = this_image
+            user_info_image.innerHTML = `<img src="${this_image}" alt="" height="64px">`
+            user_info_email.innerText = this_email
+            user_info_old.innerText = this_old
+            user_info_gender.innerText = this_gender
+            user_info_role.innerText = this_role
+            user_info_status.innerText = this_status
+            user_info_address.innerText = this_address
+            user_info_company.innerText = this_company
+            user_info_organization.innerText = this_organization
+            user_info_passport.innerText = this_passport
         }
     </script>
     <script src="{{asset('js/cities.js')}}"></script>

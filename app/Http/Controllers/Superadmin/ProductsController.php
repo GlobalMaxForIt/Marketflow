@@ -3,16 +3,13 @@
 namespace App\Http\Controllers\Superadmin;
 
 use App\Models\Language;
-use App\Models\ProductDescriptionTranslation;
 use App\Models\ProductInfo;
 use App\Models\Products;
 use App\Models\Store;
 use App\Models\Unit;
 use App\Http\Controllers\Controller;
-use App\Models\ProductsAmountTranslation;
 use App\Models\ProductsCategories;
 use App\Models\ProductsCategoriesTranslation;
-use App\Models\ProductTranslations;
 use App\Service\ProductsCategoriesService;
 use App\Service\ProductsService;
 use App\Service\SaveImages;
@@ -77,6 +74,7 @@ class ProductsController extends Controller
                         'name'=>$product->name,
                         'amount'=>$product->amount,
                         'stock'=>$product->stock,
+                        'cost'=>$product->cost,
                         'price'=>number_format((int)$product->price, 0, '', ' '),
                         'discount'=>number_format($discount, 0, '', ' '),
                         'last_price'=>number_format((int)$product->price - $discount, 0, '', ' '),
@@ -132,6 +130,7 @@ class ProductsController extends Controller
         $products->amount = $request->amount;
         $products->barcode = $request->barcode;
         $products->stock = $request->stock;
+        $products->cost = $request->cost;
         if($user->store_id){
             $products->store_id = $user->store_id;
         }
@@ -308,6 +307,7 @@ class ProductsController extends Controller
         }
         $products->name = $request->name;
         $products->price = $request->price;
+        $products->cost = $request->cost;
         $products->amount = $request->amount;
         $products->barcode = $request->barcode;
         $products->stock = $request->stock;
@@ -325,7 +325,7 @@ class ProductsController extends Controller
             $product_info->description = $request->description;
             $product_info->unit_id = $request->unit;
             $images = $request->file('images');
-            $product_info->images = $this->saveImages->imageSave($products, $images, 'store', 'products');
+            $product_info->images = $this->saveImages->imageSave($products, $images, 'update', 'products');
             $product_info->status = $request->status;
             $product_info->manufactured_date = $request->manufactured_date;
             $product_info->expired_date =  $request->expired_date;

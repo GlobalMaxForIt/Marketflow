@@ -1,11 +1,10 @@
-@extends('layouts.admin_layout')
+@extends('layouts.cashier_layout')
 
 @section('title')
-     {{translate_title('Clients')}}
+     {{translate_title('Clients', $lang)}}
 @endsection
 @section('content')
-    <div id="loader"></div>
-    <div class="main-content-section d-none" id="myDiv">
+    <div class="main-content-section">
         <div class="order-section">
             <div class="card">
                 <div class="right_button_create">

@@ -100,7 +100,7 @@
                         <div class="row">
                             <div class="col-6 mb-3">
                                 <label for="address" class="form-label">{{translate_title('Address', $lang)}}</label>
-                                <input type="text" id="address" class="form-control" name="address" value="{{$user['address']?$user['address']->name:''}}">
+                                <input type="text" id="address" class="form-control" name="address" value="{{$user->address?$user->address->name:''}}">
                             </div>
                             <div class="col-6 mb-3">
                                 <label for="password" class="form-label">{{translate_title('Current password', $lang)}}</label>
@@ -191,10 +191,10 @@
     <script src="{{asset('js/stuffs.js')}}"></script>
     <script>
         let page = true
-        @if($user['address'])
-            @if($user['address']->cities)
-                let current_region = "{{$user['address']->cities->region?$user['address']->cities->region->id:''}}"
-                let current_district = "{{$user['address']->cities->id??''}}"
+        @if($user->address)
+            @if($user->address->cities)
+                let current_region = "{{$user->address->cities->region?$user->address->cities->region->id:''}}"
+                let current_district = "{{$user->address->cities->id??''}}"
             @else
                 let current_region = ''
                 let current_district = ''

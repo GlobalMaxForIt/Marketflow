@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('email')->nullable();
             $table->tinyInteger('gender')->nullable();
+            $table->unsignedInteger('store_id')->nullable();
             $table->unsignedInteger('address_id')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();

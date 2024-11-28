@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\Cashier\CashierProductsController;
+use App\Http\Controllers\Cashier\CashierDiscountController;
 use App\Http\Controllers\Cashier\CashboxController;
 use App\Http\Controllers\Superadmin\ProductsController;
 use App\Http\Controllers\Superadmin\ProductsCategoriesController;
@@ -86,6 +87,7 @@ Route::group(['middleware'=>['isCashier', 'language'], 'prefix'=>'cashier'], fun
     Route::resource('cashier-product', CashierProductsController::class);
     Route::post('change-cashier', [CashboxController::class, 'changeCashier'])->name('changeCashier');
     Route::resource('cashbox', CashboxController::class);
+    Route::resource('cashier-discount', CashierDiscountController::class);
 });
 Route::group(['middleware'=>['isManager', 'language'], 'prefix'=>'manager'], function(){
     Route::get('/', [\App\Http\Controllers\Manager\IndexController::class, 'index'])->name('manager.index');

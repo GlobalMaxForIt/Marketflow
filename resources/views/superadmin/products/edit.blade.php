@@ -69,6 +69,13 @@
                                     {{translate_title('Please enter price.', $lang)}}
                                 </div>
                             </div>
+                            <div class="position-relative col-6">
+                                <label for="cost" class="form-label">{{translate_title('Cost', $lang)}}</label>
+                                <input type="text" id="cost" class="form-control" name="cost" value="{{$product->cost}}" required>
+                                <div class="invalid-tooltip">
+                                    {{translate_title('Please enter cost.', $lang)}}
+                                </div>
+                            </div>
                             <div class="col-6">
                                 <label for="description" class="form-label">{{translate_title('Description', $lang)}}</label>
                                 <textarea id="description" class="form-control" name="description" rows="4">{{$product_info->description}}</textarea>

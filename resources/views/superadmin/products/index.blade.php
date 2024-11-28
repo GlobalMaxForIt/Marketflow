@@ -48,6 +48,7 @@
                                                 <th>{{translate_title('Barcode', $lang)}}</th>
                                                 <th>{{translate_title('Stock', $lang)}}</th>
                                                 <th>{{translate_title('Price', $lang)}}</th>
+                                                <th>{{translate_title('Cost', $lang)}}</th>
                                                 <th>{{translate_title('Functions', $lang)}}</th>
                                             </tr>
                                         </thead>
@@ -65,6 +66,7 @@
                                                         <del>{{$product['price']}}</del>
                                                     @endif
                                                 </td>
+                                                <td>{{$product['cost']}}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-around align-items-center height_50 function_buttons">
                                                         <a class="edit_button btn" href="{{route('product.edit', $product['id'])}}">
@@ -116,6 +118,7 @@
                                                     <th>{{translate_title('Barcode', $lang)}}</th>
                                                     <th>{{translate_title('Stock', $lang)}}</th>
                                                     <th>{{translate_title('Price', $lang)}}</th>
+                                                    <th>{{translate_title('Cost', $lang)}}</th>
                                                     <th>{{translate_title('Functions', $lang)}}</th>
                                                 </tr>
                                             </thead>
@@ -134,6 +137,7 @@
                                                                 <del>{{$product['price']}}</del>
                                                             @endif
                                                         </td>
+                                                        <td>{{$product['cost']}}</td>
                                                         <td>
                                                             <div class="d-flex justify-content-around align-items-center height_50 function_buttons">
                                                                 <a class="edit_button btn" href="{{route('product.edit', $product['id'])}}">
@@ -210,6 +214,13 @@
                         <input type="text" id="price" class="form-control" name="price" required>
                         <div class="invalid-tooltip">
                             {{translate_title('Please enter price', $lang)}}
+                        </div>
+                    </div>
+                    <div class="position-relative mb-3">
+                        <label for="price" class="form-label">{{translate_title('Cost', $lang)}}</label>
+                        <input type="text" id="cost" class="form-control" name="cost" required>
+                        <div class="invalid-tooltip">
+                            {{translate_title('Please enter cost', $lang)}}
                         </div>
                     </div>
                     <div class="mb-3">

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedInteger('product_id')->nullable();
             $table->unsignedInteger('products_categories_id')->nullable();
             $table->unsignedInteger('client_id')->nullable();
+            $table->unsignedInteger('store_id')->nullable();
             $table->unsignedInteger('discount_number')->nullable();
             $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();

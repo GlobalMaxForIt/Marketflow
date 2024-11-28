@@ -410,12 +410,6 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('discount.index')}}">
-                            <i class="mdi mdi-percent-outline"></i>
-                            <span>{{translate_title('Discount', $lang)}}</span>
-                        </a>
-                    </li>
-                    <li>
                         <a href="{{route('language.index')}}">
                             <i class="fe-settings noti-icon"></i>
                             <span>{{translate_title('Settings', $lang)}}</span>

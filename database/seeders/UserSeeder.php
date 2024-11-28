@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Constants;
+use App\Models\PersonalInfo;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,14 +18,18 @@ class UserSeeder extends Seeder
     {
         $is_exist_user = User::withTrashed()->where('email', 'admin@btob.com')->first();
         if(!$is_exist_user){
+            $personalinfo = [
+                'middlename'=>'Admin',
+                'gender'=>0,
+            ];
+            $personal_info = PersonalInfo::create($personalinfo);
             $user = [
                 'name'=>'Superadmin',
                 'surname'=>'Super',
-                'middlename'=>'Admin',
-                'gender'=>0,
                 'email'=>'admin@btob.com',
                 'password'=>Hash::make('btob1234'),
-                'role'=>1
+                'role'=>1,
+                'personal_info_id'=>$personal_info->id
             ];
             User::create($user);
         }else{

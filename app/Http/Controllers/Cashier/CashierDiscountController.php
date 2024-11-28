@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Superadmin;
+namespace App\Http\Controllers\Cashier;
 
-use App\Constants;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\DiscountRequest;
 use App\Models\Clients;
 use App\Models\Discount;
@@ -10,11 +10,9 @@ use App\Models\Products;
 use App\Models\ProductsCategories;
 use App\Service\ClientService;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
 
-class DiscountController extends Controller
+class CashierDiscountController extends Controller
 {
     public $title;
     public $clientService;
@@ -63,7 +61,7 @@ class DiscountController extends Controller
                 'end_date'=>$discount_client_distinct->end_date
             ];
         }
-        return view('superadmin.discount.index', [
+        return view('cashier.discount.index', [
             'discounts_data'=> $discounts_data,
             'discounts_client_data'=> $discounts_client_data,
             'products_categories'=>$products_categories,
@@ -136,7 +134,7 @@ class DiscountController extends Controller
     {
         $lang = App::getLocale();
         $categories = ProductsCategories::where('step', 0)->orderBy('id', 'asc')->get();
-        return view('superadmin.discount.create', [
+        return view('cashier.discount.create', [
             'categories'=>$categories,
             'lang'=>$lang
         ]);
@@ -150,7 +148,7 @@ class DiscountController extends Controller
     {
         $current_discount = new Discount();
         $this->saveDiscount($request, $current_discount, 'store');
-        return redirect()->route('discount.index')->with('success', translate_title('Successfully created', $this->lang));
+        return redirect()->route('cashier-discount.index')->with('success', translate_title('Successfully created', $this->lang));
     }
 
     public function getProducts($request){
@@ -278,7 +276,7 @@ class DiscountController extends Controller
             $subcategory_id = '';
         }
 
-        return view('superadmin.discount.edit', [
+        return view('cashier.discount.edit', [
             'discount'=> $discount,
             'categories'=>$categories,
             'clients'=>$clients,
@@ -299,7 +297,7 @@ class DiscountController extends Controller
     {
         $current_discount = Discount::find($id);
         $this->saveDiscount($request, $current_discount, 'update');
-        return redirect()->route('discount.index')->with('success', translate_title('Successfully updated', $this->lang));
+        return redirect()->route('cashier-discount.index')->with('success', translate_title('Successfully updated', $this->lang));
     }
 
     /**
@@ -312,7 +310,7 @@ class DiscountController extends Controller
         foreach ($current_discount_group as $currentDiscount){
             $currentDiscount->delete();
         }
-        return redirect()->route('discount.index')->with('success', translate_title('Successfully created', $this->lang));
+        return redirect()->route('cashier-discount.index')->with('success', translate_title('Successfully created', $this->lang));
     }
 
     public function saveDiscount($request, $current_discount, $type){

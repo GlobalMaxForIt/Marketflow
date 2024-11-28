@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('products_categories_id')->nullable(); // O'lchov birligi
             $table->string('name'); // Tovar nomi
+            $table->unsignedInteger('cost')->nullable();
             $table->unsignedInteger('price')->nullable();
             $table->string('amount')->nullable();
             $table->string('barcode')->nullable();

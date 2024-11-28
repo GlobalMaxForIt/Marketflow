@@ -43,7 +43,7 @@
                                                     <a class="edit_button btn me-2" href="{{route('users.edit', $user['id'])}}">
                                                         <img src="{{asset('img/edit_icon.png')}}" alt="" height="18px">
                                                     </a>
-                                                    <a class="edit_button btn me-2" href="{{route('users.show', $user['id'])}}">
+                                                    <a class="edit_button btn me-2" data-bs-toggle="modal" data-bs-target="#full_info_modal" href="{{route('users.show', $user['id'])}}">
                                                         <span class="fa fa-eye height_18"></span>
                                                     </a>
                                                     <a type="button" class="btn delete_button btn-sm waves-effect" data-bs-toggle="modal" data-bs-target="#delete_modal" data-url="{{route('users.destroy', $user['id'])}}">

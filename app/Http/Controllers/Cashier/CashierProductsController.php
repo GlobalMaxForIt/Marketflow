@@ -73,6 +73,7 @@ class CashierProductsController extends Controller
                         'name'=>$product->name,
                         'amount'=>$product->amount,
                         'stock'=>$product->stock,
+                        'cost'=>$product->cost,
                         'price'=>number_format((int)$product->price, 0, '', ' '),
                         'discount'=>number_format($discount, 0, '', ' '),
                         'last_price'=>number_format((int)$product->price - $discount, 0, '', ' '),
@@ -114,7 +115,7 @@ class CashierProductsController extends Controller
         $user = Auth::user();
         if($request->expired_date && $request->manufactured_date){
             if($request->manufactured_date >= $request->expired_date){
-                return redirect()->back()->with('status', translate_title('Expired date must be bigger than manufactured date', $this->lang));
+                return redirect()->back()->with('error', translate_title('Expired date must be bigger than manufactured date', $this->lang));
             }
         }
         $products = new Products();
@@ -125,6 +126,7 @@ class CashierProductsController extends Controller
         }
         $products->name = $request->name;
         $products->price = $request->price;
+        $products->cost = $request->cost;
         $products->amount = $request->amount;
         $products->barcode = $request->barcode;
         $products->stock = $request->stock;
@@ -268,6 +270,7 @@ class CashierProductsController extends Controller
                 'description'=>$description,
                 'barcode'=>$product->barcode,
                 'stock'=>$product->stock,
+                'cost'=>$product->cost,
                 'manufactured_date'=>$product->manufactured_date,
                 'expired_date'=>$product->expired_date,
                 'store'=>$store,
@@ -293,7 +296,7 @@ class CashierProductsController extends Controller
         $user = Auth::user();
         if($request->expired_date && $request->manufactured_date){
             if($request->manufactured_date >= $request->expired_date){
-                return redirect()->back()->with('status', translate_title('Expired date must be bigger than manufactured date', $this->lang));
+                return redirect()->back()->with('error', translate_title('Expired date must be bigger than manufactured date', $this->lang));
             }
         }
         $products = Products::where('id', $id)->where('store_id', $user->store_id)->first();
@@ -304,6 +307,7 @@ class CashierProductsController extends Controller
         }
         $products->name = $request->name;
         $products->price = $request->price;
+        $products->cost = $request->cost;
         $products->amount = $request->amount;
         $products->barcode = $request->barcode;
         $products->stock = $request->stock;

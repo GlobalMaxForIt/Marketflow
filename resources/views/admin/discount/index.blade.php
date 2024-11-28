@@ -4,9 +4,7 @@
     {{translate_title('Discount', $lang)}}
 @endsection
 @section('content')
-    <div id="loader"></div>
-    <div class="main-content-section d-none" id="myDiv">
-
+    <div class="main-content-section">
         <div class="order-section">
             @if ($errors->any())
                 <div class="alert alert-danger">
