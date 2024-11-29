@@ -160,6 +160,9 @@
             border-radius: 10px;
             border: solid 1px #ccc;
         }
+        .modal-header h6{
+            margin: 0px !important;
+        }
     </style>
 </head>
 
@@ -463,9 +466,9 @@
                 <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
             </div>
             <div class="modal-header d-flex justify-content-between">
-                <button type="button" class="btn btn-outline-secondary waves-effect active" onclick="setCash(this)">{{translate_title('Наличные', $lang)}}</button>
-                <button type="button" class="btn btn-outline-secondary waves-effect" onclick="setCard(this)">{{translate_title('Безналичные', $lang)}}</button>
-                <button type="button" class="btn btn-outline-secondary waves-effect" onclick="setMixed(this)">{{translate_title('Смешанные', $lang)}}</button>
+                <button type="button" class="btn btn-outline-secondary waves-effect active" onclick="setCash(this)"><h6>{{translate_title('Наличные', $lang)}}</h6></button>
+                <button type="button" class="btn btn-outline-secondary waves-effect" onclick="setCard(this)"><h6>{{translate_title('Безналичные', $lang)}}</h6></button>
+                <button type="button" class="btn btn-outline-secondary waves-effect" onclick="setMixed(this)"><h6>{{translate_title('Смешанные', $lang)}}</h6></button>
             </div>
             <div class="modal-body d-flex justify-content-between" id="calculators">
                 <div class="mt-2 cash_calculator" id="cashCalculator">
@@ -601,8 +604,8 @@
                 <input class="input-display" type="text" id="card_payment_" readonly>
             </div>
             <div class="modal-footer">
-                <a class="btn modal_close height_50" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
-                <a class="btn modal_confirm height_50">{{translate_title('Payment', $lang)}}</a>
+                <a class="btn modal_close height_50 me-4" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
+                <a class="btn modal_confirm height_50" onclick="paymentPayFunc()">{{translate_title('Payment', $lang)}}</a>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -911,7 +914,7 @@
     }
 
     function paymentFunc() {
-        getTotalSum = total_sum.innerText
+        getTotalSum = total_all_left_sum
         payment_sum.innerText = format_entered_sum(getTotalSum)
         change_sum.innerText = '0'
     }
@@ -1130,10 +1133,12 @@
     let orders_performed = {name:"{{translate_title('Orders performed', $lang)}}", count:"2"}
     let order_cancelled = {name:"{{translate_title('Cancelled orders', $lang)}}", count:"5"}
     let orders_accepted = {name:"{{translate_title('Completed orders', $lang)}}", count:"4"}
+
     {{--let monthly_orders_count = {!! 74??0 !!}--}}
     {{--let monthly_offers_count = {!! 12??0 !!}--}}
     {{--let order_created = "{{translate_title('Order created', $lang)}}"--}}
     {{--let offer_created = "{{translate_title('Offer created', $lang)}}"--}}
+
     const month_names = ["","January","February","March","April","May","June","July",
         "August","September","October","November","December"];
     !function(e){

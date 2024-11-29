@@ -7,6 +7,7 @@ let table_id = '';
 let has_items = document.getElementById('has_items')
 let no_items = document.getElementById('no_items')
 let client_with_discount_button = document.getElementById('client_with_discount_button')
+let general_discount_button = document.getElementById('general_discount_button')
 
 function showPage() {
     let loader = document.getElementById("loader")
@@ -47,6 +48,9 @@ function showHasItems(){
     if(client_with_discount_button != undefined && client_with_discount_button != null) {
         client_with_discount_button.disabled = false
     }
+    if(general_discount_button != undefined && general_discount_button != null) {
+        general_discount_button.disabled = false
+    }
 }
 function hideHasItems() {
     if(has_items != undefined && has_items != null){
@@ -61,6 +65,9 @@ function hideHasItems() {
     }
     if(client_with_discount_button != undefined && client_with_discount_button != null) {
         client_with_discount_button.disabled = true
+    }
+    if(general_discount_button != undefined && general_discount_button != null) {
+        general_discount_button.disabled = true
     }
 }
 
@@ -112,6 +119,7 @@ let client_id = 0
 let total_all_left_sum = 0
 let general_discount_sum = 0
 let general_discount_percent_int = 0
+let general_discount_price_int = 0
 let confirm_client_discount = document.getElementById('confirm_client_discount')
 let client_select_id_2 = document.getElementById('client_select_id_2')
 let total_left_sum = document.getElementById('total_left_sum')
@@ -126,7 +134,6 @@ let confirm_general_discount_price = document.getElementById('confirm_general_di
 let removeGeneralDiscountContent = document.getElementById('removeGeneralDiscountContent')
 let generalDiscountContent = document.getElementById('generalDiscountContent')
 let generalDiscount = document.getElementById('generalDiscount')
-
 
 let discountInfo = []
 let discountClientInfo = []
@@ -169,22 +176,38 @@ confirm_client_discount.addEventListener('click', function () {
 
 confirm_general_discount_percent.addEventListener('click', function () {
     general_discount_percent_int = parseInt(general_discount_percent.value)
+    general_discount_price_int = 0
     setClientPrices()
 })
 
-function setClientPrices(){
+confirm_general_discount_price.addEventListener('click', function () {
+    general_discount_price_int = parseInt(general_discount_price.value)
+    general_discount_percent_int = 0
+    setClientPrices()
+})
+
+function setClientPrices() {
     total_all_left_sum = all_sum
-    if(percent_v != 0){
-        clientDicountPrice = all_sum*(1-percent_v)
-        total_all_left_sum = all_sum*percent_v
+    if (percent_v != 0) {
+        clientDicountPrice = all_sum * (1 - percent_v)
+        total_all_left_sum = all_sum * percent_v
     }
-    if(general_discount_percent_int > 0){
-        generalDiscount.innerText = general_discount_percent_int+' %'
-        showClientDiscount(generalDiscountContent)
-        general_discount_sum = general_discount_percent_int/100 * total_all_left_sum
-        total_all_left_sum = total_all_left_sum - general_discount_sum
+    if (general_discount_price_int > 0 || general_discount_percent_int > 0) {
+        if (general_discount_percent_int > 0) {
+            generalDiscount.innerText = general_discount_percent_int + ' %'
+            showClientDiscount(generalDiscountContent)
+            general_discount_sum = general_discount_percent_int / 100 * total_all_left_sum
+            total_all_left_sum = total_all_left_sum - general_discount_sum
+        }else if(general_discount_price_int > 0){
+            generalDiscount.innerText = general_discount_price_int
+            showClientDiscount(generalDiscountContent)
+            general_discount_sum = general_discount_price_int
+            total_all_left_sum = total_all_left_sum - general_discount_sum
+        }
     }else{
         hideClientDiscount(generalDiscountContent)
+        generalDiscount.innerText = ''
+        general_discount_sum = 0
     }
     total_left_sum.innerText = total_all_left_sum
 }
@@ -192,25 +215,47 @@ function setClientPrices(){
 function removeClientDiscountFunc(){
     discountValue = 0
     clientDiscount.innerText = ''
-    total_left_sum.innerText = ''
     percent_v = 0
-    takeAwayFunc()
     hideClientDiscount(clientDiscountContent)
 }
 function removeGeneralDiscountContentFunc(){
     general_discount_percent_int = 0
+    general_discount_price_int = 0
     generalDiscount.innerText = ''
-    total_left_sum.innerText = ''
-    takeAwayFunc()
     hideClientDiscount(generalDiscountContent)
 }
+
 removeClientDiscount.addEventListener('click', function () {
     removeClientDiscountFunc()
+    setClientPrices()
 })
 
 removeGeneralDiscountContent.addEventListener('click', function () {
     removeGeneralDiscountContentFunc()
+    setClientPrices()
 })
+
+function truncuateCashboxFunc(){
+    discountValue = 0
+    clientDiscount.innerText = ''
+    total_left_sum.innerText = ''
+    percent_v = 0
+    general_discount_percent_int = 0
+    general_discount_price_int = 0
+    generalDiscount.innerText = ''
+    total_left_sum.innerText = ''
+    total_all_left_sum = 0
+    if(localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null) {
+        localStorage.removeItem('order_data')
+    }
+    all_sum = 0
+    hideClientDiscount(clientDiscountContent)
+    hideClientDiscount(generalDiscountContent)
+    hideHasItems()
+    order_data = []
+    order_data_html = setOrderHtml(order_data)
+    order_data_content.innerHTML = order_data_html
+}
 
 function addToOrder(id, name, price, discount, discount_percent, last_price, amount) {
     is_exist = false
@@ -265,6 +310,7 @@ function plusProduct(id) {
         }
     }
 }
+
 function minusProduct(id) {
     if(order_data.length>0){
         for(let i = 0; i<order_data.length; i++){
@@ -328,25 +374,9 @@ function setOrderHtml(order_data_){
 
     return order_data_html_
 }
-let html = ''
-function takeAwayFunc() {
-    let take_away_content = document.getElementById('take_away_content')
-    setTakeAwayHtml(take_away_content)
-}
-function setTakeAwayHtml(content) {
-    setClientPrices()
-    html = `<div class="d-flex justify-content-center">
-                <div class="width_60_percent">
-                    <h4 class="d-flex justify-content-between">
-                        <span>${total_price_text}:</span>
-                        <span><b>${total_all_left_sum} </b>${sum_text}</span>
-                    </h4>
-                </div>
-            </div>`
-    content.innerHTML = html
-}
 
-function takeAwayConfirm() {
+let html = ''
+function paymentPayFunc() {
     if(loader != undefined && loader != null){
         if(loader.classList.contains("d-none")){
             loader.classList.remove("d-none")
@@ -361,11 +391,14 @@ function takeAwayConfirm() {
         if(order_data.length>0){
             try{
                 $.ajax({
-                    url: "/../api/take-away",
+                    url: "/../api/payment-pay",
                     method: 'POST',
                     data:{
                         'order_data':order_data,
+                        'cashier_id':1,
                         'client_id':client_id,
+                        'client_dicount_price':clientDicountPrice,
+                        'general_dicount_price':clientDicountPrice,
                         'client_dicount_price':clientDicountPrice,
                     },
                     success: function (data) {

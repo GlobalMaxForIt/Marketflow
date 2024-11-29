@@ -157,7 +157,7 @@
                 </div>
                 <div class="d-flex add_to_order_buttons_" id="has_items">
                     <div class="width_100_percent d-flex justify-content-between">
-                        <a class="modal_close delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal">
+                        <a class="modal_close delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal_cashbox">
                             <b>{{translate_title('Delete', $lang)}}</b>
                         </a>
                         <a class="modal_confirm btn" onclick="paymentFunc()" data-bs-toggle="modal" data-bs-target="#payment_modal">
@@ -167,10 +167,10 @@
                 </div>
                 <div class="d-flex add_to_order_buttons_" id="no_items">
                     <div class="width_100_percent d-flex justify-content-around">
-                        <button class="modal_close delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal" disabled>
+                        <button class="modal_close delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal_cashbox" disabled>
                             <b>{{translate_title('Delete', $lang)}}</b>
                         </button>
-                        <button class="modal_confirm btn" onclick="paymentFunc()" data-bs-toggle="modal" data-bs-target="#payment_modal" disabled>
+                        <button class="modal_confirm btn" data-bs-toggle="modal" data-bs-target="#payment_modal" disabled>
                             <b>{{translate_title('Payment', $lang)}}</b>
                         </button>
                     </div>
@@ -178,25 +178,22 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" tabindex="-1" role="dialog" id="take_away_modal"
-         aria-labelledby="staticBackdropLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog card" role="document">
-            <div class="modal-content">
-                <div class="modal-header card-header">
-                    <h4>{{translate_title('Do you order takeout?', $lang)}}</h4>
-                </div>
-                <div class="modal-body card-body">
-                    <div class="tab-content overflow-auto" id="take_away_content">
-
-                    </div>
-                    <div class="d-flex justify-content-between width_100_percent mt-4">
-                        <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
-                        <a onclick="takeAwayConfirm()" class="btn modal_confirm">{{translate_title('Confirm', $lang)}}</a>
+    <div id="delete_modal_cashbox" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content modal-filled">
+                <div class="modal-body">
+                    <div class="text-center">
+                        <img src="{{asset('img/delete_icon.png')}}" alt="" height="100px">
+                        <h4 class="mt-2 delete_text_content">{{ translate_title('Вы уверены, что хотите удалить это?', $lang)}}</h4>
+                        <div class="d-flex justify-content-between width_100_percent">
+                            <a type="button" class="btn delete_modal_close my-2" data-bs-dismiss="modal"> {{ translate_title('No', $lang)}}</a>
+                            <a class="btn delete_modal_confirm my-2" data-bs-dismiss="modal" onclick="truncuateCashboxFunc()"> {{ translate_title('Yes', $lang)}} </a>
+                        </div>
                     </div>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div>
+    </div><!-- /.modal -->
     <div class="modal fade" tabindex="-1" role="dialog" id="client_with_discount"
          aria-labelledby="staticBackdropLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog" role="document">
@@ -234,14 +231,14 @@
                 @method('POST')
                 <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
                     <li class="nav-item ms-2">
-                        <a href="#discount_price_" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">%</a>
+                        <a href="#discount_percent_" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">%</a>
                     </li>
                     <li class="nav-item ms-2">
-                        <a href="#discount_percent_" data-bs-toggle="tab" aria-expanded="false" class="nav-link">$</a>
+                        <a href="#discount_price_" data-bs-toggle="tab" aria-expanded="false" class="nav-link">$</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="discount_tab">
-                    <div class="tab-pane fade show active" id="discount_price_" role="tabpanel" aria-labelledby="discount_price_tab">
+                    <div class="tab-pane fade show active" id="discount_percent_" role="tabpanel" aria-labelledby="discount_percent_tab">
                         <div class="modal-header card-header">
                             <h5>{{translate_title('Do you want to add general discount percent?', $lang)}}</h5>
                         </div>
@@ -259,14 +256,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="discount_percent_" role="tabpanel" aria-labelledby="discount_percent_tab">
+                    <div class="tab-pane fade" id="discount_price_" role="tabpanel" aria-labelledby="discount_price_tab">
                         <div class="modal-header card-header">
                             <h5>{{translate_title('Do you want to add general discount price?', $lang)}}</h5>
                         </div>
                         <div class="modal-body card-body">
                             <div class="position-relative mb-4">
                                 <label class="form-label">{{translate_title('Discount price', $lang)}}</label>
-                                <input data-toggle="touchspin" type="number" name="general_discount_price" id="general_discount_price" data-bts-postfix="$">
+                                <input data-toggle="touchspin" type="text" name="general_discount_price" id="general_discount_price" data-bts-max="999999999" data-bts-postfix="$">
                                 <div class="invalid-tooltip">
                                     {{translate_title('Please enter a general discount price.', $lang)}}
                                 </div>
@@ -299,7 +296,6 @@
         let kitchen_index = "{{route('cashbox.index', $lang)}}"
         let json_products = JSON.parse('{!! $allProductsData['json_products'] !!}')
         let page = false
-
 
         $(document).ready(function () {
             if($('#client_select_id_2') != undefined && $('#client_select_id_2') != null){

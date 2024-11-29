@@ -8,9 +8,11 @@ use App\Models\Clients;
 use App\Models\Discount;
 use App\Models\Products;
 use App\Models\ProductsCategories;
+use App\Models\Sales;
 use App\Models\User;
 use App\Service\ClientService;
 use App\Service\ProductsCategoriesService;
+use App\Service\SalesService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -22,12 +24,14 @@ class CashboxController extends Controller
     public $title;
     public $clientService;
     public $productsCategoriesService;
+    public $salesService;
     public $lang;
 
-    public function __construct(ClientService $clientService, ProductsCategoriesService $productsCategoriesService,)
+    public function __construct(ClientService $clientService, ProductsCategoriesService $productsCategoriesService, SalesService $salesService)
     {
         $this->clientService = $clientService;
         $this->productsCategoriesService = $productsCategoriesService;
+        $this->salesService = $salesService;
         $this->title = $this->getTableTitle('Cashbox');
     }
     /**
@@ -104,7 +108,6 @@ class CashboxController extends Controller
                     ];
                     $allProducts[] = $array_products;
 
-
                     $allProductsNames[] = $array_products;
                 }
 
@@ -178,6 +181,25 @@ class CashboxController extends Controller
     public function update(Request $request, string $id)
     {
         //
+    }
+
+
+
+    public function paymentPay(Request $request){
+        $user = Auth::user();
+
+        date_default_timezone_set("Asia/Tashkent");
+        $order_data = $request->order_data;
+        $table_id = $request->table_id;
+        $sales = new Sales();
+        $sales->store_id = $user->store_id;
+        $sales->cashier_id = $user->id;
+        $sales->status = Constants::ORDER_PENDING;
+        $client_id = $request->client_id;
+        $client_dicount_price = $request->client_dicount_price;
+
+        $response = $this->salesService->salesItemsSave($order, $client_dicount_price, $client_id, $order_data, 'take-away');
+        return response()->json($response);
     }
 
     /**

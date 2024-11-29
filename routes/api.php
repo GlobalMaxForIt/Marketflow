@@ -7,6 +7,7 @@ use App\Http\Controllers\Superadmin\ProductsController;
 use App\Http\Controllers\Superadmin\CompanyController;
 use App\Http\Controllers\Superadmin\OrganizationController;
 use App\Http\Controllers\Superadmin\StoreController;
+use App\Http\Controllers\Cashier\CashboxController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,4 @@ Route::post('delete-organization', [OrganizationController::class, 'deleteOrgani
 Route::post('delete-store', [StoreController::class, 'deleteStoreImage']);
 Route::get('get-stores/{id}', [StoreController::class, 'getStores']);
 
+Route::post('payment-pay', [CashboxController::class, 'paymentPay'])->name('paymentPay');
