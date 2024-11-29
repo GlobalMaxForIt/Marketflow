@@ -6,6 +6,13 @@
     <title>Barcode Scanner</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
 </head>
+<style>
+    #interactive video {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+</style>
 <body>
 <h1>Barcode Scanner</h1>
 <div id="interactive" style="width: 100%; max-width: 640px; height: 480px; border: 1px solid black;"></div>
@@ -14,34 +21,45 @@
 <script>
     navigator.mediaDevices.getUserMedia({ video: true })
         .then(function(stream) {
-            // Quagga konfiguratsiyasi
-            Quagga.init({
-                inputStream: {
-                    name: "Live",
-                    type: "LiveStream",
-                    target: document.querySelector('#interactive') // Kamera uchun element
-                },
-                decoder: {
-                    readers: ["code_128_reader", "ean_reader", "upc_reader"] // Shtrix kod turlari
-                }
-            }, function(err) {
-                if (err) {
-                    console.log(err);
-                    return;
-                }
-                console.log("Initialization finished. Ready to start");
-                Quagga.start(); // Skannerni ishga tushirish
-            });
-
-            // Shtrix kodni o'qish
-            Quagga.onDetected(function(data) {
-                document.getElementById('result').textContent = data.codeResult.code;
-                console.log("Scanned code: ", data.codeResult.code);
-            });
+            const video = document.createElement('video');
+            video.srcObject = stream;
+            video.play();
+            document.querySelector('#interactive').appendChild(video);
         })
         .catch(function(err) {
-            console.error('Camera access denied: ', err);
+            console.error('Camera access error:', err);
         });
+
+    // navigator.mediaDevices.getUserMedia({ video: true })
+    //     .then(function(stream) {
+    //         // Quagga konfiguratsiyasi
+    //         Quagga.init({
+    //             inputStream: {
+    //                 name: "Live",
+    //                 type: "LiveStream",
+    //                 target: document.querySelector('#interactive') // Kamera uchun element
+    //             },
+    //             decoder: {
+    //                 readers: ["code_128_reader", "ean_reader", "upc_reader"] // Shtrix kod turlari
+    //             }
+    //         }, function(err) {
+    //             if (err) {
+    //                 console.log(err);
+    //                 return;
+    //             }
+    //             console.log("Initialization finished. Ready to start");
+    //             Quagga.start(); // Skannerni ishga tushirish
+    //         });
+    //
+    //         // Shtrix kodni o'qish
+    //         Quagga.onDetected(function(data) {
+    //             document.getElementById('result').textContent = data.codeResult.code;
+    //             console.log("Scanned code: ", data.codeResult.code);
+    //         });
+    //     })
+    //     .catch(function(err) {
+    //         console.error('Camera access denied: ', err);
+    //     });
 
 </script>
 </body>
