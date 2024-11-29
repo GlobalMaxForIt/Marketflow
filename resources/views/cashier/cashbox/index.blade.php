@@ -99,12 +99,12 @@
             </div><!-- /.modal -->
         </div>
         <div class="col-4">
-            <div class="d-flex justify-content-center mb-2">
+            <div class="d-flex justify-content-between mb-2">
                 <button class="edit_button btn me-2" data-bs-toggle="modal" data-bs-target="#client_with_discount" id="client_with_discount_button">
                     <b>{{translate_title('Select client with discount', $lang)}}</b>
                 </button>
-                <button class="edit_button btn me-2" data-bs-toggle="modal" data-bs-target="#client_with_discount" id="client_with_discount_button">
-                    <b>{{translate_title('Select client with discount', $lang)}}</b>
+                <button class="edit_button btn me-2" data-bs-toggle="modal" data-bs-target="#general_discount" id="general_discount_button">
+                    <b>{{translate_title('Select general discount', $lang)}}</b>
                 </button>
             </div>
             <div class="main-content-section">
@@ -137,6 +137,17 @@
                                 <img src="{{asset('img/trash_icon.png')}}" alt="" height="18px">
                             </a>
                             <h6 id="clientDiscount" class="color_red"></h6>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between d-none padding_20 mb-2" id="generalDiscountContent">
+                        <div class="d-flex">
+                            <h6>{{translate_title('General discount:', $lang)}}</h6>&nbsp;
+                        </div>
+                        <div class="d-flex">
+                            <a type="button" class="btn delete_button btn-sm waves-effect me-2" id="removeGeneralDiscountContent">
+                                <img src="{{asset('img/trash_icon.png')}}" alt="" height="18px">
+                            </a>
+                            <h6 id="generalDiscount" class="color_red"></h6>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between d-none padding_20" id="totalLeftSum">
@@ -213,6 +224,61 @@
                     </div>
                 </div>
             </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="general_discount"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <form class="modal-content" method="POST">
+                @csrf
+                @method('POST')
+                <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                    <li class="nav-item ms-2">
+                        <a href="#discount_price_" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">%</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a href="#discount_percent_" data-bs-toggle="tab" aria-expanded="false" class="nav-link">$</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="discount_tab">
+                    <div class="tab-pane fade show active" id="discount_price_" role="tabpanel" aria-labelledby="discount_price_tab">
+                        <div class="modal-header card-header">
+                            <h5>{{translate_title('Do you want to add general discount percent?', $lang)}}</h5>
+                        </div>
+                        <div class="modal-body card-body">
+                            <div class="position-relative mb-4">
+                                <label class="form-label">{{translate_title('Discount percent', $lang)}}</label>
+                                <input data-toggle="touchspin" type="number" name="general_discount_percent" id="general_discount_percent" min="0" max="100" data-bts-postfix="%">
+                                <div class="invalid-tooltip">
+                                    {{translate_title('Please enter a general discount percent.', $lang)}}
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between width_100_percent mt-4">
+                                <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
+                                <a class="btn modal_confirm" data-bs-dismiss="modal" id="confirm_general_discount_percent">{{translate_title('Confirm', $lang)}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="discount_percent_" role="tabpanel" aria-labelledby="discount_percent_tab">
+                        <div class="modal-header card-header">
+                            <h5>{{translate_title('Do you want to add general discount price?', $lang)}}</h5>
+                        </div>
+                        <div class="modal-body card-body">
+                            <div class="position-relative mb-4">
+                                <label class="form-label">{{translate_title('Discount price', $lang)}}</label>
+                                <input data-toggle="touchspin" type="number" name="general_discount_price" id="general_discount_price" data-bts-postfix="$">
+                                <div class="invalid-tooltip">
+                                    {{translate_title('Please enter a general discount price.', $lang)}}
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between width_100_percent mt-4">
+                                <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
+                                <a class="btn modal_confirm" data-bs-dismiss="modal" id="confirm_general_discount_price">{{translate_title('Confirm', $lang)}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>
     <script>

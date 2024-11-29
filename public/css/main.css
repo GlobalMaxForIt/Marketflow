@@ -1805,7 +1805,7 @@ table{
 }
 .bootstrap-touchspin-down, .bootstrap-touchspin-up{
     border: 1px solid #CED4DA !important;
-    background-color: #F2F2F2 !important;
+    background-color: transparent !important;
     color: #CED4DA !important;
     font-size: 28px !important;
 }
@@ -2130,7 +2130,7 @@ del{
 .color_red{
     color: red;
 }
-#clientDiscountContent h6, #clientDiscountContent span{
+#clientDiscountContent h6, #clientDiscountContent span, #generalDiscountContent h6, #generalDiscountContent span{
     margin-bottom: 0px !important;
     margin-top:7px;
 }
