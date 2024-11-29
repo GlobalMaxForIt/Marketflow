@@ -33,6 +33,8 @@ Route::group(['middleware'=>['role', 'language']], function(){
     Route::get('/', [HomeController::class, 'index'])->name('dashboard');
 });
 
+Route::get('/barcode', [HomeController::class, 'barcode'])->name('barcode');
+
 Route::group(['middleware'=>['auth', 'language']], function(){
     Route::get('api/get-districts', [HomeController::class, 'getCities']);
     Route::resource('clients', ClientsController::class);

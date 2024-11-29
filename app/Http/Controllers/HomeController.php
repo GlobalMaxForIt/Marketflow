@@ -18,6 +18,10 @@ class HomeController extends Controller
 //        $this->middleware('auth');
 //    }
 
+
+    public function barcode(){
+        return view('barcode');
+    }
     /**
      * Show the application dashboard.
      *
