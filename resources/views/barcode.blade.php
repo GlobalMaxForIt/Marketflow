@@ -26,7 +26,7 @@
                 inputStream: {
                     name: "Live",
                     type: "LiveStream",
-                    target: document.querySelector('#interactive') // Kamera uchun element
+                    target: document.querySelector('#interactive'),// Kamera uchun element
                     constraints: {
                         facingMode: "environment" // Old kamera o‘rniga orqa kamera
                     }
