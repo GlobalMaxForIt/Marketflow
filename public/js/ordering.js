@@ -399,7 +399,7 @@ function paymentPayFunc() {
                         'client_id':client_id,
                         'client_dicount_price':clientDicountPrice,
                         'general_dicount_price':clientDicountPrice,
-                        'client_dicount_price':clientDicountPrice,
+                        // 'client_dicount_price':clientDicountPrice,
                     },
                     success: function (data) {
                         hideHasItems()

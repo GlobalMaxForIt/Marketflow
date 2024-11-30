@@ -25,7 +25,7 @@
             target: document.querySelector("#barcode-scanner")
         },
         decoder: {
-            readers: ["ean_reader"]
+            readers: ["ean_reader", "code_128_reader", "upc_reader"]
         }
     }, function(err) {
         if (err) {
@@ -45,6 +45,9 @@
         barcode_number.innerText = result.codeResult.code;
 
         Quagga.stop(); // Stop scanning after a barcode is detected
+        // setTimeout(() => {
+        //     Quagga.start(); // Restart scanning after 3 seconds
+        // }, 3000);
     });
 
 </script>
