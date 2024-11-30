@@ -26,6 +26,11 @@
         },
         decoder: {
             readers: ["ean_reader", "code_128_reader", "upc_reader"]
+        },
+        locate: true, // Barcode aniqlash aniqligini oshiradi
+        locator: {
+            patchSize: "medium", // small, medium, large
+            halfSample: true
         }
     }, function(err) {
         if (err) {
