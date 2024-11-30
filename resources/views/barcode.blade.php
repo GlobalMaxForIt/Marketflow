@@ -10,12 +10,14 @@
         <div id="barcode-scanner" class="h-full w-full relative">
             <!-- Overlay text -->
             <div id="overlay-text" class="absolute inset-0 flex justify-center items-center bg-opacity-50 text-white text-lg font-bold">
-                Scan barcode here: {{ $barcode }}
+                Scan barcode here: <span id="barcode_number"></span>
             </div>
         </div>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
 <script>
+    let barcode_number = document.getElementById('barcode_number')
     Quagga.init({
         inputStream: {
             name: "Live",
@@ -40,11 +42,10 @@
         console.log("Barcode detected and read successfully:", result);
 
         // Handle the detected barcode here
-        $wire.sendBarcodeData(result.codeResult.code);
+        barcode_number.innerText = result.codeResult.code;
 
         Quagga.stop(); // Stop scanning after a barcode is detected
     });
 
 </script>
 <!-- Include the library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
