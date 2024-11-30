@@ -1,37 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Barcode Scanner</title>
-    <script>
-        var barcode = '';
-        var interval;
-        document.addEventListener('keydown', function(evt) {
-            if (interval) {
-                clearInterval(interval);
-            }
-            if (evt.code == 'Enter') {
-                if (barcode) {
-                    handleBarcode(barcode);
-                    barcode = '';
-                }
-                return;
-            }
-            if (evt.key != 'Shift') {
-                barcode += evt.key;
-            }
-            interval = setInterval(() => barcode = '', 20);
-        });
 
-        function handleBarcode(scanned_barcode) {
-            document.querySelector('#last-barcode').innerHTML = scanned_barcode;
+<style>
+    #barcode-scanner video {
+        width: 100% !important;
+    }
+</style>
+
+<div>
+    <div class="fixed top-0 left-0 w-screen h-screen bg-gray-100 flex items-center justify-center">
+        <div id="barcode-scanner" class="h-full w-full relative">
+            <!-- Overlay text -->
+            <div id="overlay-text" class="absolute inset-0 flex justify-center items-center bg-opacity-50 text-white text-lg font-bold">
+                Scan barcode here: {{ $barcode }}
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    Quagga.init({
+        inputStream: {
+            name: "Live",
+            type: "LiveStream",
+            target: document.querySelector("#barcode-scanner")
+        },
+        decoder: {
+            readers: ["ean_reader"]
         }
-    </script>
-</head>
-<body>
-<h1>Simple Barcode Scanner</h1>
-<strong>Last scanned barcode: </strong>
-<div id="last-barcode"></div>
-</body>
-</html>
+    }, function(err) {
+        if (err) {
+            console.error("Error initializing Quagga:", err);
+            return;
+        }
+        console.log("Initialization finished. Ready to start");
+
+        Quagga.start();
+    });
+
+    // Listen for barcode detection
+    Quagga.onDetected(function(result) {
+        console.log("Barcode detected and read successfully:", result);
+
+        // Handle the detected barcode here
+        $wire.sendBarcodeData(result.codeResult.code);
+
+        Quagga.stop(); // Stop scanning after a barcode is detected
+    });
+
+</script>
+<!-- Include the library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
