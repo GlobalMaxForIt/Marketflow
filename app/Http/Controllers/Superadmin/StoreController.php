@@ -20,6 +20,7 @@ class StoreController extends Controller
     public $saveImages;
     public $productsService;
     public $lang;
+    public $current_page = 'store';
 
     public function __construct(SaveImages $saveImages, ProductsService $productsService)
     {
@@ -49,10 +50,10 @@ class StoreController extends Controller
                     }
                 }
                 if($is_image == 0){
-                    $images = [asset('storage/icon/no_photo.jpg')];
+                    $images = [asset('icon/no_photo.jpg')];
                 }
             }else{
-                $images = [asset('storage/icon/no_photo.jpg')];
+                $images = [asset('icon/no_photo.jpg')];
             }
             $stores[] = [
                 'id'=>$store->id,
@@ -75,7 +76,8 @@ class StoreController extends Controller
             'stores'=>$stores,
             'organizations'=>$organizations,
             'title'=>$this->title,
-            'lang'=>$lang
+            'lang'=>$lang,
+            'current_page'=>$this->current_page
         ]);
     }
 
@@ -131,10 +133,10 @@ class StoreController extends Controller
                 }
             }
             if($is_image == 0){
-                $images = [asset('storage/icon/no_photo.jpg')];
+                $images = [asset('icon/no_photo.jpg')];
             }
         }else{
-            $images = [asset('storage/icon/no_photo.jpg')];
+            $images = [asset('icon/no_photo.jpg')];
         }
         $store = [
             'id'=>$store_->id,
@@ -158,7 +160,8 @@ class StoreController extends Controller
             'images'=>$images_,
             'organizations'=>$organizations,
             'title'=>$this->title,
-            'lang'=>$lang
+            'lang'=>$lang,
+            'current_page'=>$this->current_page
         ]);
     }
 

@@ -59,6 +59,13 @@ class ProductsController extends Controller
                 $products_ = Products::orderBy('created_at', 'desc')->where('products_categories_id', $sub_category->id)->get();
                 $products = [];
                 foreach ($products_ as $product) {
+                    $product_small_image = storage_path('app/public/products/small/'.$product->image);
+                    if(file_exists($product_small_image)){
+                        $small_image = asset('storage/products/small/'.$product->image);
+                    }else{
+                        $small_image = asset('icon/no_photo.jpg');
+                    }
+
                     if($product->discount){
                         if($product->discount->percent&& $product->price){
                             $discount = $this->getDiscount($product->discount->percent, $product->price);
@@ -75,6 +82,7 @@ class ProductsController extends Controller
                         'amount'=>$product->amount,
                         'stock'=>$product->stock,
                         'cost'=>$product->cost,
+                        'small_image'=>$small_image,
                         'price'=>number_format((int)$product->price, 0, '', ' '),
                         'discount'=>number_format($discount, 0, '', ' '),
                         'last_price'=>number_format((int)$product->price - $discount, 0, '', ' '),
@@ -103,8 +111,8 @@ class ProductsController extends Controller
             'products_categories'=>$categoryData,
             'productsSubCategories'=>$productsSubCategories,
             'title'=>$this->title,
-            'current_page'=>$this->current_page,
-            'lang'=>$language
+            'lang'=>$language,
+            'current_page'=>$this->current_page
         ]);
     }
 
@@ -130,12 +138,18 @@ class ProductsController extends Controller
         $products->amount = $request->amount;
         $products->barcode = $request->barcode;
         $products->stock = $request->stock;
+        if($request->fast_selling_goods){
+            $products->fast_selling_goods = 1;
+        }
         $products->cost = $request->cost;
         if($user->store_id){
             $products->store_id = $user->store_id;
         }
         if($user->company_id){
             $products->company_id = $user->company_id;
+        }
+        if($request->file('small_image')) {
+            $products->image = $this->saveImages->saveSmallImage($request->file('small_image'));
         }
         $products->save();
 
@@ -174,19 +188,26 @@ class ProductsController extends Controller
                 $images = json_decode($product_info->images);
             }
         }
+        $product_small_image = storage_path('app/public/products/small/'.$product->image);
+        if(file_exists($product_small_image)){
+            $small_image = asset('storage/products/small/'.$product->image);
+        }else{
+            $small_image = asset('icon/no_photo.jpg');
+        }
 
         $lang = App::getLocale();
         $products_categories = ProductsCategories::where('step', 0)->get();
         return view('superadmin.products.edit', [
             'product'=>$product,
+            'small_image'=>$small_image,
             'product_info'=>$product_info,
             'current_sub_category_id'=>$current_sub_category_id,
             'current_category'=>$current_category,
             'products_categories'=>$products_categories,
             'images'=>$images, 'title'=>$this->title,
-            'current_page'=>$this->current_page,
             'units'=>$units,
-            'lang'=>$lang
+            'lang'=>$lang,
+            'current_page'=>$this->current_page
         ]);
     }
 
@@ -219,10 +240,10 @@ class ProductsController extends Controller
                         }
                     }
                     if($is_image == 0){
-                        $images = [asset('storage/icon/no_photo.jpg')];
+                        $images = [asset('icon/no_photo.jpg')];
                     }
                 }else{
-                    $images = [asset('storage/icon/no_photo.jpg')];
+                    $images = [asset('icon/no_photo.jpg')];
                 }
                 if($product_info->status == 0) {
                     $status = translate_title('Active', $this->lang);
@@ -260,6 +281,12 @@ class ProductsController extends Controller
             if($company_){
                 $company = $company_->name;
             }
+            $product_small_image = storage_path('app/public/products/small/'.$product->image);
+            if(file_exists($product_small_image)){
+                $small_image = asset('storage/products/small/'.$product->image);
+            }else{
+                $small_image = asset('icon/no_photo.jpg');
+            }
             $array_product=[
                 'id'=>$product->id,
                 'products_categories'=>$category_translation,
@@ -278,13 +305,14 @@ class ProductsController extends Controller
                 'unit'=>$unit,
                 'status'=>$status,
                 'images'=>$images,
+                'small_image'=>$small_image,
                 'created_at'=>$product->created_at,
                 'updated_at'=>$product->updated_at,
             ];
         }else{
             return redirect()->back()->with('status', 'array_products');
         }
-        return view('superadmin.products.show', ['array_product'=>$array_product, 'lang'=>$language]);
+        return view('superadmin.products.show', ['array_product'=>$array_product, 'lang'=>$language, 'current_page'=>$this->current_page]);
     }
 
     /**
@@ -317,21 +345,33 @@ class ProductsController extends Controller
         if($user->company_id){
             $products->company_id = $user->company_id;
         }
+        if($request->fast_selling_goods){
+            $products->fast_selling_goods = 1;
+        }else{
+            $products->fast_selling_goods = 0;
+        }
+        $product_image = storage_path('app/public/products/small/'.$products->image);
+        if(file_exists($product_image)){
+            unlink($product_image);
+        }
+        if($request->file('small_image')) {
+            $products->image = $this->saveImages->saveSmallImage($request->file('small_image'));
+        }
         $products->save();
 
         $product_info = $products->product_info;
-        if($product_info){
-            $product_info->product_id = $products->id;
-            $product_info->description = $request->description;
-            $product_info->unit_id = $request->unit;
-            $images = $request->file('images');
-            $product_info->images = $this->saveImages->imageSave($products, $images, 'update', 'products');
-            $product_info->status = $request->status;
-            $product_info->manufactured_date = $request->manufactured_date;
-            $product_info->expired_date =  $request->expired_date;
-            $product_info->save();
+        if(!$product_info) {
+            $product_info = new ProductInfo();
         }
-
+        $product_info->product_id = $products->id;
+        $product_info->description = $request->description;
+        $product_info->unit_id = $request->unit;
+        $images = $request->file('images');
+        $product_info->images = $this->saveImages->imageSave($products, $images, 'update', 'products');
+        $product_info->status = $request->status;
+        $product_info->manufactured_date = $request->manufactured_date;
+        $product_info->expired_date =  $request->expired_date;
+        $product_info->save();
         return redirect()->route('product.index')->with('success', translate_title('Successfully updated', $this->lang));
     }
 
@@ -341,20 +381,26 @@ class ProductsController extends Controller
     public function destroy(string $id)
     {
         $products = Products::find($id);
-        $product_info = $products->product_info;
-        if($product_info){
-            if($product_info->images){
-                $images = json_decode($product_info->images);
-                foreach ($images as $image){
-                    $product_image = storage_path('app/public/products/'.$image);
-                    if(file_exists($product_image)){
-                        unlink($product_image);
+        if($products){
+            $product_image_small = storage_path('app/public/products/small/'.$products->image);
+            if(file_exists($product_image_small)){
+                unlink($product_image_small);
+            }
+            $product_info = $products->product_info;
+            if($product_info){
+                if($product_info->images){
+                    $images = json_decode($product_info->images);
+                    foreach ($images as $image){
+                        $product_image = storage_path('app/public/products/'.$image);
+                        if(file_exists($product_image)){
+                            unlink($product_image);
+                        }
                     }
                 }
+                $product_info->delete();
             }
-            $product_info->delete();
+            $products->delete();
         }
-        $products->delete();
         return redirect()->route('product.index')->with('success', translate_title('Successfully deleted', $this->lang));
     }
 

@@ -61,6 +61,10 @@
                         <td>{{$array_product['manufactured_date']??''}}</td>
                     </tr>
                     <tr>
+                        <th>{{translate_title('Fast selling good', $lang)}}</th>
+                        <td>{{$array_product['fast_selling_goods']??''}}</td>
+                    </tr>
+                    <tr>
                         <th>{{translate_title('Expired date', $lang)}}</th>
                         <td>{{$array_product['expired_date']??''}}</td>
                     </tr>
@@ -90,6 +94,12 @@
                                     </div>
                                 @endforeach
                             </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{translate_title('Small image', $lang)}}</th>
+                        <td>
+                            <img onclick="showImage('{{$array_product['small_image']}}')" data-bs-toggle="modal" data-bs-target="#images-modal" src="{{$array_product['small_image']}}" alt="" height="144px">
                         </td>
                     </tr>
                     <tr>

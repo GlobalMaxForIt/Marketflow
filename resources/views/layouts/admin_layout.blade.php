@@ -172,7 +172,6 @@
             </li>
             <li class="">
                 <div>
-
                     <div class="align-items-center d-flex mt-4" id="lang-change">
                         <a class="buttonUzbDropDownHeader" type="button" id="dropdownMenuButton" role="button"
                            data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="javascript:void(0);">
@@ -407,6 +406,22 @@
                             <i class="mdi mdi-basket-outline"></i>
                             <span> {{translate_title('Products', $lang)}} </span>
                             <span class="menu-arrow"></span>
+                        </a>
+                        <a class="main-menu-top-buttons_link" href="#products" data-bs-toggle="collapse">
+                            <div class="main-menu-buttons_link-img">
+                                @if(isset($current_page))
+                                    @if($current_page == 'products')
+                                        <i class="mdi mdi-basket-outline active"></i>
+                                    @else
+                                        <i class="mdi mdi-basket-outline"></i>
+                                    @endif
+                                @else
+                                    <i class="mdi mdi-basket-outline"></i>
+                                @endif
+                            </div>
+                            <span class="main-menu-top-buttons-link_text @if(isset($current_page)) {{$current_page == 'products'?'active':''}} @endif">
+                                {{translate_title('Products', $lang)}}
+                            </span>
                         </a>
                         <div class="collapse" id="products">
                             <ul class="nav-second-level">
@@ -753,6 +768,30 @@
             });
         }
     })
+</script>
+<script>
+    let carousel_product_images = document.getElementById('carousel_product_images')
+    function getImages(images) {
+        console.log(images)
+        let all_images = images.split(' ')
+        let images_content = ''
+        for(let i=0; i<all_images.length; i++){
+            if(i == 0){
+                images_content = images_content +
+                    `<div class="carousel-item active">
+                        <img class="d-block img-fluid" src="${all_images[i]}" alt="First slide">
+                    </div>`
+            }else{
+                images_content = images_content +
+                    `<div class="carousel-item">
+                            <img class="d-block img-fluid" src="${all_images[i]}" alt="First slide">
+                        </div>`
+            }
+        }
+        if(carousel_product_images != undefined && carousel_product_images != null){
+            carousel_product_images.innerHTML = images_content
+        }
+    }
 </script>
 <script src="{{ asset('js/dark-light.js') }}"></script>
 </script>

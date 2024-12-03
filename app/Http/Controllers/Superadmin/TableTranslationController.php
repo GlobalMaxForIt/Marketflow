@@ -35,9 +35,9 @@ class TableTranslationController extends Controller
     {
         $lang = App::getLocale();
         return view('language.tables', [
-            'current_page'=>$this->current_page,
             'title'=>$this->title,
-            'lang'=>$lang
+            'lang'=>$lang,
+            'current_page'=>$this->current_page
         ]);
     }
 
@@ -47,9 +47,9 @@ class TableTranslationController extends Controller
         return view('language.table_lang', [
             'type'=>$type,
             'languages'=>$languages,
-            'current_page'=>$this->current_page,
             'title'=>$this->title,
-            'lang'=>$lang
+            'lang'=>$lang,
+            'current_page'=>$this->current_page
         ]);
     }
 

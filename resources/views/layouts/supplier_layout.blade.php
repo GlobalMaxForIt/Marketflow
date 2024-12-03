@@ -314,7 +314,30 @@
         }
     })
 </script>
-
+<script>
+    let carousel_product_images = document.getElementById('carousel_product_images')
+    function getImages(images) {
+        console.log(images)
+        let all_images = images.split(' ')
+        let images_content = ''
+        for(let i=0; i<all_images.length; i++){
+            if(i == 0){
+                images_content = images_content +
+                    `<div class="carousel-item active">
+                        <img class="d-block img-fluid" src="${all_images[i]}" alt="First slide">
+                    </div>`
+            }else{
+                images_content = images_content +
+                    `<div class="carousel-item">
+                            <img class="d-block img-fluid" src="${all_images[i]}" alt="First slide">
+                        </div>`
+            }
+        }
+        if(carousel_product_images != undefined && carousel_product_images != null){
+            carousel_product_images.innerHTML = images_content
+        }
+    }
+</script>
 <script src="{{ asset('js/dark-light.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
 <script src="{{ asset('js/datatables_style.js') }}"></script>

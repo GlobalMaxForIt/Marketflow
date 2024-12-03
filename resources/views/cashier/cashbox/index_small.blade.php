@@ -1,4 +1,4 @@
-@extends('layouts.cashbox_layout')
+@extends('layouts.cashier_small_layout')
 
 @section('title')
     {{translate_title('Checkout', $lang)}}
@@ -8,50 +8,85 @@
         .select2-container {
             z-index: 1055 !important; /* Bootstrap modal uchun z-indexdan yuqori qiymat */
         }
+        #input-area {
+            width: 80%;
+            height: 50px;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .keyboard {
+            display: grid;
+            grid-template-columns: repeat(10, 50px);
+            gap: 10px;
+            justify-content: center;
+        }
+        .key {
+            width: 50px;
+            height: 50px;
+            background-color: #ddd;
+            text-align: center;
+            line-height: 50px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .key:hover {
+            background-color: #ccc;
+        }
     </style>
     <div class="row">
-        <div class="col-3">
-            <div id="dragTree">
-                <ul>
-                    @foreach($allCategriesSubcategoriesProducts as $category)
-                        <li>{{$category['category_name']}}
-                            <ul>
-                                @foreach($category['sub_categories'] as $sub_category)
-                                    <li data-jstree='{"opened":true}'>{{$sub_category['sub_category_name']}}
-                                        <ul>
-                                            @foreach($sub_category['products'] as $product)
-                                                <li data-jstree='{"type":"file"}'>
-                                                    <a onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}')">
-                                                        {{$product['name']}}{{$product['amount']}}
-                                                    </a>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </li>
-                    @endforeach
-                </ul>
+        <div class="col-7">
+
+            <textarea id="input-area" placeholder="Yozish uchun shu yerga bosing..."></textarea>
+            <div class="keyboard">
+                <!-- Harflar -->
+                <div class="key">A</div>
+                <div class="key">B</div>
+                <div class="key">C</div>
+                <div class="key">D</div>
+                <div class="key">E</div>
+                <div class="key">F</div>
+                <div class="key">G</div>
+                <div class="key">H</div>
+                <div class="key">I</div>
+                <div class="key">J</div>
+                <!-- Raqamlar -->
+                <div class="key">1</div>
+                <div class="key">2</div>
+                <div class="key">3</div>
+                <div class="key">4</div>
+                <div class="key">5</div>
+                <!-- Belgilar -->
+                <div class="key">@</div>
+                <div class="key">#</div>
+                <div class="key">$</div>
+                <div class="key">%</div>
+                <div class="key">_</div>
+                <!-- Probel -->
+                <div class="key" style="grid-column: span 10;">Space</div>
             </div>
-        </div>
-        <div class="col-5">
+
             <div class="main-content-section" id="myDiv">
                 <div class="order-section">
                     <div class="card">
                         <div class="card-body overflow-auto">
                             <table class="restaurant_tables datatable table table-striped dt-responsive nowrap">
                                 <thead>
-                                    <tr>
-                                        <th><h6><b>{{translate_title('Name', $lang)}}</b></h6></th>
-                                        <th><h6><b>{{translate_title('Price', $lang)}}</b></h6></th>
-                                        <th><h6><b>{{translate_title('Stock', $lang)}}</b></h6></th>
-                                        <th><h6><b>{{translate_title('Functions', $lang)}}</b></h6></th>
-                                    </tr>
+                                <tr>
+                                    <th><h6><b>{{translate_title('Barcode', $lang)}}</b></h6></th>
+                                    <th><h6><b>{{translate_title('Name', $lang)}}</b></h6></th>
+                                    <th><h6><b>{{translate_title('Price', $lang)}}</b></h6></th>
+                                    <th><h6><b>{{translate_title('Stock', $lang)}}</b></h6></th>
+                                    <th><h6><b>{{translate_title('Functions', $lang)}}</b></h6></th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($allProductsData['products'] as $product)
                                     <tr>
+                                        <td class="market_tables_text">
+                                            <span><h6><b>{{$product['barcode']}}</b></h6></span>
+                                        </td>
                                         <td class="market_tables_text">
                                             <span><h6><b>{{$product['name']}}</b></h6></span>
                                             <span><h6><b>{{$product['amount']}}</b></h6></span>
@@ -66,9 +101,8 @@
                                             <h6><b>{{$product['stock']}}</b></h6>
                                         </td>
                                         <td class="market_tables_text">
-                                            <a onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}')" class="edit_button btn">
-                                                <b><span class="mdi mdi-basket"></span></b>
-                                            </a>
+                                            <button class="edit_button btn" onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}')">+</button>
+                                            <button class="ms-2 edit_button btn" onclick="minusProduct('{{$product['id']}}')">-</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -98,13 +132,10 @@
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
         </div>
-        <div class="col-4">
+        <div class="col-5 ps-2">
             <div class="d-flex justify-content-between mb-2">
                 <button class="edit_button btn me-2" data-bs-toggle="modal" data-bs-target="#client_with_discount" id="client_with_discount_button">
                     <b>{{translate_title('Select client with discount', $lang)}}</b>
-                </button>
-                <button class="edit_button btn me-2" data-bs-toggle="modal" data-bs-target="#general_discount" id="general_discount_button">
-                    <b>{{translate_title('Select general discount', $lang)}}</b>
                 </button>
             </div>
             <div class="main-content-section">
@@ -112,11 +143,11 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>{{translate_title('Product name', $lang)}}</th>
-                                <th>{{translate_title('Qty', $lang)}}</th>
-                                <th>{{translate_title('Price', $lang)}}</th>
-                                <th>{{translate_title('Total sum', $lang)}}</th>
-                                <th>{{translate_title('Functions', $lang)}}</th>
+                                <th><h6><b>{{translate_title('Barcode', $lang)}}</b></h6></th>
+                                <th><h6><b>{{translate_title('Product name', $lang)}}</b></h6></th>
+                                <th><h6><b>{{translate_title('Qty', $lang)}}</b></h6></th>
+                                <th><h6><b>{{translate_title('Price', $lang)}}</b></h6></th>
+                                <th><h6><b>{{translate_title('Total sum', $lang)}}</b></h6></th>
                             </tr>
                         </thead>
                         <tbody id="order_data_content">
@@ -137,17 +168,6 @@
                                 <img src="{{asset('img/trash_icon.png')}}" alt="" height="18px">
                             </a>
                             <h6 id="clientDiscount" class="color_red"></h6>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between d-none padding_20 mb-2" id="generalDiscountContent">
-                        <div class="d-flex">
-                            <h6>{{translate_title('General discount:', $lang)}}</h6>&nbsp;
-                        </div>
-                        <div class="d-flex">
-                            <a type="button" class="btn delete_button btn-sm waves-effect me-2" id="removeGeneralDiscountContent">
-                                <img src="{{asset('img/trash_icon.png')}}" alt="" height="18px">
-                            </a>
-                            <h6 id="generalDiscount" class="color_red"></h6>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between d-none padding_20" id="totalLeftSum">
@@ -223,61 +243,6 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>
-    <div class="modal fade" tabindex="-1" role="dialog" id="general_discount"
-         aria-labelledby="staticBackdropLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog" role="document">
-            <form class="modal-content" method="POST">
-                @csrf
-                @method('POST')
-                <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
-                    <li class="nav-item ms-2">
-                        <a href="#discount_percent_" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">%</a>
-                    </li>
-                    <li class="nav-item ms-2">
-                        <a href="#discount_price_" data-bs-toggle="tab" aria-expanded="false" class="nav-link">$</a>
-                    </li>
-                </ul>
-                <div class="tab-content" id="discount_tab">
-                    <div class="tab-pane fade show active" id="discount_percent_" role="tabpanel" aria-labelledby="discount_percent_tab">
-                        <div class="modal-header card-header">
-                            <h5>{{translate_title('Do you want to add general discount percent?', $lang)}}</h5>
-                        </div>
-                        <div class="modal-body card-body">
-                            <div class="position-relative mb-4">
-                                <label class="form-label">{{translate_title('Discount percent', $lang)}}</label>
-                                <input data-toggle="touchspin" type="number" name="general_discount_percent" id="general_discount_percent" min="0" max="100" data-bts-postfix="%">
-                                <div class="invalid-tooltip">
-                                    {{translate_title('Please enter a general discount percent.', $lang)}}
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between width_100_percent mt-4">
-                                <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
-                                <a class="btn modal_confirm" data-bs-dismiss="modal" id="confirm_general_discount_percent">{{translate_title('Confirm', $lang)}}</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="discount_price_" role="tabpanel" aria-labelledby="discount_price_tab">
-                        <div class="modal-header card-header">
-                            <h5>{{translate_title('Do you want to add general discount price?', $lang)}}</h5>
-                        </div>
-                        <div class="modal-body card-body">
-                            <div class="position-relative mb-4">
-                                <label class="form-label">{{translate_title('Discount price', $lang)}}</label>
-                                <input data-toggle="touchspin" type="text" name="general_discount_price" id="general_discount_price" data-bts-max="999999999" data-bts-postfix="$">
-                                <div class="invalid-tooltip">
-                                    {{translate_title('Please enter a general discount price.', $lang)}}
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between width_100_percent mt-4">
-                                <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
-                                <a class="btn modal_confirm" data-bs-dismiss="modal" id="confirm_general_discount_price">{{translate_title('Confirm', $lang)}}</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div>
     <script>
 
         let sum_text =  "{{translate_title('sum', $lang)}}"
@@ -306,37 +271,23 @@
             }
         })
 
-        // let current_region = ''
-        // let current_district = ''
-        // if(localStorage.getItem('region_id') != undefined && localStorage.getItem('region_id') != null){
-        //     localStorage.removeItem('region_id')
-        // }
-        // if(localStorage.getItem('district_id') != undefined && localStorage.getItem('district_id') != null){
-        //     localStorage.removeItem('district_id')
-        // }
-        // if(localStorage.getItem('region') != undefined && localStorage.getItem('region') != null){
-        //     localStorage.removeItem('region')
-        // }
-        // if(localStorage.getItem('district') != undefined && localStorage.getItem('district') != null){
-        //     localStorage.removeItem('district')
-        // }
-        //
-        // if(localStorage.getItem('delivery_region_id') != undefined && localStorage.getItem('delivery_region_id') != null){
-        //     localStorage.removeItem('delivery_region_id')
-        // }
-        // if(localStorage.getItem('delivery_district_id') != undefined && localStorage.getItem('delivery_district_id') != null){
-        //     localStorage.removeItem('delivery_district_id')
-        // }
-        // if(localStorage.getItem('delivery_region') != undefined && localStorage.getItem('delivery_region') != null){
-        //     localStorage.removeItem('delivery_region')
-        // }
-        // if(localStorage.getItem('delivery_district') != undefined && localStorage.getItem('delivery_district') != null){
-        //     localStorage.removeItem('delivery_district')
-        // }
+        const inputArea = document.getElementById('input-area');
+        const keys = document.querySelectorAll('.key');
 
+        keys.forEach(key => {
+            key.addEventListener('click', () => {
+                const keyText = key.textContent.trim();
+                if (keyText === 'Space') {
+                    inputArea.value += ' ';
+                } else {
+                    inputArea.value += keyText;
+                }
+            });
+        });
 
     </script>
-{{--    <script src="{{asset('js/cities.js')}}"></script>--}}
-    <script src="{{asset('js/ordering.js')}}"></script>
+
+    {{--    <script src="{{asset('js/cities.js')}}"></script>--}}
+    <script src="{{asset('js/small_ordering.js')}}"></script>
 @endsection
 

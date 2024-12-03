@@ -15,6 +15,7 @@ class ClientsController extends Controller
     public $title;
     public $clientService;
     public $lang;
+    public $current_page = 'home';
 
     public function __construct(ClientService $clientService)
     {
@@ -33,7 +34,8 @@ class ClientsController extends Controller
         return view('clients.index', [
             'clients'=>$clients,
             'title'=>$this->title,
-            'lang'=>$lang
+            'lang'=>$lang,
+            'current_page'=>$this->current_page
         ]);
     }
 
@@ -84,7 +86,8 @@ class ClientsController extends Controller
         return view('clients.edit', [
             'client'=>$client,
             'title'=>$this->title,
-            'lang'=>$lang
+            'lang'=>$lang,
+            'current_page'=>$this->current_page
         ]);
     }
 

@@ -19,6 +19,7 @@ class DiscountController extends Controller
     public $title;
     public $clientService;
     public $lang;
+    public $current_page = 'discount';
 
     public function __construct(ClientService $clientService)
     {
@@ -70,7 +71,8 @@ class DiscountController extends Controller
             'title'=>$this->title,
             'clients'=>$clients,
             'clients_for_discount'=>$clients_for_discount,
-            'lang'=>$lang
+            'lang'=>$lang,
+            'current_page'=>$this->current_page
         ]);
     }
 
@@ -138,7 +140,8 @@ class DiscountController extends Controller
         $categories = ProductsCategories::where('step', 0)->orderBy('id', 'asc')->get();
         return view('superadmin.discount.create', [
             'categories'=>$categories,
-            'lang'=>$lang
+            'lang'=>$lang,
+            'current_page'=>$this->current_page
         ]);
     }
 
@@ -288,7 +291,8 @@ class DiscountController extends Controller
             'start_end_date'=>$start_end_date,
             'quantity'=>$quantity,
             'title'=>$this->title,
-            'lang'=>$lang
+            'lang'=>$lang,
+            'current_page'=>$this->current_page
         ]);
     }
 

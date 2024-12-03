@@ -7,7 +7,6 @@ let table_id = '';
 let has_items = document.getElementById('has_items')
 let no_items = document.getElementById('no_items')
 let client_with_discount_button = document.getElementById('client_with_discount_button')
-let general_discount_button = document.getElementById('general_discount_button')
 
 function showPage() {
     let loader = document.getElementById("loader")
@@ -48,9 +47,6 @@ function showHasItems(){
     if(client_with_discount_button != undefined && client_with_discount_button != null) {
         client_with_discount_button.disabled = false
     }
-    if(general_discount_button != undefined && general_discount_button != null) {
-        general_discount_button.disabled = false
-    }
 }
 function hideHasItems() {
     if(has_items != undefined && has_items != null){
@@ -65,9 +61,6 @@ function hideHasItems() {
     }
     if(client_with_discount_button != undefined && client_with_discount_button != null) {
         client_with_discount_button.disabled = true
-    }
-    if(general_discount_button != undefined && general_discount_button != null) {
-        general_discount_button.disabled = true
     }
 }
 
@@ -90,7 +83,7 @@ function hideClientDiscount(discount_content_element) {
             discount_content_element.classList.add('d-none')
         }
     }
-    if(percent_v<=0 && general_discount_percent_int<=0){
+    if(percent_v<=0){
         if(totalLeftSum != undefined && totalLeftSum != null){
             if(!totalLeftSum.classList.contains('d-none')){
                 totalLeftSum.classList.add('d-none')
@@ -117,23 +110,11 @@ let servicePrice = 0
 let all_sum = 0
 let client_id = 0
 let total_all_left_sum = 0
-let general_discount_sum = 0
-let general_discount_percent_int = 0
-let general_discount_price_int = 0
 let confirm_client_discount = document.getElementById('confirm_client_discount')
 let client_select_id_2 = document.getElementById('client_select_id_2')
 let total_left_sum = document.getElementById('total_left_sum')
 let clientFullName = document.getElementById('clientFullName')
 let removeClientDiscount = document.getElementById('removeClientDiscount')
-
-let general_discount_percent = document.getElementById('general_discount_percent')
-let general_discount_price = document.getElementById('general_discount_price')
-let confirm_general_discount_percent = document.getElementById('confirm_general_discount_percent')
-let confirm_general_discount_price = document.getElementById('confirm_general_discount_price')
-
-let removeGeneralDiscountContent = document.getElementById('removeGeneralDiscountContent')
-let generalDiscountContent = document.getElementById('generalDiscountContent')
-let generalDiscount = document.getElementById('generalDiscount')
 
 let discountInfo = []
 let discountClientInfo = []
@@ -158,9 +139,6 @@ function confirm_client_discount_func(discountValue_){
     }
 }
 confirm_client_discount.addEventListener('click', function () {
-    if(general_discount_button != undefined && general_discount_button != null) {
-        general_discount_button.disabled = true
-    }
     let discountInfo = client_select_id_2.value.split(" ")
     let discountClientInfo = client_select_id_2.value.split("/")
     if(discountInfo[1] != undefined && discountInfo[1] != null){
@@ -177,76 +155,23 @@ confirm_client_discount.addEventListener('click', function () {
     setClientPrices()
 })
 
-confirm_general_discount_percent.addEventListener('click', function () {
-    if(client_with_discount_button != undefined && client_with_discount_button != null) {
-        client_with_discount_button.disabled = true
-    }
-    general_discount_percent_int = parseInt(general_discount_percent.value)
-    general_discount_price_int = 0
-    setClientPrices()
-})
-
-confirm_general_discount_price.addEventListener('click', function () {
-    if(client_with_discount_button != undefined && client_with_discount_button != null) {
-        client_with_discount_button.disabled = true
-    }
-    general_discount_price_int = parseInt(general_discount_price.value)
-    general_discount_percent_int = 0
-    setClientPrices()
-})
-
 function setClientPrices() {
     total_all_left_sum = all_sum
     if (percent_v != 0) {
         clientDicountPrice = all_sum * (1 - percent_v)
         total_all_left_sum = all_sum * percent_v
     }
-    if (general_discount_price_int > 0 || general_discount_percent_int > 0) {
-        if (general_discount_percent_int > 0) {
-            generalDiscount.innerText = general_discount_percent_int + ' %'
-            showClientDiscount(generalDiscountContent)
-            general_discount_sum = general_discount_percent_int / 100 * total_all_left_sum
-            total_all_left_sum = total_all_left_sum - general_discount_sum
-        }else if(general_discount_price_int > 0){
-            generalDiscount.innerText = general_discount_price_int
-            showClientDiscount(generalDiscountContent)
-            general_discount_sum = general_discount_price_int
-            total_all_left_sum = total_all_left_sum - general_discount_sum
-        }
-    }else{
-        hideClientDiscount(generalDiscountContent)
-        generalDiscount.innerText = ''
-        general_discount_sum = 0
-    }
     total_left_sum.innerText = total_all_left_sum
 }
 
 function removeClientDiscountFunc(){
-    if(general_discount_button != undefined && general_discount_button != null) {
-        general_discount_button.disabled = false
-    }
     discountValue = 0
     clientDiscount.innerText = ''
     percent_v = 0
     hideClientDiscount(clientDiscountContent)
 }
-function removeGeneralDiscountContentFunc(){
-    if(client_with_discount_button != undefined && client_with_discount_button != null) {
-        client_with_discount_button.disabled = false
-    }
-    general_discount_percent_int = 0
-    general_discount_price_int = 0
-    generalDiscount.innerText = ''
-    hideClientDiscount(generalDiscountContent)
-}
-
 removeClientDiscount.addEventListener('click', function () {
     removeClientDiscountFunc()
-    setClientPrices()
-})
-
-removeGeneralDiscountContent.addEventListener('click', function () {
-    removeGeneralDiscountContentFunc()
     setClientPrices()
 })
 
@@ -255,9 +180,6 @@ function truncuateCashboxFunc(){
     clientDiscount.innerText = ''
     total_left_sum.innerText = ''
     percent_v = 0
-    general_discount_percent_int = 0
-    general_discount_price_int = 0
-    generalDiscount.innerText = ''
     total_left_sum.innerText = ''
     total_all_left_sum = 0
     if(localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null) {
@@ -265,14 +187,13 @@ function truncuateCashboxFunc(){
     }
     all_sum = 0
     hideClientDiscount(clientDiscountContent)
-    hideClientDiscount(generalDiscountContent)
     hideHasItems()
     order_data = []
     order_data_html = setOrderHtml(order_data)
     order_data_content.innerHTML = order_data_html
 }
 
-function addToOrder(id, name, price, discount, discount_percent, last_price, amount) {
+function addToOrder(id, name, price, discount, discount_percent, last_price, amount, barcode) {
     is_exist = false
     order_json = {}
     if(order_data.length>0){
@@ -283,10 +204,10 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
             }
         }
         if(!is_exist){
-            order_json = {'id':id, 'name':name, 'price':price, 'discount':discount, 'discount_percent':discount_percent, 'last_price':last_price, 'amount':amount, 'quantity':1}
+            order_json = {'id':id, 'name':name, 'price':price, 'discount':discount, 'discount_percent':discount_percent, 'last_price':last_price, 'amount':amount, 'quantity':1, 'barcode':barcode}
         }
     }else{
-        order_json = {'id':id, 'name':name, 'price':price, 'discount':discount, 'discount_percent':discount_percent, 'last_price':last_price, 'amount':amount, 'quantity':1}
+        order_json = {'id':id, 'name':name, 'price':price, 'discount':discount, 'discount_percent':discount_percent, 'last_price':last_price, 'amount':amount, 'quantity':1, 'barcode':barcode}
     }
     if(Object.keys(order_json).length != 0){
         order_data.push(order_json)
@@ -305,24 +226,6 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
     if(order_data_content != undefined && order_data_content != null){
         order_data_html = setOrderHtml(order_data)
         order_data_content.innerHTML = order_data_html
-    }
-}
-
-function plusProduct(id) {
-    if(order_data.length>0) {
-        for (let i = 0; i < order_data.length; i++) {
-            if (order_data[i].id == id) {
-                order_data[i].quantity = order_data[i].quantity + 1
-            }
-        }
-        order_data_html = setOrderHtml(order_data)
-        order_data_content.innerHTML = order_data_html
-        if (localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null) {
-            localStorage.setItem('order_data', JSON.stringify(order_data))
-        } else {
-            localStorage.removeItem('order_data')
-            localStorage.setItem('order_data', JSON.stringify(order_data))
-        }
     }
 }
 
@@ -364,24 +267,19 @@ function setOrderHtml(order_data_){
         all_sum = all_sum + order_data_[j].quantity*parseInt(order_data_[j].last_price.replace(/\s/g, ''), 10)
 
         if(parseInt(order_data_[j].discount.replace(/\s/g, ''), 10)>0){
-            discount_html = `<div>${order_data_[j].last_price}</div><del>${order_data_[j].price}</del>`
+            discount_html = `<div><h6>${order_data_[j].last_price}</h6></div><del><h6>${order_data_[j].price}</h6></del>`
         }else{
             discount_html = `${order_data_[j].price}`
         }
         order_data_html_ = order_data_html_ +
             `\n<tr>
+                    <td><h6><b>${order_data_[j].barcode}</b></h6></td>
                     <td><h6><b>${order_data_[j].name+' '+order_data_[j].amount}</b></h6></td>
                     <td><h6><b>${order_data_[j].quantity}</b></h6></td>
                     <td>
                         <h6><b>${discount_html}</b></h6>
                     </td>
                     <td><h6><b>${order_data_[j].quantity*parseInt(order_data_[j].last_price.replace(/\s/g, ''), 10)}</b></h6></td>
-                    <td>
-                        <div class="d-flex">
-                            <button class="edit_button btn" onclick="plusProduct(${order_data_[j].id})">+</button>
-                            <button class="ms-2 edit_button btn" onclick="minusProduct(${order_data_[j].id})">-</button>
-                        </div>
-                    </td>
                 </tr>`
     }
     total_sum.innerText = all_sum
@@ -413,7 +311,6 @@ function paymentPayFunc() {
                         'cashier_id':1,
                         'client_id':client_id,
                         'client_dicount_price':clientDicountPrice,
-                        'general_dicount_price':clientDicountPrice,
                         // 'client_dicount_price':clientDicountPrice,
                     },
                     success: function (data) {

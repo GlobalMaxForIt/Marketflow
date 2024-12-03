@@ -1,7 +1,6 @@
 @php
     $current_user = \Illuminate\Support\Facades\Auth::user();
     $locale = app()->getLocale();
-
 @endphp
     <!doctype html>
 <html lang="en">
@@ -299,19 +298,9 @@
             </li>
 
         </ul>
-
-        <ul class="list-unstyled topnav-menu topnav-menu-left mb-0" style="margin-top: -150px">
-            <li>
-                <a class="button-menu-mobile disable-btn waves-effect">
-                    <i class="fe-menu"></i>
-                </a>
-            </li>
-
-            <li>
-                <h4 class="page-title-main">@yield('title')</h4>
-            </li>
-
-        </ul>
+        <a class="button-menu-mobile waves-effect">
+            <i class="fe-menu"></i>
+        </a>
         <div class="clearfix"></div>
 
     </div>
@@ -383,23 +372,58 @@
             <!--- Sidemenu -->
             <div id="sidebar-menu">
                 <ul id="side-menu">
+{{--                    <li>--}}
+{{--                        <a class="main-menu-top-buttons_link">--}}
+{{--                            <div class="main-menu-buttons_link-img">--}}
+{{--                                @if(isset($current_page))--}}
+{{--                                    @if($current_page == 'dashboard')--}}
+{{--                                        <i class="mdi mdi-home-outline me-1 font-24 active"></i>--}}
+{{--                                    @else--}}
+{{--                                        <i class="mdi mdi-home-outline me-1 font-24"></i>--}}
+{{--                                    @endif--}}
+{{--                                @else--}}
+{{--                                    <i class="mdi mdi-home-outline me-1 font-24"></i>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
+{{--                            <span class="main-menu-top-buttons-link_text @if(isset($current_page)) {{$current_page == 'dashboard'?'active':''}} @endif">--}}
+{{--                                {{translate_title('Home', $lang)}}--}}
+{{--                            </span>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+{{--                    <li>--}}
+{{--                        <a class="main-menu-top-buttons_link">--}}
+{{--                            <div class="main-menu-buttons_link-img">--}}
+{{--                                @if(isset($current_page))--}}
+{{--                                    @if($current_page == 'products')--}}
+{{--                                        <i class="mdi mdi-warehouse me-1 font-24 active"></i>--}}
+{{--                                    @else--}}
+{{--                                        <i class="mdi mdi-warehouse me-1 font-24"></i>--}}
+{{--                                    @endif--}}
+{{--                                @else--}}
+{{--                                    <i class="mdi mdi-warehouse me-1 font-24"></i>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
+{{--                            <span class="main-menu-top-buttons-link_text @if(isset($current_page)) {{$current_page == 'products'?'active':''}} @endif">--}}
+{{--                                {{translate_title('Warehouse', $lang)}}--}}
+{{--                            </span>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
                     <li>
-                        <a href="{{route('dashboard')}}">
-                            <i class="mdi mdi-home-outline me-1"></i>
-                            <span class="badge bg-success rounded-pill float-end">9+</span>
-                            <span> {{translate_title('Home', $lang)}} </span>
+                        <a href="{{route('cashier.index')}}">
+                            <i class="mdi mdi mdi-home-outline me-1 me-1"></i>
+                            <span> {{translate_title('Dashboard', $lang)}} </span>
                         </a>
                     </li>
                     <li>
                         <a href="{{route('cashier-product.index')}}">
-                            <i class="mdi mdi-warehouse me-1"></i>
+                            <i class="mdi mdi mdi-warehouse me-1 me-1"></i>
                             <span> {{translate_title('Warehouse', $lang)}} </span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('cashbox.index')}}">
+                        <a href="{{route('indexSmall')}}">
                             <i class="mdi mdi-cash-register me-1"></i>
-                            <span> {{translate_title('Cashbox', $lang)}} </span>
+                            <span> {{translate_title('Cashbox small', $lang)}} </span>
                         </a>
                     </li>
                     <li>
@@ -742,6 +766,30 @@
             });
         }
     })
+</script>
+<script>
+    let carousel_product_images = document.getElementById('carousel_product_images')
+    function getImages(images) {
+        console.log(images)
+        let all_images = images.split(' ')
+        let images_content = ''
+        for(let i=0; i<all_images.length; i++){
+            if(i == 0){
+                images_content = images_content +
+                    `<div class="carousel-item active">
+                        <img class="d-block img-fluid" src="${all_images[i]}" alt="First slide">
+                    </div>`
+            }else{
+                images_content = images_content +
+                    `<div class="carousel-item">
+                            <img class="d-block img-fluid" src="${all_images[i]}" alt="First slide">
+                        </div>`
+            }
+        }
+        if(carousel_product_images != undefined && carousel_product_images != null){
+            carousel_product_images.innerHTML = images_content
+        }
+    }
 </script>
 <script src="{{ asset('js/dark-light.js') }}"></script>
 </script>

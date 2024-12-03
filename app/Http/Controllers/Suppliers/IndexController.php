@@ -11,6 +11,7 @@ class IndexController extends Controller
 {
     public $title;
     public $lang;
+    public $current_page = 'user';
 
     public function __construct()
     {
@@ -21,7 +22,8 @@ class IndexController extends Controller
         $lang = App::getLocale();
         return view('suppliers.index', [
             'title'=>$this->title,
-            'lang'=>$lang
+            'lang'=>$lang,
+            'current_page'=>$this->current_page
         ]);
     }
 }

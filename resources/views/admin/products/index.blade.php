@@ -4,7 +4,6 @@
     {{translate_title('Products', $lang)}}
 @endsection
 @section('content')
-{{--    <script src="{{ asset('node_modules/html2pdf.js/dist/html2pdf.bundle.js') }}"></script>--}}
     <div class="main-content-section">
         <div class="order-section">
             <div class="tab-content" id="myCategory">
@@ -48,6 +47,7 @@
                                                 <th>{{translate_title('Barcode', $lang)}}</th>
                                                 <th>{{translate_title('Stock', $lang)}}</th>
                                                 <th>{{translate_title('Price', $lang)}}</th>
+                                                <th>{{translate_title('Cost', $lang)}}</th>
                                                 <th>{{translate_title('Functions', $lang)}}</th>
                                             </tr>
                                         </thead>
@@ -65,6 +65,7 @@
                                                         <del>{{$product['price']}}</del>
                                                     @endif
                                                 </td>
+                                                <td>{{$product['cost']}}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-around align-items-center height_50 function_buttons">
                                                         <a class="edit_button btn" href="{{route('cashier-product.edit', $product['id'])}}">
@@ -116,6 +117,7 @@
                                                     <th>{{translate_title('Barcode', $lang)}}</th>
                                                     <th>{{translate_title('Stock', $lang)}}</th>
                                                     <th>{{translate_title('Price', $lang)}}</th>
+                                                    <th>{{translate_title('Cost', $lang)}}</th>
                                                     <th>{{translate_title('Functions', $lang)}}</th>
                                                 </tr>
                                             </thead>
@@ -134,6 +136,7 @@
                                                                 <del>{{$product['price']}}</del>
                                                             @endif
                                                         </td>
+                                                        <td>{{$product['cost']}}</td>
                                                         <td>
                                                             <div class="d-flex justify-content-around align-items-center height_50 function_buttons">
                                                                 <a class="edit_button btn" href="{{route('cashier-product.edit', $product['id'])}}">
@@ -212,13 +215,24 @@
                             {{translate_title('Please enter price', $lang)}}
                         </div>
                     </div>
+                    <div class="position-relative mb-3">
+                        <label for="price" class="form-label">{{translate_title('Cost', $lang)}}</label>
+                        <input type="text" id="cost" class="form-control" name="cost" required>
+                        <div class="invalid-tooltip">
+                            {{translate_title('Please enter cost', $lang)}}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{{translate_title('Fast selling goods', $lang)}}</label>
+                        <input type="checkbox" id="fast_selling_goods" data-plugin="switchery" data-color="#3db9dc" name="fast_selling_goods"/>
+                    </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">{{translate_title('Description', $lang)}}</label>
                         <textarea id="description" class="form-control" name="description" cols="30" rows="10"></textarea>
                     </div>
                     <div class="position-relative mb-3">
                         <label for="barcode" class="form-label">{{translate_title('Barcode', $lang)}}</label>
-                        <input type="text" id="barcode" class="form-control" name="barcode" required>
+                        <input type="text" id="barcode" class="form-control" name="barcode">
                         <div class="invalid-tooltip">
                             {{translate_title('Please enter barcode', $lang)}}
                         </div>
@@ -241,7 +255,7 @@
                         <input type="file" id="image_input" name="images[]" class="form-control d-none" multiple>
                     </div>
                     <div class="position-relative form-floating mb-3">
-                        <select class="form-select" name="unit" id="unit" aria-label="Floating label select example" required>
+                        <select class="form-select" name="unit" id="unit" aria-label="Floating label select example">
                             @foreach($units as $unit)
                                 <option value="{{$unit->id}}">{{$unit->name}}</option>
                             @endforeach

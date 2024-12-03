@@ -25,11 +25,19 @@
                         </div>
                         <div class="row">
                             <div class="col-6 d-flex overflow-auto">
+                                @php
+                                    $i = -1;
+                                @endphp
                                 @foreach($store['images'] as $image)
+                                    @php
+                                        $i = $i + 1;
+                                        $image_text = explode('/', $image);
+                                        $image_name = end($image_text)
+                                    @endphp
                                     <div class="mb-3 product_image">
                                         <div class="d-flex justify-content-between">
                                             <img src="{{$image}}" alt="">
-                                            <a class="delete_product_func">X</a>
+                                            <a class="delete_product_func" onclick="deleteProductFunc('{{$image_name}}', '{{$i}}')">X</a>
                                         </div>
                                     </div>
                                 @endforeach
@@ -121,31 +129,25 @@
             @endforeach
         @endif
 
-
-        function deleteProductFunc(item, val) {
-            delete_product_func[item].addEventListener('click', function (e) {
-                e.preventDefault()
-                $.ajax({
-                    url: '/api/delete-company',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: {
-                        id:"{{$store['id']}}",
-                        product_name: product_images[item]
-                    },
-                    success: function(data){
-                        if(data.status == true){
-                            toastr.success(deleted_text)
-                        }
+        function deleteProductFunc(image_name, index){
+            $.ajax({
+                url: '/api/delete-store',
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    id:"{{$store['id']}}",
+                    product_name: image_name
+                },
+                success: function(data){
+                    if(data.status == true){
+                        toastr.success(deleted_text)
                     }
-                });
-                if(!product_image[item].classList.contains('display-none')){
-                    product_image[item].classList.add('display-none')
                 }
-            })
+            });
+            if(!product_image[index].classList.contains('display-none')){
+                product_image[index].classList.add('display-none')
+            }
         }
-        Object.keys(delete_product_func).forEach(deleteProductFunc)
-
 
         let sessionSuccess ="{{session('status')}}";
         if(sessionSuccess){

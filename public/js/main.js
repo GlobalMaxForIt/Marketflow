@@ -42,7 +42,6 @@ if(default_image_content != undefined && default_image_content != null && image_
     });
 }
 
-
 let default_image_content_ = document.querySelector('.default_image_content_')
 let image_input_ = document.getElementById('image_input_')
 let images_quantity_ = document.getElementById('images_quantity_')
@@ -60,7 +59,6 @@ if(default_image_content_ != undefined && default_image_content_ != null && imag
         }
     });
 }
-
 
 let default_image_content__ = document.querySelector('.default_image_content__')
 let image_input__ = document.getElementById('image_input__')

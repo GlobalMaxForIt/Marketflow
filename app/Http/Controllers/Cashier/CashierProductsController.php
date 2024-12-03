@@ -13,6 +13,7 @@ use App\Service\SaveImages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 
 class CashierProductsController extends Controller
 {
@@ -25,7 +26,6 @@ class CashierProductsController extends Controller
 
     public function __construct(ProductsCategoriesService $productsCategoriesService, SaveImages $saveImages, ProductsService $productsService)
     {
-        $user = Auth::user();
         $this->title = $this->getTableTitle('Products');
         $this->productsCategoriesService = $productsCategoriesService;
         $this->saveImages = $saveImages;
@@ -58,6 +58,13 @@ class CashierProductsController extends Controller
                 $products_ = Products::orderBy('created_at', 'desc')->where('products_categories_id', $sub_category->id)->where('store_id', $user->store_id)->get();
                 $products = [];
                 foreach ($products_ as $product) {
+                    $product_small_image = storage_path('app/public/products/small/'.$product->image);
+                    if(file_exists($product_small_image)){
+                        $small_image = asset('storage/products/small/'.$product->image);
+                    }else{
+                        $small_image = asset('icon/no_photo.jpg');
+                    }
+
                     if($product->discount){
                         if($product->discount->percent&& $product->price){
                             $discount = $this->getDiscount($product->discount->percent, $product->price);
@@ -74,6 +81,7 @@ class CashierProductsController extends Controller
                         'amount'=>$product->amount,
                         'stock'=>$product->stock,
                         'cost'=>$product->cost,
+                        'small_image'=>$small_image,
                         'price'=>number_format((int)$product->price, 0, '', ' '),
                         'discount'=>number_format($discount, 0, '', ' '),
                         'last_price'=>number_format((int)$product->price - $discount, 0, '', ' '),
@@ -102,8 +110,8 @@ class CashierProductsController extends Controller
             'products_categories'=>$categoryData,
             'productsSubCategories'=>$productsSubCategories,
             'title'=>$this->title,
-            'current_page'=>$this->current_page,
-            'lang'=>$language
+            'lang'=>$language,
+            'current_page'=>$this->current_page
         ]);
     }
 
@@ -130,23 +138,29 @@ class CashierProductsController extends Controller
         $products->amount = $request->amount;
         $products->barcode = $request->barcode;
         $products->stock = $request->stock;
+        if($request->fast_selling_goods){
+            $products->fast_selling_goods = 1;
+        }
         if($user->store_id){
             $products->store_id = $user->store_id;
         }
         if($user->company_id){
             $products->company_id = $user->company_id;
         }
-        $products->save();
+        if($request->file('small_image')) {
+            $products->image = $this->saveImages->saveSmallImage($request->file('small_image'));
+        }
 
         $product_info = new ProductInfo();
-        $product_info->product_id = $products->id;
         $product_info->description = $request->description;
         $product_info->unit_id = $request->unit;
         $images = $request->file('images');
         $product_info->images = $this->saveImages->imageSave($products, $images, 'store', 'products');
+        $products->save();
         $product_info->status = $request->status;
         $product_info->manufactured_date = $request->manufactured_date;
         $product_info->expired_date =  $request->expired_date;
+        $product_info->product_id = $products->id;
         $product_info->save();
         return redirect()->route('cashier-product.index')->with('success', translate_title('Successfully created', $this->lang));
     }
@@ -176,17 +190,26 @@ class CashierProductsController extends Controller
             }
         }
 
+        $product_small_image = storage_path('app/public/products/small/'.$product->image);
+        if(file_exists($product_small_image)){
+            $small_image = asset('storage/products/small/'.$product->image);
+        }else{
+            $small_image = asset('icon/no_photo.jpg');
+        }
+
+
         $products_categories = ProductsCategories::where('step', 0)->get();
         return view('cashier.products.edit', [
             'product'=>$product,
+            'small_image'=>$small_image,
             'product_info'=>$product_info,
             'current_sub_category_id'=>$current_sub_category_id,
             'current_category'=>$current_category,
             'products_categories'=>$products_categories,
             'images'=>$images, 'title'=>$this->title,
-            'current_page'=>$this->current_page,
             'units'=>$units,
-            'lang'=>$lang
+            'lang'=>$lang, 'user'=>$user,
+            'current_page'=>$this->current_page
         ]);
     }
 
@@ -218,10 +241,10 @@ class CashierProductsController extends Controller
                         }
                     }
                     if($is_image == 0){
-                        $images = [asset('storage/icon/no_photo.jpg')];
+                        $images = [asset('icon/no_photo.jpg')];
                     }
                 }else{
-                    $images = [asset('storage/icon/no_photo.jpg')];
+                    $images = [asset('icon/no_photo.jpg')];
                 }
                 if($product_info->status == 0) {
                     $status = translate_title('Active', $this->lang);
@@ -234,6 +257,8 @@ class CashierProductsController extends Controller
                 if($product_info->unit){
                     $unit = $product_info->unit->name;
                 }
+                $manufactured_date = $product_info->manufactured_date;
+                $expired_date = $product_info->expired_date;
             }
             $product_categories_ = $product->products_categories;
             if($product_categories_){
@@ -251,6 +276,11 @@ class CashierProductsController extends Controller
             }else{
                 $discount = 0;
             }
+            if($product->fast_selling_goods){
+                $fast_selling_goods = translate_title('Yes');
+            }else{
+                $fast_selling_goods = translate_title('No');
+            }
             $store_ = $product->store;
             if($store_){
                 $store = $store_->name;
@@ -258,6 +288,12 @@ class CashierProductsController extends Controller
             $company_ = $product->company_;
             if($company_){
                 $company = $company_->name;
+            }
+            $product_small_image = storage_path('app/public/products/small/'.$product->image);
+            if(file_exists($product_small_image)){
+                $small_image = asset('storage/products/small/'.$product->image);
+            }else{
+                $small_image = asset('icon/no_photo.jpg');
             }
             $array_product=[
                 'id'=>$product->id,
@@ -271,20 +307,22 @@ class CashierProductsController extends Controller
                 'barcode'=>$product->barcode,
                 'stock'=>$product->stock,
                 'cost'=>$product->cost,
-                'manufactured_date'=>$product->manufactured_date,
-                'expired_date'=>$product->expired_date,
+                'fast_selling_goods'=>$fast_selling_goods,
+                'manufactured_date'=>$manufactured_date,
+                'expired_date'=>$expired_date,
                 'store'=>$store,
                 'company'=>$company,
                 'unit'=>$unit,
                 'status'=>$status,
                 'images'=>$images,
+                'small_image'=>$small_image,
                 'created_at'=>$product->created_at,
-                'updated_at'=>$product->updated_at,
+                'updated_at'=>$product->updated_at
             ];
         }else{
             return redirect()->back()->with('status', 'array_products');
         }
-        return view('cashier.products.show', ['array_product'=>$array_product, 'lang'=>$language]);
+        return view('cashier.products.show', ['array_product'=>$array_product, 'lang'=>$language, 'current_page'=>$this->current_page]);
     }
 
     /**
@@ -317,20 +355,32 @@ class CashierProductsController extends Controller
         if($user->company_id){
             $products->company_id = $user->company_id;
         }
-        $products->save();
-
-        $product_info = $products->product_info;
-        if($product_info){
-            $product_info->product_id = $products->id;
-            $product_info->description = $request->description;
-            $product_info->unit_id = $request->unit;
-            $images = $request->file('images');
-            $product_info->images = $this->saveImages->imageSave($products, $images, 'store', 'products');
-            $product_info->status = $request->status;
-            $product_info->manufactured_date = $request->manufactured_date;
-            $product_info->expired_date =  $request->expired_date;
-            $product_info->save();
+        if($request->fast_selling_goods){
+            $products->fast_selling_goods = 1;
+        }else{
+            $products->fast_selling_goods = 0;
         }
+        $product_image = storage_path('app/public/products/small/'.$products->image);
+        if(file_exists($product_image)){
+            unlink($product_image);
+        }
+        $images = $request->file('images');
+        if($request->file('small_image')) {
+            $products->image = $this->saveImages->saveSmallImage($request->file('small_image'));
+        }
+        $product_info = $products->product_info;
+        if(!$product_info) {
+            $product_info = new ProductInfo();
+        }
+        $product_info->product_id = $products->id;
+        $product_info->description = $request->description;
+        $product_info->unit_id = $request->unit;
+        $product_info->images = $this->saveImages->imageSave($products, $images, 'store', 'products');
+        $product_info->status = $request->status;
+        $product_info->manufactured_date = $request->manufactured_date;
+        $product_info->expired_date =  $request->expired_date;
+        $product_info->save();
+        $products->save();
         return redirect()->route('cashier-product.index')->with('success', translate_title('Successfully updated', $this->lang));
     }
 
@@ -341,26 +391,31 @@ class CashierProductsController extends Controller
     {
         $user = Auth::user();
         $products = Products::where('id', $id)->where('store_id', $user->store_id)->first();
-        $product_info = $products->product_info;
-        if($product_info){
-            if($product_info->images){
-                $images = json_decode($product_info->images);
-                foreach ($images as $image){
-                    $product_image = storage_path('app/public/products/'.$image);
-                    if(file_exists($product_image)){
-                        unlink($product_image);
+        if($products){
+            $product_image_small = storage_path('app/public/products/small/'.$products->image);
+            if(file_exists($product_image_small)){
+                unlink($product_image_small);
+            }
+            $product_info = $products->product_info;
+            if($product_info){
+                if($product_info->images){
+                    $images = json_decode($product_info->images);
+                    foreach ($images as $image){
+                        $product_image = storage_path('app/public/products/'.$image);
+                        if(file_exists($product_image)){
+                            unlink($product_image);
+                        }
                     }
                 }
+                $product_info->delete();
             }
-            $product_info->delete();
+            $products->delete();
         }
-        $products->delete();
         return redirect()->route('cashier-product.index')->with('success', translate_title('Successfully deleted', $this->lang));
     }
 
     public function deleteProductImage(Request $request){
-        $user = Auth::user();
-        $model = Products::where('id', $request->id)->where('store_id', $user->store_id)->first();
+        $model = Products::where('id', $request->id)->where('store_id', $request->store_id)->first();
         $product_info = $model->product_info;
         $this->productsService->deleteImage($request, $product_info, 'products');
         return response()->json([
@@ -372,6 +427,76 @@ class CashierProductsController extends Controller
     public function getDiscount($percent, $price){
         $discount = (int)$price*(int)$percent/100;
         return $discount;
+    }
+
+    public function getProductsByCategory(Request $request)
+    {
+        $products_category = ProductsCategories::find($request->category_id);
+        $data = [];
+        $products_data = [];
+        $category_ = [];
+        $subCategory = [];
+        $categories_id = [];
+
+        if ($products_category) {
+            if ($products_category->step == 0) {
+                $category_ = [
+                    'id' => $products_category->id,
+                    'name' => $products_category->name,
+                ];
+                $categories_id[] = $products_category->id;
+                foreach($products_category->subcategory as $sub__category){
+                    $categories_id[] = $sub__category->id;
+                    $subCategory[] = [
+                        'id' => $sub__category->id,
+                        'name' => $sub__category->name,
+                    ];
+                }
+
+            } elseif ($products_category->step == 1) {
+                $category_ = [
+                    'id' => $products_category->category->id,
+                    'name' => $products_category->category->name,
+                ];
+
+                $subCategory = [
+                    'id' => $products_category->id,
+                    'name' => $products_category->name,
+                ];
+                $categories_id = [$products_category->id, $products_category->category->id];
+            }
+
+            $products = Products::select('id', 'name', 'amount', 'products_categories_id')->with('discount')->whereIn('products_categories_id', $categories_id)->get();
+        } else {
+            $subCategory = [];
+            $products = [];
+            $category_= [];
+        }
+
+        foreach ($products as $product) {
+            $product_name = $product->name??'';
+            $product_amount = $product->amount?' '.$product->amount:'';
+            $products_data[] = [
+                'id' => $product->id,
+                'name' => $product_name.''.$product_amount,
+                'products_category_id' => $product->products_categories_id,
+                'discount' => $product->discount ? $product->discount->percent : NULL,
+                'price_discount' => $product->discount? $product->price - ($product->price / 100 * $product->discount->percent) : NULL,
+            ];
+        }
+
+        $data[] = [
+            'category' => $category_,
+            'sub_category' => $subCategory,
+            'products' => $products_data,
+        ];
+        $message = 'Success';
+
+        return response()->json([
+            'message'=>$message,
+            'status'=>false,
+            'data'=>$data
+        ]);
     }
 
 }

@@ -22,6 +22,7 @@ class UserController extends Controller
     public $user_service;
     public $address_service;
     public $lang;
+    public $current_page = 'user';
 
     public function __construct(UserService $user_service, AddressService $addressService)
     {
@@ -112,7 +113,8 @@ class UserController extends Controller
             'organizations'=>$organizations,
             'title'=>$this->title,
             'roles'=>$roles,
-            'lang'=>$lang
+            'lang'=>$lang,
+            'current_page'=>$this->current_page
         ]);
     }
 
@@ -286,7 +288,8 @@ class UserController extends Controller
             'companies'=>$companies,
             'organizations'=>$organizations,
             'title'=>$this->title,
-            'lang'=>$lang
+            'lang'=>$lang,
+            'current_page'=>$this->current_page
         ]);
     }
 
@@ -384,7 +387,8 @@ class UserController extends Controller
         return view('superadmin.stuffs.show', [
             'user'=>$user_,
             'title'=>$this->title,
-            'lang'=>$lang
+            'lang'=>$lang,
+            'current_page'=>$this->current_page
         ]);
     }
 

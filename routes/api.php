@@ -8,6 +8,7 @@ use App\Http\Controllers\Superadmin\CompanyController;
 use App\Http\Controllers\Superadmin\OrganizationController;
 use App\Http\Controllers\Superadmin\StoreController;
 use App\Http\Controllers\Cashier\CashboxController;
+use App\Http\Controllers\Cashier\CashierProductsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +26,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('delete-product', [ProductsController::class, 'deleteProductImage']);
+Route::post('cashier-delete-product', [CashierProductsController::class, 'deleteProductImage']);
 Route::post('delete-company', [CompanyController::class, 'deleteCompanyImage']);
 Route::post('delete-organization', [OrganizationController::class, 'deleteOrganizationImage']);
 Route::post('delete-store', [StoreController::class, 'deleteStoreImage']);
 Route::get('get-stores/{id}', [StoreController::class, 'getStores']);
 
+Route::get('get-products-by-category', [CashierProductsController::class, 'getProductsByCategory']);
 Route::post('payment-pay', [CashboxController::class, 'paymentPay'])->name('paymentPay');

@@ -130,6 +130,9 @@
     margin-bottom: 28px;
     text-align: center;
 }
+.main-menu-top-buttons_link .active{
+    color: #FB850E;
+}
 #side-menu a{
     text-decoration: none;
 }
@@ -148,8 +151,11 @@
 }
 .left-side-menu{
     overflow-y: auto;
-    z-index: 1004;
-    margin-top: -70px
+    z-index: 1004 !important;
+    margin-top: -70px;
+    width: 204px;
+    min-height: 100vh;
+    display: block !important;
 }
 .main-menu-buttons_link-img{
     display: flex;
@@ -1495,7 +1501,7 @@ input[type=number]::-webkit-outer-spin-button {
 .modal-header{
     border-bottom: 0px !important;
 }
-.default_image_content{
+.default_image_content, .default_image_content_{
     height: 119px;
     width: 119px;
     display: flex;
@@ -1504,7 +1510,7 @@ input[type=number]::-webkit-outer-spin-button {
     background-color: #F2F2F2;
     border-radius: 10px;
 }
-.default_image_content img{
+.default_image_content img, .default_image_content_ img{
     height: 32px;
 }
 .table_title{
@@ -2051,6 +2057,7 @@ del{
     position: fixed;
     width: 33%;
     bottom: 24px;
+    z-index: 1004;
 }
 .position_fixed_bottom{
     position: fixed;
@@ -2158,6 +2165,7 @@ body{
 }
 .content-page{
     height: 100%!important;
+    margin-left: 204px !important;
 }
 .flatpickr-monthDropdown-months{
     color: #7E7F80!important;
@@ -2186,4 +2194,40 @@ textarea, textarea:focus, .form-control, .form-control:focus, .btn-close{
 }
 .navbar-custom{
     box-shadow: 1px 4px 8px rgb(0, 0, 0, 0.4);
+}
+.menu_bar{
+    display: inline-flex !important;
+    align-items: center;
+    margin-left: 214px;
+}
+.button-menu-mobile{
+    text-align: center;
+}
+.user-box{
+    display: block !important;
+    min-height: 84px;
+}
+body[data-leftbar-size=condensed] .user-box{
+    display: block !important;
+}
+body[data-leftbar-size=condensed] .menu_bar{
+    margin-left: 0px !important;
+}
+body[data-leftbar-size=condensed] .user-box div, body[data-leftbar-size=condensed] .user-box ul{
+    display: none !important;
+}
+body[data-leftbar-size=condensed] .left-side-menu{
+    position: fixed !important;
+    min-height: 100vh;
+    z-index: 4 !important;
+}
+footer{
+    left:204px!important;
+}
+body[data-leftbar-size=condensed]:not([data-layout=compact]){
+    min-height: 100vh !important;
+}
+body[data-leftbar-size=condensed] .content-page {
+    margin-left: 74px !important;
+    padding: 0 10px;
 }

@@ -17,6 +17,7 @@ class ProductsCategoriesController extends Controller
     public $title;
     public $productsCategoriesService;
     public $lang;
+    public $current_page = 'category';
 
     public function __construct(ProductsCategoriesService $productsCategoriesService)
     {
@@ -41,7 +42,8 @@ class ProductsCategoriesController extends Controller
             'products_sub_categories'=>$products_sub_categories,
             'products_categories'=>$products_categories,
             'title'=>$this->title,
-            'lang'=>$language
+            'lang'=>$language,
+            'current_page'=>$this->current_page
         ]);
     }
 
@@ -90,7 +92,8 @@ class ProductsCategoriesController extends Controller
         return view('superadmin.products_categories.edit', [
             'products_category'=>$products_category,
             'title'=>$this->title,
-            'lang'=>$lang
+            'lang'=>$lang,
+            'current_page'=>$this->current_page
         ]);
     }
 

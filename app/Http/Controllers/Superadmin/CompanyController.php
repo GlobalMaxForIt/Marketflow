@@ -19,6 +19,7 @@ class CompanyController extends Controller
     public $saveImages;
     public $productsService;
     public $lang;
+    public $current_page = 'company';
 
     public function __construct(SaveImages $saveImages, ProductsService $productsService)
     {
@@ -48,10 +49,10 @@ class CompanyController extends Controller
                     }
                 }
                 if($is_image == 0){
-                    $images = [asset('storage/icon/no_photo.jpg')];
+                    $images = [asset('icon/no_photo.jpg')];
                 }
             }else{
-                $images = [asset('storage/icon/no_photo.jpg')];
+                $images = [asset('icon/no_photo.jpg')];
             }
             $companies[] = [
                 'id'=>$company->id,
@@ -63,7 +64,8 @@ class CompanyController extends Controller
         return view('superadmin.companies.index', [
             'companies'=>$companies,
             'title'=>$this->title,
-            'lang'=>$lang
+            'lang'=>$lang,
+            'current_page'=>$this->current_page
         ]);
     }
 
@@ -118,10 +120,10 @@ class CompanyController extends Controller
                 }
             }
             if($is_image == 0){
-                $images = [asset('storage/icon/no_photo.jpg')];
+                $images = [asset('icon/no_photo.jpg')];
             }
         }else{
-            $images = [asset('storage/icon/no_photo.jpg')];
+            $images = [asset('icon/no_photo.jpg')];
         }
         $company = [
             'id'=>$company_->id,
@@ -134,7 +136,8 @@ class CompanyController extends Controller
             'company'=>$company,
             'images'=>$images_,
             'title'=>$this->title,
-            'lang'=>$lang
+            'lang'=>$lang,
+            'current_page'=>$this->current_page
         ]);
     }
 
@@ -171,11 +174,21 @@ class CompanyController extends Controller
 
     public function deleteCompanyImage(Request $request){
         $model = Company::find($request->id);
-        $this->productsService->deleteImage($request, $model, 'companies');
-        return response()->json([
-            'status'=>true,
-            'message'=>'Success'
-        ], 200);
+        $response = $this->productsService->deleteImage($request, $model, 'companies');
+        if($response){
+            return response()->json([
+                'status'=>true,
+                'message'=>'Success',
+                'data'=>$response
+            ],200);
+        }else{
+            return response()->json([
+                'status'=>true,
+                'message'=>'Success',
+                'data'=>[]
+            ],200);
+        }
+
     }
 
     /**

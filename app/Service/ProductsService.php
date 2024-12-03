@@ -6,6 +6,7 @@ namespace App\Service;
 use Illuminate\Http\Request;
 use App\Models\ProductsCategories;
 use App\Models\Products;
+use Intervention\Image\Facades\Image;
 
 class ProductsService
 {
@@ -18,10 +19,12 @@ class ProductsService
         if(is_array($product_images_base)){
             if(isset($request->product_name)){
                 $selected_product_key = array_search($request->product_name, $product_images_base);
+
                 if(!$request->product_name){
                     $request->product_name = 'no';
                 }
                 $product_main = storage_path("app/public/$images_directory/".$request->product_name);
+
                 if(file_exists($product_main)){
                     unlink($product_main);
                 }
@@ -29,6 +32,8 @@ class ProductsService
             }
             $model->images = json_encode(array_values($product_images_base));
             $model->save();
+        }else{
+            return [];
         }
     }
 
@@ -98,10 +103,10 @@ class ProductsService
                             }
                         }
                         if($is_image == 0){
-                            $images = [asset('storage/icon/no_photo.jpg')];
+                            $images = [asset('icon/no_photo.jpg')];
                         }
                     }else{
-                        $images = [asset('storage/icon/no_photo.jpg')];
+                        $images = [asset('icon/no_photo.jpg')];
                     }
                     if($product->discount){
                         if($product->discount->percent&& $product->price){
@@ -148,4 +153,50 @@ class ProductsService
         ];
         return $allProductsData;
     }
+
+    public function getProducts($products_){
+        $allProducts = [];
+        foreach ($products_ as $product) {
+            if($product->discount){
+                if($product->discount->percent&& $product->price){
+                    $discount = $this->getDiscount($product->discount->percent, $product->price);
+                    $discount_percent = $product->discount->percent;
+                }else{
+                    $discount = 0;
+                    $discount_percent = 0;
+                }
+            }else{
+                $discount = 0;
+                $discount_percent = 0;
+            }
+            $product_small_image = storage_path('app/public/products/small/'.$product->image);
+            if(file_exists($product_small_image)){
+                $small_image = asset('storage/products/small/'.$product->image);
+            }else{
+                $small_image = asset('icon/no_photo.jpg');
+            }
+
+            $array_products = [
+                'id'=>$product->id,
+                'products_categories'=>$product->products_categories,
+                'name'=>$product->name,
+                'amount'=>$product->amount,
+                'price'=>number_format((int)$product->price, 0, '', ' '),
+                'discount'=>number_format($discount, 0, '', ' '),
+                'discount_percent'=>$discount_percent,
+                'last_price'=>number_format((int)$product->price - $discount, 0, '', ' '),
+                'barcode'=>$product->barcode,
+                'image'=>$small_image,
+                'stock'=>$product->stock,
+            ];
+            $allProducts[] = $array_products;
+        }
+        return $allProducts;
+    }
+
+    public function getDiscount($percent, $price){
+        $discount = (int)$price*(int)$percent/100;
+        return $discount;
+    }
+
 }

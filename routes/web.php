@@ -89,6 +89,7 @@ Route::group(['middleware'=>['isCashier', 'language'], 'prefix'=>'cashier'], fun
     Route::resource('cashier-product', CashierProductsController::class);
     Route::post('change-cashier', [CashboxController::class, 'changeCashier'])->name('changeCashier');
     Route::resource('cashbox', CashboxController::class);
+    Route::get('cashbox-small', [CashboxController::class, 'indexSmall'])->name('indexSmall');
     Route::resource('cashier-discount', CashierDiscountController::class);
 });
 Route::group(['middleware'=>['isManager', 'language'], 'prefix'=>'manager'], function(){

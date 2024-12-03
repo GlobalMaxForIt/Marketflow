@@ -19,6 +19,7 @@ class OrganizationController extends Controller
     public $saveImages;
     public $productsService;
     public $lang;
+    public $current_page = 'organization';
 
     public function __construct(SaveImages $saveImages, ProductsService $productsService)
     {
@@ -48,10 +49,10 @@ class OrganizationController extends Controller
                     }
                 }
                 if($is_image == 0){
-                    $images = [asset('storage/icon/no_photo.jpg')];
+                    $images = [asset('icon/no_photo.jpg')];
                 }
             }else{
-                $images = [asset('storage/icon/no_photo.jpg')];
+                $images = [asset('icon/no_photo.jpg')];
             }
             $organizations[] = [
                 'id'=>$organization->id,
@@ -64,7 +65,8 @@ class OrganizationController extends Controller
         return view('superadmin.organizations.index', [
             'organizations'=>$organizations,
             'title'=>$this->title,
-            'lang'=>$lang
+            'lang'=>$lang,
+            'current_page'=>$this->current_page
         ]);
     }
 
@@ -119,10 +121,10 @@ class OrganizationController extends Controller
                 }
             }
             if($is_image == 0){
-                $images = [asset('storage/icon/no_photo.jpg')];
+                $images = [asset('icon/no_photo.jpg')];
             }
         }else{
-            $images = [asset('storage/icon/no_photo.jpg')];
+            $images = [asset('icon/no_photo.jpg')];
         }
         $organization = [
             'id'=>$organization_->id,
@@ -135,7 +137,8 @@ class OrganizationController extends Controller
             'organization'=>$organization,
             'images'=>$images_,
             'title'=>$this->title,
-            'lang'=>$lang
+            'lang'=>$lang,
+            'current_page'=>$this->current_page
         ]);
     }
 

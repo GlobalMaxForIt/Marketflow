@@ -12,6 +12,7 @@ class ProductsSubCategoriesController extends Controller
 {
     public $title;
     public $lang;
+    public $current_page = 'category';
 
     public function __construct()
     {
@@ -59,7 +60,8 @@ class ProductsSubCategoriesController extends Controller
             'products_sub_category'=>$products_sub_category,
             'products_categories'=>$products_categories,
             'title'=>$this->title,
-            'lang'=>$lang
+            'lang'=>$lang,
+            'current_page'=>$this->current_page
         ]);
     }
 

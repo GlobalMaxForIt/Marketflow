@@ -42,28 +42,28 @@
                         <div class="card-body overflow-auto">
                             <table class="restaurant_tables datatable table table-striped dt-responsive nowrap">
                                 <thead>
-                                    <tr>
-                                        <th><h6><b>{{translate_title('Name', $lang)}}</b></h6></th>
-                                        <th><h6><b>{{translate_title('Price', $lang)}}</b></h6></th>
-                                        <th><h6><b>{{translate_title('Stock', $lang)}}</b></h6></th>
-                                        <th><h6><b>{{translate_title('Functions', $lang)}}</b></h6></th>
-                                    </tr>
+                                <tr>
+                                    <th>{{translate_title('Name', $lang)}}</th>
+                                    <th>{{translate_title('Price', $lang)}}</th>
+                                    <th>{{translate_title('Stock', $lang)}}</th>
+                                    <th>{{translate_title('Functions', $lang)}}</th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($allProductsData['products'] as $product)
                                     <tr>
                                         <td class="market_tables_text">
-                                            <span><h6><b>{{$product['name']}}</b></h6></span>
-                                            <span><h6><b>{{$product['amount']}}</b></h6></span>
+                                            <span>{{$product['name']}}</span>
+                                            <span>{{$product['amount']}}</span>
                                         </td>
                                         <td class="market_tables_text">
-                                            <div><span><h6><b>{{$product['last_price']}}</b></h6></span></div>
+                                            <div><span>{{$product['last_price']}}</span></div>
                                             @if($product['discount']>0)
-                                                <del><h6><b>{{$product['price']}}</b></h6></del>
+                                                <del>{{$product['price']}}</del>
                                             @endif
                                         </td>
                                         <td class="market_tables_text">
-                                            <h6><b>{{$product['stock']}}</b></h6>
+                                            {{$product['stock']}}
                                         </td>
                                         <td class="market_tables_text">
                                             <a onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}')" class="edit_button btn">
@@ -111,13 +111,13 @@
                 <div class="right_options" role="presentation">
                     <table class="table table-striped">
                         <thead>
-                            <tr>
-                                <th>{{translate_title('Product name', $lang)}}</th>
-                                <th>{{translate_title('Qty', $lang)}}</th>
-                                <th>{{translate_title('Price', $lang)}}</th>
-                                <th>{{translate_title('Total sum', $lang)}}</th>
-                                <th>{{translate_title('Functions', $lang)}}</th>
-                            </tr>
+                        <tr>
+                            <th>{{translate_title('Product name', $lang)}}</th>
+                            <th>{{translate_title('Qty', $lang)}}</th>
+                            <th>{{translate_title('Price', $lang)}}</th>
+                            <th>{{translate_title('Total sum', $lang)}}</th>
+                            <th>{{translate_title('Functions', $lang)}}</th>
+                        </tr>
                         </thead>
                         <tbody id="order_data_content">
 
@@ -336,7 +336,7 @@
 
 
     </script>
-{{--    <script src="{{asset('js/cities.js')}}"></script>--}}
+    {{--    <script src="{{asset('js/cities.js')}}"></script>--}}
     <script src="{{asset('js/ordering.js')}}"></script>
 @endsection
 

@@ -11,6 +11,7 @@ class IndexController extends Controller
 {
     public $title;
     public $lang;
+    public $current_page = 'dashboard';
 
     public function __construct()
     {
@@ -29,7 +30,8 @@ class IndexController extends Controller
             'performed_orders'=>$performed_orders,
             'cancelled_orders'=>$cancelled_orders,
             'accepted_orders'=>$accepted_orders,
-            'lang'=>$lang
+            'lang'=>$lang,
+            'current_page'=>$this->current_page
         ]);
     }
 }

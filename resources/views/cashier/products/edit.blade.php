@@ -76,13 +76,17 @@
                                     {{translate_title('Please enter cost.', $lang)}}
                                 </div>
                             </div>
+                            <div class="col-6 d-flex align-items-center justify-content-around">
+                                <label class="form-label">{{translate_title('Fast selling foods', $lang)}}</label>
+                                <input type="checkbox" id="fast_selling_goods" {{$product->fast_selling_goods == 1?'checked':''}} data-plugin="switchery" data-color="#3db9dc" name="fast_selling_goods"/>
+                            </div>
                             <div class="col-6">
                                 <label for="description" class="form-label">{{translate_title('Description', $lang)}}</label>
                                 <textarea id="description" class="form-control" name="description" rows="4">{{$product_info->description}}</textarea>
                             </div>
                             <div class="position-relative col-6">
                                 <label for="barcode" class="form-label">{{translate_title('Barcode', $lang)}}</label>
-                                <input type="text" id="barcode" class="form-control" name="barcode" value="{{$product->barcode}}" required>
+                                <input type="text" id="barcode" class="form-control" name="barcode" value="{{$product->barcode}}">
                                 <div class="invalid-tooltip">
                                     {{translate_title('Please enter barcode.', $lang)}}
                                 </div>
@@ -94,8 +98,37 @@
                                     {{translate_title('Please enter stock', $lang)}}
                                 </div>
                             </div>
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <label for="image_input" class="form-label">{{translate_title('Image icon', $lang)}}</label>
+                                    <div class="d-flex justify-content-center">
+                                        <img onclick="showImage('{{$small_image}}')" data-bs-toggle="modal" data-bs-target="#images-modal" src="{{$small_image}}" alt="" height="100px">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <label for="image_input_" class="form-label">{{translate_title('Image icon', $lang)}}</label>
+                                    <div class="d-flex">
+                                        <div class="default_image_content_">
+                                            <img src="{{asset('img/default_image_plus.png')}}" alt="">
+                                        </div>
+                                        <span class="ms-1" id="images_quantity_"></span>
+                                    </div>
+                                    <input type="file" id="image_input_" name="small_image" class="form-control d-none" multiple>
+                                </div>
+                            </div>
                             <div class="col-6 d-flex overflow-auto">
+                                @php
+                                    $i = -1;
+                                @endphp
                                 @foreach($images as $image)
+                                    @php
+                                        $i = $i + 1;
+                                        if(!$image){
+                                            $image = 'no';
+                                        }
+                                    @endphp
                                     @php
                                         $avatar_main = storage_path('app/public/products/'.$image);
                                     @endphp
@@ -103,7 +136,7 @@
                                         <div class="mb-3 product_image">
                                             <div class="d-flex justify-content-between">
                                                 <img src="{{asset('storage/products/'.$image)}}" alt="">
-                                                <a class="delete_product_func">X</a>
+                                                <a class="delete_product_func" onclick="deleteProductFunc('{{$image}}', '{{$i}}')">X</a>
                                             </div>
                                         </div>
                                     @endif
@@ -123,7 +156,7 @@
                             </div>
                             <div class="col-6">
                                 <div class="position-relative form-floating mb-3">
-                                    <select class="form-select" name="unit" id="unit" aria-label="Floating label select example" required>
+                                    <select class="form-select" name="unit" id="unit" aria-label="Floating label select example">
                                         @foreach($units as $unit)
                                             <option value="{{$unit->id}}" {{$product->unit_id == $unit->id?'selected':''}}>{{$unit->name}}</option>
                                         @endforeach
@@ -187,30 +220,27 @@
         category_id.addEventListener('change', function () {
             getSubcategory(subcategory_exists, category_id, subcategory_id, disabled_text)
         })
-        function deleteProductFunc(item, val) {
-            delete_product_func[item].addEventListener('click', function (e) {
-                e.preventDefault()
-                $.ajax({
-                    url: '/api/delete-product',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: {
-                        id:"{{$product->id}}",
-                        product_name: product_images[item]
-                    },
-                    success: function(data){
-                        if(data.status == true){
-                            toastr.success(deleted_text)
-                        }
-                    }
-                });
-                if(!product_image[item].classList.contains('display-none')){
-                    product_image[item].classList.add('display-none')
-                }
-            })
-        }
-        Object.keys(delete_product_func).forEach(deleteProductFunc)
 
+        function deleteProductFunc(image_name, index){
+            $.ajax({
+                url: '/api/cashier-delete-product',
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    id:"{{$product->id}}",
+                    store_id:"{{$user->store_id}}",
+                    product_name: image_name
+                },
+                success: function(data){
+                    if(data.status == true){
+                        toastr.success(deleted_text)
+                    }
+                }
+            });
+            if(!product_image[index].classList.contains('display-none')){
+                product_image[index].classList.add('display-none')
+            }
+        }
 
         let sessionSuccess ="{{session('status')}}";
         if(sessionSuccess){
