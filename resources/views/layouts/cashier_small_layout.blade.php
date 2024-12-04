@@ -167,7 +167,7 @@
             <li class="">
                 <div>
 
-                    <div class="align-items-center d-flex mt-4" id="lang-change">
+                    <div class="align-items-center d-flex" id="lang-change">
                         <a class="buttonUzbDropDownHeader" type="button" id="dropdownMenuButton" role="button"
                            data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="javascript:void(0);">
                             @switch($locale)
@@ -788,8 +788,9 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-body d-flex justify-content-center d-none" id="cardContent">
-                <input class="input-display" type="text" id="card_payment_" readonly>
+                <div class="modal-body d-flex justify-content-center d-none" id="cardContent">
+                    <input class="input-display" type="text" id="card_payment_" readonly>
+                </div>
             </div>
             <div class="modal-footer">
                 <a class="btn modal_close height_50 me-4" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
@@ -837,8 +838,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-
 
 
 <div id="delete_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">

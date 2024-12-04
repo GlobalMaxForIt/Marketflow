@@ -256,10 +256,12 @@ class CashboxController extends Controller
             'quantity'=>0,
         ];
         $products_ = Products::orderBy('created_at', 'desc')->where('store_id', $user->store_id)->whereNotNull('fast_selling_goods')->get();
+        $products_json = Products::where('store_id', $user->store_id)->whereNotNull('barcode')->get();
         $allProducts = $this->productsService->getProducts($products_);
+        $allProductsJson = $this->productsService->getProducts($products_json);
         $allProductsData = [
             'products'=>$allProducts,
-            'json_products'=>json_encode($allProducts),
+            'json_products'=>json_encode($allProductsJson),
             'quantity'=>count($allProducts),
         ];
 

@@ -8,78 +8,70 @@
         .select2-container {
             z-index: 1055 !important; /* Bootstrap modal uchun z-indexdan yuqori qiymat */
         }
-        #input-area {
-            width: 80%;
-            height: 50px;
-            font-size: 20px;
-            margin-bottom: 20px;
+        .key h6, .key_space h6{
+            margin: 0px !important;
         }
-        .keyboard {
-            display: grid;
-            grid-template-columns: repeat(10, 50px);
-            gap: 10px;
-            justify-content: center;
-        }
-        .key {
-            width: 50px;
-            height: 50px;
-            background-color: #ddd;
-            text-align: center;
-            line-height: 50px;
-            font-size: 18px;
-            border-radius: 5px;
-            cursor: pointer;
-            user-select: none;
-        }
-        .key:hover {
-            background-color: #ccc;
+        .accordion-button{
+            padding: 7px;
         }
     </style>
     <div class="row">
         <div class="col-7">
-
-            <textarea id="input-area" placeholder="Yozish uchun shu yerga bosing..."></textarea>
-            <div class="keyboard">
-                <!-- Harflar -->
-                <div class="key">A</div>
-                <div class="key">B</div>
-                <div class="key">C</div>
-                <div class="key">D</div>
-                <div class="key">E</div>
-                <div class="key">F</div>
-                <div class="key">G</div>
-                <div class="key">H</div>
-                <div class="key">I</div>
-                <div class="key">J</div>
-                <!-- Raqamlar -->
-                <div class="key">1</div>
-                <div class="key">2</div>
-                <div class="key">3</div>
-                <div class="key">4</div>
-                <div class="key">5</div>
-                <!-- Belgilar -->
-                <div class="key">@</div>
-                <div class="key">#</div>
-                <div class="key">$</div>
-                <div class="key">%</div>
-                <div class="key">_</div>
-                <!-- Probel -->
-                <div class="key" style="grid-column: span 10;">Space</div>
-            </div>
-
             <div class="main-content-section" id="myDiv">
                 <div class="order-section">
                     <div class="card">
                         <div class="card-body overflow-auto">
+                            <div class="accordion mb-3" id="accordionExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="keyboard_heading">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#keyboard_body" aria-expanded="true"
+                                                aria-controls="collapseOne">
+                                            <span class="fa fa-keyboard"></span>
+                                        </button>
+                                    </h2>
+                                    <div id="keyboard_body" class="accordion-collapse collapse show"
+                                         aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <div class="keyboard">
+                                                <!-- Harflar -->
+                                                <div class="key"><h6>A</h6></div><div class="key"><h6>B</h6></div><div class="key"><h6>C</h6></div><div class="key"><h6>D</h6></div>
+                                                <div class="key"><h6>E</h6></div><div class="key"><h6>F</h6></div><div class="key"><h6>G</h6></div><div class="key"><h6>H</h6></div>
+                                                <div class="key"><h6>I</h6></div><div class="key"><h6>J</h6></div><div class="key"><h6>K</h6></div><div class="key"><h6>L</h6></div>
+                                                <div class="key"><h6>M</h6></div><div class="key"><h6>N</h6></div><div class="key"><h6>O</h6></div><div class="key"><h6>P</h6></div>
+                                                <div class="key"><h6>Q</h6></div><div class="key"><h6>R</h6></div><div class="key"><h6>S</h6></div><div class="key"><h6>T</h6></div>
+                                                <div class="key"><h6>U</h6></div><div class="key"><h6>V</h6></div><div class="key"><h6>W</h6></div><div class="key"><h6>X</h6></div>
+                                                <div class="key"><h6>Y</h6></div><div class="key"><h6>Z</h6></div>
+
+                                                <!-- Raqamlar -->
+                                                <div class="key"><h6>0</h6></div><div class="key"><h6>1</h6></div><div class="key"><h6>2</h6></div><div class="key"><h6>3</h6></div>
+                                                <div class="key"><h6>4</h6></div><div class="key"><h6>5</h6></div><div class="key"><h6>6</h6></div><div class="key"><h6>7</h6></div>
+                                                <div class="key"><h6>8</h6></div><div class="key"><h6>9</h6></div><div class="key"><h6>-</h6></div><div class="key"><h6>_</h6></div>
+                                                <div class="key"><h6>.</h6></div><div class="key"><h6>,</h6></div><div class="key"><h6>/</h6></div><div class="key"><h6>(</h6></div>
+                                                <div class="key"><h6>)</h6></div><div class="key"><h6>[</h6></div><div class="key"><h6>]</h6></div><div class="key"><h6>{</h6></div>
+                                                <div class="key"><h6>}</h6></div><div class="key"><h6>*</h6></div><div class="key"><h6>@</h6></div><div class="key"><h6>#</h6></div>
+                                                <div class="key"><h6>$</h6></div><div class="key"><h6>%</h6></div><div class="key"><h6>#</h6></div><div class="key"><h6>:</h6></div>
+                                                <div class="key"><h6>|</h6></div><div class="key"><h6>&</h6></div><div class="key"><h6>€</h6></div><div class="key"><h6>£</h6></div>
+                                                <div class="key"><h6>₩</h6></div><!-- Probel -->
+                                                <div class="d-flex justify-content-between width_304_pixel">
+                                                    <div class="key key_space"><h6>Space</h6></div>
+                                                    <div class="key_space" onclick="clearKeyboardDisplay()"><h6>Clear</h6></div>
+                                                    <div class="key_space" onclick="backspaceKeyboard()"><h6><span class="mdi mdi-backspace"></span></h6></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <table class="restaurant_tables datatable table table-striped dt-responsive nowrap">
                                 <thead>
-                                <tr>
-                                    <th><h6><b>{{translate_title('Barcode', $lang)}}</b></h6></th>
-                                    <th><h6><b>{{translate_title('Name', $lang)}}</b></h6></th>
-                                    <th><h6><b>{{translate_title('Price', $lang)}}</b></h6></th>
-                                    <th><h6><b>{{translate_title('Stock', $lang)}}</b></h6></th>
-                                    <th><h6><b>{{translate_title('Functions', $lang)}}</b></h6></th>
-                                </tr>
+                                    <tr>
+                                        <th><h6><b>{{translate_title('Barcode', $lang)}}</b></h6></th>
+                                        <th><h6><b>{{translate_title('Name', $lang)}}</b></h6></th>
+                                        <th><h6><b>{{translate_title('Price', $lang)}}</b></h6></th>
+                                        <th><h6><b>{{translate_title('Stock', $lang)}}</b></h6></th>
+                                        <th><h6><b>{{translate_title('Functions', $lang)}}</b></h6></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($allProductsData['products'] as $product)
@@ -98,11 +90,11 @@
                                             @endif
                                         </td>
                                         <td class="market_tables_text">
-                                            <h6><b>{{$product['stock']}}</b></h6>
+                                            <h6><b class="stock__quantity">{{$product['stock']}}</b></h6>
                                         </td>
                                         <td class="market_tables_text">
-                                            <button class="edit_button btn" onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}')">+</button>
-                                            <button class="ms-2 edit_button btn" onclick="minusProduct('{{$product['id']}}')">-</button>
+                                            <button class="edit_button btn" onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', this)">+</button>
+                                            <button class="ms-2 edit_button btn" onclick="minusProduct('{{$product['id']}}', this)">-</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -198,6 +190,14 @@
             </div>
         </div>
     </div>
+
+    <div id="barcode-scanner" class="h-full w-full relative">
+        <!-- Overlay text -->
+        <div id="overlay-text" class="absolute inset-0 flex justify-center items-center bg-opacity-50 text-white text-lg font-bold">
+            Scan barcode here: <span id="barcode_number"></span>
+        </div>
+    </div>
+
     <div id="delete_modal_cashbox" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content modal-filled">
@@ -261,7 +261,7 @@
         let kitchen_index = "{{route('cashbox.index', $lang)}}"
         let json_products = JSON.parse('{!! $allProductsData['json_products'] !!}')
         let page = false
-
+        let input__event = {}
         $(document).ready(function () {
             if($('#client_select_id_2') != undefined && $('#client_select_id_2') != null){
                 $('#client_select_id_2').select2({
@@ -270,19 +270,86 @@
                 });
             }
         })
+        setTimeout(function () {
+            let dataTables_filter_input = document.querySelector('.dataTables_filter input')
+            let keys = document.querySelectorAll('.key');
+            keys.forEach(key => {
+                key.addEventListener('click', () => {
+                    const keyText = key.textContent.trim();
+                    if (keyText === 'Space') {
+                        dataTables_filter_input.value += ' ';
+                    } else {
+                        dataTables_filter_input.value += keyText;
+                    }
 
-        const inputArea = document.getElementById('input-area');
-        const keys = document.querySelectorAll('.key');
-
-        keys.forEach(key => {
-            key.addEventListener('click', () => {
-                const keyText = key.textContent.trim();
-                if (keyText === 'Space') {
-                    inputArea.value += ' ';
-                } else {
-                    inputArea.value += keyText;
-                }
+                    inputEvent(dataTables_filter_input)
+                });
             });
+        }, 544)
+
+        function clearKeyboardDisplay(){
+            let dataTables_filter_input = document.querySelector('.dataTables_filter input')
+            dataTables_filter_input.value = ''
+            inputEvent(dataTables_filter_input)
+        }
+        function backspaceKeyboard(){
+            let dataTables_filter_input = document.querySelector('.dataTables_filter input')
+            if (dataTables_filter_input.value.length > 1) {
+                dataTables_filter_input.value = String(dataTables_filter_input.value).slice(0, -1)
+            } else {
+                dataTables_filter_input.value = ''
+            }
+            inputEvent(dataTables_filter_input)
+        }
+       function inputEvent(dataTables_filter_input){
+           // "input" hodisasini qo'lda qo'zg'atish
+            input__event = new Event('input', { bubbles: true });
+            dataTables_filter_input.dispatchEvent(input__event);
+        }
+    </script>
+
+    <script src="{{asset('js/quagga.min.js')}}"></script>
+    <script>
+
+        let barcode_number = document.getElementById('barcode_number')
+        Quagga.init({
+            inputStream: {
+                name: "Live",
+                type: "LiveStream",
+                target: document.querySelector("#barcode-scanner")
+            },
+            decoder: {
+                readers: ["ean_reader", "code_128_reader", "upc_reader"]
+            },
+            locate: true, // Barcode aniqlash aniqligini oshiradi
+            locator: {
+                patchSize: "medium", // small, medium, large
+                halfSample: true
+            }
+        }, function(err) {
+            if (err) {
+                console.error("Error initializing Quagga:", err);
+                return;
+            }
+            console.log("Initialization finished. Ready to start");
+
+            Quagga.start();
+        });
+
+        // Listen for barcode detection
+        Quagga.onDetected(function(result) {
+            console.log("Barcode detected and read successfully:", result);
+
+            for(let p=0; p<json_products.length; p++){
+                console.log(json_products[p])
+            }
+            // Handle the detected barcode here
+            barcode_number.innerText = result.codeResult.code;
+
+            Quagga.stop(); // Stop scanning after a barcode is detected
+            // setTimeout(() => {
+            //     Quagga.start(); // Restart scanning after 3 seconds
+            // }, 3000);
         });
 
     </script>

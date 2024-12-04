@@ -166,7 +166,7 @@
             <li class="">
                 <div>
 
-                    <div class="align-items-center d-flex mt-4" id="lang-change">
+                    <div class="align-items-center d-flex" id="lang-change">
                         <a class="buttonUzbDropDownHeader" type="button" id="dropdownMenuButton" role="button"
                            data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="javascript:void(0);">
                             @switch($lang)
@@ -299,17 +299,15 @@
 
         </ul>
 
-        <ul class="list-unstyled topnav-menu topnav-menu-left mb-0" style="margin-top: -150px">
+        <ul class="list-unstyled topnav-menu topnav-menu-left mb-0 menu_bar">
             <li>
-                <a class="button-menu-mobile disable-btn waves-effect">
+                <a class="button-menu-mobile waves-effect">
                     <i class="fe-menu"></i>
                 </a>
             </li>
-
             <li>
-                <h4 class="page-title-main">@yield('title')</h4>
+                <h4>@yield('title')</h4>
             </li>
-
         </ul>
         <div class="clearfix"></div>
 

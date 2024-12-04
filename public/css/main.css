@@ -839,6 +839,9 @@
 .width_100_percent{
     width: 100% !important;
 }
+.width_304_pixel{
+    width: 304px !important;
+}
 .width_144_pixel{
     width: 144px !important;
 }
@@ -2230,4 +2233,55 @@ body[data-leftbar-size=condensed]:not([data-layout=compact]){
 body[data-leftbar-size=condensed] .content-page {
     margin-left: 74px !important;
     padding: 0 10px;
+}
+.keyboard {
+    display: grid;
+    grid-template-columns: repeat(14, 24px);
+    gap: 10px;
+    justify-content: center;
+}
+.key {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background-color: #ddd;
+    text-align: center;
+    /*line-height: 50px;*/
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+}
+.key_space {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 94px;
+    height: 24px;
+    background-color: #ddd;
+    text-align: center;
+    /*line-height: 50px;*/
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+}
+.key:hover {
+    background-color: #ccc;
+}
+.dark_header_keyboard{
+    background-color: #404959 !important;
+    color: white !important;
+}
+.dark_keyboard{
+    background-color: dimgrey !important;
+    color: white !important;
+}
+.accordion-button{
+    background-color: rgb(0, 0, 0, 0.24) !important;
+}
+.fa-keyboard{
+    color: white !important;
 }

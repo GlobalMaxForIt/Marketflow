@@ -2,67 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a85e38f-1f56-4a6c-8c17-810c8b388b15" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.editorconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/COSPaneldomainsbtobstoragelogs/laravel.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/IndexController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/IndexController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Cashier/CashboxController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Cashier/CashboxController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Cashier/CashierDiscountController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Cashier/CashierDiscountController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Cashier/CashierProductsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Cashier/CashierProductsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Cashier/IndexController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Cashier/IndexController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ClientsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ClientsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Manager/IndexController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Manager/IndexController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/CompanyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/CompanyController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/DiscountController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/DiscountController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/IndexController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/IndexController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/OrganizationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/OrganizationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/ProductsCategoriesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/ProductsCategoriesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/ProductsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/ProductsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/ProductsSubCategoriesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/ProductsSubCategoriesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/StoreController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/StoreController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/TableTranslationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/TableTranslationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Suppliers/IndexController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Suppliers/IndexController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Service/ProductsService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Service/ProductsService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Service/SaveImages.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Service/SaveImages.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2024_11_09_064151_products.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2024_11_09_064151_products.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/COSPaneldomainsbtobstoragelogs/laravel.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/bootstrap/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/bootstrap/bootstrap.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/cashbox.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/cashbox.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/companies/airbnb.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/companies/amazon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/companies/apple.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/companies/cisco.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/companies/facebook.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/companies/google.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/cashbox.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/cashbox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/dark-light.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/dark-light.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/ordering.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/ordering.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/products/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/products/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/products/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/products/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/stores/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/stores/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/small_ordering.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/small_ordering.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/cashier/cashbox/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/cashier/cashbox/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/cashier/products/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/cashier/products/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/cashier/products/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/cashier/products/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/cashier/products/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/cashier/products/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/cashier/cashbox/index_small.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/cashier/cashbox/index_small.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/admin_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/admin_layout.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/cashbox_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/cashbox_layout.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/cashier_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/cashier_layout.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/supplier_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/supplier_layout.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/superadmin/companies/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/superadmin/companies/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/superadmin/organizations/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/superadmin/organizations/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/superadmin/products/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/superadmin/products/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/superadmin/products/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/superadmin/products/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/superadmin/products/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/superadmin/products/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/superadmin/stores/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/superadmin/stores/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vite.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/cashier_small_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/cashier_small_layout.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/new_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/new_layout.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/superadmin_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/superadmin_layout.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -213,7 +168,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../restaurant" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -280,7 +235,8 @@
       <workItem from="1733118128429" duration="10089000" />
       <workItem from="1733131907116" duration="888000" />
       <workItem from="1733132989103" duration="10424000" />
-      <workItem from="1733204107394" duration="24763000" />
+      <workItem from="1733204107394" duration="24891000" />
+      <workItem from="1733290848922" duration="20749000" />
     </task>
     <servers />
   </component>

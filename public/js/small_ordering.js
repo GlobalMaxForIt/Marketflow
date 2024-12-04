@@ -92,12 +92,10 @@ function hideClientDiscount(discount_content_element) {
     }
 }
 if(localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null){
+    localStorage.removeItem('order_data')
+    localStorage.setItem('order_data', JSON.stringify(order_data))
     order_data = JSON.parse(localStorage.getItem('order_data'))
-    if(order_data.length>0){
-        showHasItems()
-    }else{
-        hideHasItems()
-    }
+    hideHasItems()
 }else{
     hideHasItems()
     order_data = []
@@ -110,6 +108,7 @@ let servicePrice = 0
 let all_sum = 0
 let client_id = 0
 let total_all_left_sum = 0
+let stock_int = 0
 let confirm_client_discount = document.getElementById('confirm_client_discount')
 let client_select_id_2 = document.getElementById('client_select_id_2')
 let total_left_sum = document.getElementById('total_left_sum')
@@ -193,43 +192,70 @@ function truncuateCashboxFunc(){
     order_data_content.innerHTML = order_data_html
 }
 
-function addToOrder(id, name, price, discount, discount_percent, last_price, amount, barcode) {
+function addToOrder(id, name, price, discount, discount_percent, last_price, amount, barcode, this_element) {
+    let get_stock_element = this_element.parentElement.parentElement.querySelector('.stock__quantity')
+    stock_int = parseInt(get_stock_element.innerText)
     is_exist = false
     order_json = {}
-    if(order_data.length>0){
-        for(let i = 0; i<order_data.length; i++){
-            if(order_data[i].id == id){
-                order_data[i].quantity = order_data[i].quantity + 1
-                is_exist = true
+    if(stock_int > 0) {
+        if (order_data.length > 0) {
+            for (let i = 0; i < order_data.length; i++) {
+                if (order_data[i].id == id) {
+                    order_data[i].quantity = order_data[i].quantity + 1
+                    is_exist = true
+                }
+            }
+            if (!is_exist) {
+                order_json = {
+                    'id': id,
+                    'name': name,
+                    'price': price,
+                    'discount': discount,
+                    'discount_percent': discount_percent,
+                    'last_price': last_price,
+                    'amount': amount,
+                    'quantity': 1,
+                    'barcode': barcode
+                }
+            }
+        } else {
+            order_json = {
+                'id': id,
+                'name': name,
+                'price': price,
+                'discount': discount,
+                'discount_percent': discount_percent,
+                'last_price': last_price,
+                'amount': amount,
+                'quantity': 1,
+                'barcode': barcode
             }
         }
-        if(!is_exist){
-            order_json = {'id':id, 'name':name, 'price':price, 'discount':discount, 'discount_percent':discount_percent, 'last_price':last_price, 'amount':amount, 'quantity':1, 'barcode':barcode}
+        if (Object.keys(order_json).length != 0) {
+            order_data.push(order_json)
         }
-    }else{
-        order_json = {'id':id, 'name':name, 'price':price, 'discount':discount, 'discount_percent':discount_percent, 'last_price':last_price, 'amount':amount, 'quantity':1, 'barcode':barcode}
+        if (order_data.length > 0) {
+            showHasItems()
+        } else {
+            hideHasItems()
+        }
+        if (localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null) {
+            localStorage.setItem('order_data', JSON.stringify(order_data))
+        } else {
+            localStorage.removeItem('order_data')
+            localStorage.setItem('order_data', JSON.stringify(order_data))
+        }
+        if (order_data_content != undefined && order_data_content != null) {
+            order_data_html = setOrderHtml(order_data)
+            order_data_content.innerHTML = order_data_html
+        }
+        stock_int = stock_int - 1;
     }
-    if(Object.keys(order_json).length != 0){
-        order_data.push(order_json)
-    }
-    if(order_data.length>0){
-        showHasItems()
-    }else{
-        hideHasItems()
-    }
-    if(localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null){
-        localStorage.setItem('order_data', JSON.stringify(order_data))
-    }else{
-        localStorage.removeItem('order_data')
-        localStorage.setItem('order_data', JSON.stringify(order_data))
-    }
-    if(order_data_content != undefined && order_data_content != null){
-        order_data_html = setOrderHtml(order_data)
-        order_data_content.innerHTML = order_data_html
-    }
+    get_stock_element.innerText = stock_int
 }
-
-function minusProduct(id) {
+function minusProduct(id, this_element) {
+    let get_stock_element = this_element.parentElement.parentElement.querySelector('.stock__quantity')
+    stock_int = parseInt(get_stock_element.innerText)
     if(order_data.length>0){
         for(let i = 0; i<order_data.length; i++){
             if(order_data[i].id == id){
@@ -255,6 +281,8 @@ function minusProduct(id) {
         localStorage.removeItem('order_data')
         localStorage.setItem('order_data', JSON.stringify(order_data))
     }
+    stock_int = stock_int + 1;
+    get_stock_element.innerText = stock_int
 }
 
 function setOrderHtml(order_data_){
@@ -273,14 +301,14 @@ function setOrderHtml(order_data_){
         }
         order_data_html_ = order_data_html_ +
             `\n<tr>
-                    <td><h6><b>${order_data_[j].barcode}</b></h6></td>
-                    <td><h6><b>${order_data_[j].name+' '+order_data_[j].amount}</b></h6></td>
-                    <td><h6><b>${order_data_[j].quantity}</b></h6></td>
-                    <td>
-                        <h6><b>${discount_html}</b></h6>
-                    </td>
-                    <td><h6><b>${order_data_[j].quantity*parseInt(order_data_[j].last_price.replace(/\s/g, ''), 10)}</b></h6></td>
-                </tr>`
+                <td><h6><b>${order_data_[j].barcode}</b></h6></td>
+                <td><h6><b>${order_data_[j].name+' '+order_data_[j].amount}</b></h6></td>
+                <td><h6><b>${order_data_[j].quantity}</b></h6></td>
+                <td>
+                    <h6><b>${discount_html}</b></h6>
+                </td>
+                <td><h6><b>${order_data_[j].quantity*parseInt(order_data_[j].last_price.replace(/\s/g, ''), 10)}</b></h6></td>
+            </tr>`
     }
     total_sum.innerText = all_sum
     setClientPrices()

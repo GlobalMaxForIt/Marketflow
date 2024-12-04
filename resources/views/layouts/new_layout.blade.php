@@ -313,17 +313,15 @@
 
         </ul>
 
-        <ul class="list-unstyled topnav-menu topnav-menu-left mb-0" style="margin-top: -150px">
+        <ul class="list-unstyled topnav-menu topnav-menu-left mb-0 menu_bar">
             <li>
-                <a class="button-menu-mobile disable-btn waves-effect">
+                <a class="button-menu-mobile waves-effect">
                     <i class="fe-menu"></i>
                 </a>
             </li>
-
             <li>
-                <h4 class="page-title-main">@yield('title')</h4>
+                <h4>@yield('title')</h4>
             </li>
-
         </ul>
         <div class="clearfix"></div>
 

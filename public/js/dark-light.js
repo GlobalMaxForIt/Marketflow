@@ -3,9 +3,13 @@ let light_mode = document.getElementById('light-mode-check')
 let dark_mode = document.getElementById('dark-mode-check')
 let body_layout = document.getElementById('body_layout')
 let wrapper = document.getElementById('wrapper')
+let keyboard_heading = document.querySelector('#keyboard_heading button')
+let keyboard_body = document.getElementById('keyboard_body')
 let content_page = document.querySelector('.content-page')
 let modal_content = document.querySelector('.modal-content')
 let layout_local = localStorage.getItem('layout_local')
+let keys_keyboard = document.getElementsByClassName('key')
+let key_space = document.getElementsByClassName('key_space')
 light_mode.addEventListener('click', function (){
     localStorage.setItem('layout_local', 'light')
     removeDarkContainer(content_page)
@@ -41,6 +45,26 @@ function removeDarkContainer(modal_container){
             wrapper.classList.remove('back_dark')
         }
     }
+    if(keyboard_body != undefined && keyboard_body != null){
+        if(keyboard_body.classList.contains('back_dark')){
+            keyboard_body.classList.remove('back_dark')
+        }
+    }
+    if(keyboard_heading != undefined && keyboard_heading != null){
+        if(keyboard_heading.classList.contains('dark_header_keyboard')){
+            keyboard_heading.classList.remove('dark_header_keyboard')
+        }
+    }
+    for(let k=0; k<key_space.length; k++){
+        if(key_space[k].classList.contains('dark_keyboard')){
+            key_space[k].classList.remove('dark_keyboard')
+        }
+    }
+    for(let k=0; k<keys_keyboard.length; k++){
+        if(keys_keyboard[k].classList.contains('dark_keyboard')){
+            keys_keyboard[k].classList.remove('dark_keyboard')
+        }
+    }
 }
 function setDarkContainer(modal_container){
     if(modal_container != undefined && modal_container != null){
@@ -51,6 +75,26 @@ function setDarkContainer(modal_container){
     if(wrapper != undefined && wrapper != null){
         if(!wrapper.classList.contains('back_dark')){
             wrapper.classList.add('back_dark')
+        }
+    }
+    if(keyboard_body != undefined && keyboard_body != null){
+        if(!keyboard_body.classList.contains('back_dark')){
+            keyboard_body.classList.add('back_dark')
+        }
+    }
+    for(let k=0; k<keys_keyboard.length; k++){
+        if(!keys_keyboard[k].classList.contains('dark_keyboard')){
+            keys_keyboard[k].classList.add('dark_keyboard')
+        }
+    }
+    for(let k=0; k<key_space.length; k++){
+        if(!key_space[k].classList.contains('dark_keyboard')){
+            key_space[k].classList.add('dark_keyboard')
+        }
+    }
+    if(keyboard_heading != undefined && keyboard_heading != null){
+        if(!keyboard_heading.classList.contains('dark_header_keyboard')){
+            keyboard_heading.classList.add('dark_header_keyboard')
         }
     }
 }

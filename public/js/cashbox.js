@@ -9,10 +9,10 @@ let entered_cash_sum = '0'
 let entered_card_sum = '0'
 let cash_sum = 0
 let card_sum = 0
-let only_card_sum = 0
 let accepting_sum_int = 0
 let leaving_sum_int = 0
 let change_sum_int = 0
+let klaviaturaNumber = 0
 
 let getTotalSum = 0
 let payment_sum = document.getElementById('payment_sum')
@@ -25,6 +25,7 @@ let cashCalculator = document.getElementById('cashCalculator')
 let cardCalculator = document.getElementById('cardCalculator')
 let cardContent = document.getElementById('cardContent')
 let card_payment_ = document.getElementById('card_payment_')
+let is_set_mixed = false
 
 function format_entered_sum(numbers){
     if(parseInt(numbers)>0){
@@ -69,6 +70,9 @@ function appendNumber(number) {
         entered_cash_sum = String(entered_cash_sum) + number
     }
     cash_sum = parseInt(entered_cash_sum)
+    if(is_set_mixed){
+        autoSetCardSum()
+    }
     setValues(cash_sum, card_sum)
 }
 
@@ -86,6 +90,9 @@ function appendNumberCard(number) {
 // Function to clear the display
 function clearDisplay() {
     cash_sum = 0
+    if(is_set_mixed){
+        autoSetCardSum()
+    }
     setValues(cash_sum, card_sum)
 }
 
@@ -99,10 +106,16 @@ function backspace() {
     if (display.value.length > 1) {
         entered_cash_sum = String(entered_cash_sum).slice(0, -1)
         cash_sum = parseInt(entered_cash_sum)
+        if(is_set_mixed){
+            autoSetCardSum()
+        }
         setValues(cash_sum, card_sum)
     } else {
         entered_cash_sum = '0'
         cash_sum = parseInt(entered_cash_sum)
+        if(is_set_mixed){
+            autoSetCardSum()
+        }
         setValues(cash_sum, card_sum)
     }
 }
@@ -177,6 +190,7 @@ function setCash(button__) {
     entered_cash_sum = '0'
     cash_sum = parseInt(entered_cash_sum)
     card_sum = 0
+    is_set_mixed = false
     setValues(cash_sum, card_sum)
     setPaymentTypes(button__)
 }
@@ -195,6 +209,7 @@ function setCard(button__) {
     entered_cash_sum = '0'
     card_sum = parseInt(entered_card_sum)
     cash_sum = 0
+    is_set_mixed = false
     setValues(cash_sum, card_sum)
     setPaymentTypes(button__)
 }
@@ -208,9 +223,10 @@ function setMixed(button__) {
     if(cardCalculator.classList.contains('d-none')){
         cardCalculator.classList.remove('d-none')
     }
-
+    is_set_mixed = true
     setValues(cash_sum, card_sum)
     setPaymentTypes(button__)
+
 }
 
 $(document).ready(function () {
@@ -235,11 +251,13 @@ $(document).ready(function () {
     })
 })
 
-let klaviaturaNumber = 0
 display.addEventListener('input', () => {
     klaviaturaNumber = 0
     klaviaturaNumber = formatInput(display).replace(/\s+/g, '')
     cash_sum = parseInt(klaviaturaNumber)
+    if(is_set_mixed){
+        autoSetCardSum()
+    }
     setValues(cash_sum, card_sum)
 });
 
@@ -263,4 +281,11 @@ function formatInput(param){
         param.value = '0'
     }
     return param.value
+}
+function autoSetCardSum(){
+    if(parseInt(getTotalSum) - cash_sum>0){
+        card_sum = parseInt(getTotalSum) - cash_sum
+    }else{
+        card_sum = 0
+    }
 }

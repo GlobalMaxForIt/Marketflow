@@ -21,7 +21,7 @@
                                         <ul>
                                             @foreach($sub_category['products'] as $product)
                                                 <li data-jstree='{"type":"file"}'>
-                                                    <a onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}')">
+                                                    <a onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', this)">
                                                         {{$product['name']}}{{$product['amount']}}
                                                     </a>
                                                 </li>
@@ -66,7 +66,7 @@
                                             <h6><b>{{$product['stock']}}</b></h6>
                                         </td>
                                         <td class="market_tables_text">
-                                            <a onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}')" class="edit_button btn">
+                                            <a onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', this)" class="edit_button btn">
                                                 <b><span class="mdi mdi-basket"></span></b>
                                             </a>
                                         </td>

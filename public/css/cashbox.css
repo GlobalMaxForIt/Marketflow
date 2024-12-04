@@ -95,14 +95,14 @@ table{
     display: flex;
     align-items: center;
 }
-.topnav-menu li{
-    margin-left: 14px;
-}
 .btn-outline-secondary{
     width: 30%;
     height: 50px;
     border-radius: 10px;
     border: solid 1px #ccc;
+}
+.btn-outline-secondary:hover h6, .btn-outline-secondary.active h6{
+    color:white !important;
 }
 .modal-header h6{
     margin: 0px !important;
