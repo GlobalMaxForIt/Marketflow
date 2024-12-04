@@ -277,9 +277,9 @@ class CashierProductsController extends Controller
                 $discount = 0;
             }
             if($product->fast_selling_goods){
-                $fast_selling_goods = translate_title('Yes');
+                $fast_selling_goods = translate_title('Yes', $this->lang);
             }else{
-                $fast_selling_goods = translate_title('No');
+                $fast_selling_goods = translate_title('No', $this->lang);
             }
             $store_ = $product->store;
             if($store_){
