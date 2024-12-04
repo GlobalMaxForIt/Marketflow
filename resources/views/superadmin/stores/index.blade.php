@@ -44,7 +44,7 @@
                                                     @endforeach
                                                 </a>
                                             </td>
-                                            <td>{{$store['organization']->name}}</td>
+                                            <td>{{$store['organization']?$store['organization']->name:''}}</td>
                                             <td>
                                                 <div class="d-flex justify-content-around align-items-center height_50 function_buttons">
                                                     <a class="edit_button btn me-2" href="{{route('stores.edit', $store['id'])}}">
