@@ -28,7 +28,9 @@ use App\Http\Controllers\Superadmin\LanguageController;
 |
 */
 
-
+Route::get('/public', function (){
+    return redirect()->route('dashboard');
+});
 Route::group(['middleware'=>['role', 'language']], function(){
     Route::get('/', [HomeController::class, 'index'])->name('dashboard');
 });
