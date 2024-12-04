@@ -1,4 +1,4 @@
-@extends('layouts.cashier_layout')
+@extends('layouts.superadmin_layout')
 
 @section('title')
     {{-- Your page title --}}
