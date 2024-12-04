@@ -2288,3 +2288,7 @@ body[data-leftbar-size=condensed] .content-page {
 .navbar-custom ul, .navbar-custom ul li{
     height: 100%;
 }
+.navbar-custom ul li {
+    display: flex;
+    align-items: center;
+}
