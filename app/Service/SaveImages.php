@@ -26,7 +26,6 @@ class SaveImages
 
             // Tasvirni olish
             $ProductImage = [];
-            dd($images);
             foreach ($images as $image) {
                 $image_size = $image->getSize();
 
@@ -69,6 +68,7 @@ class SaveImages
 
                 // Yangi fayl nomini yaratish
                 $random = $this->setRandom();
+                dd($image, $image->extension());
                 $product_image_name = $random . ''. date('Y-m-d_h-i-s') . '.' . $image->extension();
                 $img = Image::make($image);
                 // Agar kichraytirish parametri mavjud bo'lsa
