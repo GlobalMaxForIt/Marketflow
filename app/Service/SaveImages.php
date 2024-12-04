@@ -26,6 +26,7 @@ class SaveImages
 
             // Tasvirni olish
             $ProductImage = [];
+            dd($images);
             foreach ($images as $image) {
                 $image_size = $image->getSize();
 
