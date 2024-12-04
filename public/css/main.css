@@ -1705,6 +1705,9 @@ input[type=number]::-webkit-outer-spin-button {
 .delete_modal_close{
     width: 100px;
     background-color: #FB850E;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .delete_modal_confirm{
     width: 100px;
