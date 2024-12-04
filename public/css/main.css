@@ -2285,3 +2285,6 @@ body[data-leftbar-size=condensed] .content-page {
 .fa-keyboard{
     color: white !important;
 }
+.navbar-custom ul, .navbar-custom ul li{
+    height: 100%;
+}
