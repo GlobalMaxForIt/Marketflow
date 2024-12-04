@@ -122,7 +122,7 @@
                 method: 'POST',
                 dataType: 'json',
                 data: {
-                    id:"{{$company['id']}}",
+                    id:"{{$organization['id']}}",
                     product_name: image_name
                 },
                 success: function(data){
