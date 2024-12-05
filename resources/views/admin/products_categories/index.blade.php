@@ -37,17 +37,17 @@
                             <table class="restaurant_tables datatable table table-striped table-bordered dt-responsive nowrap">
                                 <thead>
                                 <tr>
-                                    <th>{{translate_title('Id', $lang)}}</th>
-                                    <th>{{translate_title('Name', $lang)}}</th>
-                                    <th>{{translate_title('Image', $lang)}}</th>
-                                    <th>{{translate_title('Functions', $lang)}}</th>
+                                    <th><h6>{{translate_title('Id', $lang)}}</h6></th>
+                                    <th><h6>{{translate_title('Name', $lang)}}</h6></th>
+                                    <th><h6>{{translate_title('Image', $lang)}}</h6></th>
+                                    <th><h6>{{translate_title('Functions', $lang)}}</h6></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($products_categories as $products_category)
                                     <tr>
-                                        <td>{{$products_category['id']}}</td>
-                                        <td>{{$products_category['name']}}</td>
+                                        <td><h6>{{$products_category['id']}}</h6></td>
+                                        <td><h6>{{$products_category['name']}}</h6></td>
                                         <td>
                                             <img onclick="showImage('{{$products_category['image']}}')" data-bs-toggle="modal" data-bs-target="#images-modal" src="{{$products_category['image']}}" alt="" height="100px">
                                         </td>
@@ -76,17 +76,17 @@
                             <table class="restaurant_tables datatable table table-striped table-bordered dt-responsive nowrap">
                                 <thead>
                                 <tr>
-                                    <th>{{translate_title('Id', $lang)}}</th>
-                                    <th>{{translate_title('Name', $lang)}}</th>
-                                    <th>{{translate_title('Image', $lang)}}</th>
-                                    <th>{{translate_title('Functions', $lang)}}</th>
+                                    <th><h6>{{translate_title('Id', $lang)}}</h6></th>
+                                    <th><h6>{{translate_title('Name', $lang)}}</h6></th>
+                                    <th><h6>{{translate_title('Image', $lang)}}</h6></th>
+                                    <th><h6>{{translate_title('Functions', $lang)}}</h6></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($products_sub_categories as $products_sub_category)
                                     <tr>
-                                        <td>{{$products_sub_category['id']}}</td>
-                                        <td>{{$products_sub_category['name']}}</td>
+                                        <td><h6>{{$products_sub_category['id']}}</h6></td>
+                                        <td><h6>{{$products_sub_category['name']}}</h6></td>
                                         <td>
                                             <img onclick="showImage('{{$products_sub_category['image']}}')" data-bs-toggle="modal" data-bs-target="#images-modal" src="{{$products_sub_category['image']}}" alt="" height="100px">
                                         </td>

@@ -21,19 +21,19 @@
                                 <table id="datatable-buttons" class="restaurant_tables table table-striped table-bordered dt-responsive nowrap">
                                     <thead>
                                         <tr>
-                                            <th>{{translate_title('Id', $lang)}}</th>
-                                            <th>{{translate_title('Name', $lang)}}</th>
-                                            <th>{{translate_title('Address', $lang)}}</th>
-                                            <th>{{translate_title('Images', $lang)}}</th>
-                                            <th>{{translate_title('Functions', $lang)}}</th>
+                                            <th><h6>{{translate_title('Id', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Name', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Address', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Images', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Functions', $lang)}}</h6></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($companies as $company)
                                         <tr>
-                                            <td class="show_page">{{$company['id']}}</td>
-                                            <td>{{$company['name']}}</td>
-                                            <td>{{$company['address']}}</td>
+                                            <td class="show_page">{{$company['id']}}</h6></td>
+                                            <td><h6>{{$company['name']}}</h6></td>
+                                            <td><h6>{{$company['address']}}</h6></td>
                                             <td>
                                                 <a class="product_images_column" onclick='getImages("{{implode(" ", $company['images'])}}")' data-bs-toggle="modal" data-bs-target="#carousel-modal">
                                                     @foreach($company['images'] as $image)

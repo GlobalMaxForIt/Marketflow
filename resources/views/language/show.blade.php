@@ -18,8 +18,8 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>{{ translate_title('Key', $lang) }}</th>
-                            <th> {{ translate_title('Translation', $lang) }}</th>
+                            <th><h6>{{ translate_title('Key', $lang) }}</h6></th>
+                            <th> {{ translate_title('Translation', $lang) }}</h6></th>
                         </tr>
                     </thead>
 
@@ -30,8 +30,8 @@
                         @endphp
                         @foreach ($lang_keys as $key => $translation)
                             <tr>
-                                <td>{{ $n++ }}</td>
-                                <td class="lang_key">{{ $translation->lang_key??'' }}</td>
+                                <td><h6>{{ $n++ }}</h6></td>
+                                <td class="lang_key">{{ $translation->lang_key??'' }}</h6></td>
                                 <td class="lang_value">
                                     <input type="text" class="form-control value" id="input"
                                            style="width:100%" name="values[{{ $translation->lang_key??'' }}]"

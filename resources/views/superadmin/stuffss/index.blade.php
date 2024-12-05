@@ -22,28 +22,28 @@
                                 <table id="datatable-buttons" class="restaurant_tables table table-striped table-bordered dt-responsive nowrap">
                                     <thead>
                                         <tr>
-                                            <th>{{translate_title('Id', $lang)}}</th>
-                                            <th>{{translate_title('Name', $lang)}}</th>
-                                            <th>{{translate_title('Surname', $lang)}}</th>
-                                            <th>{{translate_title('Image', $lang)}}</th>
-                                            <th>{{translate_title('Old', $lang)}}</th>
-                                            <th>{{translate_title('Role', $lang)}}</th>
-                                            <th>{{translate_title('Status', $lang)}}</th>
-                                            <th>{{translate_title('Functions', $lang)}}</th>
+                                            <th><h6>{{translate_title('Id', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Name', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Surname', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Image', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Old', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Role', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Status', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Functions', $lang)}}</h6></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($users as $user)
                                         <tr>
-                                            <td class="show_page">{{$user['id']}}</td>
-                                            <td>{{$user['name']}}</td>
-                                            <td>{{$user['surname']}}</td>
+                                            <td class="show_page">{{$user['id']}}</h6></td>
+                                            <td><h6>{{$user['name']}}</h6></td>
+                                            <td><h6>{{$user['surname']}}</h6></td>
                                             <td>
                                                 <img onclick="showImage('{{$user['image']?asset("storage/users/".$user['image']):asset('icon/no_photo.jpg')}}')" data-bs-toggle="modal" data-bs-target="#images-modal" src="{{$user['image']?asset("storage/users/".$user['image']):asset('icon/no_photo.jpg')}}" alt="" height="50px">
                                             </td>
-                                            <td>{{$user['old']}}</td>
-                                            <td>{{$user['role']}}</td>
-                                            <td>{{$user['status']}}</td>
+                                            <td><h6>{{$user['old']}}</h6></td>
+                                            <td><h6>{{$user['role']}}</h6></td>
+                                            <td><h6>{{$user['status']}}</h6></td>
                                             <td>
                                                 <div class="d-flex justify-content-around align-items-center height_50 function_buttons">
                                                     <a class="edit_button btn me-2" href="{{route('users.edit', $user['id'])}}">
@@ -272,63 +272,63 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{{translate_title('id', $lang)}}</td>
+                                <td><h6>{{translate_title('id', $lang)}}</h6></td>
                                 <td id="user_info_id"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('name', $lang)}}</td>
+                                <td><h6>{{translate_title('name', $lang)}}</h6></td>
                                 <td id="user_info_name"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('surname', $lang)}}</td>
+                                <td><h6>{{translate_title('surname', $lang)}}</h6></td>
                                 <td id="user_info_surname"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('middlename', $lang)}}</td>
+                                <td><h6>{{translate_title('middlename', $lang)}}</h6></td>
                                 <td id="user_info_middlename"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('phone', $lang)}}</td>
+                                <td><h6>{{translate_title('phone', $lang)}}</h6></td>
                                 <td id="user_info_phone"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('image', $lang)}}</td>
+                                <td><h6>{{translate_title('image', $lang)}}</h6></td>
                                 <td id="user_info_image"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('email', $lang)}}</td>
+                                <td><h6>{{translate_title('email', $lang)}}</h6></td>
                                 <td id="user_info_email"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('old', $lang)}}</td>
+                                <td><h6>{{translate_title('old', $lang)}}</h6></td>
                                 <td id="user_info_old"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('gender', $lang)}}</td>
+                                <td><h6>{{translate_title('gender', $lang)}}</h6></td>
                                 <td id="user_info_gender"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('role', $lang)}}</td>
+                                <td><h6>{{translate_title('role', $lang)}}</h6></td>
                                 <td id="user_info_role"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('passport', $lang)}}</td>
+                                <td><h6>{{translate_title('passport', $lang)}}</h6></td>
                                 <td id="user_info_passport"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('status', $lang)}}</td>
+                                <td><h6>{{translate_title('status', $lang)}}</h6></td>
                                 <td id="user_info_status"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('address', $lang)}}</td>
+                                <td><h6>{{translate_title('address', $lang)}}</h6></td>
                                 <td id="user_info_address"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('company', $lang)}}</td>
+                                <td><h6>{{translate_title('company', $lang)}}</h6></td>
                                 <td id="user_info_company"></td>
                             </tr>
                             <tr>
-                                <td>{{translate_title('organization', $lang)}}</td>
+                                <td><h6>{{translate_title('organization', $lang)}}</h6></td>
                                 <td id="user_info_organization"></td>
                             </tr>
                         </tbody>

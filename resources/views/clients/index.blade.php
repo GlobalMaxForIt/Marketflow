@@ -17,31 +17,31 @@
                     <table id="datatable-buttons" class="restaurant_tables table table-striped table-bordered dt-responsive nowrap mt-4">
                         <thead>
                             <tr>
-                                <th>{{translate_title('Id', $lang)}}</th>
-                                <th>{{translate_title('Name', $lang)}}</th>
-                                <th>{{translate_title('Surname', $lang)}}</th>
-                                <th>{{translate_title('Middlename', $lang)}}</th>
-                                <th>{{translate_title('Phone', $lang)}}</th>
-                                <th>{{translate_title('Image', $lang)}}</th>
-                                <th>{{translate_title('Email', $lang)}}</th>
-                                <th>{{translate_title('Gender', $lang)}}</th>
-                                <th>{{translate_title('Address', $lang)}}</th>
-                                <th>{{translate_title('Notes', $lang)}}</th>
-                                <th>{{translate_title('Functions', $lang)}}</th>
+                                <th><h6>{{translate_title('Id', $lang)}}</h6></th>
+                                <th><h6>{{translate_title('Name', $lang)}}</h6></th>
+                                <th><h6>{{translate_title('Surname', $lang)}}</h6></th>
+                                <th><h6>{{translate_title('Middlename', $lang)}}</h6></th>
+                                <th><h6>{{translate_title('Phone', $lang)}}</h6></th>
+                                <th><h6>{{translate_title('Image', $lang)}}</h6></th>
+                                <th><h6>{{translate_title('Email', $lang)}}</h6></th>
+                                <th><h6>{{translate_title('Gender', $lang)}}</h6></th>
+                                <th><h6>{{translate_title('Address', $lang)}}</h6></th>
+                                <th><h6>{{translate_title('Notes', $lang)}}</h6></th>
+                                <th><h6>{{translate_title('Functions', $lang)}}</h6></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($clients as $client)
                                 <tr>
-                                    <td>{{$client['id']}}</td>
-                                    <td>{{$client['name']}}</td>
-                                    <td>{{$client['surname']}}</td>
-                                    <td>{{$client['middlename']}}</td>
-                                    <td>{{$client['phone']}}</td>
+                                    <td><h6>{{$client['id']}}</h6></td>
+                                    <td><h6>{{$client['name']}}</h6></td>
+                                    <td><h6>{{$client['surname']}}</h6></td>
+                                    <td><h6>{{$client['middlename']}}</h6></td>
+                                    <td><h6>{{$client['phone']}}</h6></td>
                                     <td>
                                         <img onclick="showImage('{{$client['image']}}')" data-bs-toggle="modal" data-bs-target="#images-modal" src="{{$client['image']}}" alt="" height="50px">
                                     </td>
-                                    <td>{{$client['email']}}</td>
+                                    <td><h6>{{$client['email']}}</h6></td>
                                     <td>
                                         @if($client['gender'] == \App\Constants::MALE)
                                             {{translate_title('Male', $lang)}}
@@ -54,7 +54,7 @@
                                             {{$client['address']->name??''}}
                                         @endif
                                     </td>
-                                    <td>{{$client['notes']}}</td>
+                                    <td><h6>{{$client['notes']}}</h6></td>
                                     <td>
                                         <div class="d-flex justify-content-around align-items-center height_50 function_buttons">
                                             <a class="edit_button btn" href="{{route('clients.edit', $client['id'])}}">

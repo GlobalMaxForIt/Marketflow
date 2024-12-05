@@ -43,10 +43,10 @@
                             <table class="restaurant_tables datatable table table-striped dt-responsive nowrap">
                                 <thead>
                                 <tr>
-                                    <th>{{translate_title('Name', $lang)}}</th>
-                                    <th>{{translate_title('Price', $lang)}}</th>
-                                    <th>{{translate_title('Stock', $lang)}}</th>
-                                    <th>{{translate_title('Functions', $lang)}}</th>
+                                    <th><h6>{{translate_title('Name', $lang)}}</h6></th>
+                                    <th><h6>{{translate_title('Price', $lang)}}</h6></th>
+                                    <th><h6>{{translate_title('Stock', $lang)}}</h6></th>
+                                    <th><h6>{{translate_title('Functions', $lang)}}</h6></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -112,11 +112,11 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>{{translate_title('Product name', $lang)}}</th>
-                            <th>{{translate_title('Qty', $lang)}}</th>
-                            <th>{{translate_title('Price', $lang)}}</th>
-                            <th>{{translate_title('Total sum', $lang)}}</th>
-                            <th>{{translate_title('Functions', $lang)}}</th>
+                            <th><h6>{{translate_title('Product name', $lang)}}</h6></th>
+                            <th><h6>{{translate_title('Qty', $lang)}}</h6></th>
+                            <th><h6>{{translate_title('Price', $lang)}}</h6></th>
+                            <th><h6>{{translate_title('Total sum', $lang)}}</h6></th>
+                            <th><h6>{{translate_title('Functions', $lang)}}</h6></th>
                         </tr>
                         </thead>
                         <tbody id="order_data_content">

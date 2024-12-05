@@ -90,7 +90,7 @@
                                             @endif
                                         </td>
                                         <td class="market_tables_text">
-                                            <h6><b class="stock__quantity">{{$product['stock']}}</b></h6>
+                                            <h6><b class="stock__quantity" id="stock__{{$product['id']}}">{{$product['stock']}}</b></h6>
                                         </td>
                                         <td class="market_tables_text">
                                             <button class="edit_button btn" onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', this)">+</button>
@@ -308,7 +308,9 @@
         }
     </script>
 
-    <script src="{{asset('js/quagga.min.js')}}"></script>
+    {{--    <script src="{{asset('js/cities.js')}}"></script>--}}
+    <script src="{{asset('js/small_ordering.js')}}"></script>
+
     <script>
 
         let barcode_number = document.getElementById('barcode_number')
@@ -335,13 +337,13 @@
 
             Quagga.start();
         });
-
         // Listen for barcode detection
         Quagga.onDetected(function(result) {
-            console.log("Barcode detected and read successfully:", result);
-
             for(let p=0; p<json_products.length; p++){
-                console.log(json_products[p])
+                if(json_products[p].barcode == result.codeResult.code){
+                    let current_element_stock = document.getElementById('stock__'+json_products[p].id)
+                    addToOrder(json_products[p].id, json_products[p].name, json_products[p].price, json_products[p].discount, json_products[p].discount_percent, json_products[p].last_price, json_products[p].amount, json_products[p].barcode, current_element_stock)
+                }
             }
             // Handle the detected barcode here
             barcode_number.innerText = result.codeResult.code;
@@ -352,9 +354,11 @@
             // }, 3000);
         });
 
-    </script>
 
-    {{--    <script src="{{asset('js/cities.js')}}"></script>--}}
-    <script src="{{asset('js/small_ordering.js')}}"></script>
+
+
+    </script>
+    <script src="{{asset('js/quagga.min.js')}}"></script>
+
 @endsection
 

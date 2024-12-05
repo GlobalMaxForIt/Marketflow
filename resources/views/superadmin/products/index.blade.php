@@ -42,25 +42,25 @@
                                     <table id="datatable-buttons" class="restaurant_tables table table-striped dt-responsive nowrap">
                                         <thead>
                                             <tr>
-                                                <th>{{translate_title('Id', $lang)}}</th>
-                                                <th>{{translate_title('Name', $lang)}}</th>
-                                                <th>{{translate_title('Amount', $lang)}}</th>
-                                                <th>{{translate_title('Barcode', $lang)}}</th>
-                                                <th>{{translate_title('Stock', $lang)}}</th>
-                                                <th>{{translate_title('Price', $lang)}}</th>
-                                                <th>{{translate_title('Image', $lang)}}</th>
-                                                <th>{{translate_title('Cost', $lang)}}</th>
-                                                <th>{{translate_title('Functions', $lang)}}</th>
+                                                <th><h6>{{translate_title('Id', $lang)}}</h6></th>
+                                                <th><h6>{{translate_title('Name', $lang)}}</h6></th>
+                                                <th><h6>{{translate_title('Amount', $lang)}}</h6></th>
+                                                <th><h6>{{translate_title('Barcode', $lang)}}</h6></th>
+                                                <th><h6>{{translate_title('Stock', $lang)}}</h6></th>
+                                                <th><h6>{{translate_title('Price', $lang)}}</h6></th>
+                                                <th><h6>{{translate_title('Image', $lang)}}</h6></th>
+                                                <th><h6>{{translate_title('Cost', $lang)}}</h6></th>
+                                                <th><h6>{{translate_title('Functions', $lang)}}</h6></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         @foreach($allProductsData['products'] as $product)
                                             <tr>
-                                                <td>{{$product['id']}}</td>
-                                                <td>{{$product['name']}}</td>
-                                                <td>{{$product['amount']}}</td>
-                                                <td>{{$product['barcode']}}</td>
-                                                <td>{{$product['stock']}}</td>
+                                                <td><h6>{{$product['id']}}</h6></td>
+                                                <td><h6>{{$product['name']}}</h6></td>
+                                                <td><h6>{{$product['amount']}}</h6></td>
+                                                <td><h6>{{$product['barcode']}}</h6></td>
+                                                <td><h6>{{$product['stock']}}</h6></td>
                                                 <td>
                                                     <div><span>{{$product['last_price']}}</span></div>
                                                     @if($product['discount']>0)
@@ -70,7 +70,7 @@
                                                 <td>
                                                     <img onclick="showImage('{{$product['small_image']}}')" data-bs-toggle="modal" data-bs-target="#images-modal" src="{{$product['small_image']}}" alt="" height="44px">
                                                 </td>
-                                                <td>{{$product['cost']}}</td>
+                                                <td><h6>{{$product['cost']}}</h6></td>
                                                 <td>
                                                     <div class="d-flex justify-content-around align-items-center height_50 function_buttons">
                                                         <a class="edit_button btn" href="{{route('product.edit', $product['id'])}}">
@@ -116,26 +116,26 @@
                                         <table class="restaurant_tables table datatable table-striped dt-responsive nowrap">
                                             <thead>
                                                 <tr>
-                                                    <th>{{translate_title('Id', $lang)}}</th>
-                                                    <th>{{translate_title('Name', $lang)}}</th>
-                                                    <th>{{translate_title('Amount', $lang)}}</th>
-                                                    <th>{{translate_title('Barcode', $lang)}}</th>
-                                                    <th>{{translate_title('Stock', $lang)}}</th>
-                                                    <th>{{translate_title('Price', $lang)}}</th>
-                                                    <th>{{translate_title('Image', $lang)}}</th>
-                                                    <th>{{translate_title('Cost', $lang)}}</th>
-                                                    <th>{{translate_title('Functions', $lang)}}</th>
+                                                    <th><h6>{{translate_title('Id', $lang)}}</h6></th>
+                                                    <th><h6>{{translate_title('Name', $lang)}}</h6></th>
+                                                    <th><h6>{{translate_title('Amount', $lang)}}</h6></th>
+                                                    <th><h6>{{translate_title('Barcode', $lang)}}</h6></th>
+                                                    <th><h6>{{translate_title('Stock', $lang)}}</h6></th>
+                                                    <th><h6>{{translate_title('Price', $lang)}}</h6></th>
+                                                    <th><h6>{{translate_title('Image', $lang)}}</h6></th>
+                                                    <th><h6>{{translate_title('Cost', $lang)}}</h6></th>
+                                                    <th><h6>{{translate_title('Functions', $lang)}}</h6></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             @foreach($products as $product)
                                                 @if(!empty($product))
                                                     <tr>
-                                                        <td>{{$product['id']}}</td>
-                                                        <td>{{$product['name']}}</td>
-                                                        <td>{{$product['amount']}}</td>
-                                                        <td>{{$product['barcode']}}</td>
-                                                        <td>{{$product['stock']}}</td>
+                                                        <td><h6>{{$product['id']}}</h6></td>
+                                                        <td><h6>{{$product['name']}}</h6></td>
+                                                        <td><h6>{{$product['amount']}}</h6></td>
+                                                        <td><h6>{{$product['barcode']}}</h6></td>
+                                                        <td><h6>{{$product['stock']}}</h6></td>
                                                         <td>
                                                             <div><span>{{$product['last_price']}}</span></div>
                                                             @if($product['discount']>0)
@@ -145,7 +145,7 @@
                                                         <td>
                                                             <img onclick="showImage('{{$product['small_image']}}')" data-bs-toggle="modal" data-bs-target="#images-modal" src="{{$product['small_image']}}" alt="" height="44px">
                                                         </td>
-                                                        <td>{{$product['cost']}}</td>
+                                                        <td><h6>{{$product['cost']}}</h6></td>
                                                         <td>
                                                             <div class="d-flex justify-content-around align-items-center height_50 function_buttons">
                                                                 <a class="edit_button btn" href="{{route('product.edit', $product['id'])}}">

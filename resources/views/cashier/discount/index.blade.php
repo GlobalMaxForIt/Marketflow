@@ -49,11 +49,11 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>{{translate_title('Discount percent', $lang)}}</th>
-                                            <th>{{translate_title('Category', $lang)}}</th>
-                                            <th>{{translate_title('Product', $lang)}}</th>
-                                            <th>{{translate_title('Number of products', $lang)}}</th>
-                                            <th class="text-center">{{translate_title('Functions', $lang)}}</th>
+                                            <th><h6>{{translate_title('Discount percent', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Category', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Product', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Number of products', $lang)}}</h6></th>
+                                            <th class="text-center">{{translate_title('Functions', $lang)}}</h6></th>
                                         </tr>
                                     </thead>
                                     <tbody class="table_body">
@@ -138,10 +138,10 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>{{translate_title('Discount percent', $lang)}}</th>
-                                            <th>{{translate_title('Client', $lang)}}</th>
-                                            <th>{{translate_title('Discount number', $lang)}}</th>
-                                            <th class="text-center">{{translate_title('Functions', $lang)}}</th>
+                                            <th><h6>{{translate_title('Discount percent', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Client', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Discount number', $lang)}}</h6></th>
+                                            <th class="text-center">{{translate_title('Functions', $lang)}}</h6></th>
                                         </tr>
                                     </thead>
                                     <tbody class="table_body">

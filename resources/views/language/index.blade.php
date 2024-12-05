@@ -48,9 +48,9 @@
                                 <thead >
                                     <tr>
                                         <th scope="row">№</th>
-                                        <td>{{ translate_title('Language', $lang) }}</td>
-                                        <td>{{ translate_title('Code', $lang) }}</td>
-                                        <td>{{ translate_title('Action', $lang) }}</td>
+                                        <td><h6>{{ translate_title('Language', $lang) }}</h6></td>
+                                        <td><h6>{{ translate_title('Code', $lang) }}</h6></td>
+                                        <td><h6>{{ translate_title('Action', $lang) }}</h6></td>
                                     </tr>
                                 </thead>
                                 <tbody class="text-align:center !important">
@@ -61,9 +61,9 @@
 
                                     @foreach ($languages as $value)
                                         <tr>
-                                            <th scope="row">{{ $i++ }}</th>
-                                            <td> {{ $value->name??'' }}</td>
-                                            <td>{{ $value->code??'' }}</td>
+                                            <th scope="row">{{ $i++ }}</h6></th>
+                                            <td> {{ $value->name??'' }}</h6></td>
+                                            <td><h6>{{ $value->code??'' }}</h6></td>
                                             <td>
                                                 <a href="{{ route('language.show', $value->id) }}"
                                                    title="{{ translate_title('Translation', $lang) }}"  >

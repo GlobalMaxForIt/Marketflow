@@ -22,22 +22,22 @@
                                 <table id="datatable-buttons" class="restaurant_tables table table-striped table-bordered dt-responsive nowrap">
                                     <thead>
                                         <tr>
-                                            <th>{{translate_title('Id', $lang)}}</th>
-                                            <th>{{translate_title('Name', $lang)}}</th>
-                                            <th>{{translate_title('Surname', $lang)}}</th>
-                                            <th>{{translate_title('Role', $lang)}}</th>
-                                            <th>{{translate_title('Status', $lang)}}</th>
-                                            <th>{{translate_title('Functions', $lang)}}</th>
+                                            <th><h6>{{translate_title('Id', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Name', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Surname', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Role', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Status', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Functions', $lang)}}</h6></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($users as $user)
                                         <tr>
-                                            <td class="show_page">{{$user['id']}}</td>
-                                            <td>{{$user['name']}}</td>
-                                            <td>{{$user['surname']}}</td>
-                                            <td>{{$user['role']}}</td>
-                                            <td>{{$user['status']}}</td>
+                                            <td class="show_page">{{$user['id']}}</h6></td>
+                                            <td><h6>{{$user['name']}}</h6></td>
+                                            <td><h6>{{$user['surname']}}</h6></td>
+                                            <td><h6>{{$user['role']}}</h6></td>
+                                            <td><h6>{{$user['status']}}</h6></td>
                                             <td>
                                                 <div class="d-flex justify-content-around align-items-center height_50 function_buttons">
                                                     <a class="edit_button btn me-2" href="{{route('users.edit', $user['id'])}}">

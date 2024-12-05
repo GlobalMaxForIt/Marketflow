@@ -21,20 +21,20 @@
                                 <table id="datatable-buttons" class="restaurant_tables table table-striped table-bordered dt-responsive nowrap">
                                     <thead>
                                         <tr>
-                                            <th>{{translate_title('Id', $lang)}}</th>
-                                            <th>{{translate_title('Name', $lang)}}</th>
-                                            <th>{{translate_title('Address', $lang)}}</th>
-                                            <th>{{translate_title('Images', $lang)}}</th>
-                                            <th>{{translate_title('Organization', $lang)}}</th>
-                                            <th>{{translate_title('Functions', $lang)}}</th>
+                                            <th><h6>{{translate_title('Id', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Name', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Address', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Images', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Organization', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Functions', $lang)}}</h6></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($stores as $store)
                                         <tr>
-                                            <td class="show_page">{{$store['id']}}</td>
-                                            <td>{{$store['name']}}</td>
-                                            <td>{{$store['address']}}</td>
+                                            <td class="show_page">{{$store['id']}}</h6></td>
+                                            <td><h6>{{$store['name']}}</h6></td>
+                                            <td><h6>{{$store['address']}}</h6></td>
                                             <td>
                                                 <a class="product_images_column" onclick='getImages("{{implode(" ", $store['images'])}}")' data-bs-toggle="modal" data-bs-target="#carousel-modal">
                                                     @foreach($store['images'] as $image)
@@ -44,7 +44,7 @@
                                                     @endforeach
                                                 </a>
                                             </td>
-                                            <td>{{$store['organization']->name}}</td>
+                                            <td><h6>{{$store['organization']->name}}</h6></td>
                                             <td>
                                                 <div class="d-flex justify-content-around align-items-center height_50 function_buttons">
                                                     <a class="edit_button btn me-2" href="{{route('stores.edit', $store['id'])}}">

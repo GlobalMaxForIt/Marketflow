@@ -47,31 +47,31 @@
                             <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap">
                                 <thead>
                                 <tr>
-                                    <th>{{translate_title('Id')}}</th>
-                                    <th>{{translate_title('Product category')}}</th>
-                                    <th>{{translate_title('Name')}}</th>
-                                    <th>{{translate_title('Amount')}}</th>
-                                    <th>{{translate_title('Price')}}</th>
-                                    <th>{{translate_title('Barcode')}}</th>
-                                    <th>{{translate_title('Description')}}</th>
-                                    <th>{{translate_title('Images')}}</th>
-                                    <th>{{translate_title('Status')}}</th>
-                                    <th>{{translate_title('Functions')}}</th>
+                                    <th><h6>{{translate_title('Id')}}</h6></th>
+                                    <th><h6>{{translate_title('Product category')}}</h6></th>
+                                    <th><h6>{{translate_title('Name')}}</h6></th>
+                                    <th><h6>{{translate_title('Amount')}}</h6></th>
+                                    <th><h6>{{translate_title('Price')}}</h6></th>
+                                    <th><h6>{{translate_title('Barcode')}}</h6></th>
+                                    <th><h6>{{translate_title('Description')}}</h6></th>
+                                    <th><h6>{{translate_title('Images')}}</h6></th>
+                                    <th><h6>{{translate_title('Status')}}</h6></th>
+                                    <th><h6>{{translate_title('Functions')}}</h6></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($allProductsData['products'] as $product)
                                     <tr>
-                                        <td>{{$product['id']}}</td>
+                                        <td><h6>{{$product['id']}}</h6></td>
                                         <td>
                                             @if($product['products_categories'])
                                                 {{$product['products_categories']->name??''}}
                                             @endif
                                         </td>
-                                        <td>{{$product['name']}}</td>
-                                        <td>{{$product['amount']}}</td>
-                                        <td>{{$product['price']}}</td>
-                                        <td>{{$product['barcode']}}</td>
+                                        <td><h6>{{$product['name']}}</h6></td>
+                                        <td><h6>{{$product['amount']}}</h6></td>
+                                        <td><h6>{{$product['price']}}</h6></td>
+                                        <td><h6>{{$product['barcode']}}</h6></td>
                                         <td>
                                             <div class="description_column">
                                                 {{$product['description']}}
@@ -115,31 +115,31 @@
                                 <table class="table datatable table-striped table-bordered dt-responsive nowrap">
                                     <thead>
                                     <tr>
-                                        <th>{{translate_title('Id')}}</th>
-                                        <th>{{translate_title('Product category')}}</th>
-                                        <th>{{translate_title('Name')}}</th>
-                                        <th>{{translate_title('Amount')}}</th>
-                                        <th>{{translate_title('Price')}}</th>
-                                        <th>{{translate_title('Barcode')}}</th>
-                                        <th>{{translate_title('Description')}}</th>
-                                        <th>{{translate_title('Images')}}</th>
-                                        <th>{{translate_title('Status')}}</th>
-                                        <th>{{translate_title('Functions')}}</th>
+                                        <th><h6>{{translate_title('Id')}}</h6></th>
+                                        <th><h6>{{translate_title('Product category')}}</h6></th>
+                                        <th><h6>{{translate_title('Name')}}</h6></th>
+                                        <th><h6>{{translate_title('Amount')}}</h6></th>
+                                        <th><h6>{{translate_title('Price')}}</h6></th>
+                                        <th><h6>{{translate_title('Barcode')}}</h6></th>
+                                        <th><h6>{{translate_title('Description')}}</h6></th>
+                                        <th><h6>{{translate_title('Images')}}</h6></th>
+                                        <th><h6>{{translate_title('Status')}}</h6></th>
+                                        <th><h6>{{translate_title('Functions')}}</h6></th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($all_products[$category->id] as $product)
                                         <tr>
-                                            <td>{{$product['id']}}</td>
+                                            <td><h6>{{$product['id']}}</h6></td>
                                             <td>
                                                 @if($product['products_categories'])
                                                     {{$product['products_categories']->name??''}}
                                                 @endif
                                             </td>
-                                            <td>{{$product['name']}}</td>
-                                            <td>{{$product['amount']}}</td>
-                                            <td>{{$product['price']}}</td>
-                                            <td>{{$product['barcode']}}</td>
+                                            <td><h6>{{$product['name']}}</h6></td>
+                                            <td><h6>{{$product['amount']}}</h6></td>
+                                            <td><h6>{{$product['price']}}</h6></td>
+                                            <td><h6>{{$product['barcode']}}</h6></td>
                                             <td>
                                                 <div class="description_column">
                                                     {{$product['description']}}

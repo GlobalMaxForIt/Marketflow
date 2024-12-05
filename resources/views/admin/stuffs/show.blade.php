@@ -15,73 +15,73 @@
             <table class="tablesaw table mb-0" data-tablesaw-mode="stack">
                 <thead>
                     <tr>
-                        <th scope="col">{{translate_title('Attributes', $lang)}}</th>
-                        <th scope="col">{{translate_title('Informations', $lang)}}</th>
+                        <th scope="col">{{translate_title('Attributes', $lang)}}</h6></th>
+                        <th scope="col">{{translate_title('Informations', $lang)}}</h6></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <th>{{translate_title('Products categories', $lang)}}</th>
-                        <td>{{$array_product['products_categories']??''}}</td>
+                        <th><h6>{{translate_title('Products categories', $lang)}}</h6></th>
+                        <td><h6>{{$array_product['products_categories']??''}}</h6></td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Name', $lang)}}</th>
-                        <td>{{$array_product['name']??''}}</td>
+                        <th><h6>{{translate_title('Name', $lang)}}</h6></th>
+                        <td><h6>{{$array_product['name']??''}}</h6></td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Amount', $lang)}}</th>
-                        <td>{{$array_product['amount']??''}}</td>
+                        <th><h6>{{translate_title('Amount', $lang)}}</h6></th>
+                        <td><h6>{{$array_product['amount']??''}}</h6></td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Price', $lang)}}</th>
-                        <td>{{$array_product['price']??''}}</td>
+                        <th><h6>{{translate_title('Price', $lang)}}</h6></th>
+                        <td><h6>{{$array_product['price']??''}}</h6></td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Discount', $lang)}}</th>
-                        <td>{{$array_product['discount']??''}}</td>
+                        <th><h6>{{translate_title('Discount', $lang)}}</h6></th>
+                        <td><h6>{{$array_product['discount']??''}}</h6></td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Last price', $lang)}}</th>
-                        <td>{{$array_product['last_price']??''}}</td>
+                        <th><h6>{{translate_title('Last price', $lang)}}</h6></th>
+                        <td><h6>{{$array_product['last_price']??''}}</h6></td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Description', $lang)}}</th>
-                        <td>{{$array_product['description']??''}}</td>
+                        <th><h6>{{translate_title('Description', $lang)}}</h6></th>
+                        <td><h6>{{$array_product['description']??''}}</h6></td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Barcode', $lang)}}</th>
-                        <td>{{$array_product['barcode']??''}}</td>
+                        <th><h6>{{translate_title('Barcode', $lang)}}</h6></th>
+                        <td><h6>{{$array_product['barcode']??''}}</h6></td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Stock', $lang)}}</th>
-                        <td>{{$array_product['stock']??''}}</td>
+                        <th><h6>{{translate_title('Stock', $lang)}}</h6></th>
+                        <td><h6>{{$array_product['stock']??''}}</h6></td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Manufactured date', $lang)}}</th>
-                        <td>{{$array_product['manufactured_date']??''}}</td>
+                        <th><h6>{{translate_title('Manufactured date', $lang)}}</h6></th>
+                        <td><h6>{{$array_product['manufactured_date']??''}}</h6></td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Expired date', $lang)}}</th>
-                        <td>{{$array_product['expired_date']??''}}</td>
+                        <th><h6>{{translate_title('Expired date', $lang)}}</h6></th>
+                        <td><h6>{{$array_product['expired_date']??''}}</h6></td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Status', $lang)}}</th>
-                        <td>{{$array_product['status'] == 1?translate_title('Active', $lang):translate_title('No active', $lang) }}</td>
+                        <th><h6>{{translate_title('Status', $lang)}}</h6></th>
+                        <td><h6>{{$array_product['status'] == 1?translate_title('Active', $lang):translate_title('No active', $lang) }}</h6></td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Store', $lang)}}</th>
-                        <td>{{$array_product['store']??''}}</td>
+                        <th><h6>{{translate_title('Store', $lang)}}</h6></th>
+                        <td><h6>{{$array_product['store']??''}}</h6></td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Company', $lang)}}</th>
-                        <td>{{$array_product['company']??''}}</td>
+                        <th><h6>{{translate_title('Company', $lang)}}</h6></th>
+                        <td><h6>{{$array_product['company']??''}}</h6></td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Unit', $lang)}}</th>
-                        <td>{{$array_product['unit']??''}}</td>
+                        <th><h6>{{translate_title('Unit', $lang)}}</h6></th>
+                        <td><h6>{{$array_product['unit']??''}}</h6></td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('image', $lang)}}</th>
+                        <th><h6>{{translate_title('image', $lang)}}</h6></th>
                         <td>
                             <a class="productImages_column" onclick='getImages("{{implode(" ", $array_product['images'])}}")' data-bs-toggle="modal" data-bs-target="#carousel-modal">
                                 @foreach($array_product['images'] as $image)
@@ -93,8 +93,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>{{translate_title('Updated at', $lang)}}</th>
-                        <td>{{$array_product['updated_at']??''}}</td>
+                        <th><h6>{{translate_title('Updated at', $lang)}}</h6></th>
+                        <td><h6>{{$array_product['updated_at']??''}}</h6></td>
                     </tr>
                 </tbody>
             </table>

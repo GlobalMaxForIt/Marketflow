@@ -253,6 +253,7 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
     }
     get_stock_element.innerText = stock_int
 }
+
 function minusProduct(id, this_element) {
     let get_stock_element = this_element.parentElement.parentElement.querySelector('.stock__quantity')
     stock_int = parseInt(get_stock_element.innerText)

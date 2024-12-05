@@ -1050,6 +1050,8 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .btn-danger{
     background-color: #BB1A1C !important;
+    display: flex;
+    align-items: center;
 }
 .btn-danger span{
     color: white !important;
