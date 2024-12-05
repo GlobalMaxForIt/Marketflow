@@ -322,6 +322,7 @@
             // Barcode scannerning oxirgi Enter tugmasini aniqlash
             if (event.key === 'Enter') {
                 const barcode = barcodeInput.value.trim();
+                console.log(barcodeInput.value)
                 // Ma'lumotni qayta ishlash
                 handleBarcode(barcode);
 
