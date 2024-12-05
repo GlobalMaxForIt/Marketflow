@@ -104,6 +104,7 @@ class SaveImages
         $kb = 1024;
         $image_size = $image->getSize();
 
+        $shrink_percent = 100;
         // Shrink parameter logikasi
         if ($image_size > 700 * $kb) {
             $shrink_percent = 2;
