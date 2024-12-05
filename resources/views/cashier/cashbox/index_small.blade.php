@@ -108,25 +108,6 @@
                     </div>
                 </div>
             </div>
-            <div id="carousel-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
-                            <div class="carousel-inner" id="carousel_product_images">
-
-                            </div>
-                            <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">{{translate_title('Previous', $lang)}}</span>
-                            </a>
-                            <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">{{translate_title('Next', $lang)}}</span>
-                            </a>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
         </div>
         <div class="col-5 ps-2">
             <div class="d-flex justify-content-between mb-2">
@@ -195,13 +176,6 @@
         </div>
     </div>
 
-    <div id="barcode-scanner" class="h-full w-full relative">
-        <!-- Overlay text -->
-        <div id="overlay-text" class="absolute inset-0 flex justify-center items-center bg-opacity-50 text-white text-lg font-bold">
-            Scan barcode here: <span id="barcode_number"></span>
-        </div>
-    </div>
-
     <div id="delete_modal_cashbox" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content modal-filled">
@@ -247,6 +221,26 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>
+
+    <div id="carousel-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                    <div class="carousel-inner" id="carousel_product_images">
+
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">{{translate_title('Previous', $lang)}}</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">{{translate_title('Next', $lang)}}</span>
+                    </a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     <input type="hidden" id="barcode_input">
     <script>
 

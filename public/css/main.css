@@ -2281,6 +2281,46 @@ body[data-leftbar-size=condensed] .content-page {
 .key:hover {
     background-color: #ccc;
 }
+.keyboard_big {
+    display: grid;
+    grid-template-columns: repeat(14, 24px);
+    gap: 10px;
+    justify-content: center;
+}
+.key_big {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 24px;
+    background-color: #ddd;
+    text-align: center;
+    /*line-height: 50px;*/
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+}
+.key_space_big {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 94px;
+    height: 24px;
+    background-color: #ddd;
+    text-align: center;
+    /*line-height: 50px;*/
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+}
+.key_big:hover {
+    background-color: #ccc;
+}
+.keyboard_big h6, .keyboard h6{
+    margin-bottom: 0px !important;
+}
 .dark_header_keyboard{
     background-color: #404959 !important;
     color: white !important;
@@ -2304,4 +2344,16 @@ body[data-leftbar-size=condensed] .content-page {
 }
 #popover-container .popover{
     background-color: white;
+}
+#all_sum_info thead, #all_sum_info tbody, #all_sum_info th, #all_sum_info tr,#all_sum_info td{
+    border: 0px !important;
+}
+#search-dropdown{
+    width: 44%;
+}
+.offcanvas-top{
+    height: 50vh !important;
+}
+.offcanvas-body{
+    padding: 0px !important;
 }

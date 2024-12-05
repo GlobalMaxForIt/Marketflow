@@ -9,7 +9,9 @@ let content_page = document.querySelector('.content-page')
 let modal_content = document.querySelector('.modal-content')
 let layout_local = localStorage.getItem('layout_local')
 let keys_keyboard = document.getElementsByClassName('key')
-let key_space = document.getElementsByClassName('key_space')
+let keys_keyboard_big = document.getElementsByClassName('key_big')
+let key_space = document.getElementsByClassName('key_space_big')
+let key_space_big = document.getElementsByClassName('key_space')
 light_mode.addEventListener('click', function (){
     localStorage.setItem('layout_local', 'light')
     removeDarkContainer(content_page)
@@ -65,6 +67,16 @@ function removeDarkContainer(modal_container){
             keys_keyboard[k].classList.remove('dark_keyboard')
         }
     }
+    for(let k=0; k<key_space_big.length; k++){
+        if(key_space_big[k].classList.contains('dark_keyboard')){
+            key_space_big[k].classList.remove('dark_keyboard')
+        }
+    }
+    for(let k=0; k<keys_keyboard_big.length; k++){
+        if(keys_keyboard_big[k].classList.contains('dark_keyboard')){
+            keys_keyboard_big[k].classList.remove('dark_keyboard')
+        }
+    }
 }
 function setDarkContainer(modal_container){
     if(modal_container != undefined && modal_container != null){
@@ -90,6 +102,16 @@ function setDarkContainer(modal_container){
     for(let k=0; k<key_space.length; k++){
         if(!key_space[k].classList.contains('dark_keyboard')){
             key_space[k].classList.add('dark_keyboard')
+        }
+    }
+    for(let k=0; k<keys_keyboard_big.length; k++){
+        if(!keys_keyboard_big[k].classList.contains('dark_keyboard')){
+            keys_keyboard_big[k].classList.add('dark_keyboard')
+        }
+    }
+    for(let k=0; k<key_space_big.length; k++){
+        if(!key_space_big[k].classList.contains('dark_keyboard')){
+            key_space_big[k].classList.add('dark_keyboard')
         }
     }
     if(keyboard_heading != undefined && keyboard_heading != null){

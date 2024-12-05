@@ -94,76 +94,11 @@
     <!-- Topbar Start -->
     <div class="navbar-custom">
         <ul class="list-unstyled topnav-menu float-end mb-0">
-            <li class="d-none d-lg-block">
-
-                <form class="app-search">
-                    <div class="app-search-box">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search..." id="top-search">
-                            <a class="btn" type="submit">
-                                <i class="fe-search"></i>
-                            </a>
-                        </div>
-                        <div class="dropdown-menu dropdown-lg" id="search-dropdown">
-                            <!-- item-->
-                            <div class="dropdown-header noti-title">
-                                <h5 class="text-overflow mb-2">{{translate_title('Found 22 results', $lang)}}</h5>
-                            </div>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <i class="fe-home me-1"></i>
-                                <span>{{translate_title('Analytics Report', $lang)}}</span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <i class="fe-aperture me-1"></i>
-                                <span>{{translate_title('How can I help you?', $lang)}}</span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <i class="fe-settings me-1"></i>
-                                <span>{{translate_title('User profile settings', $lang)}}</span>
-                            </a>
-
-                            <!-- item-->
-                            <div class="dropdown-header noti-title">
-                                <h6 class="text-overflow mb-2 text-uppercase">{{translate_title('Users', $lang)}}</h6>
-                            </div>
-
-                            <div class="notification-list">
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <div class="d-flex align-items-start">
-                                        <img class="d-flex me-2 rounded-circle" src="{{ asset('assets/images/user/user-2.jpg') }}"
-                                             alt="Generic placeholder image" height="32">
-                                        <div class="w-100">
-                                            <h5 class="m-0 font-14">Erwin E. Brown</h5>
-                                            <span class="font-12 mb-0">{{translate_title('UI Designer', $lang)}}</span>
-                                        </div>
-                                    </div>
-                                </a>
-
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <div class="d-flex align-items-start">
-                                        <img class="d-flex me-2 rounded-circle" src="{{ asset('assets/images/user/user-5.jpg') }}"
-                                             alt="Generic placeholder image" height="32">
-                                        <div class="w-100">
-                                            <h5 class="m-0 font-14">Jacob Deo</h5>
-                                            <span class="font-12 mb-0">{{translate_title('Developer', $lang)}}</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-
-                        </div>
-                    </div>
-                </form>
+            <li class="ms-4"><span>{{$user->name}} {{$user->surname}}</span></li>
+            <li>
+                <a class="text-decoration-none ms-4" data-bs-toggle="modal" data-bs-target="#change_cashier"><h5 class="m-0"><span class="mdi mdi-logout"></span></h5></a>
             </li>
-            <li class="">
+            <li>
                 <div>
                     <div class="align-items-center d-flex" id="lang-change">
                         <a class="buttonUzbDropDownHeader" type="button" id="dropdownMenuButton" role="button"
@@ -302,11 +237,24 @@
                 </a>
             </li>
             <li>
-                <h4>@yield('title')</h4>
+                <div class="app-search">
+                    <div class="app-search-box">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="top-search">
+                            <a class="btn" type="submit">
+                                <i class="fe-search"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </li>
-            <li class="ms-4"><h6>{{$user->name}} {{$user->surname}}</h6></li>
             <li>
-                <a class="text-decoration-none ms-4" data-bs-toggle="modal" data-bs-target="#change_cashier"><h5 class="m-0"><span class="mdi mdi-logout"></span></h5></a>
+                <button class="btn btn-primary mt-2 mt-md-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
+                    <i class="fe-search"></i>
+                </button>
+            </li>
+            <li>
+                <h5>@yield('title')</h5>
             </li>
         </ul>
         <div class="clearfix"></div>
@@ -496,6 +444,97 @@
     </footer>
     <!-- end Footer -->
 </div>
+<div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+    <div class="offcanvas-body">
+        <div class="card" style="margin: 0px !important;">
+            <div class="card-body overflow-auto">
+                <div class="accordion mb-3" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="keyboard_heading">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#keyboard_body" aria-expanded="true"
+                                    aria-controls="collapseOne">
+                                <span class="fa fa-keyboard"></span>
+                            </button>
+                        </h2>
+                        <div id="keyboard_body" class="accordion-collapse collapse show"
+                             aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="keyboard_big">
+                                    <!-- Harflar -->
+                                    <div class="key_big"><h6>A</h6></div><div class="key_big"><h6>B</h6></div><div class="key_big"><h6>C</h6></div><div class="key_big"><h6>D</h6></div>
+                                    <div class="key_big"><h6>E</h6></div><div class="key_big"><h6>F</h6></div><div class="key_big"><h6>G</h6></div><div class="key_big"><h6>H</h6></div>
+                                    <div class="key_big"><h6>I</h6></div><div class="key_big"><h6>J</h6></div><div class="key_big"><h6>K</h6></div><div class="key_big"><h6>L</h6></div>
+                                    <div class="key_big"><h6>M</h6></div><div class="key_big"><h6>N</h6></div><div class="key_big"><h6>O</h6></div><div class="key_big"><h6>P</h6></div>
+                                    <div class="key_big"><h6>Q</h6></div><div class="key_big"><h6>R</h6></div><div class="key_big"><h6>S</h6></div><div class="key_big"><h6>T</h6></div>
+                                    <div class="key_big"><h6>U</h6></div><div class="key_big"><h6>V</h6></div><div class="key_big"><h6>W</h6></div><div class="key_big"><h6>X</h6></div>
+                                    <div class="key_big"><h6>Y</h6></div><div class="key_big"><h6>Z</h6></div>
+
+                                    <!-- Raqamlar -->
+                                    <div class="key_big"><h6>0</h6></div><div class="key_big"><h6>1</h6></div><div class="key_big"><h6>2</h6></div><div class="key_big"><h6>3</h6></div>
+                                    <div class="key_big"><h6>4</h6></div><div class="key_big"><h6>5</h6></div><div class="key_big"><h6>6</h6></div><div class="key_big"><h6>7</h6></div>
+                                    <div class="key_big"><h6>8</h6></div><div class="key_big"><h6>9</h6></div><div class="key_big"><h6>-</h6></div><div class="key_big"><h6>_</h6></div>
+                                    <div class="key_big"><h6>.</h6></div><div class="key_big"><h6>,</h6></div><div class="key_big"><h6>/</h6></div><div class="key_big"><h6>(</h6></div>
+                                    <div class="key_big"><h6>)</h6></div><div class="key_big"><h6>[</h6></div><div class="key_big"><h6>]</h6></div><div class="key_big"><h6>{</h6></div>
+                                    <div class="key_big"><h6>}</h6></div><div class="key_big"><h6>*</h6></div><div class="key_big"><h6>@</h6></div><div class="key_big"><h6>#</h6></div>
+                                    <div class="key_big"><h6>$</h6></div><div class="key_big"><h6>%</h6></div><div class="key_big"><h6>#</h6></div><div class="key_big"><h6>:</h6></div>
+                                    <div class="key_big"><h6>|</h6></div><div class="key_big"><h6>&</h6></div><div class="key_big"><h6>€</h6></div><div class="key_big"><h6>£</h6></div>
+                                    <div class="key_big"><h6>₩</h6></div><!-- Probel -->
+                                    <div class="d-flex justify-content-between width_304_pixel">
+                                        <div class="key_space_big"><h6>Space</h6></div>
+                                        <div class="key_space_big" onclick="clearKeyboardDisplay()"><h6>Clear</h6></div>
+                                        <div class="key_space_big" onclick="backspaceKeyboard()"><h6><span class="mdi mdi-backspace"></span></h6></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="restaurant_tables datatable table table-striped nowrap">
+                    <thead>
+                    <tr>
+                        <th><h6><b>{{translate_title('Barcode', $lang)}}</b></h6></th>
+                        <th><h6><b>{{translate_title('Name', $lang)}}</b></h6></th>
+                        <th><h6><b>{{translate_title('Price', $lang)}}</b></h6></th>
+                        <th><h6><b>{{translate_title('Stock', $lang)}}</b></h6></th>
+                        <th><h6><b>{{translate_title('Functions', $lang)}}</b></h6></th>
+                    </tr>
+                    </thead>
+                    <tbody id="popover-container">
+                    @foreach($allProductsData['products'] as $product)
+                        <tr>
+                            <td class="market_tables_text">
+                                <span><h6><b>{{$product['barcode']}}</b></h6></span>
+                            </td>
+                            <td class="market_tables_text">
+                                    <span>
+                                        <h6>
+                                            <a class="product_name" data-bs-container="#popover-container" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="{{$product['name']}}" data-original-title="">{{$product['short_name']}}</a>
+                                        </h6>
+                                    </span>
+                                <span><h6><b>{{$product['amount']}}</b></h6></span>
+                            </td>
+                            <td class="market_tables_text">
+                                <div><span><h6><b>{{$product['last_price']}}</b></h6></span></div>
+                                @if($product['discount']>0)
+                                    <del><h6><b>{{$product['price']}}</b></h6></del>
+                                @endif
+                            </td>
+                            <td class="market_tables_text">
+                                <h6><b class="stock__quantity" id="stock__{{$product['id']}}">{{$product['stock']}}</b></h6>
+                            </td>
+                            <td class="market_tables_text">
+                                <button class="edit_button btn" onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', '{{$product['stock']}}')">+</button>
+                                <button class="ms-2 edit_button btn" onclick="minusProduct('{{$product['id']}}', '{{$product['stock']}}')">-</button>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div> <!-- end offcanvas-body-->
+</div> <!-- end offcanvas-->
 
 <div class="right-bar">
     <div data-simplebar class="h-100">
@@ -736,65 +775,65 @@
                     <div class="row">
                         <div class="col-12">
                             <input id="display_card" class="input-display" value="0" type="text">
-                        </input>
-                    </div>
-                    <div class="mb-2">
-                        <!-- Raqamlar tugmalari -->
-                        <div class="row mb-2">
-                            <div class="col-4">
-                                <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(1)">1</a>
-                            </div>
-                            <div class="col-4">
-                                <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(2)">2</a>
-                            </div>
-                            <div class="col-4">
-                                <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(3)">3</a>
+                            </input>
+                        </div>
+                        <div class="mb-2">
+                            <!-- Raqamlar tugmalari -->
+                            <div class="row mb-2">
+                                <div class="col-4">
+                                    <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(1)">1</a>
+                                </div>
+                                <div class="col-4">
+                                    <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(2)">2</a>
+                                </div>
+                                <div class="col-4">
+                                    <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(3)">3</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="mb-2">
-                        <div class="row mb-2">
-                            <div class="col-4">
-                                <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(4)">4</a>
-                            </div>
-                            <div class="col-4">
-                                <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(5)">5</a>
-                            </div>
-                            <div class="col-4">
-                                <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(6)">6</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-2">
-                        <div class="row mb-2">
-                            <div class="col-4">
-                                <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(7)">7</a>
-                            </div>
-                            <div class="col-4">
-                                <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(8)">8</a>
-                            </div>
-                            <div class="col-4">
-                                <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(9)">9</a>
+                        <div class="mb-2">
+                            <div class="row mb-2">
+                                <div class="col-4">
+                                    <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(4)">4</a>
+                                </div>
+                                <div class="col-4">
+                                    <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(5)">5</a>
+                                </div>
+                                <div class="col-4">
+                                    <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(6)">6</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="mb-2">
-                        <div class="row mb-2">
-                            <div class="col-4">
-                                <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(0)">0</a>
+                        <div class="mb-2">
+                            <div class="row mb-2">
+                                <div class="col-4">
+                                    <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(7)">7</a>
+                                </div>
+                                <div class="col-4">
+                                    <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(8)">8</a>
+                                </div>
+                                <div class="col-4">
+                                    <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(9)">9</a>
+                                </div>
                             </div>
-                            <div class="col-4">
-                                <a class="btn btn-outline-dark btn-number" onclick="clearDisplayCard()">Clear</a>
-                            </div>
-                            <div class="col-4">
-                                <a class="btn btn-outline-dark btn-number" onclick="backspaceCard()">
-                                    <span class="mdi mdi-backspace"></span>
-                                </a>
+                        </div>
+                        <div class="mb-2">
+                            <div class="row mb-2">
+                                <div class="col-4">
+                                    <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(0)">0</a>
+                                </div>
+                                <div class="col-4">
+                                    <a class="btn btn-outline-dark btn-number" onclick="clearDisplayCard()">Clear</a>
+                                </div>
+                                <div class="col-4">
+                                    <a class="btn btn-outline-dark btn-number" onclick="backspaceCard()">
+                                        <span class="mdi mdi-backspace"></span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
                 <div class="modal-body d-flex justify-content-center d-none" id="cardContent">
                     <input class="input-display" type="text" id="card_payment_" readonly>
                 </div>
@@ -993,6 +1032,7 @@
     </div><!-- /.modal-dialog -->
 </div>
 <div class="rightbar-overlay"></div>
+
 </body>
 
 <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>

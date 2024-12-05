@@ -1,4 +1,4 @@
-@extends('layouts.cashier_small_layout')
+@extends('layouts.cashier_large_layout')
 
 @section('title')
     {{translate_title('Checkout', $lang)}}
@@ -8,7 +8,7 @@
         .select2-container {
             z-index: 1055 !important; /* Bootstrap modal uchun z-indexdan yuqori qiymat */
         }
-        .key h6, .key_space h6{
+        .key_big h6, .key_big_space h6{
             margin: 0px !important;
         }
         .accordion-button{
@@ -16,119 +16,65 @@
         }
     </style>
     <div class="row">
-        <div class="col-7">
+        <div class="col-9">
             <div class="main-content-section" id="myDiv">
                 <div class="order-section">
                     <div class="card">
                         <div class="card-body overflow-auto">
-                            <div class="accordion mb-3" id="accordionExample">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="keyboard_heading">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#keyboard_body" aria-expanded="true"
-                                                aria-controls="collapseOne">
-                                            <span class="fa fa-keyboard"></span>
-                                        </button>
-                                    </h2>
-                                    <div id="keyboard_body" class="accordion-collapse collapse show"
-                                         aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            <div class="keyboard">
-                                                <!-- Harflar -->
-                                                <div class="key"><h6>A</h6></div><div class="key"><h6>B</h6></div><div class="key"><h6>C</h6></div><div class="key"><h6>D</h6></div>
-                                                <div class="key"><h6>E</h6></div><div class="key"><h6>F</h6></div><div class="key"><h6>G</h6></div><div class="key"><h6>H</h6></div>
-                                                <div class="key"><h6>I</h6></div><div class="key"><h6>J</h6></div><div class="key"><h6>K</h6></div><div class="key"><h6>L</h6></div>
-                                                <div class="key"><h6>M</h6></div><div class="key"><h6>N</h6></div><div class="key"><h6>O</h6></div><div class="key"><h6>P</h6></div>
-                                                <div class="key"><h6>Q</h6></div><div class="key"><h6>R</h6></div><div class="key"><h6>S</h6></div><div class="key"><h6>T</h6></div>
-                                                <div class="key"><h6>U</h6></div><div class="key"><h6>V</h6></div><div class="key"><h6>W</h6></div><div class="key"><h6>X</h6></div>
-                                                <div class="key"><h6>Y</h6></div><div class="key"><h6>Z</h6></div>
-
-                                                <!-- Raqamlar -->
-                                                <div class="key"><h6>0</h6></div><div class="key"><h6>1</h6></div><div class="key"><h6>2</h6></div><div class="key"><h6>3</h6></div>
-                                                <div class="key"><h6>4</h6></div><div class="key"><h6>5</h6></div><div class="key"><h6>6</h6></div><div class="key"><h6>7</h6></div>
-                                                <div class="key"><h6>8</h6></div><div class="key"><h6>9</h6></div><div class="key"><h6>-</h6></div><div class="key"><h6>_</h6></div>
-                                                <div class="key"><h6>.</h6></div><div class="key"><h6>,</h6></div><div class="key"><h6>/</h6></div><div class="key"><h6>(</h6></div>
-                                                <div class="key"><h6>)</h6></div><div class="key"><h6>[</h6></div><div class="key"><h6>]</h6></div><div class="key"><h6>{</h6></div>
-                                                <div class="key"><h6>}</h6></div><div class="key"><h6>*</h6></div><div class="key"><h6>@</h6></div><div class="key"><h6>#</h6></div>
-                                                <div class="key"><h6>$</h6></div><div class="key"><h6>%</h6></div><div class="key"><h6>#</h6></div><div class="key"><h6>:</h6></div>
-                                                <div class="key"><h6>|</h6></div><div class="key"><h6>&</h6></div><div class="key"><h6>€</h6></div><div class="key"><h6>£</h6></div>
-                                                <div class="key"><h6>₩</h6></div><!-- Probel -->
-                                                <div class="d-flex justify-content-between width_304_pixel">
-                                                    <div class="key key_space"><h6>Space</h6></div>
-                                                    <div class="key_space" onclick="clearKeyboardDisplay()"><h6>Clear</h6></div>
-                                                    <div class="key_space" onclick="backspaceKeyboard()"><h6><span class="mdi mdi-backspace"></span></h6></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <table class="restaurant_tables datatable table table-striped nowrap">
+                            <table id="popover-container" class="tablesaw table mb-0" data-tablesaw-mode="swipe" data-tablesaw-mode-switch
+                                   data-tablesaw-minimap>
                                 <thead>
-                                <tr>
-                                    <th><h6><b>{{translate_title('Barcode', $lang)}}</b></h6></th>
-                                    <th><h6><b>{{translate_title('Name', $lang)}}</b></h6></th>
-                                    <th><h6><b>{{translate_title('Price', $lang)}}</b></h6></th>
-                                    <th><h6><b>{{translate_title('Stock', $lang)}}</b></h6></th>
-                                    <th><h6><b>{{translate_title('Functions', $lang)}}</b></h6></th>
-                                </tr>
-                                </thead>
-                                <tbody id="popover-container">
-                                @foreach($allProductsData['products'] as $product)
                                     <tr>
-                                        <td class="market_tables_text">
-                                            <span><h6><b>{{$product['barcode']}}</b></h6></span>
-                                        </td>
-                                        <td class="market_tables_text">
-                                            <span>
-                                                <h6>
-                                                    <a class="product_name" data-bs-container="#popover-container" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="{{$product['name']}}" data-original-title="">{{$product['short_name']}}</a>
-                                                </h6>
-                                            </span>
-                                            <span><h6><b>{{$product['amount']}}</b></h6></span>
-                                        </td>
-                                        <td class="market_tables_text">
-                                            <div><span><h6><b>{{$product['last_price']}}</b></h6></span></div>
-                                            @if($product['discount']>0)
-                                                <del><h6><b>{{$product['price']}}</b></h6></del>
-                                            @endif
-                                        </td>
-                                        <td class="market_tables_text">
-                                            <h6><b class="stock__quantity" id="stock__{{$product['id']}}">{{$product['stock']}}</b></h6>
-                                        </td>
-                                        <td class="market_tables_text">
-                                            <button class="edit_button btn" onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', this)">+</button>
-                                            <button class="ms-2 edit_button btn" onclick="minusProduct('{{$product['id']}}', this)">-</button>
-                                        </td>
+                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">
+                                            <h6><b>{{translate_title('Barcode', $lang)}}</b></h6>
+                                        </th>
+                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-sortable-default-col
+                                            data-tablesaw-priority="3"><h6><b>{{translate_title('Name', $lang)}}</b></h6>
+                                        </th>
+                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2"><h6><b>{{translate_title('Price', $lang)}}</b></h6></th>
+                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-sortable-default-col
+                                            data-tablesaw-priority="3"><h6><b>{{translate_title('Quantity', $lang)}}</b></h6>
+                                        </th>
+                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1"><h6><b>{{translate_title('Sum', $lang)}}</b></h6></th>
+                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4"><h6><b>{{translate_title('Functions', $lang)}}</b></h6></th>
                                     </tr>
-                                @endforeach
+                                </thead>
+
+                                <tbody id="order_data_content">
+
+                                </tbody>
+                            </table>
+
+
+                            <table id="all_sum_info" class="tablesaw table mb-0" data-tablesaw-mode="swipe" data-tablesaw-mode-switch
+                                   data-tablesaw-minimap>
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="order_data_content">
+                                    <tr>
+                                        <td><b><h4>{{translate_title('Sum', $lang)}}</h4></b></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b><h4>{{translate_title('Discount', $lang)}}</h4></b></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b><h4>{{translate_title('Total sum', $lang)}}</h4></b></td>
+                                        <td></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="carousel-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
-                            <div class="carousel-inner" id="carousel_product_images">
-
-                            </div>
-                            <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">{{translate_title('Previous', $lang)}}</span>
-                            </a>
-                            <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">{{translate_title('Next', $lang)}}</span>
-                            </a>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
         </div>
-        <div class="col-5 ps-2">
+        <div class="col-3 ps-2">
             <div class="d-flex justify-content-between mb-2">
                 <button class="edit_button btn me-2" data-bs-toggle="modal" data-bs-target="#client_with_discount" id="client_with_discount_button">
                     <b>{{translate_title('Select client with discount', $lang)}}</b>
@@ -146,9 +92,6 @@
                             <th><h6><b>{{translate_title('Total sum', $lang)}}</b></h6></th>
                         </tr>
                         </thead>
-                        <tbody id="order_data_content">
-
-                        </tbody>
                     </table>
                     <div class="d-flex justify-content-between padding_20">
                         <h4>{{translate_title('Total:', $lang)}}</h4>
@@ -195,13 +138,25 @@
         </div>
     </div>
 
-    <div id="barcode-scanner" class="h-full w-full relative">
-        <!-- Overlay text -->
-        <div id="overlay-text" class="absolute inset-0 flex justify-center items-center bg-opacity-50 text-white text-lg font-bold">
-            Scan barcode here: <span id="barcode_number"></span>
-        </div>
-    </div>
+    <div id="carousel-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                    <div class="carousel-inner" id="carousel_product_images">
 
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">{{translate_title('Previous', $lang)}}</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">{{translate_title('Next', $lang)}}</span>
+                    </a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     <div id="delete_modal_cashbox" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content modal-filled">
@@ -277,7 +232,7 @@
         })
         setTimeout(function () {
             let dataTables_filter_input = document.querySelector('.dataTables_filter input')
-            let keys = document.querySelectorAll('.key');
+            let keys = document.querySelectorAll('.key_big');
             keys.forEach(key => {
                 key.addEventListener('click', () => {
                     const keyText = key.textContent.trim();
@@ -314,7 +269,7 @@
     </script>
 
     {{--    <script src="{{asset('js/cities.js')}}"></script>--}}
-    <script src="{{asset('js/small_ordering.js')}}"></script>
+    <script src="{{asset('js/large_ordering.js')}}"></script>
     <script>
         let barcodeInput = document.getElementById('barcode_input')
         barcodeInput.focus()
@@ -336,7 +291,7 @@
             for(let p=0; p<json_products.length; p++){
                 if(json_products[p].barcode == barcode){
                     let current_element_stock = document.getElementById('stock__'+json_products[p].id)
-                    addToOrder(json_products[p].id, json_products[p].name, json_products[p].price, json_products[p].discount, json_products[p].discount_percent, json_products[p].last_price, json_products[p].amount, json_products[p].barcode, current_element_stock)
+                    addToOrder(json_products[p].id, json_products[p].name, json_products[p].price, json_products[p].discount, json_products[p].discount_percent, json_products[p].last_price, json_products[p].amount, json_products[p].barcode, json_products[p].stock, current_element_stock)
                 }
             }
         }
