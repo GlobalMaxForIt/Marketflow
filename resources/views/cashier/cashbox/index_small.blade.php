@@ -314,16 +314,35 @@
     <script>
         let barcodeInput = document.getElementById('barcode_input')
         barcodeInput.focus()
-        barcodeInput.addEventListener('input', function() {
-            const barcode = barcodeInput.value.trim();
-            if (barcode) {
-                // Barcode ma'lumotlarini qayta ishlash (API ga yuborish yoki ichki funksiya)
+
+
+
+
+        document.addEventListener('keydown', function(event) {
+            // Barcode scannerning oxirgi Enter tugmasini aniqlash
+            if (event.key === 'Enter') {
+                const barcode = barcodeInput.value.trim();
+                // Ma'lumotni qayta ishlash
                 handleBarcode(barcode);
 
                 // Inputni tozalash
-                barcodeInput.value = '';
+                document.getElementById('barcode-input').value = '';
             }
         });
+
+
+
+
+        // barcodeInput.addEventListener('input', function() {
+        //     const barcode = barcodeInput.value.trim();
+        //     if (barcode) {
+        //         // Barcode ma'lumotlarini qayta ishlash (API ga yuborish yoki ichki funksiya)
+        //         handleBarcode(barcode);
+        //
+        //         // Inputni tozalash
+        //         barcodeInput.value = '';
+        //     }
+        // });
 
         function handleBarcode(barcode) {
             console.log([barcode, json_products[0].barcode, json_products[1].barcode])
