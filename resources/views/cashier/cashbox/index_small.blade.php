@@ -320,15 +320,17 @@
 
         document.addEventListener('keydown', function(event) {
             // Barcode scannerning oxirgi Enter tugmasini aniqlash
-            if (event.key === 'Enter') {
-                const barcode = barcodeInput.value.trim();
-                console.log([barcodeInput.value, barcodeInput.value.trim()])
-                // Ma'lumotni qayta ishlash
-                handleBarcode(barcode);
+            setTimeout(function () {
+                if (event.key === 'Enter') {
+                    const barcode = barcodeInput.value.trim();
+                    console.log([barcodeInput.value, barcodeInput.value.trim()])
+                    // Ma'lumotni qayta ishlash
+                    handleBarcode(barcode);
 
-                // Inputni tozalash
-                barcodeInput.value = '';
-            }
+                    // Inputni tozalash
+                    barcodeInput.value = '';
+                }
+            }, 100)
         });
 
 
