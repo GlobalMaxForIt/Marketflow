@@ -310,7 +310,7 @@
 
     {{--    <script src="{{asset('js/cities.js')}}"></script>--}}
     <script src="{{asset('js/small_ordering.js')}}"></script>
-
+    <script src="{{asset('js/quagga.min.js')}}"></script>
     <script>
 
         let barcode_number = document.getElementById('barcode_number')
@@ -358,7 +358,6 @@
 
 
     </script>
-    <script src="{{asset('js/quagga.min.js')}}"></script>
 
 @endsection
 
