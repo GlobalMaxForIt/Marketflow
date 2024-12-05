@@ -329,6 +329,7 @@
 
                     // Inputni tozalash
                     barcodeInput.value = '';
+                    barcodeInput.focus()
                 }
             }, 100)
         });
