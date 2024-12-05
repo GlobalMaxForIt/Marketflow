@@ -88,7 +88,6 @@
                     </div>
                 </div>
             </div>
-
         </div><!-- /.modal-dialog -->
     </div>
 
@@ -166,7 +165,6 @@
             </li>
             <li class="">
                 <div>
-
                     <div class="align-items-center d-flex" id="lang-change">
                         <a class="buttonUzbDropDownHeader" type="button" id="dropdownMenuButton" role="button"
                            data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" href="javascript:void(0);">
@@ -186,7 +184,7 @@
                                      src="{{ asset('/images/language/RU.png') }}" alt="region">
                                 @break
                             @endswitch
-                            <span>{{strtoupper($locale)}}</span>
+                            <span><h6>{{strtoupper($locale)}}</h6></span>
                         </a>
                         <div id="language_flag" class="language_flag display-none"
                              aria-labelledby="dropdownMenuButton">
@@ -307,6 +305,9 @@
                 <h4>@yield('title')</h4>
             </li>
             <li class="ms-4"><h6>{{$user->name}} {{$user->surname}}</h6></li>
+            <li>
+                <a class="text-decoration-none ms-4" data-bs-toggle="modal" data-bs-target="#change_cashier"><h5 class="m-0"><span class="mdi mdi-logout"></span></h5></a>
+            </li>
         </ul>
         <div class="clearfix"></div>
 
@@ -819,7 +820,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-
 <!-- Standard modal content -->
 <div id="standard-modal-admin" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -838,7 +838,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 
 <div id="delete_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm">
@@ -895,6 +894,98 @@
     </div><!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" id="change_cashier"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header card-header">
+                <h4>{{translate_title('Do you want to change cashier', $lang)}}</h4>
+            </div>
+            <form class="modal-body card-body" action="{{route('changeCashier')}}" method="POST">
+                @csrf
+                @method('POST')
+                <div class="form-floating mb-3">
+                    <select class="form-select" name="cashier_id" id="floatingSelect" aria-label="Floating label select example">
+                        @foreach($cashiers as $cashier)
+                            <option value="{{$cashier['id']}}">{{$cashier['name']}}{{$cashier['surname']}}</option>
+                        @endforeach
+                    </select>
+                    <label for="floatingSelect">{{translate_title('Select a cashier', $lang)}}</label>
+                </div>
+                <input type="hidden" id="cashier_password" name="password">
+                <div class="mt-2">
+                    <h4>{{translate_title('Parol kiritish', $lang)}}</h4>
+
+                    <!-- Sonni ko'rsatish joyi -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="display_password" class="input-display_password">0</div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <!-- Raqamlar tugmalari -->
+                        <div class="row mb-2">
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendPassword(1)">1</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendPassword(2)">2</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendPassword(3)">3</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="row mb-2">
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendPassword(4)">4</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendPassword(5)">5</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendPassword(6)">6</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="row mb-2">
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendPassword(7)">7</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendPassword(8)">8</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendPassword(9)">9</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="row mb-2">
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendPassword(0)">0</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="clearDisplayPassword()">Clear</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="backspacePassword()">
+                                    <span class="mdi mdi-backspace"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between width_100_percent mt-4">
+                    <a class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
+                    <button type="submit" class="btn modal_confirm">{{translate_title('Confirm', $lang)}}</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 <div class="rightbar-overlay"></div>
 </body>
 

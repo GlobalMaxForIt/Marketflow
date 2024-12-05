@@ -1,4 +1,4 @@
-@extends('layouts.cashbox_layout')
+@extends('layouts.cashier_small_layout')
 
 @section('title')
     {{translate_title('Checkout', $lang)}}
@@ -8,67 +8,93 @@
         .select2-container {
             z-index: 1055 !important; /* Bootstrap modal uchun z-indexdan yuqori qiymat */
         }
+        .key h6, .key_space h6{
+            margin: 0px !important;
+        }
+        .accordion-button{
+            padding: 7px;
+        }
     </style>
     <div class="row">
-        <div class="col-3">
-            <div id="dragTree">
-                <ul>
-                    @foreach($allCategriesSubcategoriesProducts as $category)
-                        <li>{{$category['category_name']}}
-                            <ul>
-                                @foreach($category['sub_categories'] as $sub_category)
-                                    <li data-jstree='{"opened":true}'>{{$sub_category['sub_category_name']}}
-                                        <ul>
-                                            @foreach($sub_category['products'] as $product)
-                                                <li data-jstree='{"type":"file"}'>
-                                                    <a onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}')">
-                                                        {{$product['name']}}{{$product['amount']}}
-                                                    </a>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-        </div>
-        <div class="col-5">
+        <div class="col-7">
             <div class="main-content-section" id="myDiv">
                 <div class="order-section">
                     <div class="card">
                         <div class="card-body overflow-auto">
+                            <div class="accordion mb-3" id="accordionExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="keyboard_heading">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#keyboard_body" aria-expanded="true"
+                                                aria-controls="collapseOne">
+                                            <span class="fa fa-keyboard"></span>
+                                        </button>
+                                    </h2>
+                                    <div id="keyboard_body" class="accordion-collapse collapse show"
+                                         aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <div class="keyboard">
+                                                <!-- Harflar -->
+                                                <div class="key"><h6>A</h6></div><div class="key"><h6>B</h6></div><div class="key"><h6>C</h6></div><div class="key"><h6>D</h6></div>
+                                                <div class="key"><h6>E</h6></div><div class="key"><h6>F</h6></div><div class="key"><h6>G</h6></div><div class="key"><h6>H</h6></div>
+                                                <div class="key"><h6>I</h6></div><div class="key"><h6>J</h6></div><div class="key"><h6>K</h6></div><div class="key"><h6>L</h6></div>
+                                                <div class="key"><h6>M</h6></div><div class="key"><h6>N</h6></div><div class="key"><h6>O</h6></div><div class="key"><h6>P</h6></div>
+                                                <div class="key"><h6>Q</h6></div><div class="key"><h6>R</h6></div><div class="key"><h6>S</h6></div><div class="key"><h6>T</h6></div>
+                                                <div class="key"><h6>U</h6></div><div class="key"><h6>V</h6></div><div class="key"><h6>W</h6></div><div class="key"><h6>X</h6></div>
+                                                <div class="key"><h6>Y</h6></div><div class="key"><h6>Z</h6></div>
+
+                                                <!-- Raqamlar -->
+                                                <div class="key"><h6>0</h6></div><div class="key"><h6>1</h6></div><div class="key"><h6>2</h6></div><div class="key"><h6>3</h6></div>
+                                                <div class="key"><h6>4</h6></div><div class="key"><h6>5</h6></div><div class="key"><h6>6</h6></div><div class="key"><h6>7</h6></div>
+                                                <div class="key"><h6>8</h6></div><div class="key"><h6>9</h6></div><div class="key"><h6>-</h6></div><div class="key"><h6>_</h6></div>
+                                                <div class="key"><h6>.</h6></div><div class="key"><h6>,</h6></div><div class="key"><h6>/</h6></div><div class="key"><h6>(</h6></div>
+                                                <div class="key"><h6>)</h6></div><div class="key"><h6>[</h6></div><div class="key"><h6>]</h6></div><div class="key"><h6>{</h6></div>
+                                                <div class="key"><h6>}</h6></div><div class="key"><h6>*</h6></div><div class="key"><h6>@</h6></div><div class="key"><h6>#</h6></div>
+                                                <div class="key"><h6>$</h6></div><div class="key"><h6>%</h6></div><div class="key"><h6>#</h6></div><div class="key"><h6>:</h6></div>
+                                                <div class="key"><h6>|</h6></div><div class="key"><h6>&</h6></div><div class="key"><h6>€</h6></div><div class="key"><h6>£</h6></div>
+                                                <div class="key"><h6>₩</h6></div><!-- Probel -->
+                                                <div class="d-flex justify-content-between width_304_pixel">
+                                                    <div class="key key_space"><h6>Space</h6></div>
+                                                    <div class="key_space" onclick="clearKeyboardDisplay()"><h6>Clear</h6></div>
+                                                    <div class="key_space" onclick="backspaceKeyboard()"><h6><span class="mdi mdi-backspace"></span></h6></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <table class="restaurant_tables datatable table table-striped dt-responsive nowrap">
                                 <thead>
                                 <tr>
-                                    <th><h6>{{translate_title('Name', $lang)}}</h6></th>
-                                    <th><h6>{{translate_title('Price', $lang)}}</h6></th>
-                                    <th><h6>{{translate_title('Stock', $lang)}}</h6></th>
-                                    <th><h6>{{translate_title('Functions', $lang)}}</h6></th>
+                                    <th><h6><b>{{translate_title('Barcode', $lang)}}</b></h6></th>
+                                    <th><h6><b>{{translate_title('Name', $lang)}}</b></h6></th>
+                                    <th><h6><b>{{translate_title('Price', $lang)}}</b></h6></th>
+                                    <th><h6><b>{{translate_title('Stock', $lang)}}</b></h6></th>
+                                    <th><h6><b>{{translate_title('Functions', $lang)}}</b></h6></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($allProductsData['products'] as $product)
                                     <tr>
                                         <td class="market_tables_text">
-                                            <span>{{$product['name']}}</span>
-                                            <span>{{$product['amount']}}</span>
+                                            <span><h6><b>{{$product['barcode']}}</b></h6></span>
                                         </td>
                                         <td class="market_tables_text">
-                                            <div><span>{{$product['last_price']}}</span></div>
+                                            <span><h6><b>{{$product['name']}}</b></h6></span>
+                                            <span><h6><b>{{$product['amount']}}</b></h6></span>
+                                        </td>
+                                        <td class="market_tables_text">
+                                            <div><span><h6><b>{{$product['last_price']}}</b></h6></span></div>
                                             @if($product['discount']>0)
-                                                <del>{{$product['price']}}</del>
+                                                <del><h6><b>{{$product['price']}}</b></h6></del>
                                             @endif
                                         </td>
                                         <td class="market_tables_text">
-                                            {{$product['stock']}}
+                                            <h6><b class="stock__quantity" id="stock__{{$product['id']}}">{{$product['stock']}}</b></h6>
                                         </td>
                                         <td class="market_tables_text">
-                                            <a onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}')" class="edit_button btn">
-                                                <b><span class="mdi mdi-basket"></span></b>
-                                            </a>
+                                            <button class="edit_button btn" onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', this)">+</button>
+                                            <button class="ms-2 edit_button btn" onclick="minusProduct('{{$product['id']}}', this)">-</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -98,13 +124,10 @@
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
         </div>
-        <div class="col-4">
+        <div class="col-5 ps-2">
             <div class="d-flex justify-content-between mb-2">
                 <button class="edit_button btn me-2" data-bs-toggle="modal" data-bs-target="#client_with_discount" id="client_with_discount_button">
                     <b>{{translate_title('Select client with discount', $lang)}}</b>
-                </button>
-                <button class="edit_button btn me-2" data-bs-toggle="modal" data-bs-target="#general_discount" id="general_discount_button">
-                    <b>{{translate_title('Select general discount', $lang)}}</b>
                 </button>
             </div>
             <div class="main-content-section">
@@ -112,11 +135,11 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th><h6>{{translate_title('Product name', $lang)}}</h6></th>
-                            <th><h6>{{translate_title('Qty', $lang)}}</h6></th>
-                            <th><h6>{{translate_title('Price', $lang)}}</h6></th>
-                            <th><h6>{{translate_title('Total sum', $lang)}}</h6></th>
-                            <th><h6>{{translate_title('Functions', $lang)}}</h6></th>
+                            <th><h6><b>{{translate_title('Barcode', $lang)}}</b></h6></th>
+                            <th><h6><b>{{translate_title('Product name', $lang)}}</b></h6></th>
+                            <th><h6><b>{{translate_title('Qty', $lang)}}</b></h6></th>
+                            <th><h6><b>{{translate_title('Price', $lang)}}</b></h6></th>
+                            <th><h6><b>{{translate_title('Total sum', $lang)}}</b></h6></th>
                         </tr>
                         </thead>
                         <tbody id="order_data_content">
@@ -137,17 +160,6 @@
                                 <img src="{{asset('img/trash_icon.png')}}" alt="" height="18px">
                             </a>
                             <h6 id="clientDiscount" class="color_red"></h6>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between d-none padding_20 mb-2" id="generalDiscountContent">
-                        <div class="d-flex">
-                            <h6>{{translate_title('General discount:', $lang)}}</h6>&nbsp;
-                        </div>
-                        <div class="d-flex">
-                            <a type="button" class="btn delete_button btn-sm waves-effect me-2" id="removeGeneralDiscountContent">
-                                <img src="{{asset('img/trash_icon.png')}}" alt="" height="18px">
-                            </a>
-                            <h6 id="generalDiscount" class="color_red"></h6>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between d-none padding_20" id="totalLeftSum">
@@ -178,6 +190,14 @@
             </div>
         </div>
     </div>
+
+    <div id="barcode-scanner" class="h-full w-full relative">
+        <!-- Overlay text -->
+        <div id="overlay-text" class="absolute inset-0 flex justify-center items-center bg-opacity-50 text-white text-lg font-bold">
+            Scan barcode here: <span id="barcode_number"></span>
+        </div>
+    </div>
+
     <div id="delete_modal_cashbox" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content modal-filled">
@@ -223,61 +243,7 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>
-    <div class="modal fade" tabindex="-1" role="dialog" id="general_discount"
-         aria-labelledby="staticBackdropLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog" role="document">
-            <form class="modal-content" method="POST">
-                @csrf
-                @method('POST')
-                <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
-                    <li class="nav-item ms-2">
-                        <a href="#discount_percent_" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">%</a>
-                    </li>
-                    <li class="nav-item ms-2">
-                        <a href="#discount_price_" data-bs-toggle="tab" aria-expanded="false" class="nav-link">$</a>
-                    </li>
-                </ul>
-                <div class="tab-content" id="discount_tab">
-                    <div class="tab-pane fade show active" id="discount_percent_" role="tabpanel" aria-labelledby="discount_percent_tab">
-                        <div class="modal-header card-header">
-                            <h5>{{translate_title('Do you want to add general discount percent?', $lang)}}</h5>
-                        </div>
-                        <div class="modal-body card-body">
-                            <div class="position-relative mb-4">
-                                <label class="form-label">{{translate_title('Discount percent', $lang)}}</label>
-                                <input data-toggle="touchspin" type="number" name="general_discount_percent" id="general_discount_percent" min="0" max="100" data-bts-postfix="%">
-                                <div class="invalid-tooltip">
-                                    {{translate_title('Please enter a general discount percent.', $lang)}}
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between width_100_percent mt-4">
-                                <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
-                                <a class="btn modal_confirm" data-bs-dismiss="modal" id="confirm_general_discount_percent">{{translate_title('Confirm', $lang)}}</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="discount_price_" role="tabpanel" aria-labelledby="discount_price_tab">
-                        <div class="modal-header card-header">
-                            <h5>{{translate_title('Do you want to add general discount price?', $lang)}}</h5>
-                        </div>
-                        <div class="modal-body card-body">
-                            <div class="position-relative mb-4">
-                                <label class="form-label">{{translate_title('Discount price', $lang)}}</label>
-                                <input data-toggle="touchspin" type="text" name="general_discount_price" id="general_discount_price" data-bts-max="999999999" data-bts-postfix="$">
-                                <div class="invalid-tooltip">
-                                    {{translate_title('Please enter a general discount price.', $lang)}}
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between width_100_percent mt-4">
-                                <a type="button" class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
-                                <a class="btn modal_confirm" data-bs-dismiss="modal" id="confirm_general_discount_price">{{translate_title('Confirm', $lang)}}</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div>
+    <input type="hidden" id="barcode_input">
     <script>
 
         let sum_text =  "{{translate_title('sum', $lang)}}"
@@ -296,7 +262,7 @@
         let kitchen_index = "{{route('cashbox.index', $lang)}}"
         let json_products = JSON.parse('{!! $allProductsData['json_products'] !!}')
         let page = false
-
+        let input__event = {}
         $(document).ready(function () {
             if($('#client_select_id_2') != undefined && $('#client_select_id_2') != null){
                 $('#client_select_id_2').select2({
@@ -305,8 +271,73 @@
                 });
             }
         })
+        setTimeout(function () {
+            let dataTables_filter_input = document.querySelector('.dataTables_filter input')
+            let keys = document.querySelectorAll('.key');
+            keys.forEach(key => {
+                key.addEventListener('click', () => {
+                    const keyText = key.textContent.trim();
+                    if (keyText === 'Space') {
+                        dataTables_filter_input.value += ' ';
+                    } else {
+                        dataTables_filter_input.value += keyText;
+                    }
+
+                    inputEvent(dataTables_filter_input)
+                });
+            });
+        }, 544)
+
+        function clearKeyboardDisplay(){
+            let dataTables_filter_input = document.querySelector('.dataTables_filter input')
+            dataTables_filter_input.value = ''
+            inputEvent(dataTables_filter_input)
+        }
+        function backspaceKeyboard(){
+            let dataTables_filter_input = document.querySelector('.dataTables_filter input')
+            if (dataTables_filter_input.value.length > 1) {
+                dataTables_filter_input.value = String(dataTables_filter_input.value).slice(0, -1)
+            } else {
+                dataTables_filter_input.value = ''
+            }
+            inputEvent(dataTables_filter_input)
+        }
+        function inputEvent(dataTables_filter_input){
+            // "input" hodisasini qo'lda qo'zg'atish
+            input__event = new Event('input', { bubbles: true });
+            dataTables_filter_input.dispatchEvent(input__event);
+        }
+    </script>
+
+    {{--    <script src="{{asset('js/cities.js')}}"></script>--}}
+    <script src="{{asset('js/small_ordering.js')}}"></script>
+    <script>
+        let barcodeInput = document.getElementById('barcode_input')
+        barcodeInput.focus()
+        let scannedBarcode = ''
+
+        document.addEventListener('keydown', function(event) {
+            setTimeout(function () {
+                if (event.key === 'Enter') {
+                    console.log("Barcode Scanned:", scannedBarcode);
+                    handleBarcode(scannedBarcode);
+                    scannedBarcode = '';
+                } else {
+                    scannedBarcode += event.key;
+                }
+            }, 244);
+        });
+
+        function handleBarcode(barcode) {
+            for(let p=0; p<json_products.length; p++){
+                if(json_products[p].barcode == barcode){
+                    let current_element_stock = document.getElementById('stock__'+json_products[p].id)
+                    addToOrder(json_products[p].id, json_products[p].name, json_products[p].price, json_products[p].discount, json_products[p].discount_percent, json_products[p].last_price, json_products[p].amount, json_products[p].barcode, current_element_stock)
+                }
+            }
+        }
 
     </script>
-    <script src="{{asset('js/ordering.js')}}"></script>
+
 @endsection
 

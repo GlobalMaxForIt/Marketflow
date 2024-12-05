@@ -316,9 +316,6 @@
         barcodeInput.focus()
         let scannedBarcode = ''
 
-
-
-
         document.addEventListener('keydown', function(event) {
             setTimeout(function () {
                 if (event.key === 'Enter') {
@@ -331,40 +328,7 @@
             }, 244);
         });
 
-
-
-        // document.addEventListener('keydown', function(event) {
-        //     // Barcode scannerning oxirgi Enter tugmasini aniqlash
-        //     setTimeout(function () {
-        //         if (event.key === 'Enter') {
-        //             const barcode = barcodeInput.value.trim();
-        //             console.log([barcodeInput.value, barcodeInput.value.trim()])
-        //             // Ma'lumotni qayta ishlash
-        //             handleBarcode(barcode);
-        //
-        //             // Inputni tozalash
-        //             barcodeInput.value = '';
-        //             barcodeInput.focus()
-        //         }
-        //     }, 100)
-        // });
-
-
-
-
-        // barcodeInput.addEventListener('input', function() {
-        //     const barcode = barcodeInput.value.trim();
-        //     if (barcode) {
-        //         // Barcode ma'lumotlarini qayta ishlash (API ga yuborish yoki ichki funksiya)
-        //         handleBarcode(barcode);
-        //
-        //         // Inputni tozalash
-        //         barcodeInput.value = '';
-        //     }
-        // });
-
         function handleBarcode(barcode) {
-            console.log([barcode, json_products[0].barcode, json_products[1].barcode])
             for(let p=0; p<json_products.length; p++){
                 if(json_products[p].barcode == barcode){
                     let current_element_stock = document.getElementById('stock__'+json_products[p].id)
