@@ -314,25 +314,40 @@
     <script>
         let barcodeInput = document.getElementById('barcode_input')
         barcodeInput.focus()
+        let scannedBarcode = ''
 
 
 
 
         document.addEventListener('keydown', function(event) {
-            // Barcode scannerning oxirgi Enter tugmasini aniqlash
             setTimeout(function () {
                 if (event.key === 'Enter') {
-                    const barcode = barcodeInput.value.trim();
-                    console.log([barcodeInput.value, barcodeInput.value.trim()])
-                    // Ma'lumotni qayta ishlash
-                    handleBarcode(barcode);
-
-                    // Inputni tozalash
-                    barcodeInput.value = '';
-                    barcodeInput.focus()
+                    console.log("Barcode Scanned:", scannedBarcode);
+                    handleBarcode(scannedBarcode);
+                    scannedBarcode = '';
+                } else {
+                    scannedBarcode += event.key;
                 }
-            }, 100)
+            }, 244);
         });
+
+
+
+        // document.addEventListener('keydown', function(event) {
+        //     // Barcode scannerning oxirgi Enter tugmasini aniqlash
+        //     setTimeout(function () {
+        //         if (event.key === 'Enter') {
+        //             const barcode = barcodeInput.value.trim();
+        //             console.log([barcodeInput.value, barcodeInput.value.trim()])
+        //             // Ma'lumotni qayta ishlash
+        //             handleBarcode(barcode);
+        //
+        //             // Inputni tozalash
+        //             barcodeInput.value = '';
+        //             barcodeInput.focus()
+        //         }
+        //     }, 100)
+        // });
 
 
 
