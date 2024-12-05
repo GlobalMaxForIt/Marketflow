@@ -322,12 +322,12 @@
             // Barcode scannerning oxirgi Enter tugmasini aniqlash
             if (event.key === 'Enter') {
                 const barcode = barcodeInput.value.trim();
-                console.log(barcodeInput.value)
+                console.log([barcodeInput.value, barcodeInput.value.trim()])
                 // Ma'lumotni qayta ishlash
                 handleBarcode(barcode);
 
                 // Inputni tozalash
-                document.getElementById('barcode-input').value = '';
+                barcodeInput.value = '';
             }
         });
 
