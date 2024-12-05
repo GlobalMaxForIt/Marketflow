@@ -1350,9 +1350,14 @@ input[type=number]::-webkit-outer-spin-button {
     line-height: 18.72px;
     color: #adb5bd !important;
     display: flex;
+    align-items: center;
 }
 .buttonUzbDropDownHeader img{
+    margin-right: 8px;
     height: 18px;
+}
+.buttonUzbDropDownHeader h6{
+    margin-bottom: 0px !important;
 }
 .buttonUzbDropDownHeader svg{
     margin-top: -4px;
@@ -2296,4 +2301,7 @@ body[data-leftbar-size=condensed] .content-page {
 .navbar-custom ul li {
     display: flex;
     align-items: center;
+}
+#popover-container .popover{
+    background-color: white;
 }

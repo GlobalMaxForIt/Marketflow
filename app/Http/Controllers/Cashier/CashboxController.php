@@ -179,37 +179,22 @@ class CashboxController extends Controller
         foreach($clients_discount_ as $client_discount){
             $clients_discount[] = $this->clientService->getClientFullInfo($client_discount);
         }
-        $products_fast_selling = Products::orderBy('created_at', 'desc')->where('store_id', $user->store_id)->whereNotNull('fast_selling_goods')->get();
+        $allProductsData[] = [
+            'products'=>[],
+            'quantity'=>0,
+        ];
         $products_ = Products::orderBy('created_at', 'desc')->where('store_id', $user->store_id)->whereNotNull('fast_selling_goods')->get();
-        foreach ($products_ as $product) {
-            if($product->discount){
-                if($product->discount->percent&& $product->price){
-                    $discount = $this->getDiscount($product->discount->percent, $product->price);
-                    $discount_percent = $product->discount->percent;
-                }else{
-                    $discount = 0;
-                    $discount_percent = 0;
-                }
-            }else{
-                $discount = 0;
-                $discount_percent = 0;
-            }
-            $array_products = [
-                'id'=>$product->id,
-                'products_categories'=>$product->products_categories,
-                'name'=>$product->name,
-                'amount'=>$product->amount,
-                'price'=>number_format((int)$product->price, 0, '', ' '),
-                'discount'=>number_format($discount, 0, '', ' '),
-                'discount_percent'=>$discount_percent,
-                'last_price'=>number_format((int)$product->price - $discount, 0, '', ' '),
-                'barcode'=>$product->barcode,
-                'stock'=>$product->stock,
-            ];
-            $allProducts[] = $array_products;
-        }
+        $products_json = Products::where('store_id', $user->store_id)->whereNotNull('barcode')->get();
+        $allProducts = $this->productsService->getProducts($products_);
+        $allProductsJson = $this->productsService->getProducts($products_json);
+        $allProductsData = [
+            'products'=>$allProducts,
+            'json_products'=>json_encode($allProductsJson),
+            'quantity'=>count($allProducts),
+        ];
 
         return view('cashier.cashbox.index_large', [
+            'allProductsData'=>$allProductsData,
             'title'=>$this->title,
             'user'=>$user,
             'clients'=>$clients,

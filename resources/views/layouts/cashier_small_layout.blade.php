@@ -435,6 +435,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{route('indexLarge')}}">
+                            <i class="mdi mdi-cash-register me-1"></i>
+                            <span> {{translate_title('Cashbox large', $lang)}} </span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{route('cashier-discount.index')}}">
                             <i class="mdi mdi-percent me-1"></i>
                             <span> {{translate_title('Discount', $lang)}} </span>
@@ -1084,6 +1090,7 @@
 <script src="{{ asset('libs/jquery.counterup/jquery.counterup.min.js') }}"></script>
 <script src="{{ asset('libs/feather-icons/feather.min.js') }}"></script>
 <script src="{{ asset('libs/parsleyjs/parsley.min.js') }}"></script>
+<script src="{{ asset('libs/tippy.js/tippy.all.min.js') }}"></script>
 
 <script src="{{ asset('libs/moment/min/moment.min.js') }}"></script>
 <script src="{{ asset('libs/x-editable/bootstrap-editable/js/bootstrap-editable.min.js') }}"></script>

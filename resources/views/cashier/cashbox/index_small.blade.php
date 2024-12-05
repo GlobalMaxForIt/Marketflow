@@ -63,7 +63,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <table class="restaurant_tables datatable table table-striped dt-responsive nowrap">
+                            <table class="restaurant_tables datatable table table-striped nowrap">
                                 <thead>
                                     <tr>
                                         <th><h6><b>{{translate_title('Barcode', $lang)}}</b></h6></th>
@@ -73,14 +73,18 @@
                                         <th><h6><b>{{translate_title('Functions', $lang)}}</b></h6></th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="popover-container">
                                 @foreach($allProductsData['products'] as $product)
                                     <tr>
                                         <td class="market_tables_text">
                                             <span><h6><b>{{$product['barcode']}}</b></h6></span>
                                         </td>
                                         <td class="market_tables_text">
-                                            <span><h6><b>{{$product['name']}}</b></h6></span>
+                                            <span>
+                                                <h6>
+                                                    <a class="product_name" data-bs-container="#popover-container" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="{{$product['name']}}" data-original-title="">{{$product['short_name']}}</a>
+                                                </h6>
+                                            </span>
                                             <span><h6><b>{{$product['amount']}}</b></h6></span>
                                         </td>
                                         <td class="market_tables_text">

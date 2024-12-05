@@ -179,6 +179,7 @@ class ProductsService
             $array_products = [
                 'id'=>$product->id,
                 'products_categories'=>$product->products_categories,
+                'short_name'=>$this->truncateString($product->name),
                 'name'=>$product->name,
                 'amount'=>$product->amount,
                 'price'=>number_format((int)$product->price, 0, '', ' '),
@@ -197,6 +198,13 @@ class ProductsService
     public function getDiscount($percent, $price){
         $discount = (int)$price*(int)$percent/100;
         return $discount;
+    }
+
+    function truncateString($string, $length = 14, $suffix = '...') {
+        if (strlen($string) > $length) {
+            return substr($string, 0, $length) . $suffix;
+        }
+        return $string;
     }
 
 }
