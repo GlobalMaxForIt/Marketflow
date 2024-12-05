@@ -243,6 +243,7 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>
+    <input type="hidden" id="barcode_input">
     <script>
 
         let sum_text =  "{{translate_title('sum', $lang)}}"
@@ -310,52 +311,28 @@
 
     {{--    <script src="{{asset('js/cities.js')}}"></script>--}}
     <script src="{{asset('js/small_ordering.js')}}"></script>
-    <script src="{{asset('js/quagga.min.js')}}"></script>
     <script>
+        let barcodeInput = document.getElementById('barcode_input')
+        barcodeInput.focus()
+        barcodeInput.addEventListener('input', function() {
+            const barcode = barcodeInput.value.trim();
+            if (barcode) {
+                // Barcode ma'lumotlarini qayta ishlash (API ga yuborish yoki ichki funksiya)
+                handleBarcode(barcode);
 
-        let barcode_number = document.getElementById('barcode_number')
-        Quagga.init({
-            inputStream: {
-                name: "Live",
-                type: "LiveStream",
-                target: document.querySelector("#barcode-scanner")
-            },
-            decoder: {
-                readers: ["ean_reader", "code_128_reader", "upc_reader"]
-            },
-            locate: true, // Barcode aniqlash aniqligini oshiradi
-            locator: {
-                patchSize: "medium", // small, medium, large
-                halfSample: true
+                // Inputni tozalash
+                barcodeInput.value = '';
             }
-        }, function(err) {
-            if (err) {
-                console.error("Error initializing Quagga:", err);
-                return;
-            }
-            console.log("Initialization finished. Ready to start");
-
-            Quagga.start();
         });
-        // Listen for barcode detection
-        Quagga.onDetected(function(result) {
+
+        function handleBarcode(barcode) {
             for(let p=0; p<json_products.length; p++){
-                if(json_products[p].barcode == result.codeResult.code){
+                if(json_products[p].barcode == barcode){
                     let current_element_stock = document.getElementById('stock__'+json_products[p].id)
                     addToOrder(json_products[p].id, json_products[p].name, json_products[p].price, json_products[p].discount, json_products[p].discount_percent, json_products[p].last_price, json_products[p].amount, json_products[p].barcode, current_element_stock)
                 }
             }
-            // Handle the detected barcode here
-            barcode_number.innerText = result.codeResult.code;
-
-            Quagga.stop(); // Stop scanning after a barcode is detected
-            // setTimeout(() => {
-            //     Quagga.start(); // Restart scanning after 3 seconds
-            // }, 3000);
-        });
-
-
-
+        }
 
     </script>
 
