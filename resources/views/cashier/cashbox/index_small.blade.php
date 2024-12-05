@@ -326,6 +326,7 @@
         });
 
         function handleBarcode(barcode) {
+            console.log(barcode)
             for(let p=0; p<json_products.length; p++){
                 if(json_products[p].barcode == barcode){
                     let current_element_stock = document.getElementById('stock__'+json_products[p].id)
