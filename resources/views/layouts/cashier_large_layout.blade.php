@@ -52,6 +52,10 @@
         .img-thumbnail{
             height: 56px;
         }
+        .col-7, .order-section{
+            padding: 0px !important;
+        }
+
     </style>
     <link rel="stylesheet" href="{{asset('css/cashbox.css')}}">
 </head>
@@ -153,18 +157,6 @@
                     </div>
                 </div>
             </li>
-            <li class="dropdown d-inline-block d-lg-none">
-                <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-bs-toggle="dropdown"
-                   href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <i class="fe-search noti-icon"></i>
-                </a>
-                <div class="dropdown-menu dropdown-lg dropdown-menu-end p-0">
-                    <form class="p-3">
-                        <input type="text" class="form-control" placeholder="Search ..."
-                               aria-label="Recipient's username">
-                    </form>
-                </div>
-            </li>
             <li class="dropdown notification-list topbar-dropdown">
                 <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown"
                    href="#" role="button" aria-haspopup="false" aria-expanded="false">
@@ -237,24 +229,12 @@
                 </a>
             </li>
             <li>
-                <div class="app-search">
-                    <div class="app-search-box">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search..." id="top-search">
-                            <a class="btn" type="submit">
-                                <i class="fe-search"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <h5 class="mt-2">@yield('title')</h5>
             </li>
             <li>
-                <button class="btn btn-primary mt-2 mt-md-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
+                <a class="btn mt-2 mt-md-0 color_white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
                     <i class="fe-search"></i>
-                </button>
-            </li>
-            <li>
-                <h5>@yield('title')</h5>
+                </a>
             </li>
         </ul>
         <div class="clearfix"></div>
@@ -446,8 +426,8 @@
 </div>
 <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
     <div class="offcanvas-body">
-        <div class="card" style="margin: 0px !important;">
-            <div class="card-body overflow-auto">
+        <div class="card" style="margin: 0px !important; min-height: auto !important;">
+            <div class="card-body overflow-auto" style="padding: 4px 1rem !important;">
                 <div class="accordion mb-3" id="accordionExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="keyboard_heading">
@@ -492,38 +472,43 @@
                 </div>
                 <table class="restaurant_tables datatable table table-striped nowrap">
                     <thead>
-                    <tr>
-                        <th><h6><b>{{translate_title('Barcode', $lang)}}</b></h6></th>
-                        <th><h6><b>{{translate_title('Name', $lang)}}</b></h6></th>
-                        <th><h6><b>{{translate_title('Price', $lang)}}</b></h6></th>
-                        <th><h6><b>{{translate_title('Stock', $lang)}}</b></h6></th>
-                        <th><h6><b>{{translate_title('Functions', $lang)}}</b></h6></th>
-                    </tr>
+                        <tr>
+                            <th><h6><b>{{translate_title('Barcode', $lang)}}</b></h6></th>
+                            <th><h6><b>{{translate_title('Name', $lang)}}</b></h6></th>
+                            <th><h6><b>{{translate_title('Price', $lang)}}</b></h6></th>
+                            <th><h6><b>{{translate_title('Stock', $lang)}}</b></h6></th>
+                            <th><h6><b>{{translate_title('Functions', $lang)}}</b></h6></th>
+                        </tr>
                     </thead>
                     <tbody id="popover-container">
                     @foreach($allProductsData['products'] as $product)
                         <tr>
-                            <td class="market_tables_text">
+                            <td class="market_tables_text_big">
                                 <span><h6><b>{{$product['barcode']}}</b></h6></span>
                             </td>
-                            <td class="market_tables_text">
-                                    <span>
+                            <td class="market_tables_text_big">
+                                <div class="d-flex">
+                                    <span class="me-2">
                                         <h6>
                                             <a class="product_name" data-bs-container="#popover-container" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="{{$product['name']}}" data-original-title="">{{$product['short_name']}}</a>
                                         </h6>
                                     </span>
-                                <span><h6><b>{{$product['amount']}}</b></h6></span>
+                                    <span><h6><b>{{$product['amount']}}</b></h6></span>
+                                </div>
+
                             </td>
-                            <td class="market_tables_text">
-                                <div><span><h6><b>{{$product['last_price']}}</b></h6></span></div>
-                                @if($product['discount']>0)
-                                    <del><h6><b>{{$product['price']}}</b></h6></del>
-                                @endif
+                            <td class="market_tables_text_big">
+                                <div class="d-flex">
+                                    @if($product['discount']>0)
+                                        <del class="me-2"><h6><b>{{$product['price']}}</b></h6></del>
+                                    @endif
+                                    <div><span><h6><b>{{$product['last_price']}}</b></h6></span></div>
+                                </div>
                             </td>
-                            <td class="market_tables_text">
+                            <td class="market_tables_text_big">
                                 <h6><b class="stock__quantity" id="stock__{{$product['id']}}">{{$product['stock']}}</b></h6>
                             </td>
-                            <td class="market_tables_text">
+                            <td class="market_tables_text_big">
                                 <button class="edit_button btn" onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', '{{$product['stock']}}')">+</button>
                                 <button class="ms-2 edit_button btn" onclick="minusProduct('{{$product['id']}}', '{{$product['stock']}}')">-</button>
                             </td>

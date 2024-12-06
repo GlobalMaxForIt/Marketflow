@@ -1822,6 +1822,9 @@ table{
 .market_tables_text{
     padding: 14px 0px !important;
 }
+.market_tables_text_big{
+    padding: 4px 0px !important;
+}
 .bootstrap-touchspin-down, .bootstrap-touchspin-up{
     border: 1px solid #CED4DA !important;
     background-color: transparent !important;
@@ -2283,7 +2286,7 @@ body[data-leftbar-size=condensed] .content-page {
 }
 .keyboard_big {
     display: grid;
-    grid-template-columns: repeat(14, 24px);
+    grid-template-columns: repeat(24, 24px);
     gap: 10px;
     justify-content: center;
 }
@@ -2356,4 +2359,13 @@ body[data-leftbar-size=condensed] .content-page {
 }
 .offcanvas-body{
     padding: 0px !important;
+}
+.offcanvas{
+    background-color: transparent !important;
+}
+.color_white{
+    color: white !important;
+}
+.accordion-item, .accordion-header,.accordion-button{
+    background-color: transparent !important;
 }

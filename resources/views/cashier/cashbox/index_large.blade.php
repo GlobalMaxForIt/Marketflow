@@ -14,6 +14,14 @@
         .accordion-button{
             padding: 7px;
         }
+        #all_sum_info{
+            position: fixed;
+            background-color: rgb(0, 0, 0, 0.1);
+            width: 50%;
+            bottom: 24px;
+            z-index: 1004;
+            border-radius: 20px;
+        }
     </style>
     <div class="row">
         <div class="col-9">
@@ -56,8 +64,10 @@
                                 </thead>
                                 <tbody id="order_data_content">
                                     <tr>
-                                        <td><b><h4>{{translate_title('Sum', $lang)}}</h4></b></td>
-                                        <td></td>
+                                        <td>
+                                            <h4>{{translate_title('Sum:', $lang)}}</h4>
+                                        </td>
+                                        <td><h4 id="total_sum"></h4></td>
                                     </tr>
                                     <tr>
                                         <td><b><h4>{{translate_title('Discount', $lang)}}</h4></b></td>
@@ -65,7 +75,12 @@
                                     </tr>
                                     <tr>
                                         <td><b><h4>{{translate_title('Total sum', $lang)}}</h4></b></td>
-                                        <td></td>
+                                        <td>
+                                            <div class="d-flex justify-content-between d-none" id="totalLeftSum">
+                                                <h4>{{translate_title('Total left sum:', $lang)}}</h4>
+                                                <h4 id="total_left_sum"></h4>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -93,10 +108,6 @@
                         </tr>
                         </thead>
                     </table>
-                    <div class="d-flex justify-content-between padding_20">
-                        <h4>{{translate_title('Total:', $lang)}}</h4>
-                        <h4 id="total_sum"></h4>
-                    </div>
                     <div class="d-flex justify-content-between d-none padding_20 mb-2" id="clientDiscountContent">
                         <div class="d-flex">
                             <h6>{{translate_title('Client discount:', $lang)}}</h6>&nbsp;
@@ -108,10 +119,6 @@
                             </a>
                             <h6 id="clientDiscount" class="color_red"></h6>
                         </div>
-                    </div>
-                    <div class="d-flex justify-content-between d-none padding_20" id="totalLeftSum">
-                        <h4>{{translate_title('Total left sum:', $lang)}}</h4>
-                        <h4 id="total_left_sum"></h4>
                     </div>
                 </div>
                 <div class="d-flex add_to_order_buttons_" id="has_items">

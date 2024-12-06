@@ -11,8 +11,9 @@
         .key h6, .key_space h6{
             margin: 0px !important;
         }
-        .accordion-button{
-            padding: 7px;
+        #popover-container td{
+            padding: 4px 0px !important;
+            height: 40px !important;
         }
     </style>
     <div class="row">
@@ -21,48 +22,7 @@
                 <div class="order-section">
                     <div class="card">
                         <div class="card-body overflow-auto">
-                            <div class="accordion mb-3" id="accordionExample">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="keyboard_heading">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#keyboard_body" aria-expanded="true"
-                                                aria-controls="collapseOne">
-                                            <span class="fa fa-keyboard"></span>
-                                        </button>
-                                    </h2>
-                                    <div id="keyboard_body" class="accordion-collapse collapse show"
-                                         aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            <div class="keyboard">
-                                                <!-- Harflar -->
-                                                <div class="key"><h6>A</h6></div><div class="key"><h6>B</h6></div><div class="key"><h6>C</h6></div><div class="key"><h6>D</h6></div>
-                                                <div class="key"><h6>E</h6></div><div class="key"><h6>F</h6></div><div class="key"><h6>G</h6></div><div class="key"><h6>H</h6></div>
-                                                <div class="key"><h6>I</h6></div><div class="key"><h6>J</h6></div><div class="key"><h6>K</h6></div><div class="key"><h6>L</h6></div>
-                                                <div class="key"><h6>M</h6></div><div class="key"><h6>N</h6></div><div class="key"><h6>O</h6></div><div class="key"><h6>P</h6></div>
-                                                <div class="key"><h6>Q</h6></div><div class="key"><h6>R</h6></div><div class="key"><h6>S</h6></div><div class="key"><h6>T</h6></div>
-                                                <div class="key"><h6>U</h6></div><div class="key"><h6>V</h6></div><div class="key"><h6>W</h6></div><div class="key"><h6>X</h6></div>
-                                                <div class="key"><h6>Y</h6></div><div class="key"><h6>Z</h6></div>
 
-                                                <!-- Raqamlar -->
-                                                <div class="key"><h6>0</h6></div><div class="key"><h6>1</h6></div><div class="key"><h6>2</h6></div><div class="key"><h6>3</h6></div>
-                                                <div class="key"><h6>4</h6></div><div class="key"><h6>5</h6></div><div class="key"><h6>6</h6></div><div class="key"><h6>7</h6></div>
-                                                <div class="key"><h6>8</h6></div><div class="key"><h6>9</h6></div><div class="key"><h6>-</h6></div><div class="key"><h6>_</h6></div>
-                                                <div class="key"><h6>.</h6></div><div class="key"><h6>,</h6></div><div class="key"><h6>/</h6></div><div class="key"><h6>(</h6></div>
-                                                <div class="key"><h6>)</h6></div><div class="key"><h6>[</h6></div><div class="key"><h6>]</h6></div><div class="key"><h6>{</h6></div>
-                                                <div class="key"><h6>}</h6></div><div class="key"><h6>*</h6></div><div class="key"><h6>@</h6></div><div class="key"><h6>#</h6></div>
-                                                <div class="key"><h6>$</h6></div><div class="key"><h6>%</h6></div><div class="key"><h6>#</h6></div><div class="key"><h6>:</h6></div>
-                                                <div class="key"><h6>|</h6></div><div class="key"><h6>&</h6></div><div class="key"><h6>€</h6></div><div class="key"><h6>£</h6></div>
-                                                <div class="key"><h6>₩</h6></div><!-- Probel -->
-                                                <div class="d-flex justify-content-between width_304_pixel">
-                                                    <div class="key key_space"><h6>Space</h6></div>
-                                                    <div class="key_space" onclick="clearKeyboardDisplay()"><h6>Clear</h6></div>
-                                                    <div class="key_space" onclick="backspaceKeyboard()"><h6><span class="mdi mdi-backspace"></span></h6></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <table class="restaurant_tables datatable table table-striped nowrap">
                                 <thead>
                                     <tr>

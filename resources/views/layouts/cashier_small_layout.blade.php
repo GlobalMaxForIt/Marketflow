@@ -52,6 +52,19 @@
         .img-thumbnail{
             height: 56px;
         }
+        .col-7, .order-section{
+            padding: 0px !important;
+        }
+        .accordion-item{
+            position: relative;
+            z-index: 99;
+        }
+        .accordion-button{
+            padding: 7px;
+        }
+        .accordion-body{
+            box-shadow: 0px 2px 4px;
+        }
     </style>
     <link rel="stylesheet" href="{{asset('css/cashbox.css')}}">
 </head>
@@ -302,15 +315,28 @@
                 </a>
             </li>
             <li>
-                <h4>@yield('title')</h4>
+                <h5 class="mt-2">@yield('title')</h5>
             </li>
-            <li class="ms-4"><h6>{{$user->name}} {{$user->surname}}</h6></li>
+            <li class="ms-4"><span>{{$user->name}} {{$user->surname}}</span></li>
             <li>
                 <a class="text-decoration-none ms-4" data-bs-toggle="modal" data-bs-target="#change_cashier"><h5 class="m-0"><span class="mdi mdi-logout"></span></h5></a>
             </li>
+            <li>
+                <div class="accordion ms-4" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="keyboard_heading">
+                            <a class="accordion-button" data-bs-toggle="collapse"
+                                    data-bs-target="#keyboard_body" aria-expanded="true"
+                                    aria-controls="collapseOne">
+                                <span class="fa fa-keyboard"></span>
+                            </a>
+                        </h2>
+
+                    </div>
+                </div>
+            </li>
         </ul>
         <div class="clearfix"></div>
-
     </div>
     <!-- end Topbar -->
     <!-- ========== Left Sidebar Start ========== -->
@@ -470,6 +496,39 @@
     <!-- ============================================================== -->
 
     <div class="content-page">
+
+        <div id="keyboard_body" class="accordion-collapse collapse show"
+             aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <div class="keyboard_big">
+                    <!-- Harflar -->
+                    <div class="key"><h6>A</h6></div><div class="key"><h6>B</h6></div><div class="key"><h6>C</h6></div><div class="key"><h6>D</h6></div>
+                    <div class="key"><h6>E</h6></div><div class="key"><h6>F</h6></div><div class="key"><h6>G</h6></div><div class="key"><h6>H</h6></div>
+                    <div class="key"><h6>I</h6></div><div class="key"><h6>J</h6></div><div class="key"><h6>K</h6></div><div class="key"><h6>L</h6></div>
+                    <div class="key"><h6>M</h6></div><div class="key"><h6>N</h6></div><div class="key"><h6>O</h6></div><div class="key"><h6>P</h6></div>
+                    <div class="key"><h6>Q</h6></div><div class="key"><h6>R</h6></div><div class="key"><h6>S</h6></div><div class="key"><h6>T</h6></div>
+                    <div class="key"><h6>U</h6></div><div class="key"><h6>V</h6></div><div class="key"><h6>W</h6></div><div class="key"><h6>X</h6></div>
+                    <div class="key"><h6>Y</h6></div><div class="key"><h6>Z</h6></div>
+
+                    <!-- Raqamlar -->
+                    <div class="key"><h6>0</h6></div><div class="key"><h6>1</h6></div><div class="key"><h6>2</h6></div><div class="key"><h6>3</h6></div>
+                    <div class="key"><h6>4</h6></div><div class="key"><h6>5</h6></div><div class="key"><h6>6</h6></div><div class="key"><h6>7</h6></div>
+                    <div class="key"><h6>8</h6></div><div class="key"><h6>9</h6></div><div class="key"><h6>-</h6></div><div class="key"><h6>_</h6></div>
+                    <div class="key"><h6>.</h6></div><div class="key"><h6>,</h6></div><div class="key"><h6>/</h6></div><div class="key"><h6>(</h6></div>
+                    <div class="key"><h6>)</h6></div><div class="key"><h6>[</h6></div><div class="key"><h6>]</h6></div><div class="key"><h6>{</h6></div>
+                    <div class="key"><h6>}</h6></div><div class="key"><h6>*</h6></div><div class="key"><h6>@</h6></div><div class="key"><h6>#</h6></div>
+                    <div class="key"><h6>$</h6></div><div class="key"><h6>%</h6></div><div class="key"><h6>#</h6></div><div class="key"><h6>:</h6></div>
+                    <div class="key"><h6>|</h6></div><div class="key"><h6>&</h6></div><div class="key"><h6>€</h6></div><div class="key"><h6>£</h6></div>
+                    <div class="key"><h6>₩</h6></div><!-- Probel -->
+                    <div class="d-flex justify-content-between width_304_pixel">
+                        <div class="key key_space"><h6>Space</h6></div>
+                        <div class="key_space" onclick="clearKeyboardDisplay()"><h6>Clear</h6></div>
+                        <div class="key_space" onclick="backspaceKeyboard()"><h6><span class="mdi mdi-backspace"></span></h6></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <br>
         <div class="content">
             <!-- Start Content-->
