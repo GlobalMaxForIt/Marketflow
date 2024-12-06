@@ -244,7 +244,7 @@
                     inputEvent(dataTables_filter_input)
                 });
             });
-        }, 544)
+        }, 844)
 
         function clearKeyboardDisplay(){
             let dataTables_filter_input = document.querySelector('.dataTables_filter input')
