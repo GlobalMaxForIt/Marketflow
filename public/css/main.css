@@ -215,6 +215,13 @@
     background-color: #F2F2F2;
     border: 0px;
 }
+.input-default_{
+    height: 40px;
+    border-radius:10px;
+    padding: 11px !important;
+    gap:10px;
+    border: 0px;
+}
 .product-input-default{
     height: 50px;
     border-radius:10px;
@@ -247,7 +254,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: calc(100vh - 124px);
+    min-height: calc(100vh - 224px);
 }
 .main-content-section_bills{
     display: flex;
@@ -367,6 +374,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative !important;
+    z-index: 1 !important;
 }
 .payment-content-header-user_name{
     width: 100%;
@@ -377,6 +386,13 @@
     font-size: 20px;
     line-height: 24.8px;
     color: #ECECEC;
+    margin-bottom: 0px !important;
+}
+.payment-content-header-title_name_{
+    font-family: Stem;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24.8px;
     margin-bottom: 0px !important;
 }
 .payment-content-header-title_button{
@@ -397,6 +413,9 @@
     .input-default{
         padding: 11px 0px 11px 30px !important;
     }
+    .input-default_{
+        width: 114px;
+    }
     .product-input-default{
         padding: 11px 0px 11px 30px;
     }
@@ -413,6 +432,9 @@
     }
     .input-default{
         padding: 11px 30px 11px 30px !important;
+    }
+    .input-default_{
+        width: 144px;
     }
     .product-input-default{
         padding: 11px 0px 11px 30px;
@@ -481,9 +503,15 @@
 .payment-method-name{
     font-family: Stem;
     font-weight: 350;
-    font-size: 16px;
+    font-size: 12px;
     line-height: 18.72px;
     color:#ECECEC
+}
+.payment-method-name_{
+    font-family: Stem;
+    font-weight: 350;
+    font-size: 12px;
+    line-height: 18.72px;
 }
 .payment-sum-title{
     font-family: Stem;
@@ -939,6 +967,9 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .padding_40{
     padding-left: 40px !important;
+}
+.padding_12{
+    padding-left: 12px !important;
 }
 .glyphicon {
     color: #585B5F;
@@ -1668,6 +1699,9 @@ input[type=number]::-webkit-outer-spin-button {
 .delete_button:hover, .modal_confirm:hover, .modal_close:hover{
     transform: scale(1.104);
 }
+.delete_button_:hover, .modal_confirm_:hover, .modal_close_:hover{
+    transform: scale(1.104);
+}
 .bill_edit_button{
     border: 1px solid #3EB944;
     background-color: #3EB944;
@@ -1726,6 +1760,19 @@ input[type=number]::-webkit-outer-spin-button {
     transition: 0.14s;
     color: black;
     margin-right: 4px;
+}
+.modal_close_{
+    background-color: #FB850E;
+    transition: 0.14s;
+    color: black;
+    margin-right: 4px;
+}
+.modal_confirm_{
+    background-color: #3EB944;
+    transition: 0.14s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .modal_confirm{
     width: 200px;
@@ -2072,8 +2119,11 @@ del{
 .add_to_order_buttons_{
     position: fixed;
     width: 33%;
-    bottom: 24px;
+    bottom: 54px;
     z-index: 1004;
+}
+.add_to_order_buttons_ div{
+    width: 60%;
 }
 .position_fixed_bottom{
     position: fixed;
@@ -2180,7 +2230,6 @@ body{
     overflow: hidden;
 }
 .content-page{
-    height: 100%!important;
     margin-left: 204px !important;
 }
 .flatpickr-monthDropdown-months{
@@ -2286,16 +2335,16 @@ body[data-leftbar-size=condensed] .content-page {
 }
 .keyboard_big {
     display: grid;
-    grid-template-columns: repeat(24, 24px);
+    grid-template-columns: repeat(8, 54px);
     gap: 10px;
     justify-content: center;
 }
-.key_big {
+.key_big, .key_big_fast {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 24px;
+    width: 44px;
+    height: 44px;
     background-color: #ddd;
     text-align: center;
     /*line-height: 50px;*/
@@ -2304,12 +2353,12 @@ body[data-leftbar-size=condensed] .content-page {
     cursor: pointer;
     user-select: none;
 }
-.key_space_big {
+.key_space_big, .key_space_big_fast {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 94px;
-    height: 24px;
+    height: 44px;
     background-color: #ddd;
     text-align: center;
     /*line-height: 50px;*/
@@ -2318,7 +2367,7 @@ body[data-leftbar-size=condensed] .content-page {
     cursor: pointer;
     user-select: none;
 }
-.key_big:hover {
+.key_big:hover, key_big_fast:hover {
     background-color: #ccc;
 }
 .keyboard_big h6, .keyboard h6{
@@ -2348,6 +2397,9 @@ body[data-leftbar-size=condensed] .content-page {
 #popover-container .popover{
     background-color: white;
 }
+#popover-container b, #popover-container h6{
+    font-size: 14px;
+}
 #all_sum_info thead, #all_sum_info tbody, #all_sum_info th, #all_sum_info tr,#all_sum_info td{
     border: 0px !important;
 }
@@ -2355,7 +2407,7 @@ body[data-leftbar-size=condensed] .content-page {
     width: 44%;
 }
 .offcanvas-top{
-    height: 50vh !important;
+    height: 554px !important;
 }
 .offcanvas-body{
     padding: 0px !important;
@@ -2368,4 +2420,44 @@ body[data-leftbar-size=condensed] .content-page {
 }
 .accordion-item, .accordion-header,.accordion-button{
     background-color: transparent !important;
+}
+@media (max-width: 991.98px) {
+    body {
+        overflow-x: hidden;
+        padding-bottom: 57px;
+    }
+}
+body[data-layout-color="dark"] .fa-keyboard, body[data-layout-color="dark"] .accordion-button::after{
+    color: white !important;
+}
+body[data-layout-color="light"] .fa-keyboard, body[data-layout-color="dark"] .accordion-button::after{
+    color: black !important;
+}
+
+
+#all_sum_info{
+    position: fixed;
+    background-color: rgb(0, 0, 0, 0.1);
+    width: calc(75% - 193px);
+    bottom: 54px;
+    border-radius: 4px;
+    z-index: 1004;
+}
+#all_sum_info td{
+    padding: 7px 24px !important;
+}
+
+body[data-leftbar-size=condensed] #all_sum_info{
+    position: fixed;
+    background-color: rgb(0, 0, 0, 0.1);
+    width: calc(75% - 94px);
+    bottom: 24px;
+    border-radius: 4px;
+    z-index: 1004;
+}
+body[data-leftbar-size=condensed] #all_sum_info td{
+    padding: 7px 24px !important;
+}
+.mt_10{
+    margin-top: 10px !important;
 }

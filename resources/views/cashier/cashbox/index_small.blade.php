@@ -18,7 +18,7 @@
     </style>
     <div class="row">
         <div class="col-7">
-            <div class="main-content-section" id="myDiv">
+            <div id="myDiv">
                 <div class="order-section">
                     <div class="card">
                         <div class="card-body overflow-auto">
@@ -75,7 +75,7 @@
                     <b>{{translate_title('Select client with discount', $lang)}}</b>
                 </button>
             </div>
-            <div class="main-content-section">
+            <div class="">
                 <div class="right_options" role="presentation">
                     <table class="table table-striped">
                         <thead>

@@ -15,7 +15,7 @@
     border: solid 1px;
 }
 .dataTables_filter div{
-    margin: -38px 0px 0px 14px;
+    margin: -30px 0px 0px 14px;
 }
 table th{
     padding: 0px 14px!important;
@@ -24,7 +24,7 @@ table th{
     padding: 8px;
 }
 .card{
-    min-height: 100vh;
+    min-height: 74vh;
 }
 table{
     border-color: transparent !important;
@@ -106,4 +106,38 @@ table{
 }
 .modal-header h6{
     margin: 0px !important;
+}
+.select2-container--default.select2-container--disabled .select2-selection--single{
+    background-color: transparent;
+}
+.top_cashbox_buttons{
+    display: flex;
+    justify-content: center;
+}
+
+.table-striped>tbody>tr{
+    height: 24px !important;
+}
+.top_cashbox_buttons button{
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.dataTables_wrapper .col-md-6{
+    margin-bottom: 8px !important;
+}
+.dataTables_wrapper .dataTables_filter input{
+    height: 34px !important;
+}
+.dataTables_length{
+    display: none !important;
+}
+.offcanvas tr{
+    cursor: pointer;
+    transition: 0.1s;
+}
+.offcanvas tr:hover{
+    transform: scale(1.014);
+    background-color: rgb(0, 0, 0, 0.1);
 }

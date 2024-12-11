@@ -149,6 +149,7 @@ function clearDisplayPassword() {
     cashier_password.value = '0'
     display_password.innerText = '0'; // Ekrandagi raqamni tozalash
 }
+
 // Function to remove the last digit (Backspace)
 function backspacePassword() {
     if (display_password.innerText.length > 1) {
@@ -177,6 +178,7 @@ function setPaymentTypes(button_){
         button_.classList.add('active')
     }
 }
+
 function setCash(button__) {
     if(!cardContent.classList.contains('d-none')){
         cardContent.classList.add('d-none')
@@ -228,28 +230,6 @@ function setMixed(button__) {
     setPaymentTypes(button__)
 
 }
-
-$(document).ready(function () {
-    if($('#client_select_id_2') != undefined && $('#client_select_id_2') != null){
-        $('#client_select_id_2').select2({
-            dropdownParent: $('#client_with_discount') // modal ID ni kiriting
-        });
-    }
-
-    if($('#client_select_id_2').val()){
-        confirm_client_discount.disabled = false
-    }else{
-        confirm_client_discount.disabled = true
-    }
-
-    $('#client_select_id_2').select2().on('change', function (e) {
-        if($(this).val()){
-            confirm_client_discount.disabled = false
-        }else{
-            confirm_client_discount.disabled = true
-        }
-    })
-})
 
 display.addEventListener('input', () => {
     klaviaturaNumber = 0

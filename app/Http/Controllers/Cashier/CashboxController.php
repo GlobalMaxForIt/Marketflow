@@ -168,6 +168,7 @@ class CashboxController extends Controller
             if($client__->discount){
                 $clients_for_discount[] = [
                     'client_full_name'=>$this->clientService->getClientFullname($client__),
+                    'phone'=>$client__->phone,
                     'percent'=>(int)$client__->discount->percent,
                     'client_id'=>(int)$client__->id
                 ];
@@ -183,12 +184,15 @@ class CashboxController extends Controller
             'products'=>[],
             'quantity'=>0,
         ];
-        $products_ = Products::orderBy('created_at', 'desc')->where('store_id', $user->store_id)->whereNotNull('fast_selling_goods')->get();
+        $products_ = Products::orderBy('created_at', 'desc')->where('store_id', $user->store_id)->get();
+        $products_fast = Products::orderBy('created_at', 'desc')->where('store_id', $user->store_id)->whereNotNull('fast_selling_goods')->get();
         $products_json = Products::where('store_id', $user->store_id)->whereNotNull('barcode')->get();
         $allProducts = $this->productsService->getProducts($products_);
+        $allProductsFast = $this->productsService->getProducts($products_fast);
         $allProductsJson = $this->productsService->getProducts($products_json);
         $allProductsData = [
             'products'=>$allProducts,
+            'products_fast'=>$allProductsFast,
             'json_products'=>json_encode($allProductsJson),
             'quantity'=>count($allProducts),
         ];
@@ -415,18 +419,24 @@ class CashboxController extends Controller
 
 
     public function paymentPay(Request $request){
+
+//        return response()->json([
+//            $request->order_data,
+//            $request->client_id,
+//            $request->cashier_id,
+//            $request->client_dicount_price,
+//        ]);
+
         $user = Auth::user();
         date_default_timezone_set("Asia/Tashkent");
         $order_data = $request->order_data;
-        $table_id = $request->table_id;
         $sales = new Sales();
         $sales->store_id = $user->store_id;
         $sales->cashier_id = $user->id;
-        $sales->status = Constants::ORDER_PENDING;
         $client_id = $request->client_id;
         $client_dicount_price = $request->client_dicount_price;
 
-        $response = $this->salesService->salesItemsSave($order, $client_dicount_price, $client_id, $order_data, 'take-away');
+        $response = $this->salesService->salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, 'take-away');
         return response()->json($response);
     }
 
@@ -452,7 +462,9 @@ class CashboxController extends Controller
         if (!Hash::check($request->password, $newUser->password)) {
             return redirect()->back()->with('error', translate_title('Invalid password for the new cashier.', $this->lang));
         }
-
+        $token = $newUser->createToken('myapptoken')->plainTextToken;
+        $newUser->token = $token;
+        $newUser->save();
         // Hozirgi foydalanuvchini logout qilish
         Auth::logout();
 

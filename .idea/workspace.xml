@@ -4,20 +4,18 @@
     <list default="true" id="7a85e38f-1f56-4a6c-8c17-810c8b388b15" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Cashier/CashboxController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Cashier/CashboxController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/bootstrap/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/bootstrap/bootstrap.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Service/SalesService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Service/SalesService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/cashbox.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/cashbox.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/cashbox.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/cashbox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/cashbox_big.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/cashbox_big.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/dark-light.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/dark-light.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/ordering.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/ordering.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/small_ordering.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/small_ordering.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/cashier/cashbox/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/cashier/cashbox/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/large_ordering.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/large_ordering.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/cashier/cashbox/index_large.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/cashier/cashbox/index_large.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/cashier/cashbox/index_small.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/cashier/cashbox/index_small.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/admin_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/admin_layout.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/cashier_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/cashier_layout.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/cashier_large_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/cashier_large_layout.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/cashier_small_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/cashier_small_layout.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/new_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/new_layout.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/superadmin_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/superadmin_layout.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +166,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../4u2-Backend" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -236,7 +234,11 @@
       <workItem from="1733131907116" duration="888000" />
       <workItem from="1733132989103" duration="10424000" />
       <workItem from="1733204107394" duration="24891000" />
-      <workItem from="1733290848922" duration="20749000" />
+      <workItem from="1733290848922" duration="25431000" />
+      <workItem from="1733378526532" duration="24356000" />
+      <workItem from="1733464405032" duration="21898000" />
+      <workItem from="1733809521417" duration="25613000" />
+      <workItem from="1733894125134" duration="6829000" />
     </task>
     <servers />
   </component>

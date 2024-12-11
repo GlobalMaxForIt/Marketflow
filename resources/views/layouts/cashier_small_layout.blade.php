@@ -58,9 +58,14 @@
         .accordion-item{
             position: relative;
             z-index: 99;
+            border: 0px !important;
         }
         .accordion-button{
             padding: 7px;
+        }
+        .custom-accordion .accordion-arrow{
+            font-size: 28px;
+            position: relative;
         }
         .accordion-body{
             box-shadow: 0px 2px 4px;
@@ -322,16 +327,18 @@
                 <a class="text-decoration-none ms-4" data-bs-toggle="modal" data-bs-target="#change_cashier"><h5 class="m-0"><span class="mdi mdi-logout"></span></h5></a>
             </li>
             <li>
-                <div class="accordion ms-4" id="accordionExample">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="keyboard_heading">
-                            <a class="accordion-button" data-bs-toggle="collapse"
-                                    data-bs-target="#keyboard_body" aria-expanded="true"
-                                    aria-controls="collapseOne">
-                                <span class="fa fa-keyboard"></span>
-                            </a>
-                        </h2>
-
+                <div class="accordion custom-accordion" id="custom-accordion-one">
+                    <div class="accordion ms-4" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="keyboard_heading">
+                                <a class="custom-accordion-title text-reset d-block"
+                                    data-bs-toggle="collapse" href="#keyboard_body"
+                                    aria-expanded="true" aria-controls="collapseNine">
+                                    <span class="fa fa-keyboard"></span>
+                                    <i class="mdi mdi-chevron-down accordion-arrow"></i>
+                                </a>
+                            </h2>
+                        </div>
                     </div>
                 </div>
             </li>

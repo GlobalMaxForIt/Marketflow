@@ -10,6 +10,7 @@ let modal_content = document.querySelector('.modal-content')
 let layout_local = localStorage.getItem('layout_local')
 let keys_keyboard = document.getElementsByClassName('key')
 let keys_keyboard_big = document.getElementsByClassName('key_big')
+let keys_keyboard_big_fast = document.getElementsByClassName('key_big_fast')
 let key_space = document.getElementsByClassName('key_space_big')
 let key_space_big = document.getElementsByClassName('key_space')
 light_mode.addEventListener('click', function (){
@@ -77,6 +78,11 @@ function removeDarkContainer(modal_container){
             keys_keyboard_big[k].classList.remove('dark_keyboard')
         }
     }
+    for(let k=0; k<keys_keyboard_big_fast.length; k++){
+        if(keys_keyboard_big_fast[k].classList.contains('dark_keyboard')){
+            keys_keyboard_big_fast[k].classList.remove('dark_keyboard')
+        }
+    }
 }
 function setDarkContainer(modal_container){
     if(modal_container != undefined && modal_container != null){
@@ -102,6 +108,11 @@ function setDarkContainer(modal_container){
     for(let k=0; k<key_space.length; k++){
         if(!key_space[k].classList.contains('dark_keyboard')){
             key_space[k].classList.add('dark_keyboard')
+        }
+    }
+    for(let k=0; k<keys_keyboard_big_fast.length; k++){
+        if(!keys_keyboard_big_fast[k].classList.contains('dark_keyboard')){
+            keys_keyboard_big_fast[k].classList.add('dark_keyboard')
         }
     }
     for(let k=0; k<keys_keyboard_big.length; k++){

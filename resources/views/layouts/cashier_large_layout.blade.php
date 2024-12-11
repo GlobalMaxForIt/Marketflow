@@ -55,6 +55,9 @@
         .col-7, .order-section{
             padding: 0px !important;
         }
+        .dataTables_wrapper{
+            width: 100%;
+        }
 
     </style>
     <link rel="stylesheet" href="{{asset('css/cashbox.css')}}">
@@ -98,9 +101,10 @@
     <!-- Topbar Start -->
     <div class="navbar-custom">
         <ul class="list-unstyled topnav-menu float-end mb-0">
-            <li class="ms-4"><span>{{$user->name}} {{$user->surname}}</span></li>
+            <li class="ms-4"><h6 class="mt_10"><a class="fast_goods" data-bs-toggle="offcanvas" data-bs-target="#fastgoods" aria-controls="offcanvasTop">{{translate_title('Fast goods', $lang)}}</a></h6></li>
+            <li class="ms-4"><h6 class="mt_10">{{$user->name}} {{$user->surname}}</h6></li>
             <li>
-                <a class="text-decoration-none ms-4" data-bs-toggle="modal" data-bs-target="#change_cashier"><h5 class="m-0"><span class="mdi mdi-logout"></span></h5></a>
+                <a class="text-decoration-none ms-4" data-bs-toggle="modal" data-bs-target="#change_cashier"><h5 class="m-0"><span class="mdi mdi-logout me-2"></span></h5></a>
             </li>
             <li>
                 <div>
@@ -233,7 +237,9 @@
             </li>
             <li>
                 <a class="btn mt-2 mt-md-0 color_white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
-                    <i class="fe-search"></i>
+                    <h6 class="mt_10">
+                        <i class="fe-search"></i>
+                    </h6>
                 </a>
             </li>
         </ul>
@@ -308,42 +314,6 @@
             <!--- Sidemenu -->
             <div id="sidebar-menu">
                 <ul id="side-menu">
-                    {{--                    <li>--}}
-                    {{--                        <a class="main-menu-top-buttons_link">--}}
-                    {{--                            <div class="main-menu-buttons_link-img">--}}
-                    {{--                                @if(isset($current_page))--}}
-                    {{--                                    @if($current_page == 'dashboard')--}}
-                    {{--                                        <i class="mdi mdi-home-outline me-1 font-24 active"></i>--}}
-                    {{--                                    @else--}}
-                    {{--                                        <i class="mdi mdi-home-outline me-1 font-24"></i>--}}
-                    {{--                                    @endif--}}
-                    {{--                                @else--}}
-                    {{--                                    <i class="mdi mdi-home-outline me-1 font-24"></i>--}}
-                    {{--                                @endif--}}
-                    {{--                            </div>--}}
-                    {{--                            <span class="main-menu-top-buttons-link_text @if(isset($current_page)) {{$current_page == 'dashboard'?'active':''}} @endif">--}}
-                    {{--                                {{translate_title('Home', $lang)}}--}}
-                    {{--                            </span>--}}
-                    {{--                        </a>--}}
-                    {{--                    </li>--}}
-                    {{--                    <li>--}}
-                    {{--                        <a class="main-menu-top-buttons_link">--}}
-                    {{--                            <div class="main-menu-buttons_link-img">--}}
-                    {{--                                @if(isset($current_page))--}}
-                    {{--                                    @if($current_page == 'products')--}}
-                    {{--                                        <i class="mdi mdi-warehouse me-1 font-24 active"></i>--}}
-                    {{--                                    @else--}}
-                    {{--                                        <i class="mdi mdi-warehouse me-1 font-24"></i>--}}
-                    {{--                                    @endif--}}
-                    {{--                                @else--}}
-                    {{--                                    <i class="mdi mdi-warehouse me-1 font-24"></i>--}}
-                    {{--                                @endif--}}
-                    {{--                            </div>--}}
-                    {{--                            <span class="main-menu-top-buttons-link_text @if(isset($current_page)) {{$current_page == 'products'?'active':''}} @endif">--}}
-                    {{--                                {{translate_title('Warehouse', $lang)}}--}}
-                    {{--                            </span>--}}
-                    {{--                        </a>--}}
-                    {{--                    </li>--}}
                     <li>
                         <a href="{{route('cashier.index')}}">
                             <i class="mdi mdi mdi-home-outline me-1 me-1"></i>
@@ -428,17 +398,9 @@
     <div class="offcanvas-body">
         <div class="card" style="margin: 0px !important; min-height: auto !important;">
             <div class="card-body overflow-auto" style="padding: 4px 1rem !important;">
-                <div class="accordion mb-3" id="accordionExample">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="keyboard_heading">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#keyboard_body" aria-expanded="true"
-                                    aria-controls="collapseOne">
-                                <span class="fa fa-keyboard"></span>
-                            </button>
-                        </h2>
-                        <div id="keyboard_body" class="accordion-collapse collapse show"
-                             aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="d-flex">
+                    <div class="accordion mb-3 me-4" id="accordionExample">
+                        <div class="accordion-item">
                             <div class="accordion-body">
                                 <div class="keyboard_big">
                                     <!-- Harflar -->
@@ -469,53 +431,120 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <table class="restaurant_tables datatable table table-striped nowrap">
-                    <thead>
+                    <table class="restaurant_tables datatable table table-striped nowrap">
+                        <thead>
                         <tr>
                             <th><h6><b>{{translate_title('Barcode', $lang)}}</b></h6></th>
                             <th><h6><b>{{translate_title('Name', $lang)}}</b></h6></th>
                             <th><h6><b>{{translate_title('Price', $lang)}}</b></h6></th>
                             <th><h6><b>{{translate_title('Stock', $lang)}}</b></h6></th>
-                            <th><h6><b>{{translate_title('Functions', $lang)}}</b></h6></th>
                         </tr>
-                    </thead>
-                    <tbody id="popover-container">
-                    @foreach($allProductsData['products'] as $product)
-                        <tr>
-                            <td class="market_tables_text_big">
-                                <span><h6><b>{{$product['barcode']}}</b></h6></span>
-                            </td>
-                            <td class="market_tables_text_big">
-                                <div class="d-flex">
-                                    <span class="me-2">
+                        </thead>
+                        <tbody id="popover-container">
+                        @foreach($allProductsData['products'] as $product)
+                            <tr onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', '{{$product['stock']}}')">
+                                <td class="market_tables_text_big">
+                                    <span><h6><b>{{$product['barcode']}}</b></h6></span>
+                                </td>
+                                <td class="market_tables_text_big">
+                                    <div class="me-2">
                                         <h6>
                                             <a class="product_name" data-bs-container="#popover-container" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="{{$product['name']}}" data-original-title="">{{$product['short_name']}}</a>
                                         </h6>
-                                    </span>
-                                    <span><h6><b>{{$product['amount']}}</b></h6></span>
-                                </div>
-
-                            </td>
-                            <td class="market_tables_text_big">
-                                <div class="d-flex">
+                                    </div>
+                                    <div><h6><b>{{$product['amount']}}</b></h6></div>
+                                </td>
+                                <td class="market_tables_text_big">
+                                    <div><span><h6><b>{{$product['last_price']}}</b></h6></span></div>
                                     @if($product['discount']>0)
                                         <del class="me-2"><h6><b>{{$product['price']}}</b></h6></del>
                                     @endif
-                                    <div><span><h6><b>{{$product['last_price']}}</b></h6></span></div>
+                                </td>
+                                <td class="market_tables_text_big">
+                                    <h6><b class="stock__quantity" id="stock__{{$product['id']}}">{{$product['stock']}}</b></h6>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div> <!-- end offcanvas-body-->
+</div> <!-- end offcanvas-->
+
+<div class="offcanvas offcanvas-top" tabindex="-1" id="fastgoods" aria-labelledby="fastgoodsLabel">
+    <div class="offcanvas-body">
+        <div class="card" style="margin: 0px !important; min-height: auto !important;">
+            <div class="card-body overflow-auto" style="padding: 4px 1rem !important;">
+                <div class="d-flex">
+                    <div class="accordion mb-3 me-4" id="accordionExample">
+                        <div class="accordion-item">
+                            <div class="accordion-body">
+                                <div class="keyboard_big">
+                                    <!-- Harflar -->
+                                    <div class="key_big_fast"><h6>A</h6></div><div class="key_big_fast"><h6>B</h6></div><div class="key_big_fast"><h6>C</h6></div><div class="key_big_fast"><h6>D</h6></div>
+                                    <div class="key_big_fast"><h6>E</h6></div><div class="key_big_fast"><h6>F</h6></div><div class="key_big_fast"><h6>G</h6></div><div class="key_big_fast"><h6>H</h6></div>
+                                    <div class="key_big_fast"><h6>I</h6></div><div class="key_big_fast"><h6>J</h6></div><div class="key_big_fast"><h6>K</h6></div><div class="key_big_fast"><h6>L</h6></div>
+                                    <div class="key_big_fast"><h6>M</h6></div><div class="key_big_fast"><h6>N</h6></div><div class="key_big_fast"><h6>O</h6></div><div class="key_big_fast"><h6>P</h6></div>
+                                    <div class="key_big_fast"><h6>Q</h6></div><div class="key_big_fast"><h6>R</h6></div><div class="key_big_fast"><h6>S</h6></div><div class="key_big_fast"><h6>T</h6></div>
+                                    <div class="key_big_fast"><h6>U</h6></div><div class="key_big_fast"><h6>V</h6></div><div class="key_big_fast"><h6>W</h6></div><div class="key_big_fast"><h6>X</h6></div>
+                                    <div class="key_big_fast"><h6>Y</h6></div><div class="key_big_fast"><h6>Z</h6></div>
+
+                                    <!-- Raqamlar -->
+                                    <div class="key_big_fast"><h6>0</h6></div><div class="key_big_fast"><h6>1</h6></div><div class="key_big_fast"><h6>2</h6></div><div class="key_big_fast"><h6>3</h6></div>
+                                    <div class="key_big_fast"><h6>4</h6></div><div class="key_big_fast"><h6>5</h6></div><div class="key_big_fast"><h6>6</h6></div><div class="key_big_fast"><h6>7</h6></div>
+                                    <div class="key_big_fast"><h6>8</h6></div><div class="key_big_fast"><h6>9</h6></div><div class="key_big_fast"><h6>-</h6></div><div class="key_big_fast"><h6>_</h6></div>
+                                    <div class="key_big_fast"><h6>.</h6></div><div class="key_big_fast"><h6>,</h6></div><div class="key_big_fast"><h6>/</h6></div><div class="key_big_fast"><h6>(</h6></div>
+                                    <div class="key_big_fast"><h6>)</h6></div><div class="key_big_fast"><h6>[</h6></div><div class="key_big_fast"><h6>]</h6></div><div class="key_big_fast"><h6>{</h6></div>
+                                    <div class="key_big_fast"><h6>}</h6></div><div class="key_big_fast"><h6>*</h6></div><div class="key_big_fast"><h6>@</h6></div><div class="key_big_fast"><h6>#</h6></div>
+                                    <div class="key_big_fast"><h6>$</h6></div><div class="key_big_fast"><h6>%</h6></div><div class="key_big_fast"><h6>#</h6></div><div class="key_big_fast"><h6>:</h6></div>
+                                    <div class="key_big_fast"><h6>|</h6></div><div class="key_big_fast"><h6>&</h6></div><div class="key_big_fast"><h6>€</h6></div><div class="key_big_fast"><h6>£</h6></div>
+                                    <div class="key_big_fast"><h6>₩</h6></div><!-- Probel -->
+                                    <div class="d-flex justify-content-between width_304_pixel">
+                                        <div class="key_space_big"><h6>Space</h6></div>
+                                        <div class="key_space_big" onclick="clearKeyboardDisplayFast()"><h6>Clear</h6></div>
+                                        <div class="key_space_big" onclick="backspaceKeyboardFast()"><h6><span class="mdi mdi-backspace"></span></h6></div>
+                                    </div>
                                 </div>
-                            </td>
-                            <td class="market_tables_text_big">
-                                <h6><b class="stock__quantity" id="stock__{{$product['id']}}">{{$product['stock']}}</b></h6>
-                            </td>
-                            <td class="market_tables_text_big">
-                                <button class="edit_button btn" onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', '{{$product['stock']}}')">+</button>
-                                <button class="ms-2 edit_button btn" onclick="minusProduct('{{$product['id']}}', '{{$product['stock']}}')">-</button>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="restaurant_tables datatable table table-striped nowrap">
+                        <thead>
+                            <tr>
+                                <th><h6><b>{{translate_title('Barcode', $lang)}}</b></h6></th>
+                                <th><h6><b>{{translate_title('Name', $lang)}}</b></h6></th>
+                                <th><h6><b>{{translate_title('Price', $lang)}}</b></h6></th>
+                                <th><h6><b>{{translate_title('Stock', $lang)}}</b></h6></th>
+                            </tr>
+                        </thead>
+                        <tbody id="popover-container">
+                        @foreach($allProductsData['products_fast'] as $product)
+                            <tr onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', '{{$product['stock']}}')">
+                                <td class="market_tables_text_big">
+                                    <span><h6><b>{{$product['barcode']}}</b></h6></span>
+                                </td>
+                                <td class="market_tables_text_big">
+                                    <h6>
+                                        <a class="product_name" data-bs-container="#popover-container" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="{{$product['name']}}" data-original-title="">{{$product['short_name']}}</a>
+                                    </h6>
+                                    <h6><b>{{$product['amount']}}</b></h6>
+                                </td>
+                                <td class="market_tables_text_big">
+                                    <div><span><h6><b>{{$product['last_price']}}</b></h6></span></div>
+                                    @if($product['discount']>0)
+                                        <del class="me-2"><h6><b>{{$product['price']}}</b></h6></del>
+                                    @endif
+                                </td>
+                                <td class="market_tables_text_big">
+                                    <h6><b class="stock__quantity" id="stock__{{$product['id']}}">{{$product['stock']}}</b></h6>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div> <!-- end offcanvas-body-->
@@ -850,25 +879,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- Standard modal content -->
-<div id="standard-modal-admin" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="standard-modalLabel"></h4>
-                <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
-            </div>
-            <div class="modal-body">
-
-            </div>
-            <div class="modal-footer">
-                <a type="button" class="btn btn-light" data-bs-dismiss="modal">{{ translate_title('Close', $lang) }}</a>
-                <a type="button" class="btn btn-primary">{{ translate_title('Save changes', $lang) }}</a>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
 <div id="delete_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content modal-filled">
@@ -1102,10 +1112,8 @@
 <script src="{{ asset('js/datatables_style.js') }}"></script>
 <!-- Vendor -->
 
-
 <script src="{{ asset('libs/jstree/jstree.min.js') }}"></script>
 <script src="{{ asset('js/pages/treeview.init.js') }}"></script>
-
 
 <script src="{{ asset('libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('libs/simplebar/simplebar.min.js') }}"></script>
@@ -1227,7 +1235,23 @@
     }(window.jQuery),function(a){a.Dashboard1.init(),window.addEventListener("adminto.setBoxed",function(e){a.Dashboard1.init()}),window.addEventListener("adminto.setFluid",function(e){a.Dashboard1.init()})}(window.jQuery);
 
 </script>
-<script src="{{asset('js/cashbox.js')}}"></script>
+<script src="{{asset('js/cashbox_big.js')}}"></script>
 </body>
-
+<script>
+    removeClientDiscount.addEventListener('click', function () {
+        $(document).ready(function () {
+            if($('#client_select_id_2') != undefined && $('#client_select_id_2') != null){
+                $('#client_select_id_2').val(null).trigger('change')
+            }
+        })
+    })
+    if (window.innerWidth < 1000) {
+        $(document).ready(function () {
+            setTimeout(function () {
+                $('.navbar-custom .menu_bar .button-menu-mobile').trigger('click')
+                console.log('yopildi')
+            }, 144)
+        })
+    }
+</script>
 </html>

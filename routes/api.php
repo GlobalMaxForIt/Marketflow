@@ -21,8 +21,8 @@ use App\Http\Controllers\Cashier\CashierProductsController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware'=>'auth:sanctum'], function () {
+    Route::post('payment-pay', [CashboxController::class, 'paymentPay'])->name('paymentPay');
 });
 
 Route::post('delete-product', [ProductsController::class, 'deleteProductImage']);
@@ -33,4 +33,3 @@ Route::post('delete-store', [StoreController::class, 'deleteStoreImage']);
 Route::get('get-stores/{id}', [StoreController::class, 'getStores']);
 
 Route::get('get-products-by-category', [CashierProductsController::class, 'getProductsByCategory']);
-Route::post('payment-pay', [CashboxController::class, 'paymentPay'])->name('paymentPay');
