@@ -37,7 +37,7 @@ class PaymentsController extends Controller
         foreach($clients_ as $client){
             $clients[] = $this->clientService->getClientFullInfo($client);
         }
-        $allSales = Sales::where('store_id', $user->id)->get();
+        $allSales = Sales::where('store_id', $user->store_id)->get();
         foreach ($allSales as $allSale){
             $all_sales[] = $this->getSales($allSale);
             $all_sales_info[] = $this->getSalesItem($allSale);
