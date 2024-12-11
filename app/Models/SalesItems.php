@@ -10,4 +10,12 @@ class SalesItems extends Model
     use HasFactory;
 
     protected $table = 'sales_items';
+
+    public function product(){
+        return $this->hasOne(Products::class, 'id', 'product_id');
+    }
+    public function sales(){
+        return $this->hasOne(Sales::class, 'id', 'sale_id');
+    }
+
 }

@@ -27,7 +27,6 @@ class ClientService
             'phone'=>$client->phone,
             'image'=>$client_image,
             'gender'=>$client->gender,
-            'email'=>$client->email,
             'address'=>$client->address,
             'notes'=>$client->notes
         ];

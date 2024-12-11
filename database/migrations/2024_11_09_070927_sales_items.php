@@ -18,8 +18,9 @@ return new class extends Migration
             $table->unsignedInteger('quantity')->default(0); // Sotilgan miqdor
             $table->decimal('cost_price', 10, 2)->nullable(); // Tannarx
             $table->decimal('price', 10, 2)->nullable(); // Sotuv narxi (bir dona)
-            $table->decimal('discount', 10, 2)->nullable(); // Chegirma (agar mavjud bo'lsa)
-            $table->decimal('total', 10, 2)->default(0); // Jami summa (miqdor * narx - chegirma)
+            $table->tinyInteger('status')->nullable();
+            $table->double('discount_price')->nullable();
+            $table->integer('discount_percent')->nullable();
             $table->timestamps();
         });
     }

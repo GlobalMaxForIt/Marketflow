@@ -321,7 +321,7 @@
         let service_price_text = "{{translate_title('Service price', $lang)}}"
         let total_price_text = "{{translate_title('Total price', $lang)}}"
         let image_src = "{{asset('icon/no_photo.jpg', $lang)}}"
-        let kitchen_index = "{{route('cashbox.index', $lang)}}"
+        let cashbox_index = "{{route('indexLarge', $lang)}}"
         let token = "{{$user->token}}"
         let json_products = JSON.parse('{!! $allProductsData['json_products'] !!}')
 

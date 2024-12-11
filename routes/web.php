@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\Cashier\CashierProductsController;
 use App\Http\Controllers\Cashier\CashierDiscountController;
+use App\Http\Controllers\Cashier\PaymentsController;
 use App\Http\Controllers\Cashier\CashboxController;
 use App\Http\Controllers\Superadmin\ProductsController;
 use App\Http\Controllers\Superadmin\ProductsCategoriesController;
@@ -94,6 +95,7 @@ Route::group(['middleware'=>['isCashier', 'language'], 'prefix'=>'cashier'], fun
     Route::get('cashbox-small', [CashboxController::class, 'indexSmall'])->name('indexSmall');
     Route::get('cashbox-large', [CashboxController::class, 'indexLarge'])->name('indexLarge');
     Route::resource('cashier-discount', CashierDiscountController::class);
+    Route::get('payments', [PaymentsController::class, 'index'])->name('payments');
 });
 Route::group(['middleware'=>['isManager', 'language'], 'prefix'=>'manager'], function(){
     Route::get('/', [\App\Http\Controllers\Manager\IndexController::class, 'index'])->name('manager.index');

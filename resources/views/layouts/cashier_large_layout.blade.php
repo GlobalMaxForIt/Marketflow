@@ -339,6 +339,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{route('payments')}}">
+                            <i class="mdi mdi-cash-register me-1"></i>
+                            <span> {{translate_title('Payments', $lang)}} </span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{route('cashier-discount.index')}}">
                             <i class="mdi mdi-percent me-1"></i>
                             <span> {{translate_title('Discount', $lang)}} </span>
@@ -457,7 +463,7 @@
                                 <td class="market_tables_text_big">
                                     <div><span><h6><b>{{$product['last_price']}}</b></h6></span></div>
                                     @if($product['discount']>0)
-                                        <del class="me-2"><h6><b>{{$product['price']}}</b></h6></del>
+                                        <del class="me-2 withouth_discount_price"><h6><b>{{$product['price']}}</b></h6></del>
                                     @endif
                                 </td>
                                 <td class="market_tables_text_big">
@@ -534,7 +540,7 @@
                                 <td class="market_tables_text_big">
                                     <div><span><h6><b>{{$product['last_price']}}</b></h6></span></div>
                                     @if($product['discount']>0)
-                                        <del class="me-2"><h6><b>{{$product['price']}}</b></h6></del>
+                                        <del class="me-2 withouth_discount_price"><h6><b>{{$product['price']}}</b></h6></del>
                                     @endif
                                 </td>
                                 <td class="market_tables_text_big">

@@ -419,14 +419,6 @@ class CashboxController extends Controller
 
 
     public function paymentPay(Request $request){
-
-//        return response()->json([
-//            $request->order_data,
-//            $request->client_id,
-//            $request->cashier_id,
-//            $request->client_dicount_price,
-//        ]);
-
         $user = Auth::user();
         date_default_timezone_set("Asia/Tashkent");
         $order_data = $request->order_data;
@@ -434,9 +426,14 @@ class CashboxController extends Controller
         $sales->store_id = $user->store_id;
         $sales->cashier_id = $user->id;
         $client_id = $request->client_id;
-        $client_dicount_price = $request->client_dicount_price;
 
-        $response = $this->salesService->salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, 'take-away');
+        $paid_amount = $request->paid_amount;
+        $return_amount = $request->return_amount;
+        $client_dicount_price = $request->client_dicount_price;
+        $card_sum = $request->card_sum;
+        $cash_sum = $request->cash_sum;
+
+        $response = $this->salesService->salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, 'take-away');
         return response()->json($response);
     }
 

@@ -8,7 +8,10 @@ use App\Events\PostNotification;
 use App\Models\Discount;
 use App\Models\OrderItems;
 use App\Models\Orders;
+use App\Models\Products;
 use App\Models\SalesItems;
+use App\Models\SalesPayments;
+use App\Models\SalesReports;
 use App\Models\ServicePrice;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -16,10 +19,11 @@ use Illuminate\Http\Request;
 class SalesService
 {
 
-    public function salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $type){
+    public function salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $type){
         $sales->client_id = $client_id;
         $sales->save();
         $all_price = 0;
+        $all_cost_price = 0;
         $order_discount_price = 0;
         foreach($order_data as $orderData){
             $order_data_price = (int)str_replace(' ', '', $orderData['price']);
@@ -27,13 +31,18 @@ class SalesService
             $all_price = $all_price + (int)$orderData['quantity'] * $order_data_price;
             $order_discount_price = $order_discount_price + (int)$orderData['quantity'] * $order_data_discount;
             $sales_items = new SalesItems();
-            $sales_items->order_id = $sales->id;
-            $sales_items->product_id = $orderData['id'];
-            $sales_items->quantity = (int)$orderData['quantity'];
-            $sales_items->discount_price = $order_data_discount;
-            $sales_items->discount_percent = $orderData['discount_percent'];
-            $sales_items->price = $order_data_price;
-            $sales_items->save();
+            $product = Products::find($orderData['id']);
+            if($product){
+                $sales_items->sale_id = $sales->id;
+                $sales_items->product_id = $orderData['id'];
+                $sales_items->quantity = (int)$orderData['quantity'];
+                $sales_items->discount_price = $order_data_discount;
+                $sales_items->discount_percent = $orderData['discount_percent'];
+                $sales_items->cost_price = $product->cost;
+                $all_cost_price = $all_cost_price + $product->cost * (int)$orderData['quantity'];
+                $sales_items->price = $order_data_price;
+                $sales_items->save();
+            }
         }
         $discount_modal_percent = 0;
         if($sales->client_id){
@@ -45,28 +54,36 @@ class SalesService
         if($discount_modal_percent == 0){
             $client_dicount_price = 0;
         }
-        if(!$sales->code){
-            $length = 8;
-            $order_id = (string)$sales->id;
-            $order_code = (string)str_pad($order_id, $length, '0', STR_PAD_LEFT);
-            $sales->code = $order_code;
-        }
         $sales->price = $all_price;
-        $sales->discount_price = $order_discount_price;
+        $sales->discount = $order_discount_price;
         $sales->client_discount_price = (int)$client_dicount_price;
         $total_price = $all_price - $order_discount_price - (int)$client_dicount_price;
-        $service_price = 0;
-        if($type == 'dine-in'){
-            $servicePrice = ServicePrice::where('status', Constants::ACTIVE)->first();
-            if($servicePrice){
-                $service_price = $total_price * (int)$servicePrice->percent/100;
-                $sales->service_price = $service_price;
-            }
-        }
-
-        $sales->total_price = $total_price + $service_price;
+        $sales->paid_amount = $paid_amount;
+        $sales->return_amount = $return_amount;
+        $sales->total_amount = $total_price;
         $sales->save();
-
+        if((int)$card_sum > 0){
+            $sales_payments = new SalesPayments();
+            $sales_payments->sale_id = $sales->id;
+            $sales_payments->payment_method = Constants::CARD;
+            $sales_payments->amount = $card_sum;
+            $sales_payments->save();
+        }
+        if((int)$cash_sum > 0){
+            $sales_payments = new SalesPayments();
+            $sales_payments->sale_id = $sales->id;
+            $sales_payments->payment_method = Constants::CASH;
+            $sales_payments->amount = $cash_sum;
+            $sales_payments->save();
+        }
+        if($all_cost_price>0){
+            $sales_reports = new SalesReports();
+            $sales_reports->sale_id = $sales->id;
+            $sales_reports->report_date = date('Y-m-d H:i:s');
+            $sales_reports->revenue = $all_price;
+            $sales_reports->profit = $all_price - $all_cost_price;
+            $sales_reports->save();
+        }
         $response = [
             'order_id'=>$sales->id,
             'status'=>true,

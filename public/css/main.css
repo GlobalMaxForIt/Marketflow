@@ -260,11 +260,13 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: calc(100vh - 124px);
+    height: calc(100vh - 126px);
+    position: fixed;
+    width: 25%;
     background-color: white;
     padding: 24px;
+    overflow-y: auto;
     margin-left: 14px;
-    margin-top: -89px;
     border-top: 1px solid #F2F2F2;
 }
 .container-fluid{
@@ -2027,7 +2029,7 @@ del{
     color: #FB850E;
 }
 .bill_info_table.active{
-    background-color: silver;
+    background-color: rgb(0, 0, 0, 0.2);
 }
 .bill_info_table{
     cursor: pointer;
@@ -2141,7 +2143,7 @@ del{
     background-color: white;
     position: fixed;
     right: 14px;
-    bottom: 0px;
+    bottom: 64px;
 }
 .bill_right_option{
     height: calc(100vh - 310px);
@@ -2460,4 +2462,7 @@ body[data-leftbar-size=condensed] #all_sum_info td{
 }
 .mt_10{
     margin-top: 10px !important;
+}
+.withouth_discount_price{
+    display: block;
 }
