@@ -42,7 +42,7 @@
                                         <td class="market_tables_text">
                                             <span>
                                                 <h6>
-                                                    <a class="product_name" data-bs-container="#popover-container" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="{{$product['name']}}" data-original-title="">{{$product['short_name']}}</a>
+                                                    <a class="product_name" tabindex="0"  data-bs-container="#popover-container" data-bs-toggle="popover"  data-bs-trigger="focus" data-bs-content="{{$product['name']}}" data-original-title="">{{$product['short_name']}}</a>
                                                 </h6>
                                             </span>
                                             <span><h6><b>{{$product['amount']}}</b></h6></span>

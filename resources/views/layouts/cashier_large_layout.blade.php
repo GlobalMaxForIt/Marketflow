@@ -455,7 +455,7 @@
                                 <td class="market_tables_text_big">
                                     <div class="me-2">
                                         <h6>
-                                            <a class="product_name" data-bs-container="#popover-container" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="{{$product['name']}}" data-original-title="">{{$product['short_name']}}</a>
+                                            <a class="product_name" tabindex="0" data-bs-container="#popover-container" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="{{$product['name']}}" data-original-title="">{{$product['short_name']}}</a>
                                         </h6>
                                     </div>
                                     <div><h6><b>{{$product['amount']}}</b></h6></div>
@@ -533,7 +533,7 @@
                                 </td>
                                 <td class="market_tables_text_big">
                                     <h6>
-                                        <a class="product_name" data-bs-container="#popover-container" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="{{$product['name']}}" data-original-title="">{{$product['short_name']}}</a>
+                                        <a class="product_name" tabindex="0" data-bs-container="#popover-container" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="{{$product['name']}}" data-original-title="">{{$product['short_name']}}</a>
                                     </h6>
                                     <h6><b>{{$product['amount']}}</b></h6>
                                 </td>
@@ -581,19 +581,6 @@
                         <input type="checkbox" class="form-check-input" name="layout-color" value="dark"
                                id="dark-mode-check" checked/>
                         <label class="form-check-label" for="dark-mode-check">{{ translate_title('Dark Mode', $lang)}}</label>
-                    </div>
-
-                    <!-- Width -->
-                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">{{ translate_title('Width', $lang)}}</h6>
-                    <div class="form-check form-switch mb-1">
-                        <input type="checkbox" class="form-check-input" name="layout-size" value="fluid"
-                               id="fluid" checked />
-                        <label class="form-check-label" for="fluid-check">{{ translate_title('Fluid', $lang)}}</label>
-                    </div>
-                    <div class="form-check form-switch mb-1">
-                        <input type="checkbox" class="form-check-input" name="layout-size" value="boxed"
-                               id="boxed" />
-                        <label class="form-check-label" for="boxed-check">{{ translate_title('Boxed', $lang)}}</label>
                     </div>
 
                     <!-- Menu positions -->
@@ -658,21 +645,6 @@
                                id="compact-check" />
                         <label class="form-check-label" for="compact-check">{{ translate_title('Compact', $lang)}} <small>{{ translate_title('(Small size)', $lang)}}</small></label>
                     </div>
-                    <!-- Topbar -->
-                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">{{ translate_title('Topbar', $lang)}}</h6>
-
-                    <div class="form-check form-switch mb-1">
-                        <input type="checkbox" class="form-check-input" name="topbar-color" value="dark"
-                               id="darktopbar-check" checked />
-                        <label class="form-check-label" for="darktopbar-check">{{ translate_title('Dark', $lang)}}</label>
-                    </div>
-
-                    <div class="form-check form-switch mb-1">
-                        <input type="checkbox" class="form-check-input" name="topbar-color" value="light"
-                               id="lighttopbar-check" />
-                        <label class="form-check-label" for="lighttopbar-check">{{ translate_title('Light', $lang)}}</label>
-                    </div>
-
                     <div class="d-grid mt-4">
                         <a class="btn btn-primary" id="resetBtn">{{ translate_title('Reset to Default', $lang)}}</a>
                         {{-- <a href="https://1.envato.market/admintoadmin" class="btn btn-danger mt-3" target="_blank"><i class="mdi mdi-basket me-1"></i> Purchase Now</a> --}}

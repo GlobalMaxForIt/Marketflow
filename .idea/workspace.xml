@@ -3,19 +3,20 @@
   <component name="ChangeListManager">
     <list default="true" id="7a85e38f-1f56-4a6c-8c17-810c8b388b15" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Cashier/CashboxController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Cashier/CashboxController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Superadmin/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Service/SalesService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Service/SalesService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/cashbox.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/cashbox.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/cashbox_big.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/cashbox_big.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/bills.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/bills.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/dark-light.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/dark-light.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/large_ordering.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/large_ordering.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/cashier/cashbox/index_large.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/cashier/cashbox/index_large.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/cashier/cashbox/index_small.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/cashier/cashbox/index_small.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/cashier/payments/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/cashier/payments/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/admin_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/admin_layout.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/cashbox_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/cashbox_layout.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/cashier_large_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/cashier_large_layout.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/cashier_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/cashier_layout.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/cashier_small_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/cashier_small_layout.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/new_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/new_layout.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/superadmin_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/superadmin_layout.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,11 +187,19 @@
       <recent name="C:\OSPanel\domains\btob\database" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Node.js.cashbox_big.js">
+    <configuration name="cashbox_big.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/public/js/cashbox_big.js" working-dir="$PROJECT_DIR$/public/js">
+      <method v="2" />
+    </configuration>
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.cashbox_big.js" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -238,7 +247,9 @@
       <workItem from="1733378526532" duration="24356000" />
       <workItem from="1733464405032" duration="21898000" />
       <workItem from="1733809521417" duration="25613000" />
-      <workItem from="1733894125134" duration="6829000" />
+      <workItem from="1733894125134" duration="16127000" />
+      <workItem from="1733912696538" duration="9596000" />
+      <workItem from="1733981988111" duration="21356000" />
     </task>
     <servers />
   </component>

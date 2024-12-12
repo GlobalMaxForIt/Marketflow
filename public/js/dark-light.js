@@ -133,21 +133,6 @@ function setDarkContainer(modal_container){
 }
 
 
-//fluid or boxed
-let fluid = document.getElementById('fluid')
-let boxed = document.getElementById('boxed')
-fluid.addEventListener('click', function (){
-    localStorage.setItem('fluid_or_boxed', 'fluid')
-})
-boxed.addEventListener('click', function (){
-    localStorage.setItem('fluid_or_boxed', 'boxed')
-})
-if(localStorage.getItem('fluid_or_boxed') == undefined || localStorage.getItem('fluid_or_boxed') == null){
-    body_layout.setAttribute('data-layout-size', 'fluid')
-}else{
-    body_layout.setAttribute('data-layout-size', localStorage.getItem('fluid_or_boxed'))
-}
-
 //fixed or scrollable
 let fixed_check = document.getElementById('fixed-check')
 let scrollable_check = document.getElementById('scrollable-check')
@@ -203,21 +188,6 @@ if(localStorage.getItem('leftbar_size') == undefined || localStorage.getItem('le
     body_layout.setAttribute('data-leftbar-size', 'default')
 }else{
     body_layout.setAttribute('data-leftbar-size', localStorage.getItem('leftbar_size'))
-}
-
-//Topbar color
-let darktopbar_check = document.getElementById('darktopbar-check')
-let lighttopbar_check = document.getElementById('lighttopbar-check')
-darktopbar_check.addEventListener('click', function (){
-    localStorage.setItem('topbar_color', 'dark')
-})
-lighttopbar_check.addEventListener('click', function (){
-    localStorage.setItem('topbar_color', 'light')
-})
-if(localStorage.getItem('topbar_color') == undefined || localStorage.getItem('topbar_color') == null){
-    body_layout.setAttribute('data-topbar-color', 'light')
-}else{
-    body_layout.setAttribute('data-topbar-color', localStorage.getItem('topbar_color'))
 }
 
 // Reset to default

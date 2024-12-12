@@ -1,7 +1,6 @@
 let bill_info_table = document.getElementsByClassName('bill_info_table')
 
 let bills_history_subtotal = document.getElementById('bills_history_subtotal')
-let bills_history_service = document.getElementById('bills_history_service')
 let bills_history_discount = document.getElementById('bills_history_discount')
 let bills_history_total = document.getElementById('bills_history_total')
 
@@ -36,51 +35,47 @@ $(document).ready(function () {
 
 let bills_history_html = ''
 let client_id = ''
-let client_data_ = {}
-let client_data = {}
 let client_info = {}
-let debt_loader = document.getElementById("debt_loader")
-let debt_content = document.getElementById("debt_content")
 
 let refund_modal_form_url = document.getElementById('refund_modal_form')
-let delete_bill_modal_form_url = document.getElementById('delete_bill_modal_form')
 function refundBillFunc(url){
     refund_modal_form_url.setAttribute("action", url)
 }
 
 function setItem(item, index){
-    if(parseInt(item.price) > parseInt(item.all_price)){
+    if(parseInt(item.price.replace(/\s+/g, "")) > parseInt(item.all_price.replace(/\s+/g, ""))){
         bills_history_html = bills_history_html  + `<div class="bill_info d-flex justify-content-between align-items-center">
-                                        <div class="width_30_percent">
-                                            <span class="me-2">${index+1}.</span>
-                                            <img onclick="showImage('${item.items.product_image}')"  data-bs-toggle="modal" data-bs-target="#images-modal" src="${item.items.product_image}" alt="" height="44px">
+                                        <div class="width_30_percent d-flex">
+                                            <h6 class="me-2">${index+1}.</h6>
+                                            <img onclick="showImage('${item.items.product_image}')"  data-bs-toggle="modal" data-bs-target="#images-modal" src="${item.items.product_image}" alt="" width="24px">
                                         </div>
                                         <div class="width_45_percent d-flex flex-column justify-content-center">
-                                            <span>${item.items.product_name}</span>
-                                            <span>${item.quantity} ${items_text}</span>
+                                            <h6>${item.items.product_name}</h6>
+                                            <h6>${item.quantity} ${items_text}</h6>
                                         </div>
                                         <div class="width_25_percent text-end bill_info_sum d-flex flex-column">
-                                            <span>${item.all_price} ${sum_text}</span>
+                                            <h6>${item.all_price} ${sum_text}</h6>
                                             <del class="opacity_1">${item.price} ${sum_text}</del>
                                         </div>
                                     </div>`
     }else{
         bills_history_html = bills_history_html  + `<div class="bill_info d-flex justify-content-between align-items-center">
-                                        <div class="width_30_percent">
-                                            <span class="me-2">${index+1}.</span>
+                                        <div class="width_30_percent d-flex">
+                                            <h6 class="me-2">${index+1}.</h6>
                                             <img onclick="showImage('${item.items.product_image}')" data-bs-toggle="modal" data-bs-target="#images-modal" src="${item.items.product_image}" alt="" height="44px">
                                         </div>
                                         <div class="width_45_percent d-flex flex-column justify-content-center">
-                                            <span>${item.items.product_name}</span>
-                                            <span>${item.quantity} ${items_text}</span>
+                                            <h6>${item.items.product_name}</h6>
+                                            <h6>${item.quantity} ${items_text}</h6>
                                         </div>
-                                        <div class="width_25_percent text-end bill_info_sum">${item.price} ${sum_text}</div>
+                                        <div class="width_25_percent text-end bill_info_sum"><h6>${item.price} ${sum_text}</h6></div>
                                     </div>`
     }
 }
 
-function setData(item, index) {
-    console.log()
+function setData(item) {
+    bills_history_data.innerHTML = ''
+    bills_history_html = ''
     if(item != null && item != undefined){
         item.forEach((item_, index_) =>{
             setItem(item_, index_)
@@ -91,6 +86,10 @@ function setData(item, index) {
 }
 
 function showBillInfo(this_element, sales_data, price, discount_price, total_amount, return_amount, saleId, client_full_name){
+    bills_history_subtotal.textContent = ''
+    bills_history_discount.textContent = ''
+    bills_history_total.textContent = ''
+
     bill_id = saleId
     let pay_total_amount = parseInt(total_amount.split(' ').join(''))
     let pay_return_amount = parseInt(return_amount.split(' ').join(''))
@@ -116,9 +115,7 @@ function showBillInfo(this_element, sales_data, price, discount_price, total_amo
     bills_history_discount.textContent = discount_price +' '+ sum_text
     bills_history_total.textContent = total_amount +' '+ sum_text
 
-    sales_data.forEach((item, index) => {
-        setData(item, index);
-    });
+    setData(sales_data);
 }
 
 function removeActive(){

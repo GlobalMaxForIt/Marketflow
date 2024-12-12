@@ -175,7 +175,7 @@
                 <tr>
                     <td><b><h4>{{translate_title('Total left sum:', $lang)}}</h4></b></td>
                     <td>
-                        <div class="text-end d-none" id="totalLeftSum">
+                        <div class="text-end" id="totalLeftSum">
                             <h4 id="total_left_sum"></h4>
                         </div>
                     </td>

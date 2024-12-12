@@ -4,6 +4,7 @@
     {{translate_title('Bills', $lang)}}
 @endsection
 @section('content')
+
     <div class="main-content-section">
         <div class="order-section p_right_0">
             <!-- Tab panes -->
@@ -14,50 +15,50 @@
                             <table class="restaurant_tables datatable table table-striped table-bordered dt-responsive nowrap">
                                 <thead>
                                     <tr>
-                                        <th>{{translate_title('Total amount', $lang)}}</th>
-                                        <th>{{translate_title('Paid amount', $lang)}}</th>
-                                        <th>{{translate_title('Remaining amount', $lang)}}</th>
-                                        <th>{{translate_title('Updated at', $lang)}}</th>
+                                        <th><h6>{{translate_title('Total amount', $lang)}}</h6></th>
+                                        <th><h6>{{translate_title('Paid amount', $lang)}}</h6></th>
+                                        <th><h6>{{translate_title('Returning amount', $lang)}}</h6></th>
+                                        <th><h6>{{translate_title('Updated at', $lang)}}</h6></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($all_sales as $all_sale)
-                                        <tr class="bill_info_table" onclick="showBillInfo(this, {{ json_encode($all_sales_info) }}, `{{$all_sale['price']}}`, `{{$all_sale['discount_price']}}`, `{{$all_sale['total_amount']}}`, `{{$all_sale['return_amount']}}`, `{{$all_sale['id']}}`, `{{$all_sale['client_full_name']}}`)">
-                                            <td>{{$all_sale['total_amount']}}</td>
-                                            <td>{{$all_sale['paid_amount']}}</td>
-                                            <td>{{$all_sale['return_amount']}}</td>
-                                            <td>{{$all_sale['updated_at']}}</td>
+                                    @foreach($all_sales as $key => $all_sale)
+                                        <tr class="bill_info_table" onclick="showBillInfo(this, {{ json_encode($all_sales_info[$key]) }}, `{{$all_sale['price']}}`, `{{$all_sale['discount_price']}}`, `{{$all_sale['total_amount']}}`, `{{$all_sale['return_amount']}}`, `{{$all_sale['id']}}`, `{{$all_sale['client_full_name']}}`)">
+                                            <td><h6>{{$all_sale['total_amount']}}</h6></td>
+                                            <td><h6>{{$all_sale['paid_amount']}}</h6></td>
+                                            <td><h6>{{$all_sale['return_amount']}}</h6></td>
+                                            <td><h6>{{$all_sale['updated_at']}}</h6></td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-4 d-flex flex-column">
                         <div class="main-content-section_bills">
-                            <div class="right_options bill_right_option" role="presentation">
+                            <div class="right_options bill_right_option" role="presentation" id="product_full_info_alert">
                                 <div class="text-start"><span id="bills_history_code"></span></div>
                                 <div class="nav flex-column" id="bills_history_data">
 
                                 </div>
                             </div>
-                            <div class="bills_history_content ">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span class="order-info-title">{{translate_title('Подитог', $lang)}}</span>
-                                    <span class="order-info-sum" id="bills_history_subtotal">0 000 000 {{translate_title('sum', $lang)}}</span>
-                                </div>
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span class="order-info-title">{{translate_title('Обслуживание', $lang)}}</span>
-                                    <span class="order-info-sum" id="bills_history_service">0 000 000 {{translate_title('sum', $lang)}}</span>
-                                </div>
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span class="order-info-title">{{translate_title('Скидка', $lang)}}</span>
-                                    <span class="order-info-sum" id="bills_history_discount">0 000 000 {{translate_title('sum', $lang)}}</span>
-                                </div>
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span class="order-info">{{translate_title('Итог', $lang)}}</span>
-                                    <span class="order-info" id="bills_history_total">0 000 000 {{translate_title('sum', $lang)}}</span>
-                                </div>
+                        </div>
+                        <div class="bills_history_content">
+                            <div class="d-flex justify-content-between mb-2">
+                                <h6 class="order-info-title"> {{translate_title('Подитог', $lang)}}</h6>
+                                <h6 class="order-info-sum" id="bills_history_subtotal">0 000 000 {{translate_title('sum', $lang)}}</h6>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <h6 class="order-info-title"> {{translate_title('Обслуживание', $lang)}}</h6>
+                                <h6 class="order-info-sum" id="bills_history_service">0 000 000 {{translate_title('sum', $lang)}}</h6>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <h6 class="order-info-title">{{translate_title('Скидка', $lang)}}</h6>
+                                <h6 class="order-info-sum" id="bills_history_discount">0 000 000 {{translate_title('sum', $lang)}}</h6>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <h6 class="order-info"> {{translate_title('Итог', $lang)}}</h6>
+                                <h6 class="order-info" id="bills_history_total">0 000 000 {{translate_title('sum', $lang)}}</h6>
                             </div>
                         </div>
                     </div>

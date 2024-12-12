@@ -40,6 +40,7 @@ let clientDicountPrice = 0
 let productsPrice = 0
 let servicePrice = 0
 let all_sum = 0
+let all_sum_withouth_discount = 0
 let client_id = 0
 let total_all_left_sum = 0
 let confirm_client_discount = document.getElementById('confirm_client_discount')
@@ -93,23 +94,11 @@ function showClientDiscount(discount_content_element){
             discount_content_element.classList.remove('d-none')
         }
     }
-    if(totalLeftSum != undefined && totalLeftSum != null){
-        if(totalLeftSum.classList.contains('d-none')){
-            totalLeftSum.classList.remove('d-none')
-        }
-    }
 }
 function hideClientDiscount(discount_content_element) {
     if(discount_content_element != undefined && discount_content_element != null){
         if(!discount_content_element.classList.contains('d-none')){
             discount_content_element.classList.add('d-none')
-        }
-    }
-    if(percent_v<=0){
-        if(totalLeftSum != undefined && totalLeftSum != null){
-            if(!totalLeftSum.classList.contains('d-none')){
-                totalLeftSum.classList.add('d-none')
-            }
         }
     }
 }
@@ -130,8 +119,10 @@ if(order_data_content != undefined && order_data_content != null){
 function confirm_client_discount_func(discountValue_){
     servicePrice = 0
     all_sum = 0
+    all_sum_withouth_discount = 0
     for(let j=0; j<order_data.length; j++){
         all_sum = all_sum + order_data[j].quantity*parseInt(order_data[j].last_price.replace(/\s/g, ''), 10)
+        all_sum_withouth_discount = all_sum_withouth_discount + order_data[j].quantity*parseInt(order_data[j].price.replace(/\s/g, ''), 10)
     }
     clientDiscount.innerHTML = discountValue_+' %'
 
@@ -148,6 +139,7 @@ function setClientPrices() {
         clientDicountPrice = (all_sum * (1 - percent_v)).toFixed(2)
         total_all_left_sum = (all_sum * percent_v).toFixed(2)
     }
+    total_sum.innerText = all_sum_withouth_discount
     clients_discount__sum.value = clientDicountPrice
     total_left_sum.innerText = total_all_left_sum
     clients_total_discount__sum.value = (productsPrice - total_all_left_sum).toFixed(2)
@@ -166,6 +158,7 @@ function removeClientDiscountFunc(){
     clients_total_discount__sum.value = 0
     total__sum.value = 0
 }
+
 removeClientDiscount.addEventListener('click', function () {
     removeClientDiscountFunc()
     setClientPrices()
@@ -175,13 +168,21 @@ function truncuateCashboxFunc(){
     discountValue = 0
     clientDiscount.innerText = ''
     total_left_sum.innerText = ''
+    total_sum.innerText = ''
     percent_v = 0
+    clientDicountPrice = 0
+    total_all_left_sum = 0
     total_left_sum.innerText = ''
     total_all_left_sum = 0
     if(localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null) {
         localStorage.removeItem('order_data')
     }
     all_sum = 0
+    all_sum_withouth_discount = 0
+    clients_discount__sum.value = 0.00
+    $(document).ready(function() {
+        $('#client_select_id_2').val(null).trigger('change');
+    });
     hideClientDiscount(clientDiscountContent)
     hideHasItems()
     order_data = []
@@ -304,6 +305,7 @@ function minusProduct(id, stock) {
 
 function setOrderHtml(order_data_){
     all_sum = 0
+    all_sum_withouth_discount = 0
     servicePrice = 0
     productsPrice = 0
     order_data_html_ = ''
@@ -313,6 +315,7 @@ function setOrderHtml(order_data_){
         productsPrice = productsPrice + order_data_[j].quantity*parseInt(order_data_[j].price.replace(/\s/g, ''), 10)
         discount_html = ''
         all_sum = all_sum + order_data_[j].quantity*parseInt(order_data_[j].last_price.replace(/\s/g, ''), 10)
+        all_sum_withouth_discount = all_sum_withouth_discount + order_data_[j].quantity*parseInt(order_data_[j].price.replace(/\s/g, ''), 10)
 
         if(parseInt(order_data_[j].discount.replace(/\s/g, ''), 10)>0){
             discount_html = `<div><h6>${order_data_[j].last_price}</h6></div><del><h6>${order_data_[j].price}</h6></del>`
@@ -336,7 +339,7 @@ function setOrderHtml(order_data_){
                 </td>
             </tr>`
     }
-    total_sum.innerText = all_sum
+    total_sum.innerText = all_sum_withouth_discount
     setClientPrices()
     return order_data_html_
 }

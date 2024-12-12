@@ -150,11 +150,10 @@
     text-decoration: none;
 }
 .left-side-menu{
-    overflow-y: auto;
+    width: 214px;
+    position: fixed !important;
     z-index: 1004 !important;
     margin-top: -70px;
-    width: 204px;
-    min-height: 100vh;
     display: block !important;
 }
 .main-menu-buttons_link-img{
@@ -260,13 +259,11 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: calc(100vh - 126px);
-    position: fixed;
-    width: 25%;
-    background-color: white;
-    padding: 24px;
+    height: calc(100vh - 364px);
+    position: relative;
+    padding: 24px 8px;
     overflow-y: auto;
-    margin-left: 14px;
+    width: 100%;
     border-top: 1px solid #F2F2F2;
 }
 .container-fluid{
@@ -1106,7 +1103,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .bill_info{
     min-height: 70px;
-    padding: 7px 15px;
+    padding: 7px;
     gap: 10px;
     border-radius: 10px;
     border: 1px solid #F2F2F2;
@@ -1237,7 +1234,6 @@ input[type=number]::-webkit-outer-spin-button {
     font-weight: 350;
     line-height: 18.72px;
     text-align: left;
-    color: #C1C1C1;
 }
 .order-info-sum{
     font-family: Stem;
@@ -2137,17 +2133,22 @@ del{
     left: 12%;
 }
 .bills_history_content{
-    width: 27.94%;
-    padding: 34px 14px;
+    padding: 14px;
+    margin-top: 14px;
+    box-shadow: -2px -1px 6px 2px;
     border-top: solid 1px #C1C1C1;
-    background-color: white;
-    position: fixed;
-    right: 14px;
-    bottom: 64px;
+    right: 1.1%;
+    width: 100%;
+    margin-left: 14px;
+}
+#bills_history h6{
+    font-size: 14px !important;
+}
+#bills_history #bills_history_data h6{
+    font-size: 12px !important;
 }
 .bill_right_option{
     height: calc(100vh - 310px);
-    overflow: auto;
 }
 .confirming_content span{
     color: green !important;
@@ -2226,13 +2227,10 @@ body{
     background-color: #2C333E;
 }
 #wrapper{
-    min-height: 100vh;
+    min-height: calc(100vh - 63);
 }
 .overflow_hidden{
     overflow: hidden;
-}
-.content-page{
-    margin-left: 204px !important;
 }
 .flatpickr-monthDropdown-months{
     color: #7E7F80!important;
@@ -2284,9 +2282,12 @@ body[data-leftbar-size=condensed] .user-box div, body[data-leftbar-size=condense
     display: none !important;
 }
 body[data-leftbar-size=condensed] .left-side-menu{
-    position: fixed !important;
+    /*position: fixed !important;*/
     min-height: 100vh;
     z-index: 4 !important;
+}
+body[data-leftbar-size=default] .left-side-menu{
+    min-width: 214px !important;
 }
 footer{
     left:204px!important;
@@ -2297,6 +2298,11 @@ body[data-leftbar-size=condensed]:not([data-layout=compact]){
 body[data-leftbar-size=condensed] .content-page {
     margin-left: 74px !important;
     padding: 0 10px;
+}
+body[data-leftbar-size=default] .content-page {
+    padding: 0 10px;
+    margin-left: 214px !important;
+
 }
 .keyboard {
     display: grid;
@@ -2440,7 +2446,7 @@ body[data-layout-color="light"] .fa-keyboard, body[data-layout-color="dark"] .ac
 #all_sum_info{
     position: fixed;
     background-color: rgb(0, 0, 0, 0.1);
-    width: calc(75% - 193px);
+    width: calc(75% - 200px);
     bottom: 54px;
     border-radius: 4px;
     z-index: 1004;
@@ -2465,4 +2471,8 @@ body[data-leftbar-size=condensed] #all_sum_info td{
 }
 .withouth_discount_price{
     display: block;
+}
+.bill_info img{
+    width: 34px !important;
+    height: auto !important;
 }
