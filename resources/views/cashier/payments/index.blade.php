@@ -23,7 +23,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach($all_sales as $key => $all_sale)
-                                        <tr class="bill_info_table" onclick="showBillInfo(this, {{ json_encode($all_sales_info[$key]) }}, `{{$all_sale['price']}}`, `{{$all_sale['discount_price']}}`, `{{$all_sale['total_amount']}}`, `{{$all_sale['return_amount']}}`, `{{$all_sale['id']}}`, `{{$all_sale['client_full_name']}}`)">
+                                        <tr class="bill_info_table" onclick="showBillInfo(this, {{ json_encode($all_sales_info[$key]) }}, `{{$all_sale['price']}}`, `{{$all_sale['discount_price']}}`, `{{$all_sale['total_amount']}}`, `{{$all_sale['return_amount']}}`, `{{$all_sale['id']}}`, `{{$all_sale['client_full_name']}}`, `{{$all_sale['client_discount_price']}}`)">
                                             <td><h6>{{$all_sale['total_amount']}}</h6></td>
                                             <td><h6>{{$all_sale['paid_amount']}}</h6></td>
                                             <td><h6>{{$all_sale['return_amount']}}</h6></td>
@@ -48,9 +48,9 @@
                                 <h6 class="order-info-title"> {{translate_title('Подитог', $lang)}}</h6>
                                 <h6 class="order-info-sum" id="bills_history_subtotal">0 000 000 {{translate_title('sum', $lang)}}</h6>
                             </div>
-                            <div class="d-flex justify-content-between mb-2">
-                                <h6 class="order-info-title"> {{translate_title('Обслуживание', $lang)}}</h6>
-                                <h6 class="order-info-sum" id="bills_history_service">0 000 000 {{translate_title('sum', $lang)}}</h6>
+                            <div class="d-flex justify-content-between mb-2" id="popover-container">
+                                <a class="order-info-title" id="client_title_text" tabindex="0" data-bs-container="#popover-container" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="good" data-original-title=""> {{translate_title('Скидка клиента', $lang)}}</a>
+                                <h6 class="order-info-sum" id="bills_history_client">0 000 000 {{translate_title('sum', $lang)}}</h6>
                             </div>
                             <div class="d-flex justify-content-between mb-2">
                                 <h6 class="order-info-title">{{translate_title('Скидка', $lang)}}</h6>

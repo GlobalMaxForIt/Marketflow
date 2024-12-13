@@ -1,9 +1,10 @@
 let bill_info_table = document.getElementsByClassName('bill_info_table')
 
 let bills_history_subtotal = document.getElementById('bills_history_subtotal')
+let bills_history_client = document.getElementById('bills_history_client')
 let bills_history_discount = document.getElementById('bills_history_discount')
 let bills_history_total = document.getElementById('bills_history_total')
-
+let client_title_text = document.getElementById('client_title_text')
 
 let bills_history_data = document.getElementById('bills_history_data')
 
@@ -85,10 +86,11 @@ function setData(item) {
 
 }
 
-function showBillInfo(this_element, sales_data, price, discount_price, total_amount, return_amount, saleId, client_full_name){
+function showBillInfo(this_element, sales_data, price, discount_price, total_amount, return_amount, saleId, client_full_name, client_discount_price){
     bills_history_subtotal.textContent = ''
     bills_history_discount.textContent = ''
     bills_history_total.textContent = ''
+    bills_history_client.textContent = ''
 
     bill_id = saleId
     let pay_total_amount = parseInt(total_amount.split(' ').join(''))
@@ -112,8 +114,10 @@ function showBillInfo(this_element, sales_data, price, discount_price, total_amo
     bills_history_html = ''
 
     bills_history_subtotal.textContent = price +' '+ sum_text
+    bills_history_client.textContent = client_discount_price +' '+ sum_text
     bills_history_discount.textContent = discount_price +' '+ sum_text
     bills_history_total.textContent = total_amount +' '+ sum_text
+    client_title_text.setAttribute('data-bs-content', client_full_name)
 
     setData(sales_data);
 }
@@ -125,3 +129,7 @@ function removeActive(){
         }
     }
 }
+
+client_title_text.addEventListener('click', function () {
+    
+})

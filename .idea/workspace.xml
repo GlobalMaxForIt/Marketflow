@@ -5,18 +5,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/bills.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/bills.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/dark-light.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/dark-light.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/large_ordering.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/large_ordering.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/cashier/cashbox/index_large.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/cashier/cashbox/index_large.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/cashier/cashbox/index_small.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/cashier/cashbox/index_small.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/cashier/payments/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/cashier/payments/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/admin_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/admin_layout.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/cashbox_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/cashbox_layout.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/cashier_large_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/cashier_large_layout.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/cashier_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/cashier_layout.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/cashier_small_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/cashier_small_layout.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/new_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/new_layout.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/superadmin_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/superadmin_layout.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,7 +240,8 @@
       <workItem from="1733809521417" duration="25613000" />
       <workItem from="1733894125134" duration="16127000" />
       <workItem from="1733912696538" duration="9596000" />
-      <workItem from="1733981988111" duration="21356000" />
+      <workItem from="1733981988111" duration="21703000" />
+      <workItem from="1734068556042" duration="3313000" />
     </task>
     <servers />
   </component>

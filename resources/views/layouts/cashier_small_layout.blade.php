@@ -474,6 +474,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{route('payments')}}">
+                            <i class="mdi mdi-cash-register me-1"></i>
+                            <span> {{translate_title('Payments', $lang)}} </span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{route('cashier-discount.index')}}">
                             <i class="mdi mdi-percent me-1"></i>
                             <span> {{translate_title('Discount', $lang)}} </span>
