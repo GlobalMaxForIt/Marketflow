@@ -2476,3 +2476,7 @@ body[data-leftbar-size=condensed] #all_sum_info td{
     width: 34px !important;
     height: auto !important;
 }
+
+body[data-leftbar-position="fixed"] .content-page{
+    height: 87vh;
+}

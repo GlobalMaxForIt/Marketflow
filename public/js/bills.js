@@ -131,5 +131,5 @@ function removeActive(){
 }
 
 client_title_text.addEventListener('click', function () {
-    
+
 })
