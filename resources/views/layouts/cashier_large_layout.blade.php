@@ -101,7 +101,7 @@
     <!-- Topbar Start -->
     <div class="navbar-custom">
         <ul class="list-unstyled topnav-menu float-end mb-0">
-            <li class="ms-4"><h6 class="mt_10"><a class="fast_goods" data-bs-toggle="offcanvas" data-bs-target="#fastgoods" aria-controls="offcanvasTop">{{translate_title('Fast goods', $lang)}}</a></h6></li>
+            <li class="ms-4"><h6 class="mt_10"><a class="fast_goods" id="fast_goods_list" data-bs-toggle="offcanvas" data-bs-target="#fastgoods" aria-controls="offcanvasTop">{{translate_title('Fast goods', $lang)}}</a></h6></li>
             <li class="ms-4"><h6 class="mt_10">{{$user->name}} {{$user->surname}}</h6></li>
             <li>
                 <a class="text-decoration-none ms-4" data-bs-toggle="modal" data-bs-target="#change_cashier"><h5 class="m-0"><span class="mdi mdi-logout me-2"></span></h5></a>
@@ -236,7 +236,7 @@
                 <h5 class="mt-2">@yield('title')</h5>
             </li>
             <li>
-                <a class="btn mt-2 mt-md-0 color_white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
+                <a class="btn mt-2 mt-md-0 color_white" id="open_all_products_list" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
                     <h6 class="mt_10">
                         <i class="fe-search"></i>
                     </h6>
@@ -1216,6 +1216,8 @@
 <script src="{{asset('js/cashbox_big.js')}}"></script>
 </body>
 <script>
+    let open_all_products_list = document.getElementById('open_all_products_list')
+    let fast_goods_list = document.getElementById('fast_goods_list')
     removeClientDiscount.addEventListener('click', function () {
         $(document).ready(function () {
             if($('#client_select_id_2') != undefined && $('#client_select_id_2') != null){
@@ -1223,13 +1225,27 @@
             }
         })
     })
-    if (window.innerWidth < 1000) {
-        $(document).ready(function () {
-            setTimeout(function () {
-                $('.navbar-custom .menu_bar .button-menu-mobile').trigger('click')
-                console.log('yopildi')
-            }, 144)
-        })
-    }
+    open_all_products_list.addEventListener('click', function () {
+        setTimeout(function () {
+            let all_products_list_input = document.querySelector("#offcanvasTop input[type='search'][aria-controls='DataTables_Table_0']")
+            all_products_list_input.value = '';
+            all_products_list_input.focus();
+        }, 444)
+    })
+    fast_goods_list.addEventListener('click', function () {
+        setTimeout(function () {
+            let fast_goods_list_input = document.querySelector("#fastgoods input[type='search'][aria-controls='DataTables_Table_1']")
+            fast_goods_list_input.value = '';
+            fast_goods_list_input.focus();
+        }, 444)
+    })
+    // if (window.innerWidth < 1000) {
+    //     $(document).ready(function () {
+    //         setTimeout(function () {
+    //             $('.navbar-custom .menu_bar .button-menu-mobile').trigger('click')
+    //             console.log('yopildi')
+    //         }, 144)
+    //     })
+    // }
 </script>
 </html>
