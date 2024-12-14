@@ -21,4 +21,7 @@ class ProductsCategories extends Model
     public function category(){
         return $this->hasOne(ProductsCategories::class, 'id','parent_id')->where('step', 0);
     }
+    public function unit(){
+        return $this->hasOne(Unit::class, 'id', 'unit_id');
+    }
 }

@@ -86,11 +86,11 @@ if (!function_exists('table_translate_title')) {
                     return $key->name;
                 }
                 break;
-            case 'product_description':
-                if ($product_translation=DB::table('product_description_translations')->where('product_id',$key->id)->where('lang',$lang)->first()) {
-                    return $product_translation->name;
+            case 'unit':
+                if ($unit_translation=DB::table('unit_translation')->where('unit_id',$key->id)->where('lang',$lang)->first()) {
+                    return $unit_translation->name;
                 }else {
-                    return $key->discription;
+                    return $key->name;
                 }
                 break;
             case 'products_categories':

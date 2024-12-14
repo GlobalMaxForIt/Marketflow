@@ -25,7 +25,14 @@ let cashCalculator = document.getElementById('cashCalculator')
 let cardCalculator = document.getElementById('cardCalculator')
 let cardContent = document.getElementById('cardContent')
 let card_payment_ = document.getElementById('card_payment_')
+let selected_product_name = document.getElementById('selected_product_name')
+let selected_product_price = document.getElementById('selected_product_price')
+let selected_product_amount = document.getElementById('selected_product_amount')
+let selected_product_unit = document.getElementById('selected_product_unit')
+let dotKeyboard = document.getElementById('dotKeyboard')
 let is_set_mixed = false
+let dot_has = false
+let orderProductData = {}
 
 function format_entered_sum(numbers){
     if(parseInt(numbers)>0){
@@ -132,34 +139,142 @@ function backspaceCard() {
         setValues(cash_sum, card_sum)
     }
 }
-
 // Function to append numbers to the display
 function appendPassword(number) {
-    if (display_password.innerText == '0') {
+    if (display_password.value == '') {
         cashier_password.value = String(number)
-        display_password.innerText = String(number); // Agar dastlabki raqam 0 bo'lsa, uni o'zgartiramiz
+        display_password.value = String(number); // Agar dastlabki raqam 0 bo'lsa, uni o'zgartiramiz
     } else {
         cashier_password.value = String(cashier_password.value) + String(number)
-        display_password.innerText = cashier_password.value; // Aks holda, raqamni qo'shamiz
+        display_password.value = cashier_password.value; // Aks holda, raqamni qo'shamiz
     }
 }
 
+display_password.addEventListener('input', function (event) {
+    cashier_password.value = String(event.target.value)
+    display_password.value = cashier_password.value; // Aks holda, raqamni qo'shamiz
+})
+
 // Function to clear the display
 function clearDisplayPassword() {
-    cashier_password.value = '0'
-    display_password.innerText = '0'; // Ekrandagi raqamni tozalash
+    cashier_password.value = ''
+    display_password.value = ''; // Ekrandagi raqamni tozalash
 }
 
 // Function to remove the last digit (Backspace)
 function backspacePassword() {
-    if (display_password.innerText.length > 1) {
+    if (display_password.value.length > 1) {
         cashier_password.value = String(cashier_password.value).slice(0, -1)
-        display_password.innerText = String(cashier_password.value); // Oxirgi belgini o'chirish
+        display_password.value = String(cashier_password.value); // Oxirgi belgini o'chirish
     } else {
-        display_password.innerText = '0'; // Agar faqat bir raqam qolgan bo'lsa, uni 0 ga o'zgartiramiz
-        cashier_password.value = '0'
+        display_password.value = ''; // Agar faqat bir raqam qolgan bo'lsa, uni 0 ga o'zgartiramiz
+        cashier_password.value = ''
     }
 }
+let selectedProductPrice = ''
+let selectedProductAmount = ''
+function editProductFunc(orderProduct){
+    orderProductData = JSON.parse(orderProduct.getAttribute('data-product'))
+    if(Object.keys(orderProductData).length>0){
+        selected_product_name.innerText = orderProductData.name + ' '+orderProductData.amount
+        selected_product_price.value = orderProductData.quantity*parseInt(orderProductData.last_price.replace(/\s/g, ''), 10)
+        selected_product_amount.value = orderProductData.quantity
+        selected_product_unit.innerText = orderProductData.unit
+        selectedProductAmount = parseInt(selected_product_amount.value)
+        selectedProductPrice = parseInt(selected_product_price.value)/selectedProductAmount
+    }
+}
+let amount_or_price = ''
+function selected_product_input_func(){
+    setTimeout(function () {
+        if(selected_product_amount.matches(":focus")){
+            amount_or_price = 'amount'
+            if(Object.keys(orderProductData).length>0){
+                if([4, 7, 8, 10, 11].includes(parseInt(orderProductData.unit_id))){
+                    if(dotKeyboard.classList.contains('d-none')){
+                        dotKeyboard.classList.remove('d-none')
+                    }
+                }
+            }
+            display_edit_product = selected_product_amount
+        }else{
+            amount_or_price = 'price'
+            if(!dotKeyboard.classList.contains('d-none')){
+                dotKeyboard.classList.add('d-none')
+            }
+            display_edit_product = selected_product_price
+        }
+    }, 94)
+}
+
+selected_product_price.addEventListener('click', function () {
+    selected_product_input_func()
+})
+selected_product_amount.addEventListener('click', function () {
+    selected_product_input_func()
+})
+selected_product_input_func()
+
+// Function to append numbers to the display
+function appendEditProduct(number) {
+    if (display_edit_product.value == '0') {
+        if(dot_has){
+            display_edit_product.value = '0.'+String(number);
+        }else{
+            display_edit_product.value = String(number);
+        }
+    } else {
+        if(dot_has){
+            display_edit_product.value = String(display_edit_product.value)+'.'+String(number);
+        }else{
+            display_edit_product.value = String(display_edit_product.value) + String(number);
+        }
+    }
+    dot_has = false
+    // selectedProductPrice
+    // selectedProductAmount
+    if(amount_or_price == 'amount'){
+        selected_product_price.value = selectedProductPrice * parseFloat(display_edit_product.value)
+    }else{
+        selected_product_amount.value = parseInt(selected_product_price.value)/selectedProductPrice
+    }
+}
+
+function appendDotEditProduct(){
+    dot_has = true
+}
+
+selected_product_amount.addEventListener('input', function (event) {
+    selected_product_amount.value = String(event.target.value); // Aks holda, raqamni qo'shamiz
+    selected_product_price.value = selectedProductPrice * parseFloat(selected_product_amount.value)
+})
+
+selected_product_price.addEventListener('input', function (event) {
+    selected_product_price.value = String(event.target.value); // Aks holda, raqamni qo'shamiz
+    selected_product_amount.value = parseInt(selected_product_price.value)/selectedProductPrice
+})
+
+// Function to clear the display
+function clearDisplayEditProduct() {
+    display_edit_product.value = '0'; // Ekrandagi raqamni tozalash
+    selected_product_amount.value = '0'; // Ekrandagi raqamni tozalash
+    selected_product_amount.value = '0'; // Ekrandagi raqamni tozalash
+}
+
+// Function to remove the last digit (Backspace)
+function backspaceEditProduct() {
+    if (display_edit_product.value.length > 1) {
+        display_edit_product.value = String(display_edit_product.value).slice(0, -1); // Oxirgi belgini o'chirish
+    } else {
+        display_edit_product.value = '0'; // Agar faqat bir raqam qolgan bo'lsa, uni 0 ga o'zgartiramiz
+    }
+    if(amount_or_price == 'amount'){
+        selected_product_price.value = selectedProductPrice * parseFloat(display_edit_product.value)
+    }else{
+        selected_product_amount.value = parseInt(selected_product_price.value)/selectedProductPrice
+    }
+}
+
 function paymentFunc() {
     getTotalSum = total_all_left_sum
     payment_sum.innerText = format_entered_sum(getTotalSum)
@@ -301,7 +416,6 @@ function paymentPayFunc() {
                         // 'client_dicount_price':clientDicountPrice,
                     },
                     success: function (data) {
-                        console.log(data)
                         hideHasItems()
                         if(loader != undefined && loader != null){
                             if(!loader.classList.contains("d-none")){

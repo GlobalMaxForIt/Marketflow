@@ -323,17 +323,41 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-<script>
-    let subcategory_exists = document.getElementById('subcategory_exists')
-    let category_id = document.getElementById('category_id')
-    let subcategory_id = document.getElementById('subcategory_id')
 
-    let disabled_text = "{{translate_title('Select sub category', $lang)}}"
+    <input type="hidden" id="barcode_input">
+    <script>
+        let subcategory_exists = document.getElementById('subcategory_exists')
+        let category_id = document.getElementById('category_id')
+        let subcategory_id = document.getElementById('subcategory_id')
 
-    category_id.addEventListener('change', function () {
-        getSubcategory(subcategory_exists, category_id, subcategory_id, disabled_text)
-    })
+        let disabled_text = "{{translate_title('Select sub category', $lang)}}"
 
-</script>
-<script src="{{asset('js/product.js')}}"></script>
+        category_id.addEventListener('change', function () {
+            getSubcategory(subcategory_exists, category_id, subcategory_id, disabled_text)
+        })
+
+    </script>
+    <script>
+        let barcodeInput = document.getElementById('barcode_input')
+        let barcode = document.getElementById('barcode')
+        barcodeInput.focus()
+        let scannedBarcode = ''
+
+        document.addEventListener('keydown', function(event) {
+            setTimeout(function () {
+                if (event.key === 'Enter') {
+                    console.log("Barcode Scanned:", scannedBarcode);
+                    handleBarcode(scannedBarcode);
+                    scannedBarcode = '';
+                } else {
+                    scannedBarcode += event.key;
+                }
+            }, 244);
+        });
+
+        function handleBarcode(barcode_) {
+            barcode.value = barcode_
+        }
+    </script>
+    <script src="{{asset('js/product.js')}}"></script>
 @endsection

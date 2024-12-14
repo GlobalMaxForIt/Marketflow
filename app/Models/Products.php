@@ -16,6 +16,10 @@ class Products extends Model
         return $this->hasOne(ProductsCategories::class, 'id', 'products_categories_id')->where('step', 1);
     }
 
+    public function unit(){
+        return $this->hasOne(Unit::class, 'id', 'unit_id');
+    }
+
     public function store(){
         return $this->hasOne(Store::class, 'id', 'store_id');
     }

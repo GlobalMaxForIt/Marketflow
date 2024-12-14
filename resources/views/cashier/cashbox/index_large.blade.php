@@ -16,7 +16,7 @@
         }
     </style>
     <div class="row">
-        <div class="col-9">
+        <div class="col-8">
             <div class="main-content-section" id="myDiv">
                 <div class="order-section">
                     <div class="card">
@@ -36,7 +36,6 @@
                                             data-tablesaw-priority="3"><h6><b>{{translate_title('Qty', $lang)}}</b></h6>
                                         </th>
                                         <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1"><h6><b>{{translate_title('Sum', $lang)}}</b></h6></th>
-                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4"><h6><b>{{translate_title('Functions', $lang)}}</b></h6></th>
                                     </tr>
                                 </thead>
 
@@ -49,81 +48,112 @@
                 </div>
             </div>
         </div>
-        <div class="col-3 ps-2">
+        <div class="col-4 ps-2">
 {{--            <div class="d-flex justify-content-between mb-2">--}}
 {{--                <button class="edit_button btn me-2" data-bs-toggle="modal" data-bs-target="#client_with_discount" id="client_with_discount_button">--}}
 {{--                    <b>{{translate_title('Select client with discount', $lang)}}</b>--}}
 {{--                </button>--}}
 {{--            </div>--}}
             <div class="main-content-section">
-                <div class="right_options" role="presentation">
-                    <div>
-                        <div class="payment_content">
-                            <div class="payment-content-header">
-                                <div class="payment-content-header_title mb-3">
-                                    <span class="payment-content-header-title_name">
-                                        <h6>{{translate_title('Client', $lang)}}</h6>
-                                    </span>
-                                    <a class="payment-content-header-title_button" data-bs-toggle="modal" data-bs-target="#create_modal_client" data-url="{{route('clients.store')}}">
-                                        <h6>{{translate_title('Add +', $lang)}}</h6>
-                                    </a>
-                                </div>
-                                <div class="payment-content-header_user">
-                                    <div class="d-flex justify-content-center">
-                                        <div class="position-relative mb-2 width_100_percent">
-                                            <select class="input-default payment-content-header-user_name" name="client_id" data-toggle="select2" data-width="100%" required id="client_select_id_2">
-                                                <option value="" selected disabled>{{translate_title('Select a client', $lang)}}</option>
-                                                <optgroup label="Clients">
-                                                    @foreach($clients_for_discount as $client_for_discount)
-                                                        <option value="{{$client_for_discount['client_id']}} {{$client_for_discount['percent']}} /{{$client_for_discount['client_full_name']}} /{{$client_for_discount['phone']}}">{{$client_for_discount['client_full_name']}}</option>
-                                                    @endforeach
-                                                </optgroup>
-                                            </select>
-                                            <div class="invalid-tooltip">
-                                                {{translate_title('Select a client', $lang)}}
+
+                <div class="tab-content" id="myCategory">
+                    <div class="tab-pane fade show active" id="products" role="tabpanel" aria-labelledby="products-tab">
+                        <ul class="nav nav-tabs mb-2">
+                            <li class="nav-item ms-2 mb-2">
+                                <a href="#client_modal" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                                    {{translate_title("Client", $lang)}}
+                                </a>
+                            </li>
+                            <li class="nav-item ms-2 mb-2">
+                                <a href="#fast_selling_goods_modal" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                    {{translate_title('Fast selling goods', $lang)}}
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="myCategory_">
+                            <div class="tab-pane fade show active" id="client_modal" role="tabpanel" aria-labelledby="client_modal-tab">
+                                <div class="right_options" role="presentation">
+                                    <div>
+                                        <div class="payment-content-header">
+                                            <div class="payment-content-header_title mb-3">
+                                                <span class="payment-content-header-title_name">
+                                                    <h6>{{translate_title('Client', $lang)}}</h6>
+                                                </span>
+                                                <a class="payment-content-header-title_button" data-bs-toggle="modal" data-bs-target="#create_modal_client" data-url="{{route('clients.store')}}">
+                                                    <h6>{{translate_title('Add +', $lang)}}</h6>
+                                                </a>
+                                            </div>
+                                            <div class="payment-content-header_user">
+                                                <div class="d-flex justify-content-center">
+                                                    <div class="position-relative mb-2 width_100_percent">
+                                                        <select class="input-default payment-content-header-user_name" name="client_id" data-toggle="select2" data-width="100%" required id="client_select_id_2">
+                                                            <option value="" selected disabled>{{translate_title('Select a client', $lang)}}</option>
+                                                            <optgroup label="Clients">
+                                                                @foreach($clients_for_discount as $client_for_discount)
+                                                                    <option value="{{$client_for_discount['client_id']}} {{$client_for_discount['percent']}} /{{$client_for_discount['client_full_name']}} /{{$client_for_discount['phone']}}">{{$client_for_discount['client_full_name']}}</option>
+                                                                @endforeach
+                                                            </optgroup>
+                                                        </select>
+                                                        <div class="invalid-tooltip">
+                                                            {{translate_title('Select a client', $lang)}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-between d-none p-1 mb-2" id="clientDiscountContent">
+                                                <div>
+                                                    <h6 id="clientFullName" class="font_size_12"></h6>
+                                                    <div><h6 id="clientPhoneNumber" class="font_size_12"></h6></div>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <a type="button" class="btn delete_button btn-sm waves-effect me-1" id="removeClientDiscount">
+                                                        <img src="{{asset('img/trash_icon.png')}}" alt="" height="18px">
+                                                    </a>
+                                                    <div>
+                                                        <h6 id="clientDiscount" class="color_red"></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-start mt-4">
+                                                <span class="payment-content-header-title_name">
+                                                    <h6>{{translate_title('Способ  оплаты', $lang)}}</h6>
+                                                </span>
+                                            </div>
+                                            <div class="payment-method d-flex justify-content-between mt-3">
+                                                <h6 class="payment-method-title d-flex align-items-center">
+                                                    <i class="mdi mdi-percent"></i>
+                                                    <span class="payment-method-name_">&nbsp;{{translate_title('Скидка клиета', $lang)}}</span>
+                                                </h6>
+                                                <input class="input-default_ payment-method-sum" placeholder="0 сум" type="text" id="clients_discount__sum">
+                                            </div>
+                                            <div class="payment-method d-flex justify-content-between mt-3">
+                                                <h6 class="payment-method-title d-flex align-items-center">
+                                                    <i class="mdi mdi-percent"></i>
+                                                    <span class="payment-method-name_">&nbsp;{{translate_title('Обшая скидка', $lang)}}</span>
+                                                </h6>
+                                                <input class="input-default_ payment-method-sum" placeholder="0 сум" type="text" id="clients_total_discount__sum">
+                                            </div>
+                                            <div class="payment-method d-flex justify-content-between mt-3">
+                                                <h6 class="payment-method-title d-flex align-items-center">
+                                                    <i class="mdi mdi-cash"></i>
+                                                    <span class="payment-method-name_">&nbsp;{{translate_title('Итоговая сумма', $lang)}}</span>
+                                                </h6>
+                                                <input class="input-default_ payment-method-sum" placeholder="0 сум" type="text" id="total__sum">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="d-flex justify-content-between d-none p-1 mb-2" id="clientDiscountContent">
-                                    <div>
-                                        <h6 id="clientFullName" class="font_size_12"></h6>
-                                        <div><h6 id="clientPhoneNumber" class="font_size_12"></h6></div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <a type="button" class="btn delete_button btn-sm waves-effect me-1" id="removeClientDiscount">
-                                            <img src="{{asset('img/trash_icon.png')}}" alt="" height="18px">
-                                        </a>
-                                        <div>
-                                            <h6 id="clientDiscount" class="color_red"></h6>
+                            </div>
+                            <div class="tab-pane fade" id="fast_selling_goods_modal" role="tabpanel" aria-labelledby="fast_selling_goods_modal-tab">
+                                <div class="row">
+                                    @foreach($allProductsData['products_fast'] as $product)
+                                        <div class="col-4">
+                                            <a class="badge badge-soft-secondary" onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', '{{$product['stock']}}', '{{$product['unit']}}', '{{$product['unit_id']}}')">
+                                                <h6>{{$product['name']}}</h6>
+                                            </a>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-start mt-4">
-                                    <span class="payment-content-header-title_name">
-                                        <h6>{{translate_title('Способ  оплаты', $lang)}}</h6>
-                                    </span>
-                                </div>
-                                <div class="payment-method d-flex justify-content-between mt-3">
-                                    <h6 class="payment-method-title d-flex align-items-center">
-                                        <i class="mdi mdi-percent"></i>
-                                        <span class="payment-method-name_">&nbsp;{{translate_title('Скидка клиета', $lang)}}</span>
-                                    </h6>
-                                    <input class="input-default_ payment-method-sum" placeholder="0 сум" type="text" id="clients_discount__sum">
-                                </div>
-                                <div class="payment-method d-flex justify-content-between mt-3">
-                                    <h6 class="payment-method-title d-flex align-items-center">
-                                        <i class="mdi mdi-percent"></i>
-                                        <span class="payment-method-name_">&nbsp;{{translate_title('Обшая скидка', $lang)}}</span>
-                                    </h6>
-                                    <input class="input-default_ payment-method-sum" placeholder="0 сум" type="text" id="clients_total_discount__sum">
-                                </div>
-                                <div class="payment-method d-flex justify-content-between mt-3">
-                                    <h6 class="payment-method-title d-flex align-items-center">
-                                        <i class="mdi mdi-cash"></i>
-                                        <span class="payment-method-name_">&nbsp;{{translate_title('Итоговая сумма', $lang)}}</span>
-                                    </h6>
-                                    <input class="input-default_ payment-method-sum" placeholder="0 сум" type="text" id="total__sum">
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -305,6 +335,103 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="edit_product_modal"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true" data-bs-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content width_74_percent">
+                <div class="modal-header card-header">
+                    <h4 id="selected_product_name"> Milliy cola</h4>
+                </div>
+                <div class="modal-body card-body">
+                    <div class="mt-1">
+                        <!-- Sonni ko'rsatish joyi -->
+                        <div class="row">
+                            <div class="col-5">
+                                <h4>{{translate_title('Sum', $lang)}}</h4>
+                            </div>
+                            <div class="col-7">
+                                <input id="selected_product_price" type="number" min="0" class="input-display_password" value="0">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5">
+                                <h4>{{translate_title('Amount', $lang)}}</h4>
+                            </div>
+                            <div class="col-4">
+                                <input id="selected_product_amount" type="number" max="1000" min="0" step="0.001" class="input-display_password" value="0">
+                            </div>
+                            <div class="col-3">
+                                <h6 id="selected_product_unit"></h6>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <!-- Raqamlar tugmalari -->
+                            <div class="row mb-2">
+                                <div class="col-4">
+                                    <a class="btn btn-outline-dark btn-number-password" onclick="appendEditProduct(1)">1</a>
+                                </div>
+                                <div class="col-4">
+                                    <a class="btn btn-outline-dark btn-number-password" onclick="appendEditProduct(2)">2</a>
+                                </div>
+                                <div class="col-4">
+                                    <a class="btn btn-outline-dark btn-number-password" onclick="appendEditProduct(3)">3</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <div class="row mb-2">
+                                <div class="col-4">
+                                    <a class="btn btn-outline-dark btn-number-password" onclick="appendEditProduct(4)">4</a>
+                                </div>
+                                <div class="col-4">
+                                    <a class="btn btn-outline-dark btn-number-password" onclick="appendEditProduct(5)">5</a>
+                                </div>
+                                <div class="col-4">
+                                    <a class="btn btn-outline-dark btn-number-password" onclick="appendEditProduct(6)">6</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <div class="row">
+                                <div class="col-4">
+                                    <a class="btn btn-outline-dark btn-number-password" onclick="appendEditProduct(7)">7</a>
+                                </div>
+                                <div class="col-4">
+                                    <a class="btn btn-outline-dark btn-number-password" onclick="appendEditProduct(8)">8</a>
+                                </div>
+                                <div class="col-4">
+                                    <a class="btn btn-outline-dark btn-number-password" onclick="appendEditProduct(9)">9</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <div class="row mb-2">
+                                <div class="col-4 mt-2">
+                                    <a class="btn btn-outline-dark btn-number-password" onclick="appendEditProduct(0)">0</a>
+                                </div>
+                                <div class="col-4 mt-2 d-none" id="dotKeyboard">
+                                    <a class="btn btn-outline-dark btn-number-password" onclick="appendDotEditProduct()">.</a>
+                                </div>
+                                <div class="col-4 mt-2">
+                                    <a class="btn btn-outline-dark btn-number-password" onclick="backspaceEditProduct()">
+                                        <span class="mdi mdi-backspace"></span>
+                                    </a>
+                                </div>
+                                <div class="col-4 mt-2">
+                                    <a class="btn btn-outline-dark btn-number-password" onclick="clearDisplayEditProduct()">Clear</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between width_100_percent mt-4">
+                        <a class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
+                        <button type="submit" class="btn modal_confirm">{{translate_title('Confirm', $lang)}}</button>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
     <input type="hidden" id="barcode_input">
     <script>
 
@@ -350,7 +477,7 @@
             for(let p=0; p<json_products.length; p++){
                 if(json_products[p].barcode == barcode){
                     let current_element_stock = document.getElementById('stock__'+json_products[p].id)
-                    addToOrder(json_products[p].id, json_products[p].name, json_products[p].price, json_products[p].discount, json_products[p].discount_percent, json_products[p].last_price, json_products[p].amount, json_products[p].barcode, json_products[p].stock, current_element_stock)
+                    addToOrder(json_products[p].id, json_products[p].name, json_products[p].price, json_products[p].discount, json_products[p].discount_percent, json_products[p].last_price, json_products[p].amount, json_products[p].barcode, json_products[p].stock, json_products[p].unit, json_products[p].unit_id, current_element_stock)
                 }
             }
         }

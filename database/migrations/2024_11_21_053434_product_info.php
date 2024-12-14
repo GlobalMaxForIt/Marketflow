@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('product_id')->nullable(); // O'lchov birligi
             $table->text('description')->nullable(); // Tovar tavsifi (majburiy emas)
-            $table->unsignedInteger('unit_id')->nullable(); // O'lchov birligi
             $table->json('images')->nullable();
             $table->unsignedTinyInteger('status')->nullable();
             $table->timestamp('manufactured_date')->nullable(); // ishlab chiqarilgan sana

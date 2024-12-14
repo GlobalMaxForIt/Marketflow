@@ -58,6 +58,7 @@ class CashierProductsController extends Controller
                 $products_ = Products::orderBy('created_at', 'desc')->where('products_categories_id', $sub_category->id)->where('store_id', $user->store_id)->get();
                 $products = [];
                 foreach ($products_ as $product) {
+                    $unit_translation = '';
                     $product_small_image = storage_path('app/public/products/small/'.$product->image);
                     if(file_exists($product_small_image)){
                         $small_image = asset('storage/products/small/'.$product->image);
@@ -74,6 +75,9 @@ class CashierProductsController extends Controller
                     }else{
                         $discount = 0;
                     }
+                    if($product->unit){
+                        $unit_translation = table_translate_title($product->unit, 'unit', $language);
+                    }
                     $array_products=[
                         'id'=>$product->id,
                         'products_categories'=>$product->products_categories,
@@ -81,6 +85,8 @@ class CashierProductsController extends Controller
                         'amount'=>$product->amount,
                         'stock'=>$product->stock,
                         'cost'=>$product->cost,
+                        'unit'=>$unit_translation,
+                        'unit_id'=>$product->unit_id,
                         'small_image'=>$small_image,
                         'price'=>number_format((int)$product->price, 0, '', ' '),
                         'discount'=>number_format($discount, 0, '', ' '),
@@ -138,6 +144,7 @@ class CashierProductsController extends Controller
         $products->amount = $request->amount;
         $products->barcode = $request->barcode;
         $products->stock = $request->stock;
+        $products->unit_id = $request->unit;
         if($request->fast_selling_goods){
             $products->fast_selling_goods = 1;
         }
@@ -153,7 +160,6 @@ class CashierProductsController extends Controller
 
         $product_info = new ProductInfo();
         $product_info->description = $request->description;
-        $product_info->unit_id = $request->unit;
         $images = $request->file('images');
         $product_info->images = $this->saveImages->imageSave($products, $images, 'store', 'products');
         $products->save();
@@ -254,9 +260,6 @@ class CashierProductsController extends Controller
                     $status = translate_title('Active', $this->lang);
                 }
                 $description = $product_info->description;
-                if($product_info->unit){
-                    $unit = $product_info->unit->name;
-                }
                 $manufactured_date = $product_info->manufactured_date;
                 $expired_date = $product_info->expired_date;
             }
@@ -284,6 +287,9 @@ class CashierProductsController extends Controller
             $store_ = $product->store;
             if($store_){
                 $store = $store_->name;
+            }
+            if($product->unit){
+                $unit = $product->unit->name;
             }
             $company_ = $product->company_;
             if($company_){
@@ -349,6 +355,7 @@ class CashierProductsController extends Controller
         $products->amount = $request->amount;
         $products->barcode = $request->barcode;
         $products->stock = $request->stock;
+        $products->unit_id = $request->unit;
         if($user->store_id){
             $products->store_id = $user->store_id;
         }
@@ -374,7 +381,6 @@ class CashierProductsController extends Controller
         }
         $product_info->product_id = $products->id;
         $product_info->description = $request->description;
-        $product_info->unit_id = $request->unit;
         $product_info->images = $this->saveImages->imageSave($products, $images, 'store', 'products');
         $product_info->status = $request->status;
         $product_info->manufactured_date = $request->manufactured_date;

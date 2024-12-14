@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('barcode')->nullable();
             $table->unsignedInteger('stock')->nullable();
             $table->unsignedInteger('store_id')->nullable();
+            $table->unsignedInteger('unit_id')->nullable(); // O'lchov birligi
             $table->unsignedInteger('company_id')->nullable();
             $table->unsignedTinyInteger('fast_selling_goods')->default(0);
             $table->timestamps(); // Yaratilgan va yangilangan vaqt

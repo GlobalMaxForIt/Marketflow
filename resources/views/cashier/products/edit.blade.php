@@ -194,6 +194,7 @@
             </div>
         </div>
     </div>
+    <input type="hidden" id="barcode_input">
     <script>
         let product_image = document.getElementsByClassName('product_image')
         let delete_product_func = document.getElementsByClassName('delete_product_func')
@@ -249,6 +250,28 @@
         let sessionError ="{{session('error')}}";
         if(sessionError){
             toastr.warning(sessionError)
+        }
+    </script>
+    <script>
+        let barcodeInput = document.getElementById('barcode_input')
+        let barcode = document.getElementById('barcode')
+        barcodeInput.focus()
+        let scannedBarcode = ''
+
+        document.addEventListener('keydown', function(event) {
+            setTimeout(function () {
+                if (event.key === 'Enter') {
+                    console.log("Barcode Scanned:", scannedBarcode);
+                    handleBarcode(scannedBarcode);
+                    scannedBarcode = '';
+                } else {
+                    scannedBarcode += event.key;
+                }
+            }, 244);
+        });
+
+        function handleBarcode(barcode_) {
+            barcode.value = barcode_
         }
     </script>
     <script src="{{asset('js/product.js')}}"></script>

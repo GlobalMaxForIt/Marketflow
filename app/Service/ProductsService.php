@@ -6,6 +6,7 @@ namespace App\Service;
 use Illuminate\Http\Request;
 use App\Models\ProductsCategories;
 use App\Models\Products;
+use Illuminate\Support\Facades\App;
 use Intervention\Image\Facades\Image;
 
 class ProductsService
@@ -85,7 +86,7 @@ class ProductsService
                     'created_at'=>$category->created_at,
                     'updated_at'=>$category->updated_at,
                 ];
-                $products_ = \App\Service\Products::orderBy('created_at', 'desc')->where('products_categories_id', $sub_category->id)->get();
+                $products_ = Products::orderBy('created_at', 'desc')->where('products_categories_id', $sub_category->id)->get();
                 $products = [];
                 foreach ($products_ as $product) {
                     $images = [];
@@ -155,6 +156,7 @@ class ProductsService
     }
 
     public function getProducts($products_){
+        $lang = App::getLocale();
         $allProducts = [];
         foreach ($products_ as $product) {
             if($product->discount){
@@ -175,6 +177,10 @@ class ProductsService
             }else{
                 $small_image = asset('icon/no_photo.jpg');
             }
+            $unit_translation = '';
+            if($product->unit){
+                $unit_translation = table_translate_title($product->unit, 'unit', $lang);
+            }
 
             $array_products = [
                 'id'=>$product->id,
@@ -182,6 +188,8 @@ class ProductsService
                 'short_name'=>$this->truncateString($product->name),
                 'name'=>$product->name,
                 'amount'=>$product->amount,
+                'unit'=>$unit_translation,
+                'unit_id'=>$product->unit_id,
                 'price'=>number_format((int)$product->price, 0, '', ' '),
                 'discount'=>number_format($discount, 0, '', ' '),
                 'discount_percent'=>$discount_percent,

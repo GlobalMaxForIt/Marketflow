@@ -190,7 +190,7 @@ function truncuateCashboxFunc(){
     order_data_content.innerHTML = order_data_html
 }
 
-function addToOrder(id, name, price, discount, discount_percent, last_price, amount, barcode, stock, unit, unit_id) {
+function addToOrder(id, name, price, discount, discount_percent, last_price, amount, barcode, stock) {
     stock_int = parseInt(stock)
     is_exist = false
     order_json = {}
@@ -213,9 +213,7 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
                     'amount': amount,
                     'quantity': 1,
                     'barcode': barcode,
-                    'stock': stock,
-                    'unit': unit,
-                    'unit_id': unit_id
+                    'stock': stock
                 }
             }
         } else {
@@ -229,9 +227,7 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
                 'amount': amount,
                 'quantity': 1,
                 'barcode': barcode,
-                'stock': stock,
-                'unit': unit,
-                'unit_id': unit_id
+                'stock': stock
             }
         }
         if (Object.keys(order_json).length != 0) {
@@ -256,6 +252,56 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
     }
 }
 
+function plusProduct(id, stock) {
+    stock_int = parseInt(stock)
+    if(stock_int > 0) {
+        if(order_data.length>0) {
+            for (let i = 0; i < order_data.length; i++) {
+                if (order_data[i].id == id) {
+                    order_data[i].quantity = order_data[i].quantity + 1
+                }
+            }
+            order_data_html = setOrderHtml(order_data)
+            order_data_content.innerHTML = order_data_html
+            if (localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null) {
+                localStorage.setItem('order_data', JSON.stringify(order_data))
+            } else {
+                localStorage.removeItem('order_data')
+                localStorage.setItem('order_data', JSON.stringify(order_data))
+            }
+        }
+        stock_int = stock_int - 1;
+    }
+}
+function minusProduct(id, stock) {
+    stock_int = parseInt(stock)
+    if(order_data.length>0){
+        for(let i = 0; i<order_data.length; i++){
+            if(order_data[i].id == id){
+                order_data[i].quantity = order_data[i].quantity - 1
+                if(order_data[i].quantity == 0){
+                    order_data.splice(i, 1)
+                }
+            }
+        }
+        if(order_data.length>0){
+            showHasItems()
+        }else{
+            hideHasItems()
+        }
+    }else{
+        hideHasItems()
+    }
+    order_data_html = setOrderHtml(order_data)
+    order_data_content.innerHTML = order_data_html
+    if(localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null){
+        localStorage.setItem('order_data', JSON.stringify(order_data))
+    }else{
+        localStorage.removeItem('order_data')
+        localStorage.setItem('order_data', JSON.stringify(order_data))
+    }
+    stock_int = stock_int + 1;
+}
 
 function setOrderHtml(order_data_){
     all_sum = 0
@@ -277,7 +323,7 @@ function setOrderHtml(order_data_){
             discount_html = `${order_data_[j].price}`
         }
         order_data_html_ = order_data_html_ +
-            `\n<tr data-product='${JSON.stringify(order_data_[j])}' onclick="editProductFunc(this)" data-bs-toggle="modal" data-bs-target="#edit_product_modal">
+            `\n<tr>
                 <td><h6><b>${order_data_[j].barcode}</b></h6></td>
                 <td><h6><b>${order_data_[j].name+' '+order_data_[j].amount}</b></h6></td>
                 <td>
@@ -285,6 +331,12 @@ function setOrderHtml(order_data_){
                 </td>
                 <td><h6><b>${order_data_[j].quantity}</b></h6></td>
                 <td><h6><b>${order_data_[j].quantity*parseInt(order_data_[j].last_price.replace(/\s/g, ''), 10)}</b></h6></td>
+                <td>
+                    <div class="d-flex">
+                        <button class="edit_button btn" onclick="plusProduct(${order_data_[j].id}, ${order_data_[j].stock})">+</button>
+                        <button class="ms-2 edit_button btn" onclick="minusProduct(${order_data_[j].id}, ${order_data_[j].stock})">-</button>
+                    </div>
+                </td>
             </tr>`
     }
     total_sum.innerText = all_sum_withouth_discount
