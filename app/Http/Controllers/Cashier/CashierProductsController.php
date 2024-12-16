@@ -143,8 +143,12 @@ class CashierProductsController extends Controller
         $products->cost = $request->cost;
         $products->amount = $request->amount;
         $products->barcode = $request->barcode;
-        $products->stock = $request->stock;
         $products->unit_id = $request->unit;
+        if(in_array($request->unit, [4, 7, 8, 10, 11])){
+            $products->stock = $request->stock;
+        }else{
+            $products->stock = (int)$request->stock;
+        }
         if($request->fast_selling_goods){
             $products->fast_selling_goods = 1;
         }
@@ -161,7 +165,9 @@ class CashierProductsController extends Controller
         $product_info = new ProductInfo();
         $product_info->description = $request->description;
         $images = $request->file('images');
-        $product_info->images = $this->saveImages->imageSave($products, $images, 'store', 'products');
+        if($images){
+            $product_info->images = $this->saveImages->imageSave($products, $images, 'store', 'products');
+        }
         $products->save();
         $product_info->status = $request->status;
         $product_info->manufactured_date = $request->manufactured_date;
@@ -354,8 +360,12 @@ class CashierProductsController extends Controller
         $products->cost = $request->cost;
         $products->amount = $request->amount;
         $products->barcode = $request->barcode;
-        $products->stock = $request->stock;
         $products->unit_id = $request->unit;
+        if(in_array($request->unit, [4, 7, 8, 10, 11])){
+            $products->stock = $request->stock;
+        }else{
+            $products->stock = (int)$request->stock;
+        }
         if($user->store_id){
             $products->store_id = $user->store_id;
         }
@@ -367,12 +377,12 @@ class CashierProductsController extends Controller
         }else{
             $products->fast_selling_goods = 0;
         }
-        $product_image = storage_path('app/public/products/small/'.$products->image);
-        if(file_exists($product_image)){
-            unlink($product_image);
-        }
-        $images = $request->file('images');
-        if($request->file('small_image')) {
+        $small_image = $request->file('small_image');
+        if($small_image) {
+            $product_image = storage_path('app/public/products/small/'.$products->image);
+            if(file_exists($product_image)){
+                unlink($product_image);
+            }
             $products->image = $this->saveImages->saveSmallImage($request->file('small_image'));
         }
         $product_info = $products->product_info;
@@ -381,7 +391,10 @@ class CashierProductsController extends Controller
         }
         $product_info->product_id = $products->id;
         $product_info->description = $request->description;
-        $product_info->images = $this->saveImages->imageSave($products, $images, 'store', 'products');
+        $images = $request->file('images');
+        if($images){
+            $product_info->images = $this->saveImages->imageSave($products, $images, 'update', 'products');
+        }
         $product_info->status = $request->status;
         $product_info->manufactured_date = $request->manufactured_date;
         $product_info->expired_date =  $request->expired_date;

@@ -28,18 +28,18 @@ class SalesService
         foreach($order_data as $orderData){
             $order_data_price = (int)str_replace(' ', '', $orderData['price']);
             $order_data_discount = (int)str_replace(' ', '', $orderData['discount']);
-            $all_price = $all_price + (int)$orderData['quantity'] * $order_data_price;
-            $order_discount_price = $order_discount_price + (int)$orderData['quantity'] * $order_data_discount;
+            $all_price = $all_price + (float)$orderData['quantity'] * $order_data_price;
+            $order_discount_price = $order_discount_price + (float)$orderData['quantity'] * $order_data_discount;
             $sales_items = new SalesItems();
             $product = Products::find($orderData['id']);
             if($product){
                 $sales_items->sale_id = $sales->id;
                 $sales_items->product_id = $orderData['id'];
-                $sales_items->quantity = (int)$orderData['quantity'];
+                $sales_items->quantity = (float)$orderData['quantity'];
                 $sales_items->discount_price = $order_data_discount;
                 $sales_items->discount_percent = $orderData['discount_percent'];
                 $sales_items->cost_price = $product->cost;
-                $all_cost_price = $all_cost_price + $product->cost * (int)$orderData['quantity'];
+                $all_cost_price = $all_cost_price + $product->cost * (float)$orderData['quantity'];
                 $sales_items->price = $order_data_price;
                 $sales_items->save();
             }

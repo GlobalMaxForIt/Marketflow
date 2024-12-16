@@ -150,7 +150,7 @@
                                     @foreach($allProductsData['products_fast'] as $product)
                                         <div class="col-4">
                                             <a class="badge badge-soft-secondary" onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', '{{$product['stock']}}', '{{$product['unit']}}', '{{$product['unit_id']}}')">
-                                                <h6>{{$product['name']}}</h6>
+                                                <h6 class="pre_wrap">{{$product['name']}}</h6>
                                             </a>
                                         </div>
                                     @endforeach
@@ -426,7 +426,7 @@
                     </div>
                     <div class="d-flex justify-content-between width_100_percent mt-4">
                         <a class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
-                        <button type="submit" class="btn modal_confirm">{{translate_title('Confirm', $lang)}}</button>
+                        <button type="submit" class="btn modal_confirm" onclick="changeAmountAndPrice()" data-bs-dismiss="modal">{{translate_title('Confirm', $lang)}}</button>
                     </div>
                 </div>
             </div><!-- /.modal-content -->

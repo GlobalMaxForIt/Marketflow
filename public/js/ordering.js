@@ -412,7 +412,7 @@ function setOrderHtml(order_data_){
                     <td>
                         <h6><b>${discount_html}</b></h6>
                     </td>
-                    <td><h6><b>${order_data_[j].quantity*parseInt(order_data_[j].last_price.replace(/\s/g, ''), 10)}</b></h6></td>
+                    <td><h6><b class="pre_wrap">${order_data_[j].quantity*parseInt(order_data_[j].last_price.replace(/\s/g, ''), 10)}</b></h6></td>
                     <td>
                         <div class="d-flex">
                             <button class="edit_button btn" onclick="plusProduct(${order_data_[j].id}, this))">+</button>

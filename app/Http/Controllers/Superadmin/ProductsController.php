@@ -158,7 +158,9 @@ class ProductsController extends Controller
         $product_info->description = $request->description;
         $product_info->unit_id = $request->unit;
         $images = $request->file('images');
-        $product_info->images = $this->saveImages->imageSave($products, $images, 'store', 'products');
+        if($images){
+            $product_info->images = $this->saveImages->imageSave($products, $images, 'store', 'products');
+        }
         $product_info->status = $request->status;
         $product_info->manufactured_date = $request->manufactured_date;
         $product_info->expired_date =  $request->expired_date;
@@ -350,11 +352,11 @@ class ProductsController extends Controller
         }else{
             $products->fast_selling_goods = 0;
         }
-        $product_image = storage_path('app/public/products/small/'.$products->image);
-        if(file_exists($product_image)){
-            unlink($product_image);
-        }
         if($request->file('small_image')) {
+            $product_image = storage_path('app/public/products/small/'.$products->image);
+            if(file_exists($product_image)){
+                unlink($product_image);
+            }
             $products->image = $this->saveImages->saveSmallImage($request->file('small_image'));
         }
         $products->save();
@@ -367,7 +369,9 @@ class ProductsController extends Controller
         $product_info->description = $request->description;
         $product_info->unit_id = $request->unit;
         $images = $request->file('images');
-        $product_info->images = $this->saveImages->imageSave($products, $images, 'update', 'products');
+        if($images){
+            $product_info->images = $this->saveImages->imageSave($products, $images, 'update', 'products');
+        }
         $product_info->status = $request->status;
         $product_info->manufactured_date = $request->manufactured_date;
         $product_info->expired_date =  $request->expired_date;

@@ -25,6 +25,7 @@ class ClientService
             'middlename'=>$client->middlename,
             'fullname'=>self::getClientFullname($client),
             'phone'=>$client->phone,
+            'email'=>$client->email,
             'image'=>$client_image,
             'gender'=>$client->gender,
             'address'=>$client->address,

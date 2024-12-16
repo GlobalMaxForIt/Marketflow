@@ -303,7 +303,7 @@ function setOrderHtml(order_data_){
         order_data_html_ = order_data_html_ +
             `\n<tr>
                 <td><h6><b>${order_data_[j].barcode}</b></h6></td>
-                <td><h6><b>${order_data_[j].name+' '+order_data_[j].amount}</b></h6></td>
+                <td><h6><b class="pre_wrap">${order_data_[j].name+' '+order_data_[j].amount}</b></h6></td>
                 <td><h6><b>${order_data_[j].quantity}</b></h6></td>
                 <td>
                     <h6><b>${discount_html}</b></h6>

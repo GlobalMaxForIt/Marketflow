@@ -18,9 +18,9 @@ return new class extends Migration
             $table->unsignedInteger('cost')->nullable();
             $table->unsignedInteger('price')->nullable();
             $table->string('image')->nullable();
-            $table->string('amount')->nullable();
             $table->string('barcode')->nullable();
-            $table->unsignedInteger('stock')->nullable();
+            $table->decimal('stock')->nullable();
+            $table->string('amount')->nullable();
             $table->unsignedInteger('store_id')->nullable();
             $table->unsignedInteger('unit_id')->nullable(); // O'lchov birligi
             $table->unsignedInteger('company_id')->nullable();

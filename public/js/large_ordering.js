@@ -279,12 +279,12 @@ function setOrderHtml(order_data_){
         order_data_html_ = order_data_html_ +
             `\n<tr data-product='${JSON.stringify(order_data_[j])}' onclick="editProductFunc(this)" data-bs-toggle="modal" data-bs-target="#edit_product_modal">
                 <td><h6><b>${order_data_[j].barcode}</b></h6></td>
-                <td><h6><b>${order_data_[j].name+' '+order_data_[j].amount}</b></h6></td>
+                <td><h6><b class="pre_wrap">${order_data_[j].name+' '+order_data_[j].amount}</b></h6></td>
                 <td>
                     <h6><b>${discount_html}</b></h6>
                 </td>
-                <td><h6><b>${order_data_[j].quantity}</b></h6></td>
-                <td><h6><b>${order_data_[j].quantity*parseInt(order_data_[j].last_price.replace(/\s/g, ''), 10)}</b></h6></td>
+                <td><h6><b class="product__quantity">${order_data_[j].quantity}</b></h6></td>
+                <td><h6><b class="product__sum">${order_data_[j].quantity*parseInt(order_data_[j].last_price.replace(/\s/g, ''), 10)}</b></h6></td>
             </tr>`
     }
     total_sum.innerText = all_sum_withouth_discount

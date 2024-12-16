@@ -173,15 +173,47 @@ function backspacePassword() {
 }
 let selectedProductPrice = ''
 let selectedProductAmount = ''
+let product_element_quantity = ''
+let product_element_sum = ''
+let product_element_id = ''
+let orderProduct_amount = ''
+let orderProduct_barcode = ''
+let orderProduct_discount = ''
+let orderProduct_discount_percent = ''
+let orderProduct_id = ''
+let orderProduct_last_price = ''
+let orderProduct_name = ''
+let orderProduct_price = ''
+let orderProduct_quantity = ''
+let orderProduct_stock = ''
+let orderProduct_unit = ''
+let orderProduct_unit_id = ''
 function editProductFunc(orderProduct){
+    if(orderProduct != null && orderProduct != undefined){
+        product_element_quantity = orderProduct.querySelector('td h6 .product__quantity')
+        product_element_sum = orderProduct.querySelector('td h6 .product__sum')
+    }
     orderProductData = JSON.parse(orderProduct.getAttribute('data-product'))
     if(Object.keys(orderProductData).length>0){
         selected_product_name.innerText = orderProductData.name + ' '+orderProductData.amount
         selected_product_price.value = orderProductData.quantity*parseInt(orderProductData.last_price.replace(/\s/g, ''), 10)
         selected_product_amount.value = orderProductData.quantity
         selected_product_unit.innerText = orderProductData.unit
-        selectedProductAmount = parseInt(selected_product_amount.value)
+        selectedProductAmount = parseFloat(selected_product_amount.value)
         selectedProductPrice = parseInt(selected_product_price.value)/selectedProductAmount
+
+        orderProduct_amount = orderProductData.amount
+        orderProduct_barcode = orderProductData.barcode
+        orderProduct_discount = orderProductData.discount
+        orderProduct_discount_percent = orderProductData.discount_percent
+        orderProduct_id = orderProductData.id
+        orderProduct_last_price = orderProductData.last_price
+        orderProduct_name = orderProductData.name
+        orderProduct_price = orderProductData.price
+        orderProduct_quantity = orderProductData.quantity
+        orderProduct_stock = orderProductData.stock
+        orderProduct_unit = orderProductData.unit
+        orderProduct_unit_id = orderProductData.unit_id
     }
 }
 let amount_or_price = ''
@@ -217,7 +249,7 @@ selected_product_input_func()
 
 // Function to append numbers to the display
 function appendEditProduct(number) {
-    if (display_edit_product.value == '0') {
+    if (display_edit_product.value == '0' || display_edit_product.value == '') {
         if(dot_has){
             display_edit_product.value = '0.'+String(number);
         }else{
@@ -231,8 +263,6 @@ function appendEditProduct(number) {
         }
     }
     dot_has = false
-    // selectedProductPrice
-    // selectedProductAmount
     if(amount_or_price == 'amount'){
         selected_product_price.value = selectedProductPrice * parseFloat(display_edit_product.value)
     }else{
@@ -243,22 +273,116 @@ function appendEditProduct(number) {
 function appendDotEditProduct(){
     dot_has = true
 }
+document.addEventListener('keydown', function (event) {
+    if (event.key === "Backspace") {
+        if(selected_product_amount.matches(":focus")) {
+            console.log(selected_product_amount.value)
+            if (selected_product_amount.value.length > 1) {
+                selected_product_amount.value = String(event.target.value).slice(0, -1); // Oxirgi belgini o'chirish
+            } else {
+                selected_product_amount.value = '0'; // Agar faqat bir raqam qolgan bo'lsa, uni 0 ga o'zgartiramiz
+            }
+            console.log(selected_product_amount.value)
+        }
+        if(selected_product_price.matches(":focus")) {
+            if (selected_product_price.value.length > 1) {
+                selected_product_price.value = String(event.target.value).slice(0, -1); // Oxirgi belgini o'chirish
+            } else {
+                selected_product_price.value = '0'; // Agar faqat bir raqam qolgan bo'lsa, uni 0 ga o'zgartiramiz
+            }
+        }
+    }
+});
+
+function changePriceByAmount(amount__value){
+    if(stock_int > 0) {
+        if(amount__value == ''){
+            dot_has = true
+        }else{
+            if(amount__value[0] == '.' && amount__value.length == 2){
+                selected_product_amount.value = '0.'+String(amount__value).slice(0, 1); // Aks holda, raqamni qo'shamiz
+            } else {
+                selected_product_amount.value = String(amount__value); // Aks holda, raqamni qo'shamiz
+            }
+            selected_product_amount.value = String(amount__value);
+            selected_product_price.value = selectedProductPrice * parseFloat(amount__value)
+            dot_has = false
+        }
+    }
+}
+
+function changeAmountByPrice(price__value){
+    if(stock_int > 0) {
+        selected_product_price.value = String(price__value); // Aks holda, raqamni qo'shamiz
+        selected_product_amount.value = parseInt(selected_product_price.value) / selectedProductPrice
+    }
+}
 
 selected_product_amount.addEventListener('input', function (event) {
-    selected_product_amount.value = String(event.target.value); // Aks holda, raqamni qo'shamiz
-    selected_product_price.value = selectedProductPrice * parseFloat(selected_product_amount.value)
+    is_exist = false
+    changePriceByAmount(event.target.value)
+})
+selected_product_price.addEventListener('input', function (event) {
+    changeAmountByPrice(event.target.value)
 })
 
-selected_product_price.addEventListener('input', function (event) {
-    selected_product_price.value = String(event.target.value); // Aks holda, raqamni qo'shamiz
-    selected_product_amount.value = parseInt(selected_product_price.value)/selectedProductPrice
-})
+function changeAmountAndPrice(){
+    if(product_element_quantity != '') {
+        product_element_quantity.innerText = selected_product_amount.value
+    }
+    if(product_element_sum != '') {
+        product_element_sum.innerText = selected_product_price.value
+    }
+    if(stock_int > 0) {
+        orderProduct_stock = orderProduct_stock + orderProduct_quantity
+        orderProduct_quantity = selected_product_amount.value
+        orderProduct_last_price = selected_product_price.value
+        orderProduct_stock = orderProduct_stock - orderProduct_quantity
+        if (order_data.length > 0) {
+            for (let i = 0; i < order_data.length; i++) {
+                if (order_data[i].id == orderProduct_id) {
+                    if(orderProduct_quantity>0){
+                        order_data[i].quantity = orderProduct_quantity
+                    }else{
+                        order_data.splice(i, 1)
+                    }
+                }
+            }
+        }
+        if (order_data.length > 0) {
+            showHasItems()
+        } else {
+            hideHasItems()
+        }
+        if (localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null) {
+            localStorage.setItem('order_data', JSON.stringify(order_data))
+        } else {
+            localStorage.removeItem('order_data')
+            localStorage.setItem('order_data', JSON.stringify(order_data))
+        }
+        if (order_data_content != undefined && order_data_content != null) {
+            console.log(order_data)
+            order_data_html = setOrderHtml(order_data)
+            order_data_content.innerHTML = order_data_html
+        }
+        stock_int = orderProduct_stock;
+    }
+
+    if(Object.keys(orderProductData).length>0){
+        selected_product_name.innerText = orderProductData.name + ' '+orderProductData.amount
+        selected_product_price.value = orderProductData.quantity*parseInt(orderProductData.last_price.replace(/\s/g, ''), 10)
+        selected_product_amount.value = orderProductData.quantity
+        selected_product_unit.innerText = orderProductData.unit
+        selectedProductAmount = parseInt(selected_product_amount.value)
+        selectedProductPrice = parseInt(selected_product_price.value)/selectedProductAmount
+    }
+}
 
 // Function to clear the display
 function clearDisplayEditProduct() {
     display_edit_product.value = '0'; // Ekrandagi raqamni tozalash
     selected_product_amount.value = '0'; // Ekrandagi raqamni tozalash
-    selected_product_amount.value = '0'; // Ekrandagi raqamni tozalash
+    selected_product_price.value = '0'; // Ekrandagi raqamni tozalash
 }
 
 // Function to remove the last digit (Backspace)
@@ -343,7 +467,6 @@ function setMixed(button__) {
     is_set_mixed = true
     setValues(cash_sum, card_sum)
     setPaymentTypes(button__)
-
 }
 
 display.addEventListener('input', () => {
