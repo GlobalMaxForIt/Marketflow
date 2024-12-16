@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('products_categories_translations', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('products_categories_id')->nullable();
-            $table->string('name', 100)->nullable();
+            $table->string('name')->nullable();
             $table->string('lang', 100)->nullable();
             $table->timestamps();
             $table->softDeletes();
