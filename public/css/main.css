@@ -2306,7 +2306,12 @@ body[data-leftbar-size=condensed] .content-page {
 body[data-leftbar-size=default] .content-page {
     padding: 0 10px;
     margin-left: 214px !important;
-
+}
+body[data-leftbar-size=condensed] .footer {
+    left: 70px !important;
+}
+body[data-leftbar-size=compact] .footer{
+    left: 160px !important;
 }
 .keyboard {
     display: grid;
