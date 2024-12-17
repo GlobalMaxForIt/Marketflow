@@ -164,8 +164,8 @@
 {{--                        <a class="modal_close_ delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal_cashbox">--}}
 {{--                            <b>{{translate_title('Delete', $lang)}}</b>--}}
 {{--                        </a>--}}
-                        <a class="modal_confirm_ width_height_confirm_button btn" onclick="paymentFunc()" data-bs-toggle="modal" data-bs-target="#payment_modal">
-                            <b>{{translate_title('Payment', $lang)}}</b>
+                        <a class="modal_confirm_pay width_height_confirm_button btn" onclick="paymentFunc()" data-bs-toggle="modal" data-bs-target="#payment_modal">
+                            <h4 class="color_white">{{translate_title('Payment', $lang)}}</h4>
                         </a>
                     </div>
                 </div>
@@ -174,8 +174,8 @@
 {{--                        <button class="modal_close_ delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal_cashbox" disabled>--}}
 {{--                            <b>{{translate_title('Delete', $lang)}}</b>--}}
 {{--                        </button>--}}
-                        <button class="modal_confirm_ width_height_confirm_button btn" data-bs-toggle="modal" data-bs-target="#payment_modal" disabled>
-                            <b>{{translate_title('Payment', $lang)}}</b>
+                        <button class="modal_confirm_pay_ width_height_confirm_button btn" data-bs-toggle="modal" data-bs-target="#payment_modal" disabled>
+                            <h4 class="color_white">{{translate_title('Payment', $lang)}}</h4>
                         </button>
                     </div>
                 </div>

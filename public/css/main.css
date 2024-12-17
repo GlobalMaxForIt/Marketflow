@@ -1704,6 +1704,9 @@ input[type=number]::-webkit-outer-spin-button {
 .delete_button_:hover, .modal_confirm_:hover, .modal_close_:hover{
     transform: scale(1.104);
 }
+.modal_confirm_pay_:hover, .modal_confirm_pay:hover{
+    transform: scale(1.04);
+}
 .bill_edit_button{
     border: 1px solid #3EB944;
     background-color: #3EB944;
@@ -1769,14 +1772,14 @@ input[type=number]::-webkit-outer-spin-button {
     color: black;
     margin-right: 4px;
 }
-.modal_confirm_{
+.modal_confirm_, .modal_confirm_pay_{
     background-color: #3EB944;
     transition: 0.14s;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.modal_confirm{
+.modal_confirm, .modal_confirm_pay{
     width: 200px;
     background-color: #3EB944;
     transition: 0.14s;
@@ -2518,4 +2521,22 @@ body[data-leftbar-position="fixed"] .content-page{
 }
 .pre_wrap{
     white-space: pre-wrap;
+}
+.tablesaw tbody th, .tablesaw td{
+    padding: 7px 10px !important;
+}
+.tablesaw h6{
+    margin-bottom: 0px !important;
+}
+body[data-layout-color="light"] #order_data_content .active{
+    background-color: rgb(0, 0, 0, 0.1);
+}
+body[data-layout-color="dark"] #order_data_content .active{
+    background-color: rgb(0, 0, 0, 0.1);
+}
+body[data-layout-color="light"] .client_selected_product_row:hover{
+    background-color: rgb(0, 0, 0, 0.1);
+}
+body[data-layout-color="dark"] .client_selected_product_row:hover{
+    background-color: rgb(0, 0, 0, 0.1);
 }

@@ -188,8 +188,17 @@ let orderProduct_quantity = ''
 let orderProduct_stock = ''
 let orderProduct_unit = ''
 let orderProduct_unit_id = ''
+let client_selected_product_row = document.getElementsByClassName('client_selected_product_row')
 function editProductFunc(orderProduct){
+    for(let k=0; k<client_selected_product_row.length; k++){
+        if(client_selected_product_row[k].classList.contains('active')){
+            client_selected_product_row[k].classList.remove('active')
+        }
+    }
     if(orderProduct != null && orderProduct != undefined){
+        if(!orderProduct.classList.contains('active')){
+            orderProduct.classList.add('active')
+        }
         product_element_quantity = orderProduct.querySelector('td h6 .product__quantity')
         product_element_sum = orderProduct.querySelector('td h6 .product__sum')
     }
@@ -383,9 +392,6 @@ function changeAmountAndPrice(){
 
     if(Object.keys(orderProductData).length>0){
         selected_product_name.innerText = orderProductData.name + ' '+orderProductData.amount
-        // selected_product_price.value = orderProduct_quantity*parseInt(orderProductData.last_price.replace(/\s/g, ''), 10)
-        // selected_product_price.value = orderProduct_last_price
-        // selected_product_amount.value = orderProduct_quantity
         selected_product_unit.innerText = orderProductData.unit
         selectedProductAmount = parseFloat(selected_product_amount.value)
         selectedProductPrice = parseInt(selected_product_price.value)/selectedProductAmount
