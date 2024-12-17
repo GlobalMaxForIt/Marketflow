@@ -866,6 +866,10 @@
 .width_100_percent{
     width: 100% !important;
 }
+.width_height_confirm_button{
+    width: calc(100% - 34px) !important;
+    height: 94px !important;
+}
 .width_304_pixel{
     width: 304px !important;
 }

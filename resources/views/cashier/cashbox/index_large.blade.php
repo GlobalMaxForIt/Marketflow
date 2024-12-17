@@ -148,7 +148,7 @@
                             <div class="tab-pane fade" id="fast_selling_goods_modal" role="tabpanel" aria-labelledby="fast_selling_goods_modal-tab">
                                 <div class="row">
                                     @foreach($allProductsData['products_fast'] as $product)
-                                        <div class="col-4">
+                                        <div class="col-4 mt-1">
                                             <a class="badge badge-soft-secondary" onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', '{{$product['stock']}}', '{{$product['unit']}}', '{{$product['unit_id']}}', null)">
                                                 <h6 class="pre_wrap">{{$product['name']}}</h6>
                                             </a>
@@ -170,11 +170,11 @@
                     </div>
                 </div>
                 <div class="d-flex add_to_order_buttons_" id="no_items">
-                    <div class="d-flex justify-content-between">
-                        <button class="modal_close_ delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal_cashbox" disabled>
-                            <b>{{translate_title('Delete', $lang)}}</b>
-                        </button>
-                        <button class="modal_confirm_ btn" data-bs-toggle="modal" data-bs-target="#payment_modal" disabled>
+                    <div class="d-flex justify-content-between width_height_confirm_button">
+{{--                        <button class="modal_close_ delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal_cashbox" disabled>--}}
+{{--                            <b>{{translate_title('Delete', $lang)}}</b>--}}
+{{--                        </button>--}}
+                        <button class="modal_confirm_ width_height_confirm_button btn" data-bs-toggle="modal" data-bs-target="#payment_modal" disabled>
                             <b>{{translate_title('Payment', $lang)}}</b>
                         </button>
                     </div>

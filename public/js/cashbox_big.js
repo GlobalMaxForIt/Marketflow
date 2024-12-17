@@ -202,7 +202,7 @@ function editProductFunc(orderProduct){
         selectedProductAmount = parseFloat(selected_product_amount.value)
         selectedProductPrice = parseInt(selected_product_price.value)/selectedProductAmount
 
-        orderProduct_amount = orderProductData.amount
+        orderProduct_amount = parseFloat(orderProductData.amount)
         orderProduct_barcode = orderProductData.barcode
         orderProduct_discount = orderProductData.discount
         orderProduct_discount_percent = orderProductData.discount_percent
@@ -333,8 +333,8 @@ function changeAmountAndPrice(){
         product_element_sum.innerText = selected_product_price.value
     }
     if(stock_int > 0) {
-        orderProduct_stock = orderProduct_stock + orderProduct_quantity
-        orderProduct_quantity = selected_product_amount.value
+        orderProduct_stock = orderProduct_stock
+        orderProduct_quantity = parseFloat(selected_product_amount.value)
         orderProduct_last_price = selected_product_price.value
         orderProduct_stock = orderProduct_stock - orderProduct_quantity
         if (order_data.length > 0) {
@@ -369,14 +369,16 @@ function changeAmountAndPrice(){
         if(element_id_name.length == 8){
             element_id = document.getElementById(element_id_name)
         }
-        if(element_id != null && element_id != undefined && element_id != ''){
+        if(element_id != null && element_id != undefined && element_id != '') {
             element_id.innerText = parseFloat(stock_int)
+        }
     }
 
     if(Object.keys(orderProductData).length>0){
         selected_product_name.innerText = orderProductData.name + ' '+orderProductData.amount
-        selected_product_price.value = orderProductData.quantity*parseInt(orderProductData.last_price.replace(/\s/g, ''), 10)
-        selected_product_amount.value = orderProductData.quantity
+        // selected_product_price.value = orderProduct_quantity*parseInt(orderProductData.last_price.replace(/\s/g, ''), 10)
+        // selected_product_price.value = orderProduct_last_price
+        // selected_product_amount.value = orderProduct_quantity
         selected_product_unit.innerText = orderProductData.unit
         selectedProductAmount = parseFloat(selected_product_amount.value)
         selectedProductPrice = parseInt(selected_product_price.value)/selectedProductAmount
