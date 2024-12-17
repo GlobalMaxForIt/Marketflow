@@ -359,7 +359,7 @@
                                 <h4>{{translate_title('Amount', $lang)}}</h4>
                             </div>
                             <div class="col-4">
-                                <input id="selected_product_amount" type="number" max="1000" min="0" step="0.001" class="input-display_password" value="0">
+                                <input id="selected_product_amount" type="number" max="1000" min="0" class="input-display_password" value="0">
                             </div>
                             <div class="col-3">
                                 <h6 id="selected_product_unit"></h6>
