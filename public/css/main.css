@@ -2473,7 +2473,6 @@ body[data-leftbar-size=condensed] #all_sum_info{
     position: fixed;
     background-color: rgb(0, 0, 0, 0.1);
     width: calc(68% - 94px);
-    bottom: 24px;
     border-radius: 4px;
     z-index: 1004;
 }
