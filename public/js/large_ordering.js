@@ -52,6 +52,8 @@ let clients_discount__sum = document.getElementById('clients_discount__sum')
 let clients_total_discount__sum = document.getElementById('clients_total_discount__sum')
 let total__sum = document.getElementById('total__sum')
 let total_discount = document.getElementById('total_discount')
+let order_selected_product_name = document.getElementById('order_selected_product_name')
+let order_selected_product_info = document.getElementById('order_selected_product_info')
 
 let discountInfo = []
 let discountClientInfo = []
@@ -191,10 +193,13 @@ function truncuateCashboxFunc(){
 }
 let element_id_name =''
 let element_id =''
+let current_data = {}
+let notify_product_text = ''
 function addToOrder(id, name, price, discount, discount_percent, last_price, amount, barcode, stock, unit, unit_id, this_element) {
     stock_int = parseFloat(stock)
     is_exist = false
     order_json = {}
+    current_data = {}
     element_id_name = ''
     element_id = ''
     if(stock_int > 0) {
@@ -214,6 +219,7 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
                         element_id.innerText = stock_int
                     }
                     is_exist = true
+                    current_data = order_data[i]
                 }
             }
             if (!is_exist) {
@@ -231,6 +237,7 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
                     'unit': unit,
                     'unit_id': unit_id
                 }
+                current_data = order_json
             }
         } else {
             order_json = {
@@ -258,6 +265,7 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
             }else if(element_id != null && element_id != undefined && element_id != ''){
                 element_id.innerText = stock_int
             }
+            current_data = order_json
         }
         if (Object.keys(order_json).length != 0) {
             order_data.push(order_json)
@@ -267,6 +275,8 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
         } else {
             hideHasItems()
         }
+        order_selected_product_name.innerText = name+' '+amount
+        order_selected_product_info.innerHTML = `${last_price} * ${current_data.quantity} = ${new Intl.NumberFormat('ru-RU').format(parseInt(last_price.replace(/\s/g, ''), 10)*parseFloat(current_data.quantity), 10)}`
         if (localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null) {
             localStorage.setItem('order_data', JSON.stringify(order_data))
         } else {
@@ -277,6 +287,8 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
             order_data_html = setOrderHtml(order_data)
             order_data_content.innerHTML = order_data_html
         }
+        notify_product_text = name+' '+amount + notify_text
+        toastr.success(notify_product_text)
     }
 }
 

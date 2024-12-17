@@ -210,6 +210,10 @@
                         </div>
                     </td>
                 </tr>
+                <tr>
+                    <td><b><h6 id="order_selected_product_name"></h6></b></td>
+                    <td><h6 id="order_selected_product_info" class="text-end"></h6></td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -335,7 +339,6 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>
-
     <div class="modal fade" tabindex="-1" role="dialog" id="edit_product_modal"
          aria-labelledby="staticBackdropLabel" aria-hidden="true" data-bs-keyboard="false">
         <div class="modal-dialog" role="document">
@@ -451,6 +454,7 @@
         let cashbox_index = "{{route('indexLarge', $lang)}}"
         let token = "{{$user->token}}"
         let json_products = JSON.parse('{!! $allProductsData['json_products'] !!}')
+        let notify_text = "{{translate_title('amount was added successfully!', $lang)}}"
 
     </script>
     <script src="{{asset('js/products_keyboards.js')}}"></script>
