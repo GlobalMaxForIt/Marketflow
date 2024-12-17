@@ -192,7 +192,7 @@ function truncuateCashboxFunc(){
 let element_id_name =''
 let element_id =''
 function addToOrder(id, name, price, discount, discount_percent, last_price, amount, barcode, stock, unit, unit_id, this_element) {
-    stock_int = parseFloat(stock).toFixed(3)
+    stock_int = parseFloat(stock)
     is_exist = false
     order_json = {}
     element_id_name = ''
@@ -201,12 +201,12 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
         if (order_data.length > 0) {
             for (let i = 0; i < order_data.length; i++) {
                 if (order_data[i].id == id) {
-                    order_data[i].quantity = parseFloat(order_data[i].quantity).toFixed(3) + 1
+                    order_data[i].quantity = parseFloat(order_data[i].quantity) + 1
                     element_id_name = 'stock__'+id
                     if(element_id_name.length == 8){
                         element_id = document.getElementById(element_id_name)
                     }
-                    stock_int = stock_int - parseFloat(order_data[i].quantity).toFixed(3);
+                    stock_int = stock_int - parseFloat(order_data[i].quantity);
                     if(this_element != null && this_element != undefined){
                         let get_stock_element = this_element.querySelector('.stock__quantity')
                         get_stock_element.innerText = stock_int

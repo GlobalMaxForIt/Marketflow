@@ -197,7 +197,7 @@ function editProductFunc(orderProduct){
     if(Object.keys(orderProductData).length>0){
         selected_product_name.innerText = orderProductData.name + ' '+orderProductData.amount
         selected_product_price.value = orderProductData.quantity*parseInt(orderProductData.last_price.replace(/\s/g, ''), 10)
-        selected_product_amount.value = parseFloat(orderProductData.quantity).toFixed(3)
+        selected_product_amount.value = parseFloat(orderProductData.quantity)
         selected_product_unit.innerText = orderProductData.unit
         selectedProductAmount = parseFloat(selected_product_amount.value)
         selectedProductPrice = parseInt(selected_product_price.value)/selectedProductAmount
@@ -210,8 +210,8 @@ function editProductFunc(orderProduct){
         orderProduct_last_price = orderProductData.last_price
         orderProduct_name = orderProductData.name
         orderProduct_price = orderProductData.price
-        orderProduct_quantity = parseFloat(orderProductData.quantity).toFixed(3)
-        orderProduct_stock = parseFloat(orderProductData.stock).toFixed(3)
+        orderProduct_quantity = parseFloat(orderProductData.quantity)
+        orderProduct_stock = parseFloat(orderProductData.stock)
         orderProduct_unit = orderProductData.unit
         orderProduct_unit_id = orderProductData.unit_id
     }
@@ -370,8 +370,7 @@ function changeAmountAndPrice(){
             element_id = document.getElementById(element_id_name)
         }
         if(element_id != null && element_id != undefined && element_id != ''){
-            element_id.innerText = parseFloat(stock_int).toFixed(3)
-        }
+            element_id.innerText = parseFloat(stock_int)
     }
 
     if(Object.keys(orderProductData).length>0){
@@ -379,7 +378,7 @@ function changeAmountAndPrice(){
         selected_product_price.value = orderProductData.quantity*parseInt(orderProductData.last_price.replace(/\s/g, ''), 10)
         selected_product_amount.value = orderProductData.quantity
         selected_product_unit.innerText = orderProductData.unit
-        selectedProductAmount = parseFloat(selected_product_amount.value).toFixed(3)
+        selectedProductAmount = parseFloat(selected_product_amount.value)
         selectedProductPrice = parseInt(selected_product_price.value)/selectedProductAmount
     }
 }
