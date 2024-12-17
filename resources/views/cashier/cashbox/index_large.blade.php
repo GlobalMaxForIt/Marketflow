@@ -149,7 +149,7 @@
                                 <div class="row">
                                     @foreach($allProductsData['products_fast'] as $product)
                                         <div class="col-4">
-                                            <a class="badge badge-soft-secondary" onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', '{{$product['stock']}}', '{{$product['unit']}}', '{{$product['unit_id']}}')">
+                                            <a class="badge badge-soft-secondary" onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', '{{$product['stock']}}', '{{$product['unit']}}', '{{$product['unit_id']}}', null)">
                                                 <h6 class="pre_wrap">{{$product['name']}}</h6>
                                             </a>
                                         </div>

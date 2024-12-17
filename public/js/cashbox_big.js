@@ -197,7 +197,7 @@ function editProductFunc(orderProduct){
     if(Object.keys(orderProductData).length>0){
         selected_product_name.innerText = orderProductData.name + ' '+orderProductData.amount
         selected_product_price.value = orderProductData.quantity*parseInt(orderProductData.last_price.replace(/\s/g, ''), 10)
-        selected_product_amount.value = orderProductData.quantity
+        selected_product_amount.value = parseFloat(orderProductData.quantity).toFixed(3)
         selected_product_unit.innerText = orderProductData.unit
         selectedProductAmount = parseFloat(selected_product_amount.value)
         selectedProductPrice = parseInt(selected_product_price.value)/selectedProductAmount
@@ -210,8 +210,8 @@ function editProductFunc(orderProduct){
         orderProduct_last_price = orderProductData.last_price
         orderProduct_name = orderProductData.name
         orderProduct_price = orderProductData.price
-        orderProduct_quantity = orderProductData.quantity
-        orderProduct_stock = orderProductData.stock
+        orderProduct_quantity = parseFloat(orderProductData.quantity).toFixed(3)
+        orderProduct_stock = parseFloat(orderProductData.stock).toFixed(3)
         orderProduct_unit = orderProductData.unit
         orderProduct_unit_id = orderProductData.unit_id
     }
@@ -276,13 +276,11 @@ function appendDotEditProduct(){
 document.addEventListener('keydown', function (event) {
     if (event.key === "Backspace") {
         if(selected_product_amount.matches(":focus")) {
-            console.log(selected_product_amount.value)
             if (selected_product_amount.value.length > 1) {
                 selected_product_amount.value = String(event.target.value).slice(0, -1); // Oxirgi belgini o'chirish
             } else {
                 selected_product_amount.value = '0'; // Agar faqat bir raqam qolgan bo'lsa, uni 0 ga o'zgartiramiz
             }
-            console.log(selected_product_amount.value)
         }
         if(selected_product_price.matches(":focus")) {
             if (selected_product_price.value.length > 1) {
@@ -327,6 +325,7 @@ selected_product_price.addEventListener('input', function (event) {
 })
 
 function changeAmountAndPrice(){
+    element_id = ''
     if(product_element_quantity != '') {
         product_element_quantity.innerText = selected_product_amount.value
     }
@@ -361,11 +360,18 @@ function changeAmountAndPrice(){
             localStorage.setItem('order_data', JSON.stringify(order_data))
         }
         if (order_data_content != undefined && order_data_content != null) {
-            console.log(order_data)
             order_data_html = setOrderHtml(order_data)
             order_data_content.innerHTML = order_data_html
         }
         stock_int = orderProduct_stock;
+
+        element_id_name = 'stock__'+orderProduct_id
+        if(element_id_name.length == 8){
+            element_id = document.getElementById(element_id_name)
+        }
+        if(element_id != null && element_id != undefined && element_id != ''){
+            element_id.innerText = parseFloat(stock_int).toFixed(3)
+        }
     }
 
     if(Object.keys(orderProductData).length>0){
@@ -373,7 +379,7 @@ function changeAmountAndPrice(){
         selected_product_price.value = orderProductData.quantity*parseInt(orderProductData.last_price.replace(/\s/g, ''), 10)
         selected_product_amount.value = orderProductData.quantity
         selected_product_unit.innerText = orderProductData.unit
-        selectedProductAmount = parseInt(selected_product_amount.value)
+        selectedProductAmount = parseFloat(selected_product_amount.value).toFixed(3)
         selectedProductPrice = parseInt(selected_product_price.value)/selectedProductAmount
     }
 }

@@ -189,16 +189,30 @@ function truncuateCashboxFunc(){
     order_data_html = setOrderHtml(order_data)
     order_data_content.innerHTML = order_data_html
 }
-
-function addToOrder(id, name, price, discount, discount_percent, last_price, amount, barcode, stock, unit, unit_id) {
-    stock_int = parseInt(stock)
+let element_id_name =''
+let element_id =''
+function addToOrder(id, name, price, discount, discount_percent, last_price, amount, barcode, stock, unit, unit_id, this_element) {
+    stock_int = parseFloat(stock).toFixed(3)
     is_exist = false
     order_json = {}
+    element_id_name = ''
+    element_id = ''
     if(stock_int > 0) {
         if (order_data.length > 0) {
             for (let i = 0; i < order_data.length; i++) {
                 if (order_data[i].id == id) {
-                    order_data[i].quantity = order_data[i].quantity + 1
+                    order_data[i].quantity = parseFloat(order_data[i].quantity).toFixed(3) + 1
+                    element_id_name = 'stock__'+id
+                    if(element_id_name.length == 8){
+                        element_id = document.getElementById(element_id_name)
+                    }
+                    stock_int = stock_int - parseFloat(order_data[i].quantity).toFixed(3);
+                    if(this_element != null && this_element != undefined){
+                        let get_stock_element = this_element.querySelector('.stock__quantity')
+                        get_stock_element.innerText = stock_int
+                    }else if(element_id != null && element_id != undefined && element_id != ''){
+                        element_id.innerText = stock_int
+                    }
                     is_exist = true
                 }
             }
@@ -233,6 +247,17 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
                 'unit': unit,
                 'unit_id': unit_id
             }
+            element_id_name = 'stock__'+id
+            if(element_id_name.length == 8){
+                element_id = document.getElementById(element_id_name)
+            }
+            stock_int = stock_int - 1;
+            if(this_element != null && this_element != undefined){
+                let get_stock_element = this_element.querySelector('.stock__quantity')
+                get_stock_element.innerText = stock_int
+            }else if(element_id != null && element_id != undefined && element_id != ''){
+                element_id.innerText = stock_int
+            }
         }
         if (Object.keys(order_json).length != 0) {
             order_data.push(order_json)
@@ -252,7 +277,6 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
             order_data_html = setOrderHtml(order_data)
             order_data_content.innerHTML = order_data_html
         }
-        stock_int = stock_int - 1;
     }
 }
 

@@ -379,6 +379,9 @@ class CashierProductsController extends Controller
         }
         $small_image = $request->file('small_image');
         if($small_image) {
+            if(!$products->image){
+                $products->image = 'no';
+            }
             $product_image = storage_path('app/public/products/small/'.$products->image);
             if(file_exists($product_image)){
                 unlink($product_image);
