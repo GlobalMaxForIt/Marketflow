@@ -127,14 +127,14 @@
                                                 </h6>
                                                 <input class="input-default_ payment-method-sum" placeholder="0 сум" type="text" id="clients_discount__sum">
                                             </div>
-                                            <div class="payment-method d-flex justify-content-between mt-3">
+                                            <div class="payment-method d-flex justify-content-between mt-3 d-none">
                                                 <h6 class="payment-method-title d-flex align-items-center">
                                                     <i class="mdi mdi-percent"></i>
                                                     <span class="payment-method-name_">&nbsp;{{translate_title('Обшая скидка', $lang)}}</span>
                                                 </h6>
                                                 <input class="input-default_ payment-method-sum" placeholder="0 сум" type="text" id="clients_total_discount__sum">
                                             </div>
-                                            <div class="payment-method d-flex justify-content-between mt-3">
+                                            <div class="payment-method d-flex justify-content-between mt-3 d-none">
                                                 <h6 class="payment-method-title d-flex align-items-center">
                                                     <i class="mdi mdi-cash"></i>
                                                     <span class="payment-method-name_">&nbsp;{{translate_title('Итоговая сумма', $lang)}}</span>
@@ -160,11 +160,11 @@
                     </div>
                 </div>
                 <div class="d-flex add_to_order_buttons_" id="has_items">
-                    <div class="d-flex justify-content-between">
-                        <a class="modal_close_ delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal_cashbox">
-                            <b>{{translate_title('Delete', $lang)}}</b>
-                        </a>
-                        <a class="modal_confirm_ btn" onclick="paymentFunc()" data-bs-toggle="modal" data-bs-target="#payment_modal">
+                    <div class="d-flex justify-content-between width_height_confirm_button">
+{{--                        <a class="modal_close_ delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal_cashbox">--}}
+{{--                            <b>{{translate_title('Delete', $lang)}}</b>--}}
+{{--                        </a>--}}
+                        <a class="modal_confirm_ width_height_confirm_button btn" onclick="paymentFunc()" data-bs-toggle="modal" data-bs-target="#payment_modal">
                             <b>{{translate_title('Payment', $lang)}}</b>
                         </a>
                     </div>
@@ -192,18 +192,18 @@
                 </tr>
             </thead>
             <tbody id="order_data_content">
-                <tr>
+                <tr class="d-none">
                     <td>
                         <h4>{{translate_title('Sum:', $lang)}}</h4>
                     </td>
                     <td><h4 id="total_sum" class="text-end"></h4></td>
                 </tr>
-                <tr>
+                <tr class="d-none">
                     <td><b><h4>{{translate_title('Discount', $lang)}}</h4></b></td>
                     <td><h4 id="total_discount" class="text-end"></h4></td>
                 </tr>
                 <tr>
-                    <td><b><h4>{{translate_title('Total left sum:', $lang)}}</h4></b></td>
+                    <td><b><h4>{{translate_title('The client must pay:', $lang)}}</h4></b></td>
                     <td>
                         <div class="text-end" id="totalLeftSum">
                             <h4 id="total_left_sum"></h4>

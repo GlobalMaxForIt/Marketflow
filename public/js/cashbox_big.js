@@ -193,6 +193,9 @@ function editProductFunc(orderProduct){
         product_element_quantity = orderProduct.querySelector('td h6 .product__quantity')
         product_element_sum = orderProduct.querySelector('td h6 .product__sum')
     }
+    if(!dotKeyboard.classList.contains('d-none')){
+        dotKeyboard.classList.add('d-none')
+    }
     orderProductData = JSON.parse(orderProduct.getAttribute('data-product'))
     if(Object.keys(orderProductData).length>0){
         selected_product_name.innerText = orderProductData.name + ' '+orderProductData.amount
@@ -225,6 +228,10 @@ function selected_product_input_func(){
                 if([4, 7, 8, 10, 11].includes(parseInt(orderProductData.unit_id))){
                     if(dotKeyboard.classList.contains('d-none')){
                         dotKeyboard.classList.remove('d-none')
+                    }
+                }else{
+                    if(!dotKeyboard.classList.contains('d-none')){
+                        dotKeyboard.classList.add('d-none')
                     }
                 }
             }

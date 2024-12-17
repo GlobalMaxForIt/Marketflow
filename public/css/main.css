@@ -2461,6 +2461,7 @@ body[data-layout-color="light"] .fa-keyboard, body[data-layout-color="dark"] .ac
     background-color: rgb(0, 0, 0, 0.1);
     width: calc(68% - 200px);
     bottom: 54px;
+    height: 94px !important;
     border-radius: 4px;
     z-index: 1004;
 }
