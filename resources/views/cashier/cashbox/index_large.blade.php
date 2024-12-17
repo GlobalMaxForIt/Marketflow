@@ -455,6 +455,7 @@
         let token = "{{$user->token}}"
         let json_products = JSON.parse('{!! $allProductsData['json_products'] !!}')
         let notify_text = "{{translate_title('amount was added successfully!', $lang)}}"
+        let notify_text_left_in_stock = "{{translate_title('left in stock', $lang)}}"
 
     </script>
     <script src="{{asset('js/products_keyboards.js')}}"></script>

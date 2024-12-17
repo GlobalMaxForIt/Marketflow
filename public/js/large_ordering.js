@@ -289,6 +289,8 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
         }
         notify_product_text = name+' '+amount + notify_text
         toastr.success(notify_product_text)
+    }else{
+        toastr.warning(name+' '+amount +' '+stock+' '+notify_text_left_in_stock)
     }
 }
 

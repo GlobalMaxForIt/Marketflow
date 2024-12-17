@@ -206,7 +206,6 @@ function editProductFunc(orderProduct){
     }
     orderProductData = JSON.parse(orderProduct.getAttribute('data-product'))
     if(Object.keys(orderProductData).length>0){
-        console.log()
         selected_product_name.innerText = orderProductData.name + ' '+orderProductData.amount
         selected_product_price.value = orderProductData.quantity*parseInt(orderProductData.last_price.replace(/\s/g, ''), 10)
         selected_product_amount.value = parseFloat(orderProductData.quantity)
@@ -347,11 +346,11 @@ function changeAmountAndPrice(){
     if(product_element_sum != '') {
         product_element_sum.innerText = selected_product_price.value
     }
-    if(stock_int > 0) {
-        orderProduct_stock = orderProduct_stock
-        orderProduct_quantity = parseFloat(selected_product_amount.value)
-        orderProduct_last_price = selected_product_price.value
-        orderProduct_stock = orderProduct_stock - orderProduct_quantity
+    orderProduct_stock = orderProduct_stock
+    orderProduct_quantity = parseFloat(selected_product_amount.value)
+    orderProduct_last_price = selected_product_price.value
+    orderProduct_stock = orderProduct_stock - orderProduct_quantity
+    if(orderProduct_stock > 0) {
         if (order_data.length > 0) {
             for (let i = 0; i < order_data.length; i++) {
                 if (order_data[i].id == orderProduct_id) {
@@ -387,8 +386,12 @@ function changeAmountAndPrice(){
         if(element_id != null && element_id != undefined && element_id != '') {
             element_id.innerText = parseFloat(stock_int)
         }
-    }
 
+        notify_product_text = orderProductData.name+' '+orderProduct_amount + ' '+notify_text
+        toastr.success(notify_product_text)
+    }else{
+        toastr.warning(orderProductData.name+' '+orderProduct_amount +' '+orderProduct_stock+' '+notify_text_left_in_stock)
+    }
     if(Object.keys(orderProductData).length>0){
         selected_product_name.innerText = orderProductData.name + ' '+orderProductData.amount
         selected_product_unit.innerText = orderProductData.unit
@@ -397,9 +400,6 @@ function changeAmountAndPrice(){
     }
     order_selected_product_name.innerText = orderProductData.name+' '+orderProduct_amount
     order_selected_product_info.innerHTML = `${orderProduct_last_price} * ${selectedProductAmount} = ${new Intl.NumberFormat('ru-RU').format(orderProduct_last_price*selectedProductAmount, 10)}`
-
-    notify_product_text = orderProductData.name+' '+orderProduct_amount + notify_text
-    toastr.success(notify_product_text)
 }
 
 // Function to clear the display
