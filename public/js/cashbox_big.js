@@ -358,6 +358,8 @@ function changeAmountAndPrice(){
                         order_data[i].quantity = orderProduct_quantity
                     }else{
                         order_data.splice(i, 1)
+                        order_selected_product_name.innerText = ''
+                        order_selected_product_info.innerHTML = ''
                     }
                 }
             }
@@ -398,8 +400,10 @@ function changeAmountAndPrice(){
         selectedProductAmount = parseFloat(selected_product_amount.value)
         orderProduct_last_price = parseInt(selected_product_price.value)/selectedProductAmount
     }
-    order_selected_product_name.innerText = orderProductData.name+' '+orderProduct_amount
-    order_selected_product_info.innerHTML = `${orderProduct_last_price} * ${selectedProductAmount} = ${new Intl.NumberFormat('ru-RU').format(orderProduct_last_price*selectedProductAmount, 10)}`
+    if(orderProduct_quantity>0){
+        order_selected_product_name.innerText = orderProductData.name+' '+orderProduct_amount
+        order_selected_product_info.innerHTML = `${orderProduct_last_price} * ${selectedProductAmount} = ${new Intl.NumberFormat('ru-RU').format(orderProduct_last_price*selectedProductAmount, 10)}`
+    }
 }
 
 // Function to clear the display

@@ -401,45 +401,13 @@
 </div>
 <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
     <div class="offcanvas-body">
-        <div class="card" style="margin: 0px !important; min-height: auto !important;">
+        <div class="card big_keyboard_card">
             <div class="card-body overflow-auto" style="padding: 4px 1rem !important;">
                 <div class="d-flex">
-                    <div class="accordion mb-3 me-4" id="accordionExample">
-                        <div class="accordion-item">
-                            <div class="accordion-body">
-                                <div class="keyboard_big">
-                                    <!-- Harflar -->
-                                    <div class="key_big"><h6>A</h6></div><div class="key_big"><h6>B</h6></div><div class="key_big"><h6>C</h6></div><div class="key_big"><h6>D</h6></div>
-                                    <div class="key_big"><h6>E</h6></div><div class="key_big"><h6>F</h6></div><div class="key_big"><h6>G</h6></div><div class="key_big"><h6>H</h6></div>
-                                    <div class="key_big"><h6>I</h6></div><div class="key_big"><h6>J</h6></div><div class="key_big"><h6>K</h6></div><div class="key_big"><h6>L</h6></div>
-                                    <div class="key_big"><h6>M</h6></div><div class="key_big"><h6>N</h6></div><div class="key_big"><h6>O</h6></div><div class="key_big"><h6>P</h6></div>
-                                    <div class="key_big"><h6>Q</h6></div><div class="key_big"><h6>R</h6></div><div class="key_big"><h6>S</h6></div><div class="key_big"><h6>T</h6></div>
-                                    <div class="key_big"><h6>U</h6></div><div class="key_big"><h6>V</h6></div><div class="key_big"><h6>W</h6></div><div class="key_big"><h6>X</h6></div>
-                                    <div class="key_big"><h6>Y</h6></div><div class="key_big"><h6>Z</h6></div>
-
-                                    <!-- Raqamlar -->
-                                    <div class="key_big"><h6>0</h6></div><div class="key_big"><h6>1</h6></div><div class="key_big"><h6>2</h6></div><div class="key_big"><h6>3</h6></div>
-                                    <div class="key_big"><h6>4</h6></div><div class="key_big"><h6>5</h6></div><div class="key_big"><h6>6</h6></div><div class="key_big"><h6>7</h6></div>
-                                    <div class="key_big"><h6>8</h6></div><div class="key_big"><h6>9</h6></div><div class="key_big"><h6>-</h6></div><div class="key_big"><h6>_</h6></div>
-                                    <div class="key_big"><h6>.</h6></div><div class="key_big"><h6>,</h6></div><div class="key_big"><h6>/</h6></div><div class="key_big"><h6>(</h6></div>
-                                    <div class="key_big"><h6>)</h6></div><div class="key_big"><h6>[</h6></div><div class="key_big"><h6>]</h6></div><div class="key_big"><h6>{</h6></div>
-                                    <div class="key_big"><h6>}</h6></div><div class="key_big"><h6>*</h6></div><div class="key_big"><h6>@</h6></div><div class="key_big"><h6>#</h6></div>
-                                    <div class="key_big"><h6>$</h6></div><div class="key_big"><h6>%</h6></div><div class="key_big"><h6>#</h6></div><div class="key_big"><h6>:</h6></div>
-                                    <div class="key_big"><h6>|</h6></div><div class="key_big"><h6>&</h6></div><div class="key_big"><h6>€</h6></div><div class="key_big"><h6>£</h6></div>
-                                    <div class="key_big"><h6>₩</h6></div><!-- Probel -->
-                                    <div class="d-flex justify-content-between width_304_pixel">
-                                        <div class="key_space_big"><h6>Space</h6></div>
-                                        <div class="key_space_big" onclick="clearKeyboardDisplay()"><h6>Clear</h6></div>
-                                        <div class="key_space_big" onclick="backspaceKeyboard()"><h6><span class="mdi mdi-backspace"></span></h6></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <table class="restaurant_tables datatable table table-striped nowrap">
+                    <table class="restaurant_tables datatable table table-striped nowrap" id="all_products_list_for_selling">
                         <thead>
                             <tr>
-                                <th><h6><b>{{translate_title('Barcode', $lang)}}</b></h6></th>
+                                <th class="barcode_title_column"><h6><b>{{translate_title('Barcode', $lang)}}</b></h6></th>
                                 <th><h6><b>{{translate_title('Name', $lang)}}</b></h6></th>
                                 <th><h6><b>{{translate_title('Price', $lang)}}</b></h6></th>
                                 <th><h6><b>{{translate_title('Stock', $lang)}}</b></h6></th>
@@ -448,7 +416,7 @@
                         <tbody id="popover-container">
                         @foreach($allProductsData['products'] as $product)
                             <tr onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', '{{$product['stock']}}', '{{$product['unit']}}', '{{$product['unit_id']}}', null)">
-                                <td class="market_tables_text_big">
+                                <td class="market_tables_text_big barcode_number_column">
                                     <span><h6><b>{{$product['barcode']}}</b></h6></span>
                                 </td>
                                 <td class="market_tables_text_big">
@@ -472,6 +440,40 @@
                         @endforeach
                         </tbody>
                     </table>
+
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <div class="accordion-body">
+                                <div class="keyboard_big">
+                                    <!-- Harflar raqamlar -->
+                                    <div class="key_big"><h6>1</h6></div><div class="key_big"><h6>2</h6></div><div class="key_big"><h6>3</h6></div><div class="key_big"><h6>4</h6></div>
+                                    <div class="key_big"><h6>5</h6></div><div class="key_big"><h6>6</h6></div><div class="key_big"><h6>7</h6></div><div class="key_big"><h6>8</h6></div>
+                                    <div class="key_big"><h6>9</h6></div><div class="key_big"><h6>0</h6></div><div class="key_big"><h6>Q</h6></div><div class="key_big"><h6>W</h6></div>
+                                    <div class="key_big"><h6>E</h6></div><div class="key_big"><h6>R</h6></div><div class="key_big"><h6>T</h6></div><div class="key_big"><h6>Y</h6></div>
+                                    <div class="key_big"><h6>U</h6></div><div class="key_big"><h6>I</h6></div><div class="key_big"><h6>O</h6></div><div class="key_big"><h6>P</h6></div>
+                                    <div class="key_big"><h6>A</h6></div><div class="key_big"><h6>B</h6></div><div class="key_big"><h6>D</h6></div><div class="key_big"><h6>F</h6></div>
+                                    <div class="key_big"><h6>G</h6></div><div class="key_big"><h6>H</h6></div><div class="key_big"><h6>J</h6></div><div class="key_big"><h6>K</h6></div>
+                                    <div class="key_big"><h6>L</h6></div><div class="key_big"><h6>;</h6></div><div class="key_big"><h6>Z</h6></div><div class="key_big"><h6>X</h6></div>
+                                    <div class="key_big"><h6>C</h6></div><div class="key_big"><h6>V</h6></div><div class="key_big"><h6>B</h6></div><div class="key_big"><h6>N</h6></div>
+                                    <div class="key_big"><h6>M</h6></div><div class="key_big"><h6>,</h6></div><div class="key_big"><h6>.</h6></div><div class="key_big"><h6>/</h6></div>
+
+                                    <!-- Raqamlar -->
+
+                                    <div class="key_big"><h6>-</h6></div><div class="key_big"><h6>_</h6></div><div class="key_big"><h6>(</h6></div><div class="key_big"><h6>)</h6></div>
+                                    <div class="key_big"><h6>[</h6></div><div class="key_big"><h6>]</h6></div><div class="key_big"><h6>{</h6></div><div class="key_big"><h6>}</h6></div>
+                                    <div class="key_big"><h6>*</h6></div><div class="key_big"><h6>@</h6></div><div class="key_big"><h6>#</h6></div><div class="key_big"><h6>$</h6></div>
+                                    <div class="key_big"><h6>%</h6></div><div class="key_big"><h6>#</h6></div><div class="key_big"><h6>:</h6></div><div class="key_big"><h6>|</h6></div>
+                                    <div class="key_big"><h6>&</h6></div><div class="key_big"><h6>€</h6></div><div class="key_big"><h6>£</h6></div>
+                                    <div class="key_big"><h6>₩</h6></div><!-- Probel -->
+                                    <div class="d-flex justify-content-between width_304_pixel">
+                                        <div class="key_space_big"><h6>Space</h6></div>
+                                        <div class="key_space_big" onclick="clearKeyboardDisplay()"><h6>Clear</h6></div>
+                                        <div class="key_space_big" onclick="backspaceKeyboard()"><h6><span class="mdi mdi-backspace"></span></h6></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -566,6 +568,13 @@
                         <input type="checkbox" class="form-check-input" name="leftbar-size" value="compact"
                                id="compact-check" />
                         <label class="form-check-label" for="compact-check">{{ translate_title('Compact', $lang)}} <small>{{ translate_title('(Small size)', $lang)}}</small></label>
+                    </div>
+
+                    <!-- size -->
+                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">{{ translate_title('Barcode on or off', $lang)}}</h6>
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" id="barcode_on_or_off"/>
+                        <label class="form-check-label" for="compact-check">{{ translate_title('Barcode', $lang)}} <small>{{ translate_title('(on or off)', $lang)}}</small></label>
                     </div>
                     <div class="d-grid mt-4">
                         <a class="btn btn-primary" id="resetBtn">{{ translate_title('Reset to Default', $lang)}}</a>
@@ -1148,7 +1157,7 @@
     })
     open_all_products_list.addEventListener('click', function () {
         setTimeout(function () {
-            let all_products_list_input = document.querySelector("#offcanvasTop input[type='search'][aria-controls='DataTables_Table_0']")
+            let all_products_list_input = document.querySelector("#offcanvasTop input[type='search'][aria-controls='all_products_list_for_selling']")
             all_products_list_input.value = '';
             all_products_list_input.focus();
         }, 444)

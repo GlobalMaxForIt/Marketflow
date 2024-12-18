@@ -213,3 +213,89 @@ resetBtn.addEventListener('click', function (){
     }
     location.reload();
 })
+
+let barcode_on_or_off = document.getElementById('barcode_on_or_off')
+
+let all_products_list_for_selling = document.getElementById('all_products_list_for_selling')
+let all_products_list_for_selling_title_barcode = ''
+let all_products_list_for_selling_tbody_barcodes = ''
+let barcode_checked = ''
+if(all_products_list_for_selling != undefined && all_products_list_for_selling != null){
+    all_products_list_for_selling_title_barcode = all_products_list_for_selling.querySelector('.barcode_title_column')
+    all_products_list_for_selling_tbody_barcodes = all_products_list_for_selling.querySelectorAll('.barcode_number_column')
+}
+
+let barcode_status = localStorage.getItem('barcode')
+if(barcode_status == undefined && barcode_status == null){
+    barcodeOnFunc()
+    barcode_on_or_off.checked = true
+    barcode_checked = true
+}else if(barcode_status == 'true'){
+    barcodeOnFunc()
+    if(!barcode_on_or_off.checked){
+        barcode_on_or_off.checked = true
+        barcode_checked = true
+    }
+}else if(barcode_status == 'false'){
+    barcodeOffFunc()
+    if(barcode_on_or_off.checked){
+        barcode_on_or_off.checked = false
+        barcode_checked = false
+    }
+}
+
+barcode_on_or_off.addEventListener('click', function (event) {
+    if(barcode_checked){
+        barcodeOffFunc()
+        localStorage.setItem('barcode', 'false')
+    }else{
+        barcodeOnFunc()
+        localStorage.setItem('barcode', 'true')
+    }
+})
+
+function barcodeOnFunc(){
+    if(all_products_list_for_selling_title_barcode != undefined && all_products_list_for_selling_title_barcode != null && all_products_list_for_selling_title_barcode != ''){
+        if(all_products_list_for_selling_title_barcode.classList.contains('d-none')){
+            all_products_list_for_selling_title_barcode.classList.remove('d-none')
+        }
+    }
+    if(all_products_list_for_selling_tbody_barcodes != undefined && all_products_list_for_selling_tbody_barcodes != null && all_products_list_for_selling_tbody_barcodes != ''){
+        for(let l=0; l<all_products_list_for_selling_tbody_barcodes.length; l++){
+            if(all_products_list_for_selling_tbody_barcodes[l].classList.contains('d-none')){
+                all_products_list_for_selling_tbody_barcodes[l].classList.remove('d-none')
+            }
+        }
+    }
+    if(!barcode_on_or_off.classList.contains('checkbox_checked')){
+        barcode_on_or_off.classList.add('checkbox_checked')
+    }
+    if(barcode_on_or_off.classList.contains('checkbox_unchecked')){
+        barcode_on_or_off.classList.remove('checkbox_unchecked')
+    }
+    barcode_on_or_off.checked = true
+    barcode_checked = true
+}
+function barcodeOffFunc(){
+    if(all_products_list_for_selling_title_barcode != undefined && all_products_list_for_selling_title_barcode != null && all_products_list_for_selling_title_barcode != ''){
+        if(!all_products_list_for_selling_title_barcode.classList.contains('d-none')){
+            all_products_list_for_selling_title_barcode.classList.add('d-none')
+        }
+    }
+    if(all_products_list_for_selling_tbody_barcodes != undefined && all_products_list_for_selling_tbody_barcodes != null && all_products_list_for_selling_tbody_barcodes != ''){
+        for(let l=0; l<all_products_list_for_selling_tbody_barcodes.length; l++){
+            if(!all_products_list_for_selling_tbody_barcodes[l].classList.contains('d-none')){
+                all_products_list_for_selling_tbody_barcodes[l].classList.add('d-none')
+            }
+        }
+    }
+    if(!barcode_on_or_off.classList.contains('checkbox_unchecked')){
+        barcode_on_or_off.classList.add('checkbox_unchecked')
+    }
+    if(barcode_on_or_off.classList.contains('checkbox_checked')){
+        barcode_on_or_off.classList.remove('checkbox_checked')
+    }
+    barcode_on_or_off.checked = false
+    barcode_checked = false
+}
+

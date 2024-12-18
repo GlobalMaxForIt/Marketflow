@@ -148,9 +148,10 @@
                             <div class="tab-pane fade" id="fast_selling_goods_modal" role="tabpanel" aria-labelledby="fast_selling_goods_modal-tab">
                                 <div class="row">
                                     @foreach($allProductsData['products_fast'] as $product)
-                                        <div class="col-4 mt-1">
-                                            <a class="badge badge-soft-secondary" onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', '{{$product['stock']}}', '{{$product['unit']}}', '{{$product['unit_id']}}', null)">
-                                                <h6 class="pre_wrap">{{$product['name']}}</h6>
+                                        <div class="col-4 mt-1 fast_selling_images_button">
+                                            <div></div>
+                                            <a class="badge-soft-secondary" style="background-image: url('{{$product['image']}}');">
+                                                <h6 class="pre_wrap" onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', '{{$product['stock']}}', '{{$product['unit']}}', '{{$product['unit_id']}}', null)"><b>{{$product['name']}}</b></h6>
                                             </a>
                                         </div>
                                     @endforeach
@@ -160,7 +161,7 @@
                     </div>
                 </div>
                 <div class="d-flex add_to_order_buttons_" id="has_items">
-                    <div class="d-flex justify-content-between width_height_confirm_button">
+                    <div class="d-flex justify-content-between width_100_percent">
 {{--                        <a class="modal_close_ delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal_cashbox">--}}
 {{--                            <b>{{translate_title('Delete', $lang)}}</b>--}}
 {{--                        </a>--}}
@@ -170,7 +171,7 @@
                     </div>
                 </div>
                 <div class="d-flex add_to_order_buttons_" id="no_items">
-                    <div class="d-flex justify-content-between width_height_confirm_button">
+                    <div class="d-flex justify-content-between width_100_percent">
 {{--                        <button class="modal_close_ delete_button btn me-2" data-bs-toggle="modal" data-bs-target="#delete_modal_cashbox" disabled>--}}
 {{--                            <b>{{translate_title('Delete', $lang)}}</b>--}}
 {{--                        </button>--}}
@@ -183,8 +184,7 @@
         </div>
     </div>
     <div class="padding_12">
-        <table id="all_sum_info" class="tablesaw table mb-0" data-tablesaw-mode="swipe" data-tablesaw-mode-switch
-               data-tablesaw-minimap>
+        <table id="all_sum_info" class="tablesaw table mb-0" data-tablesaw-mode="swipe" data-tablesaw-mode-switch data-tablesaw-minimap>
             <thead>
                 <tr>
                     <th></th>
@@ -217,7 +217,6 @@
             </tbody>
         </table>
     </div>
-
     <div id="carousel-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

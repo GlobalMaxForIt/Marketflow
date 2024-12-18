@@ -866,10 +866,6 @@
 .width_100_percent{
     width: 100% !important;
 }
-.width_height_confirm_button{
-    width: calc(100% - 34px) !important;
-    height: 94px !important;
-}
 .width_304_pixel{
     width: 304px !important;
 }
@@ -2274,7 +2270,6 @@ textarea, textarea:focus, .form-control, .form-control:focus, .btn-close{
 .menu_bar{
     display: inline-flex !important;
     align-items: center;
-    margin-left: 214px;
 }
 .button-menu-mobile{
     text-align: center;
@@ -2359,7 +2354,7 @@ body[data-leftbar-size=compact] .footer{
 }
 .keyboard_big {
     display: grid;
-    grid-template-columns: repeat(8, 54px);
+    grid-template-columns: repeat(10, 34px);
     gap: 10px;
     justify-content: center;
 }
@@ -2367,8 +2362,8 @@ body[data-leftbar-size=compact] .footer{
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
+    width: 39px;
+    height: 39px;
     background-color: #ddd;
     text-align: center;
     /*line-height: 50px;*/
@@ -2423,6 +2418,7 @@ body[data-leftbar-size=compact] .footer{
 }
 #popover-container b, #popover-container h6{
     font-size: 14px;
+    margin-bottom: 0px !important;
 }
 #all_sum_info thead, #all_sum_info tbody, #all_sum_info th, #all_sum_info tr,#all_sum_info td{
     border: 0px !important;
@@ -2431,7 +2427,8 @@ body[data-leftbar-size=compact] .footer{
     width: 44%;
 }
 .offcanvas-top{
-    height: 484px !important;
+    max-height: 549px !important;
+    min-height: 394px !important;
 }
 .offcanvas-body{
     padding: 0px !important;
@@ -2458,28 +2455,7 @@ body[data-layout-color="light"] .fa-keyboard, body[data-layout-color="dark"] .ac
     color: black !important;
 }
 
-
-#all_sum_info{
-    position: fixed;
-    background-color: rgb(0, 0, 0, 0.1);
-    width: calc(68% - 200px);
-    bottom: 54px;
-    height: 94px !important;
-    border-radius: 4px;
-    z-index: 1004;
-}
 #all_sum_info td{
-    padding: 7px 24px !important;
-}
-
-body[data-leftbar-size=condensed] #all_sum_info{
-    position: fixed;
-    background-color: rgb(0, 0, 0, 0.1);
-    width: calc(68% - 94px);
-    border-radius: 4px;
-    z-index: 1004;
-}
-body[data-leftbar-size=condensed] #all_sum_info td{
     padding: 7px 24px !important;
 }
 .mt_10{
@@ -2496,16 +2472,58 @@ body[data-leftbar-size=condensed] #all_sum_info td{
 body[data-leftbar-position="fixed"] .content-page{
     height: 87vh;
 }
+.width_height_confirm_button{
+    height: 94px !important;
+}
+
+#all_sum_info{
+    position: fixed;
+    background-color: rgb(0, 0, 0, 0.1);
+    bottom: 54px;
+    height: 94px !important;
+    border-radius: 4px;
+    z-index: 1004;
+}
+
+body[data-leftbar-size=default] .menu_bar{
+    margin-left: 214px;
+}
+
+body[data-leftbar-size=compact] .menu_bar{
+    margin-left: 170px;
+}
+
+body[data-leftbar-size=condensed] #all_sum_info{
+    width: calc(68% - 114px);
+}
+
+body[data-leftbar-size=default] #all_sum_info{
+    width: calc(68% - 194px);
+}
+
+body[data-leftbar-size=compact] #all_sum_info{
+    width: calc(68% - 178px);
+}
+
+body[data-leftbar-size=condensed] .width_height_confirm_button{
+    width: calc(100% - 30px) !important;
+}
+body[data-leftbar-size=default] .width_height_confirm_button{
+    width: calc(100% - 74px) !important;
+}
+body[data-leftbar-size=compact] .width_height_confirm_button{
+    width: calc(100% - 54px) !important;
+}
 .content-page{
     overflow-y: auto;
 }
 #fast_selling_goods_modal .badge-soft-secondary{
     height: 74px !important;
-    padding: 7px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-right: 4px;
+    border-radius: 4px;
 }
 #fast_selling_goods_modal .badge-soft-secondary h6{
     font-size: 12px !important;
@@ -2522,6 +2540,21 @@ body[data-leftbar-position="fixed"] .content-page{
 .pre_wrap{
     white-space: pre-wrap;
 }
+.badge-soft-secondary .pre_wrap{
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    margin: 0px !important;
+    background-color: rgb(0, 0, 0, 0.4);
+    border-radius: 4px;
+}
+.badge-soft-secondary .pre_wrap b{
+    z-index: 6;
+    color: white!important;
+}
 .tablesaw tbody th, .tablesaw td{
     padding: 7px 10px !important;
 }
@@ -2534,9 +2567,47 @@ body[data-layout-color="light"] #order_data_content .active{
 body[data-layout-color="dark"] #order_data_content .active{
     background-color: rgba(255, 255, 255, 0.1);
 }
+.fast_selling_images_button{
+    position:relative;
+    border-radius: 4px;
+}
+.fast_selling_images_button div{
+    position:absolute;
+    height: 100%;
+    width: 98%;
+    background-color: rgb(0, 0, 0, 0.4);
+    border-radius: 4px;
+}
+.fast_selling_images_button .badge-soft-secondary{
+    transition: 0.4s;
+    border-radius: 4px;
+}
+.fast_selling_images_button .badge-soft-secondary:hover{
+    background-color: rgb(0, 0, 0, 0.54);
+    transform: scale(1.014);
+}
+.badge-soft-secondary{
+    background-size: cover;
+    background-position: center;
+}
 body[data-layout-color="light"] .client_selected_product_row:hover, tbody#popover-container tr:hover{
     background-color: rgb(0, 0, 0, 0.1);
 }
 body[data-layout-color="dark"] .client_selected_product_row:hover, tbody#popover-container tr:hover{
     background-color: rgba(255, 255, 255, 0.1);
+}
+#all_products_list_for_selling{
+    margin-bottom: 0px !important;
+    margin-top: 4px !important;
+}
+.big_keyboard_card{
+    padding-top: 7px;
+    margin: 0px !important;
+    min-height: auto !important;
+    height: 100%;
+}
+.checkbox_checked{
+    background-color: #0D6EFD;
+    background-position:right center !important;
+    background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e") !important;
 }
