@@ -22,6 +22,8 @@ return new class extends Migration
             $table->integer('client_discount_price')->nullable();
             $table->decimal('paid_amount', 10, 2)->default(0); // Mijoz to'lagan summa
             $table->decimal('return_amount', 10, 2)->default(0); // Qaytarilgan summa (zda)
+            $table->string('code', 20)->nullable(); // Qaytarilgan summa (zda)
+            $table->unsignedSmallInteger('status')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

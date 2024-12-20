@@ -165,12 +165,14 @@ class CashboxController extends Controller
         $clients_for_discount = [];
         $clients__ = Clients::whereIn('id', $discount_clients_id)->get();
         foreach($clients__ as $client__){
+            $client_all_total_sum = 0;
             if($client__->discount){
                 $clients_for_discount[] = [
+                    'client_all_total_sum'=>$client_all_total_sum,
                     'client_full_name'=>$this->clientService->getClientFullname($client__),
-                    'phone'=>$client__->phone,
                     'percent'=>(int)$client__->discount->percent,
-                    'client_id'=>(int)$client__->id
+                    'client_id'=>(int)$client__->id,
+                    'phone'=>$client__->phone,
                 ];
             }
         }
@@ -197,12 +199,19 @@ class CashboxController extends Controller
             'quantity'=>count($allProducts),
         ];
 
+        $check_lists = Sales::where('status', Constants::CHECKLIST)->get();
+
+        $all_checklist_sales = [];
+        foreach($check_lists as $check_list){
+            $all_checklist_sales[] = $this->salesService->getSales($check_list);
+        }
         return view('cashier.cashbox.index_large', [
             'allProductsData'=>$allProductsData,
             'title'=>$this->title,
             'user'=>$user,
             'clients'=>$clients,
             'cashiers'=>$cashiers,
+            'all_checklist_sales'=>$all_checklist_sales,
             'clients_for_discount'=>$clients_for_discount,
             'clients_discount'=>$clients_discount,
             'lang'=>$lang,
@@ -422,18 +431,31 @@ class CashboxController extends Controller
         $user = Auth::user();
         date_default_timezone_set("Asia/Tashkent");
         $order_data = $request->order_data;
-        $sales = new Sales();
+        $saleId = (int)$request->sale_id;
+        $text = $request->text;
+        if($saleId>0){
+            $sales = Sales::find($saleId);
+            if($text == 'checklist'){
+                $response_ = [
+                    'code'=>$sales->code,
+                    'status'=>false,
+                    'message'=>'Success'
+                ];
+                return response()->json($response_);
+            }
+        }else{
+            $sales = new Sales();
+        }
+
         $sales->store_id = $user->store_id;
         $sales->cashier_id = $user->id;
         $client_id = $request->client_id;
-
         $paid_amount = $request->paid_amount;
         $return_amount = $request->return_amount;
         $client_dicount_price = $request->client_dicount_price;
         $card_sum = $request->card_sum;
         $cash_sum = $request->cash_sum;
-
-        $response = $this->salesService->salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, 'take-away');
+        $response = $this->salesService->salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $text);
         return response()->json($response);
     }
 

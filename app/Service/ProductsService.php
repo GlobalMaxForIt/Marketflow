@@ -203,6 +203,43 @@ class ProductsService
         return $allProducts;
     }
 
+    public function getShortProduct($product, $sales_item_quantity){
+        $lang = App::getLocale();
+        if($product->discount){
+            if($product->discount->percent&& $product->price){
+                $discount = $this->getDiscount($product->discount->percent, $product->price);
+                $discount_percent = $product->discount->percent;
+            }else{
+                $discount = 0;
+                $discount_percent = 0;
+            }
+        }else{
+            $discount = 0;
+            $discount_percent = 0;
+        }
+        $unit_translation = '';
+        if($product->unit){
+            $unit_translation = table_translate_title($product->unit, 'unit', $lang);
+        }
+
+        $array_products = [
+            'id'=>$product->id??'',
+            'short_name'=>$this->truncateString($product->name)??'',
+            'name'=>$product->name??'',
+            'amount'=>$product->amount??'',
+            'quantity'=>$sales_item_quantity??'',
+            'unit'=>$unit_translation,
+            'unit_id'=>$product->unit_id??'',
+            'price'=>number_format((int)$product->price, 0, '', ' '),
+            'discount'=>number_format($discount, 0, '', ' '),
+            'discount_percent'=>$discount_percent,
+            'last_price'=>number_format((int)$product->price - $discount, 0, '', ' '),
+            'barcode'=>$product->barcode??'',
+            'stock'=>$product->stock??0,
+        ];
+        return $array_products;
+    }
+
     public function getDiscount($percent, $price){
         $discount = (int)$price*(int)$percent/100;
         return $discount;

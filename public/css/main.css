@@ -2561,10 +2561,10 @@ body[data-leftbar-size=compact] .width_height_confirm_button{
 .tablesaw h6{
     margin-bottom: 0px !important;
 }
-body[data-layout-color="light"] #order_data_content .active{
+body[data-layout-color="light"] #order_data_content .active, .checklist_item.active{
     background-color: rgb(0, 0, 0, 0.1);
 }
-body[data-layout-color="dark"] #order_data_content .active{
+body[data-layout-color="dark"] #order_data_content .active, .checklist_item.active{
     background-color: rgba(255, 255, 255, 0.1);
 }
 .fast_selling_images_button{
@@ -2590,10 +2590,10 @@ body[data-layout-color="dark"] #order_data_content .active{
     background-size: cover;
     background-position: center;
 }
-body[data-layout-color="light"] .client_selected_product_row:hover, tbody#popover-container tr:hover{
+body[data-layout-color="light"] .client_selected_product_row:hover, tbody#popover-container tr:hover, .checklist_item:hover{
     background-color: rgb(0, 0, 0, 0.1);
 }
-body[data-layout-color="dark"] .client_selected_product_row:hover, tbody#popover-container tr:hover{
+body[data-layout-color="dark"] .client_selected_product_row:hover, tbody#popover-container tr:hover, .checklist_item:hover{
     background-color: rgba(255, 255, 255, 0.1);
 }
 #all_products_list_for_selling{
@@ -2610,4 +2610,14 @@ body[data-layout-color="dark"] .client_selected_product_row:hover, tbody#popover
     background-color: #0D6EFD;
     background-position:right center !important;
     background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e") !important;
+}
+.checklist_item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px;
+    border-radius: 4px;
+}
+.checklist_item h6{
+    margin-bottom: 0px !important;
 }

@@ -49,11 +49,13 @@ let total_left_sum = document.getElementById('total_left_sum')
 let clientFullName = document.getElementById('clientFullName')
 let removeClientDiscount = document.getElementById('removeClientDiscount')
 let clients_discount__sum = document.getElementById('clients_discount__sum')
+let clients_total__sum = document.getElementById('clients_total__sum')
 let clients_total_discount__sum = document.getElementById('clients_total_discount__sum')
 let total__sum = document.getElementById('total__sum')
 let total_discount = document.getElementById('total_discount')
 let order_selected_product_name = document.getElementById('order_selected_product_name')
 let order_selected_product_info = document.getElementById('order_selected_product_info')
+let set_checklist_button = document.getElementById('set_checklist_button')
 
 let discountInfo = []
 let discountClientInfo = []
@@ -72,6 +74,9 @@ function showHasItems(){
     if(client_select_id_2 != undefined && client_select_id_2 != null) {
         client_select_id_2.disabled = false
     }
+    if(set_checklist_button != undefined && set_checklist_button != null) {
+        set_checklist_button.disabled = false
+    }
 }
 function hideHasItems() {
     if(has_items != undefined && has_items != null){
@@ -86,6 +91,9 @@ function hideHasItems() {
     }
     if(client_select_id_2 != undefined && client_select_id_2 != null) {
         client_select_id_2.disabled = true
+    }
+    if(set_checklist_button != undefined && set_checklist_button != null) {
+        set_checklist_button.disabled = true
     }
 }
 
@@ -147,6 +155,7 @@ function setClientPrices() {
     clients_total_discount__sum.value = (productsPrice - total_all_left_sum).toFixed(2)
     total_discount.innerText = (productsPrice - total_all_left_sum).toFixed(2)
     total__sum.value = total_all_left_sum
+    clients_total__sum.value = new Intl.NumberFormat('ru-RU').format(parseInt(client_total_sales), 10)
 }
 
 function removeClientDiscountFunc(){
@@ -195,29 +204,19 @@ let element_id_name =''
 let element_id =''
 let current_data = {}
 let notify_product_text = ''
-function addToOrder(id, name, price, discount, discount_percent, last_price, amount, barcode, stock, unit, unit_id, this_element) {
+function addToOrder(id, name, price, discount, discount_percent, last_price, amount, barcode, stock, unit, unit_id, quantity, code, this_element) {
     stock_int = parseFloat(stock)
     is_exist = false
     order_json = {}
     current_data = {}
-    element_id_name = ''
     element_id = ''
     if(stock_int > 0) {
         if (order_data.length > 0) {
             for (let i = 0; i < order_data.length; i++) {
                 if (order_data[i].id == id) {
-                    order_data[i].quantity = parseFloat(order_data[i].quantity) + 1
-                    element_id_name = 'stock__'+id
-                    if(element_id_name.length == 8){
-                        element_id = document.getElementById(element_id_name)
-                    }
+                    order_data[i].quantity = parseFloat(order_data[i].quantity)+1
                     stock_int = stock_int - parseFloat(order_data[i].quantity);
-                    if(this_element != null && this_element != undefined){
-                        let get_stock_element = this_element.querySelector('.stock__quantity')
-                        get_stock_element.innerText = stock_int
-                    }else if(element_id != null && element_id != undefined && element_id != ''){
-                        element_id.innerText = stock_int
-                    }
+                    minusStockFunc(stock_int, this_element, id)
                     is_exist = true
                     current_data = order_data[i]
                 }
@@ -227,6 +226,7 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
                     'id': id,
                     'name': name,
                     'price': price,
+                    'code': code,
                     'discount': discount,
                     'discount_percent': discount_percent,
                     'last_price': last_price,
@@ -237,6 +237,8 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
                     'unit': unit,
                     'unit_id': unit_id
                 }
+                stock_int = stock_int - parseFloat(quantity);
+                minusStockFunc(stock_int, this_element, id)
                 current_data = order_json
             }
         } else {
@@ -244,6 +246,7 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
                 'id': id,
                 'name': name,
                 'price': price,
+                'code': code,
                 'discount': discount,
                 'discount_percent': discount_percent,
                 'last_price': last_price,
@@ -254,17 +257,8 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
                 'unit': unit,
                 'unit_id': unit_id
             }
-            element_id_name = 'stock__'+id
-            if(element_id_name.length == 8){
-                element_id = document.getElementById(element_id_name)
-            }
-            stock_int = stock_int - 1;
-            if(this_element != null && this_element != undefined){
-                let get_stock_element = this_element.querySelector('.stock__quantity')
-                get_stock_element.innerText = stock_int
-            }else if(element_id != null && element_id != undefined && element_id != ''){
-                element_id.innerText = stock_int
-            }
+            stock_int = stock_int - parseFloat(quantity);
+            minusStockFunc(stock_int, this_element, id)
             current_data = order_json
         }
         if (Object.keys(order_json).length != 0) {
@@ -287,13 +281,27 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
             order_data_html = setOrderHtml(order_data)
             order_data_content.innerHTML = order_data_html
         }
-        notify_product_text = name+' '+amount + notify_text
-        toastr.success(notify_product_text)
+        if(code == null || code == undefined || !code){
+            notify_product_text = name+' '+amount + notify_text
+            toastr.success(notify_product_text)
+        }
     }else{
         toastr.warning(name+' '+amount +' '+stock+' '+notify_text_left_in_stock)
     }
 }
 
+function minusStockFunc(stock_int_, this_element_, id_){
+    element_id_name = 'stock__'+id_
+    if(parseInt(id_)>0){
+        element_id = document.getElementById(element_id_name)
+    }
+    if(this_element_ != null && this_element_ != undefined && this_element_ != ''){
+        let get_stock_element = this_element_.querySelector('.stock__quantity')
+        get_stock_element.innerText = stock_int_
+    }else if(element_id != null && element_id != undefined && element_id != ''){
+        element_id.innerText = stock_int_
+    }
+}
 
 function setOrderHtml(order_data_){
     all_sum = 0

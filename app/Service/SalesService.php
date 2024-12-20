@@ -5,6 +5,7 @@ namespace App\Service;
 
 use App\Constants;
 use App\Events\PostNotification;
+use App\Models\Clients;
 use App\Models\Discount;
 use App\Models\OrderItems;
 use App\Models\Orders;
@@ -18,9 +19,22 @@ use Illuminate\Http\Request;
 
 class SalesService
 {
+    public $clienService;
+    public $productsService;
 
-    public function salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $type){
+    public function __construct(ClientService $clientService, ProductsService $productsService)
+    {
+        $this->clienService = $clientService;
+        $this->productsService = $productsService;
+    }
+
+    public function salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $text){
         $sales->client_id = $client_id;
+        if($text == 'checklist'){
+            $sales->status = Constants::CHECKLIST;
+        }else{
+            $sales->status = Constants::NOT_CHECKLIST;
+        }
         $sales->save();
         $all_price = 0;
         $all_cost_price = 0;
@@ -84,13 +98,58 @@ class SalesService
             $sales_reports->profit = $all_price - $all_cost_price;
             $sales_reports->save();
         }
+        $sales_id = (string)$sales->id;
+        if(strlen($sales_id)<8){
+            $length = 8;
+        }elseif(strlen($sales_id)>=8 && strlen($sales_id)<10){
+            $length = 10;
+        }elseif(strlen($sales_id)>=10 && strlen($sales_id)<12){
+            $length = 12;
+        }elseif(strlen($sales_id)>=12 && strlen($sales_id)<14){
+            $length = 14;
+        }elseif(strlen($sales_id)>=14 && strlen($sales_id)<=16){
+            $length = 16;
+        }
+        $sales_code = (string)str_pad($sales_id, $length, '0', STR_PAD_LEFT);
+        $sales->code = $sales_code;
+        $sales->save();
         $response = [
-            'order_id'=>$sales->id,
+            'code'=>$sales->code,
             'status'=>true,
             'message'=>'Success'
         ];
         return $response;
     }
 
+    public function getSales($sale){
+        $client_id = $sale->client_id;
+        $client = [];
+        if($client_id){
+            $client = Clients::find($client_id);
+        }
+        $all_sale = [
+            'id'=>$sale->id,
+            'code'=>$sale->code,
+            'client'=>$client,
+            'price'=>$sale->price?number_format($sale->price, 0, '', ' '):'no',
+            'sale_items'=>json_encode($this->getSalesItem($sale))
+        ];
+        return $all_sale;
+    }
 
+    public function getSalesItem($sale){
+        $items = [];
+        if($sale){
+            $salesItems = $sale->salesItems;
+            if(!$salesItems->isEmpty()){
+                foreach($salesItems as $salesItem){
+                    $product = $salesItem->product;
+                    if($product){
+                        $items[] = $this->productsService->getShortProduct($product, $salesItem->quantity);
+                    }
+                }
+            }
+        }
+        return $items;
+    }
 }

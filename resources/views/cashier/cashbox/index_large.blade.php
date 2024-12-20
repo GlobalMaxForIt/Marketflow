@@ -17,7 +17,7 @@
     </style>
     <div class="row">
         <div class="col-8">
-            <div class="main-content-section" id="myDiv">
+            <div class="main-content-section">
                 <div class="order-section">
                     <div class="card">
                         <div class="card-body overflow-auto">
@@ -69,6 +69,11 @@
                                     {{translate_title('Fast selling goods', $lang)}}
                                 </a>
                             </li>
+                            <li class="nav-item ms-2 mb-2">
+                                <a href="#list_aside_the_check" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                    {{translate_title('List aside the check', $lang)}}
+                                </a>
+                            </li>
                         </ul>
 
                         <div class="tab-content" id="myCategory_">
@@ -91,7 +96,7 @@
                                                             <option value="" selected disabled>{{translate_title('Select a client', $lang)}}</option>
                                                             <optgroup label="Clients">
                                                                 @foreach($clients_for_discount as $client_for_discount)
-                                                                    <option value="{{$client_for_discount['client_id']}} {{$client_for_discount['percent']}} /{{$client_for_discount['client_full_name']}} /{{$client_for_discount['phone']}}">{{$client_for_discount['client_full_name']}}</option>
+                                                                    <option value="{{$client_for_discount['client_id']}} {{$client_for_discount['percent']}} /{{$client_for_discount['client_full_name']}} /{{$client_for_discount['phone']}} /{{$client_for_discount['client_all_total_sum']}}">{{$client_for_discount['client_full_name']}}</option>
                                                                 @endforeach
                                                             </optgroup>
                                                         </select>
@@ -115,10 +120,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="d-flex justify-content-start mt-4">
-                                                <span class="payment-content-header-title_name">
-                                                    <h6>{{translate_title('Способ  оплаты', $lang)}}</h6>
-                                                </span>
+                                            <div class="payment-method d-flex justify-content-between mt-3">
+                                                <h6 class="payment-method-title d-flex align-items-center">
+                                                    <i class="mdi mdi-percent"></i>
+                                                    <span class="payment-method-name_">&nbsp;{{translate_title('История покупок', $lang)}}</span>
+                                                </h6>
+                                                <input class="input-default_ payment-method-sum" placeholder="0 сум" type="text" id="clients_total__sum">
                                             </div>
                                             <div class="payment-method d-flex justify-content-between mt-3">
                                                 <h6 class="payment-method-title d-flex align-items-center">
@@ -151,10 +158,37 @@
                                         <div class="col-4 mt-1 fast_selling_images_button">
                                             <div></div>
                                             <a class="badge-soft-secondary" style="background-image: url('{{$product['image']}}');">
-                                                <h6 class="pre_wrap" onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', '{{$product['stock']}}', '{{$product['unit']}}', '{{$product['unit_id']}}', null)"><b>{{$product['name']}}</b></h6>
+                                                <h6 class="pre_wrap" onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', '{{$product['stock']}}', '{{$product['unit']}}', '{{$product['unit_id']}}', 1, null, null)"><b>{{$product['name']}}</b></h6>
                                             </a>
                                         </div>
                                     @endforeach
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="list_aside_the_check" role="tabpanel" aria-labelledby="list_aside_the_check_modal-tab">
+                                <div class="right_options" role="presentation">
+                                    <div>
+                                        <div class="payment-content-header">
+                                            <div class="payment-content-header_title mb-3 justify-content-start">
+                                                <button class="btn-success btn" data-bs-toggle="modal" data-bs-target="#checklist_modal" id="set_checklist_button">
+                                                    <h6 class="mb-0"><span class="font-16 fa fa-angle-right me-1"></span>{{translate_title('Set aside the check', $lang)}}</h6>
+                                                </button>
+                                            </div>
+                                            <div class="payment-content-header_user">
+                                                <div class="d-flex justify-content-center">
+                                                    <div class="position-relative mb-2 width_100_percent">
+                                                        @foreach($all_checklist_sales as $all_checklist_sale)
+                                                            @if($all_checklist_sale['sale_items'])
+                                                                <div class="checklist_item" onclick="checklistFunc('{{$all_checklist_sale['sale_items']}}', `{{$all_checklist_sale['id']}}`,`{{$all_checklist_sale['code']}}`, this)">
+                                                                    <h6>{{$all_checklist_sale['code']}}</h6>
+                                                                    <h6>{{$all_checklist_sale['price']}}</h6>
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -246,6 +280,22 @@
                         <div class="d-flex justify-content-between width_100_percent">
                             <a type="button" class="btn delete_modal_close my-2" data-bs-dismiss="modal"> {{ translate_title('No', $lang)}}</a>
                             <a class="btn delete_modal_confirm my-2" data-bs-dismiss="modal" onclick="truncuateCashboxFunc()"> {{ translate_title('Yes', $lang)}} </a>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div id="checklist_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content modal-filled">
+                <div class="modal-body">
+                    <div class="text-center">
+                        <img src="{{asset('img/delete_icon.png')}}" alt="" height="100px">
+                        <h4 class="mt-2 delete_text_content">{{ translate_title('Are you sure you want to add a checklist?', $lang)}}</h4>
+                        <div class="d-flex justify-content-between width_100_percent">
+                            <a type="button" class="btn delete_modal_close my-2" data-bs-dismiss="modal"> {{ translate_title('No', $lang)}}</a>
+                            <a class="btn delete_modal_confirm my-2" data-bs-dismiss="modal" onclick="paymentPayFunc('checklist')"> {{ translate_title('Yes', $lang)}} </a>
                         </div>
                     </div>
                 </div>
@@ -455,6 +505,56 @@
         let json_products = JSON.parse('{!! $allProductsData['json_products'] !!}')
         let notify_text = "{{translate_title('amount was added successfully!', $lang)}}"
         let notify_text_left_in_stock = "{{translate_title('left in stock', $lang)}}"
+        let payment_success_text = "{{translate_title('The payment was made successfully', $lang)}}"
+        let set_aside_success_text = "{{translate_title('The check successfull set aside', $lang)}}"
+        let client_total_sales = 0
+        let checklist_items = document.getElementsByName('checklist_item')
+        let clientPhoneNumber = document.getElementById('clientPhoneNumber')
+        let selected_checklist_id = ''
+        $('#client_select_id_2').on('change', function () {
+            let discountInfo = client_select_id_2.value.split(" ")
+            let discountClientInfo = client_select_id_2.value.split("/")
+            if(discountInfo[1] != undefined && discountInfo[1] != null){
+                discountValue = discountInfo[1]
+                client_id = discountInfo[0]
+            }
+            if(parseInt(discountValue) != 0){
+                percent_v = (100 - discountValue)/100
+            }
+            if(discountClientInfo[1] != undefined && discountClientInfo[1] != null){
+                clientFullName.innerText = ' '+discountClientInfo[1]
+            }
+            if(discountClientInfo[2] != undefined && discountClientInfo[2] != null){
+                clientPhoneNumber.innerText = ' '+discountClientInfo[2]
+            }
+            if(discountClientInfo[3] != undefined && discountClientInfo[3] != null){
+                client_total_sales = discountClientInfo[3]
+            }
+            confirm_client_discount_func(discountValue)
+            setClientPrices()
+        })
+        let checklistData = []
+        function checklistFunc(checklist_data, checklist_id, checklist_code, selected_checklist){
+            selected_checklist_id = checklist_id
+            truncuateCashboxFunc()
+            for(let k=0; k<checklist_items.length; k++){
+                if(checklist_items[k].classList.contains('active')){
+                    checklist_items[k].classList.remove('active')
+                }
+            }
+            if(selected_checklist != null && selected_checklist != undefined){
+                if(!selected_checklist.classList.contains('active')){
+                    selected_checklist.classList.add('active')
+                }
+                // product_element_quantity = selected_checklist.querySelector('td h6 .product__quantity')
+                // product_element_sum = selected_checklist.querySelector('td h6 .product__sum')
+            }
+            checklistData = JSON.parse(checklist_data)
+            for(let i=0; i<checklistData.length; i++){
+                addToOrder(checklistData[i].id, checklistData[i].name, checklistData[i].price, checklistData[i].discount, checklistData[i].discount_percent, checklistData[i].last_price, checklistData[i].amount, checklistData[i].barcode, checklistData[i].stock, checklistData[i].unit, checklistData[i].unit_id, checklistData[i].quantity, checklist_code, null)
+            }
+        }
+
 
     </script>
     <script src="{{asset('js/products_keyboards.js')}}"></script>
@@ -480,34 +580,10 @@
         function handleBarcode(barcode) {
             for(let p=0; p<json_products.length; p++){
                 if(json_products[p].barcode == barcode){
-                    let current_element_stock = document.getElementById('stock__'+json_products[p].id)
-                    addToOrder(json_products[p].id, json_products[p].name, json_products[p].price, json_products[p].discount, json_products[p].discount_percent, json_products[p].last_price, json_products[p].amount, json_products[p].barcode, json_products[p].stock, json_products[p].unit, json_products[p].unit_id, current_element_stock)
+                    addToOrder(json_products[p].id, json_products[p].name, json_products[p].price, json_products[p].discount, json_products[p].discount_percent, json_products[p].last_price, json_products[p].amount, json_products[p].barcode, json_products[p].stock, json_products[p].unit, json_products[p].unit_id, 1, null, null)
                 }
             }
         }
-
-    </script>
-    <script>
-        let clientPhoneNumber = document.getElementById('clientPhoneNumber')
-        $('#client_select_id_2').on('change', function () {
-            let discountInfo = client_select_id_2.value.split(" ")
-            let discountClientInfo = client_select_id_2.value.split("/")
-            if(discountInfo[1] != undefined && discountInfo[1] != null){
-                discountValue = discountInfo[1]
-                client_id = discountInfo[0]
-            }
-            if(parseInt(discountValue) != 0){
-                percent_v = (100 - discountValue)/100
-            }
-            if(discountClientInfo[1] != undefined && discountClientInfo[1] != null){
-                clientFullName.innerText = ' '+discountClientInfo[1]
-            }
-            if(discountClientInfo[2] != undefined && discountClientInfo[2] != null){
-                clientPhoneNumber.innerText = ' '+discountClientInfo[2]
-            }
-            confirm_client_discount_func(discountValue)
-            setClientPrices()
-        })
 
     </script>
     <script>

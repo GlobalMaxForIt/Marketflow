@@ -18,6 +18,7 @@
                                         <th><h6>{{translate_title('Total amount', $lang)}}</h6></th>
                                         <th><h6>{{translate_title('Paid amount', $lang)}}</h6></th>
                                         <th><h6>{{translate_title('Returning amount', $lang)}}</h6></th>
+                                        <th><h6>{{translate_title('Code', $lang)}}</h6></th>
                                         <th><h6>{{translate_title('Updated at', $lang)}}</h6></th>
                                     </tr>
                                 </thead>
@@ -27,6 +28,7 @@
                                             <td><h6>{{$all_sale['total_amount']}}</h6></td>
                                             <td><h6>{{$all_sale['paid_amount']}}</h6></td>
                                             <td><h6>{{$all_sale['return_amount']}}</h6></td>
+                                            <td><h6>{{$all_sale['code']}}</h6></td>
                                             <td><h6>{{$all_sale['updated_at']}}</h6></td>
                                         </tr>
                                     @endforeach

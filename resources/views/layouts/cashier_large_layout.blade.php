@@ -415,7 +415,7 @@
                         </thead>
                         <tbody id="popover-container">
                         @foreach($allProductsData['products'] as $product)
-                            <tr onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', '{{$product['stock']}}', '{{$product['unit']}}', '{{$product['unit_id']}}', null)">
+                            <tr onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', '{{$product['stock']}}', '{{$product['unit']}}', '{{$product['unit_id']}}', 1, null, null)">
                                 <td class="market_tables_text_big barcode_number_column">
                                     <span><h6><b>{{$product['barcode']}}</b></h6></span>
                                 </td>
@@ -763,7 +763,7 @@
             </div>
             <div class="modal-footer">
                 <a class="btn modal_close height_50 me-4" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
-                <a class="btn modal_confirm height_50" onclick="paymentPayFunc()">{{translate_title('Payment', $lang)}}</a>
+                <button class="btn modal_confirm height_50" data-bs-dismiss="modal" onclick="paymentPayFunc(null)">{{translate_title('Payment', $lang)}}</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

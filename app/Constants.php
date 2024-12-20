@@ -56,6 +56,10 @@ class Constants{
     # gender
     const NOT_ACTIVE = 0;
     const ACTIVE = 1;
+
+    #sales
+    const NOT_CHECKLIST = 0;
+    const CHECKLIST = 1;
 }
 
 

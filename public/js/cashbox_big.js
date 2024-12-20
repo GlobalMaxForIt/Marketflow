@@ -536,15 +536,15 @@ function autoSetCardSum(){
     }
 }
 
-function paymentPayFunc() {
+function paymentPayFunc(text) {
     if(loader != undefined && loader != null){
         if(loader.classList.contains("d-none")){
             loader.classList.remove("d-none")
         }
     }
     if(myDiv != undefined && myDiv != null){
-        if(!myDiv.classList.contains("d-none")){
-            myDiv.classList.add("d-none")
+        if(myDiv.classList.contains("d-none")){
+            myDiv.classList.remove("d-none")
         }
     }
     $(document).ready(function () {
@@ -559,11 +559,13 @@ function paymentPayFunc() {
                     data:{
                         'order_data':order_data,
                         'client_id':client_id,
+                        'sale_id':selected_checklist_id,
                         'client_dicount_price':clientDicountPrice,
                         'paid_amount':accepting_sum_int,
                         'return_amount':change_sum_int,
                         'card_sum':card_sum,
                         'cash_sum':cash_sum,
+                        'text':text
                         // 'client_dicount_price':clientDicountPrice,
                     },
                     success: function (data) {
@@ -574,15 +576,22 @@ function paymentPayFunc() {
                             }
                         }
                         if(myDiv != undefined && myDiv != null){
-                            if(myDiv.classList.contains("d-none")){
-                                myDiv.classList.remove("d-none")
+                            if(!myDiv.classList.contains("d-none")){
+                                myDiv.classList.add("d-none")
                             }
                         }
                         if(data.status == true){
                             if(localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null){
                                 localStorage.removeItem('order_data')
                             }
-                            window.location.href = cashbox_index+'?id='+data.order_id
+                            toastr.success(payment_success_text+' '+data.code)
+                            truncuateCashboxFunc()
+                        }else if(data.status == false){
+                            if(localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null){
+                                localStorage.removeItem('order_data')
+                            }
+                            toastr.success(set_aside_success_text+' '+data.code)
+                            truncuateCashboxFunc()
                         }
                     },
                     error: function (xhr, status, error) {
@@ -599,4 +608,3 @@ function paymentPayFunc() {
         }
     })
 }
-

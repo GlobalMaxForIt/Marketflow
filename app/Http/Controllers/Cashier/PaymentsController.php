@@ -69,6 +69,7 @@ class PaymentsController extends Controller
             'id'=>$sale->id,
             'cashier'=>$sale->cashier,
             'store'=>$sale->store,
+            'code'=>$sale->code,
             'client_full_name'=>$client_full_name,
             'client_info'=>$client_info,
             'client_discount_price'=>$sale->client_discount_price?number_format($sale->client_discount_price, 0, '', ' '):'no',
