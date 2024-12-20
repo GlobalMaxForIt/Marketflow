@@ -131,4 +131,31 @@ class PaymentsController extends Controller
         }
         return $products_data;
     }
+
+    function paymentDeleteFunc(Request $request){
+        $user = Auth::user();
+        $sales = Sales::where('store_id', $user->store_id)->where('id', $request->sale_id)->first();
+        if($sales){
+            $salesItems = $sales->salesItems;
+            $salesPayment = $sales->salesPayment;
+            $salesReport = $sales->salesReport;
+            foreach($salesItems as $salesItem){
+                $salesItem->delete();
+            }
+            if($salesPayment){
+                $salesPayment->delete();
+            }
+            if($salesReport){
+                $salesReport->delete();
+            }
+            $sales->delete();
+            $response = [
+                'code'=>$sales->code,
+                'status'=>true,
+                'message'=>'Success'
+            ];
+        }
+
+        return response()->json($response);
+    }
 }

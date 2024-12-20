@@ -28,4 +28,12 @@ class Sales extends Model
         return $this->hasOne(User::class, 'id', 'cashier_id')->where('status', Constants::CASHIER);
     }
 
+    public function salesPayment(){
+        return $this->hasOne(SalesPayments::class, 'sale_id', 'id');
+    }
+
+    public function salesReport(){
+        return $this->hasOne(SalesReports::class, 'sale_id', 'id');
+    }
+
 }

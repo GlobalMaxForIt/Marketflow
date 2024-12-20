@@ -168,22 +168,18 @@
                                 <div class="right_options" role="presentation">
                                     <div>
                                         <div class="payment-content-header">
-                                            <div class="payment-content-header_title mb-3 justify-content-start">
+                                            <div class="payment-content-header_title mb-3 justify-content-between">
                                                 <button class="btn-success btn" data-bs-toggle="modal" data-bs-target="#checklist_modal" id="set_checklist_button">
                                                     <h6 class="mb-0"><span class="font-16 fa fa-angle-right me-1"></span>{{translate_title('Set aside the check', $lang)}}</h6>
+                                                </button>
+                                                <button class="btn-danger btn" data-bs-toggle="modal" data-bs-target="#checklist_modal_delete" id="set_checklist_button_delete">
+                                                    <h6 class="mb-0"><span class="font-16 fa fa-angle-right me-1"></span>{{translate_title('Delete this check', $lang)}}</h6>
                                                 </button>
                                             </div>
                                             <div class="payment-content-header_user">
                                                 <div class="d-flex justify-content-center">
-                                                    <div class="position-relative mb-2 width_100_percent">
-                                                        @foreach($all_checklist_sales as $all_checklist_sale)
-                                                            @if($all_checklist_sale['sale_items'])
-                                                                <div class="checklist_item" onclick="checklistFunc('{{$all_checklist_sale['sale_items']}}', `{{$all_checklist_sale['id']}}`,`{{$all_checklist_sale['code']}}`, this)">
-                                                                    <h6>{{$all_checklist_sale['code']}}</h6>
-                                                                    <h6>{{$all_checklist_sale['price']}}</h6>
-                                                                </div>
-                                                            @endif
-                                                        @endforeach
+                                                    <div class="position-relative mb-2 width_100_percent" id="checklist_content">
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -292,10 +288,26 @@
                 <div class="modal-body">
                     <div class="text-center">
                         <img src="{{asset('img/delete_icon.png')}}" alt="" height="100px">
-                        <h4 class="mt-2 delete_text_content">{{ translate_title('Are you sure you want to add a checklist?', $lang)}}</h4>
+                        <h4 class="mt-2 delete_text_content">{{ translate_title('Are you sure you want to add a checklist?', $lang)}} <b id="this__check_list_code"></b></h4>
                         <div class="d-flex justify-content-between width_100_percent">
                             <a type="button" class="btn delete_modal_close my-2" data-bs-dismiss="modal"> {{ translate_title('No', $lang)}}</a>
                             <a class="btn delete_modal_confirm my-2" data-bs-dismiss="modal" onclick="paymentPayFunc('checklist')"> {{ translate_title('Yes', $lang)}} </a>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div id="checklist_modal_delete" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content modal-filled">
+                <div class="modal-body">
+                    <div class="text-center">
+                        <img src="{{asset('img/delete_icon.png')}}" alt="" height="100px">
+                        <h4 class="mt-2 delete_text_content">{{ translate_title('Are you sure you want to delete this checklist?', $lang)}} <b id="this_check_list_code"></b></h4>
+                        <div class="d-flex justify-content-between width_100_percent">
+                            <a type="button" class="btn delete_modal_close my-2" data-bs-dismiss="modal"> {{ translate_title('No', $lang)}}</a>
+                            <a class="btn delete_modal_confirm my-2" data-bs-dismiss="modal" onclick="deleteCheckFunc()"> {{ translate_title('Yes', $lang)}} </a>
                         </div>
                     </div>
                 </div>
@@ -508,9 +520,21 @@
         let payment_success_text = "{{translate_title('The payment was made successfully', $lang)}}"
         let set_aside_success_text = "{{translate_title('The check successfull set aside', $lang)}}"
         let client_total_sales = 0
-        let checklist_items = document.getElementsByName('checklist_item')
         let clientPhoneNumber = document.getElementById('clientPhoneNumber')
         let selected_checklist_id = ''
+        let checklist_changed = false
+
+        let checklist_items = document.getElementsByName('checklist_item')
+        let checklist_content = document.getElementById('checklist_content')
+        let this_check_list_code = document.getElementById('this_check_list_code')
+        let this__check_list_code = document.getElementById('this__check_list_code')
+        let all_checklist_sales = `{!! $all_checklist_sales !!}`
+
+        let set_checklist_button_delete = document.getElementById('set_checklist_button_delete')
+        if(set_checklist_button_delete != undefined && set_checklist_button_delete != null) {
+            set_checklist_button_delete.disabled = true
+        }
+
         $('#client_select_id_2').on('change', function () {
             let discountInfo = client_select_id_2.value.split(" ")
             let discountClientInfo = client_select_id_2.value.split("/")
@@ -534,27 +558,63 @@
             setClientPrices()
         })
         let checklistData = []
+
+        let check_lists_data_html = ''
+
+        function check_list_set_html(data){
+            check_lists_data_html = ''
+            for(let i=0; i<data.length; i++){
+                check_lists_data_html = check_lists_data_html + `<div class='checklist_item' onclick='checklistFunc(${JSON.stringify(data[i]['sale_items'])}, ${data[i]['id']}, "${data[i]['code']}", this)'>
+                            <h6>${data[i]['code']}</h6>
+                            <h6>${data[i]['price']}</h6>
+                        </div>`
+            }
+            checklist_content.innerHTML = check_lists_data_html
+        }
+        function getCheckAsideFunc(){
+            $(document).ready(function () {
+                $.ajax({
+                    url:`/../api/get-check-aside`,
+                    type:'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    },
+                    success: function (data) {
+                        check_list_set_html(data)
+                    },
+                    error: function (e) {
+                        console.log(e)
+                    }
+                })
+            })
+        }
+        getCheckAsideFunc()
+
         function checklistFunc(checklist_data, checklist_id, checklist_code, selected_checklist){
             selected_checklist_id = checklist_id
+            let checklist_items_ = document.getElementsByClassName('checklist_item')
+            checklist_changed = true
             truncuateCashboxFunc()
-            for(let k=0; k<checklist_items.length; k++){
-                if(checklist_items[k].classList.contains('active')){
-                    checklist_items[k].classList.remove('active')
+            for(let k=0; k<checklist_items_.length; k++){
+                if(checklist_items_[k].classList.contains('active')){
+                    checklist_items_[k].classList.remove('active')
                 }
             }
             if(selected_checklist != null && selected_checklist != undefined){
                 if(!selected_checklist.classList.contains('active')){
                     selected_checklist.classList.add('active')
                 }
-                // product_element_quantity = selected_checklist.querySelector('td h6 .product__quantity')
-                // product_element_sum = selected_checklist.querySelector('td h6 .product__sum')
             }
             checklistData = JSON.parse(checklist_data)
             for(let i=0; i<checklistData.length; i++){
                 addToOrder(checklistData[i].id, checklistData[i].name, checklistData[i].price, checklistData[i].discount, checklistData[i].discount_percent, checklistData[i].last_price, checklistData[i].amount, checklistData[i].barcode, checklistData[i].stock, checklistData[i].unit, checklistData[i].unit_id, checklistData[i].quantity, checklist_code, null)
             }
+            this_check_list_code.innerText = checklist_code
+            this__check_list_code.innerText = checklist_code
+            if(set_checklist_button_delete != undefined && set_checklist_button_delete != null) {
+                set_checklist_button_delete.disabled = false
+            }
         }
-
 
     </script>
     <script src="{{asset('js/products_keyboards.js')}}"></script>

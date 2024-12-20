@@ -207,7 +207,7 @@ function editProductFunc(orderProduct){
     orderProductData = JSON.parse(orderProduct.getAttribute('data-product'))
     if(Object.keys(orderProductData).length>0){
         selected_product_name.innerText = orderProductData.name + ' '+orderProductData.amount
-        selected_product_price.value = orderProductData.quantity*parseInt(orderProductData.last_price.replace(/\s/g, ''), 10)
+        selected_product_price.value = parseFloat(orderProductData.quantity)*parseInt(orderProductData.last_price.replace(/\s/g, ''), 10)
         selected_product_amount.value = parseFloat(orderProductData.quantity)
         selected_product_unit.innerText = orderProductData.unit
         selectedProductAmount = parseFloat(selected_product_amount.value)
@@ -339,6 +339,7 @@ selected_product_price.addEventListener('input', function (event) {
 })
 
 function changeAmountAndPrice(){
+    checklist_changed = false
     element_id = ''
     if(product_element_quantity != '') {
         product_element_quantity.innerText = selected_product_amount.value
@@ -565,28 +566,43 @@ function paymentPayFunc(text) {
                         'return_amount':change_sum_int,
                         'card_sum':card_sum,
                         'cash_sum':cash_sum,
-                        'text':text
+                        'text':text,
+                        'checklist_changed':checklist_changed
                         // 'client_dicount_price':clientDicountPrice,
                     },
                     success: function (data) {
                         hideHasItems()
-                        if(loader != undefined && loader != null){
-                            if(!loader.classList.contains("d-none")){
-                                loader.classList.add("d-none")
-                            }
-                        }
-                        if(myDiv != undefined && myDiv != null){
-                            if(!myDiv.classList.contains("d-none")){
-                                myDiv.classList.add("d-none")
-                            }
-                        }
                         if(data.status == true){
+                            if(loader != undefined && loader != null){
+                                if(!loader.classList.contains("d-none")){
+                                    loader.classList.add("d-none")
+                                }
+                            }
+                            if(myDiv != undefined && myDiv != null){
+                                if(!myDiv.classList.contains("d-none")){
+                                    myDiv.classList.add("d-none")
+                                }
+                            }
                             if(localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null){
                                 localStorage.removeItem('order_data')
                             }
                             toastr.success(payment_success_text+' '+data.code)
                             truncuateCashboxFunc()
+
                         }else if(data.status == false){
+                            setTimeout(function () {
+                                if(loader != undefined && loader != null){
+                                    if(!loader.classList.contains("d-none")){
+                                        loader.classList.add("d-none")
+                                    }
+                                }
+                                if(myDiv != undefined && myDiv != null){
+                                    if(!myDiv.classList.contains("d-none")){
+                                        myDiv.classList.add("d-none")
+                                    }
+                                }
+                                getCheckAsideFunc()
+                            }, 244)
                             if(localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null){
                                 localStorage.removeItem('order_data')
                             }
@@ -605,6 +621,68 @@ function paymentPayFunc(text) {
             }
         }else{
             toastr.warning(ordered_fail_text)
+        }
+    })
+}
+
+function deleteCheckFunc() {
+    console.log([selected_checklist_id, order_data.length])
+    if(loader != undefined && loader != null){
+        if(loader.classList.contains("d-none")){
+            loader.classList.remove("d-none")
+        }
+    }
+    if(myDiv != undefined && myDiv != null){
+        if(myDiv.classList.contains("d-none")){
+            myDiv.classList.remove("d-none")
+        }
+    }
+    $(document).ready(function () {
+        try{
+            $.ajax({
+                url: "/../api/payment-delete",
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                data:{
+                    'sale_id':selected_checklist_id,
+                },
+                success: function (data) {
+                    console.log(data)
+                    hideHasItems()
+                    if(data.status == true){
+                        if(set_checklist_button_delete != undefined && set_checklist_button_delete != null) {
+                            set_checklist_button_delete.disabled = true
+                        }
+                        setTimeout(function () {
+                            if(loader != undefined && loader != null){
+                                if(!loader.classList.contains("d-none")){
+                                    loader.classList.add("d-none")
+                                }
+                            }
+                            if(myDiv != undefined && myDiv != null){
+                                if(!myDiv.classList.contains("d-none")){
+                                    myDiv.classList.add("d-none")
+                                }
+                            }
+                            getCheckAsideFunc()
+                        }, 244)
+                        if(localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null){
+                            localStorage.removeItem('order_data')
+                        }
+                        toastr.success(set_aside_success_text+' '+data.code)
+                        truncuateCashboxFunc()
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors here
+                    console.log(xhr.responseText); // Log the error response from the server
+                    toastr.error('An error occurred: ' + xhr.status + ' ' + error); // Show error message
+                }
+            })
+        }catch (e) {
+            console.log(e)
         }
     })
 }

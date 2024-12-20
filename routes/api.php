@@ -9,6 +9,7 @@ use App\Http\Controllers\Superadmin\OrganizationController;
 use App\Http\Controllers\Superadmin\StoreController;
 use App\Http\Controllers\Cashier\CashboxController;
 use App\Http\Controllers\Cashier\CashierProductsController;
+use App\Http\Controllers\Cashier\PaymentsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,8 @@ use App\Http\Controllers\Cashier\CashierProductsController;
 
 Route::group(['middleware'=>'auth:sanctum'], function () {
     Route::post('payment-pay', [CashboxController::class, 'paymentPay'])->name('paymentPay');
+    Route::get('get-check-aside', [CashboxController::class, 'getCheckAside'])->name('getCheckAside');
+    Route::post('payment-delete', [PaymentsController::class, 'paymentDeleteFunc'])->name('paymentDeleteFunc');
 });
 
 Route::post('delete-product', [ProductsController::class, 'deleteProductImage']);

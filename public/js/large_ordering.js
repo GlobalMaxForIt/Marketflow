@@ -205,6 +205,7 @@ let element_id =''
 let current_data = {}
 let notify_product_text = ''
 function addToOrder(id, name, price, discount, discount_percent, last_price, amount, barcode, stock, unit, unit_id, quantity, code, this_element) {
+    checklist_changed = false
     stock_int = parseFloat(stock)
     is_exist = false
     order_json = {}
@@ -231,7 +232,7 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
                     'discount_percent': discount_percent,
                     'last_price': last_price,
                     'amount': amount,
-                    'quantity': 1,
+                    'quantity': quantity,
                     'barcode': barcode,
                     'stock': stock,
                     'unit': unit,
@@ -251,7 +252,7 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
                 'discount_percent': discount_percent,
                 'last_price': last_price,
                 'amount': amount,
-                'quantity': 1,
+                'quantity': quantity,
                 'barcode': barcode,
                 'stock': stock,
                 'unit': unit,
@@ -329,8 +330,8 @@ function setOrderHtml(order_data_){
                 <td>
                     <h6><b>${discount_html}</b></h6>
                 </td>
-                <td><h6><b class="product__quantity">${order_data_[j].quantity}</b></h6></td>
-                <td><h6><b class="product__sum">${new Intl.NumberFormat('ru-RU').format(order_data_[j].quantity*parseInt(order_data_[j].last_price.replace(/\s/g, ''), 10))}</b></h6></td>
+                <td><h6><b class="product__quantity">${order_data_[j].quantity +' '+order_data_[j].unit}</b></h6></td>
+                <td><h6><b class="product__sum">${new Intl.NumberFormat('ru-RU').format(parseFloat(order_data_[j].quantity)*parseInt(order_data_[j].last_price.replace(/\s/g, ''), 10))}</b></h6></td>
             </tr>`
     }
     total_sum.innerText = all_sum_withouth_discount

@@ -28,7 +28,7 @@ class SalesService
         $this->productsService = $productsService;
     }
 
-    public function salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $text){
+    public function salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $text, $checklist_changed){
         $sales->client_id = $client_id;
         if($text == 'checklist'){
             $sales->status = Constants::CHECKLIST;
@@ -44,6 +44,20 @@ class SalesService
             $order_data_discount = (int)str_replace(' ', '', $orderData['discount']);
             $all_price = $all_price + (float)$orderData['quantity'] * $order_data_price;
             $order_discount_price = $order_discount_price + (float)$orderData['quantity'] * $order_data_discount;
+            if($text == 'checklist' && $checklist_changed == true){
+                $sales_old_items = $sales->salesItems;
+                $salesPayment = $sales->salesPayment;
+                $salesReport = $sales->salesReport;
+                foreach($sales_old_items as $sales_old_item){
+                    $sales_old_item->delete();
+                }
+                if($salesPayment){
+                    $salesPayment->delete();
+                }
+                if($salesReport){
+                    $salesReport->delete();
+                }
+            }
             $sales_items = new SalesItems();
             $product = Products::find($orderData['id']);
             if($product){
@@ -113,11 +127,20 @@ class SalesService
         $sales_code = (string)str_pad($sales_id, $length, '0', STR_PAD_LEFT);
         $sales->code = $sales_code;
         $sales->save();
-        $response = [
-            'code'=>$sales->code,
-            'status'=>true,
-            'message'=>'Success'
-        ];
+        if($text == 'checklist'){
+            $response = [
+                'code'=>$sales->code,
+                'status'=>false,
+                'message'=>'Success'
+            ];
+        }else{
+            $response = [
+                'code'=>$sales->code,
+                'status'=>true,
+                'message'=>'Success'
+            ];
+        }
+
         return $response;
     }
 

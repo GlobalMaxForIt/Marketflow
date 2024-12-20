@@ -2494,11 +2494,11 @@ body[data-leftbar-size=compact] .menu_bar{
 }
 
 body[data-leftbar-size=condensed] #all_sum_info{
-    width: calc(68% - 114px);
+    width: calc(68% - 124px);
 }
 
 body[data-leftbar-size=default] #all_sum_info{
-    width: calc(68% - 194px);
+    width: calc(68% - 214px);
 }
 
 body[data-leftbar-size=compact] #all_sum_info{

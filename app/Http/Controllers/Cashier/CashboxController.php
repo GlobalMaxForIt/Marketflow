@@ -211,12 +211,21 @@ class CashboxController extends Controller
             'user'=>$user,
             'clients'=>$clients,
             'cashiers'=>$cashiers,
-            'all_checklist_sales'=>$all_checklist_sales,
+            'all_checklist_sales'=>json_encode($all_checklist_sales),
             'clients_for_discount'=>$clients_for_discount,
             'clients_discount'=>$clients_discount,
             'lang'=>$lang,
             'current_page'=>$this->current_page
         ]);
+    }
+
+    public function getCheckAside(){
+        $all_checklist_sales = [];
+        $check_lists = Sales::where('status', Constants::CHECKLIST)->get();
+        foreach($check_lists as $check_list){
+            $all_checklist_sales[] = $this->salesService->getSales($check_list);
+        }
+        return response()->json($all_checklist_sales);
     }
     /**
      * Display a listing of the resource.
@@ -433,9 +442,10 @@ class CashboxController extends Controller
         $order_data = $request->order_data;
         $saleId = (int)$request->sale_id;
         $text = $request->text;
+        $checklist_changed = $request->checklist_changed;
         if($saleId>0){
-            $sales = Sales::find($saleId);
-            if($text == 'checklist'){
+            $sales = Sales::where('store_id', $user->store_id)->where('id', $saleId)->first();
+            if($text == 'checklist' && $checklist_changed == false){
                 $response_ = [
                     'code'=>$sales->code,
                     'status'=>false,
@@ -446,7 +456,6 @@ class CashboxController extends Controller
         }else{
             $sales = new Sales();
         }
-
         $sales->store_id = $user->store_id;
         $sales->cashier_id = $user->id;
         $client_id = $request->client_id;
@@ -455,7 +464,7 @@ class CashboxController extends Controller
         $client_dicount_price = $request->client_dicount_price;
         $card_sum = $request->card_sum;
         $cash_sum = $request->cash_sum;
-        $response = $this->salesService->salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $text);
+        $response = $this->salesService->salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $text, $checklist_changed);
         return response()->json($response);
     }
 
