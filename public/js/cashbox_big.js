@@ -7,30 +7,26 @@ let display_password = document.getElementById('display_password');
 let cashier_password = document.getElementById('cashier_password')
 let entered_cash_sum = '0'
 let entered_card_sum = '0'
+let entered_debt_sum = '0'
 let cash_sum = 0
 let card_sum = 0
+let debt_sum = 0
 let accepting_sum_int = 0
-let leaving_sum_int = 0
 let change_sum_int = 0
 let klaviaturaNumber = 0
 
 let getTotalSum = 0
 let payment_sum = document.getElementById('payment_sum')
 let accepting_sum = document.getElementById('accepting_sum')
-let leaving_sum = document.getElementById('leaving_sum')
 let change_sum = document.getElementById('change_sum')
 
 let calculators = document.getElementById('calculators')
-let cashCalculator = document.getElementById('cashCalculator')
-let cardCalculator = document.getElementById('cardCalculator')
-let cardContent = document.getElementById('cardContent')
-let card_payment_ = document.getElementById('card_payment_')
+let debt_display = document.getElementById('debt_display')
 let selected_product_name = document.getElementById('selected_product_name')
 let selected_product_price = document.getElementById('selected_product_price')
 let selected_product_amount = document.getElementById('selected_product_amount')
 let selected_product_unit = document.getElementById('selected_product_unit')
 let dotKeyboard = document.getElementById('dotKeyboard')
-let is_set_mixed = false
 let dot_has = false
 let orderProductData = {}
 
@@ -42,103 +38,153 @@ function format_entered_sum(numbers){
     }
 }
 
-function setValues(cash_sum_, card_sum_){
-    display.value = format_entered_sum(cash_sum_); // Aks holda, raqamni qo'shamiz
-    display_card.value = format_entered_sum(card_sum_); // Aks holda, raqamni qo'shamiz
-    if(parseInt(getTotalSum) > (cash_sum_ + card_sum_)){
-        accepting_sum.innerText = format_entered_sum(cash_sum_ + card_sum_); // Aks holda, raqamni qo'shamiz
-        accepting_sum_int = cash_sum_ + card_sum_
-        leaving_sum.innerText = format_entered_sum(parseInt(getTotalSum) - accepting_sum_int)
-        leaving_sum_int = parseInt(getTotalSum) - accepting_sum_int
+function setValues(cash_sum_, card_sum_, debt_sum_){
+    switch (display_or_display_card_or_debt) {
+        case "display":
+            display.value = format_entered_sum(cash_sum_)
+            break;
+        case "display_card":
+            display_card.value = format_entered_sum(card_sum_)
+            break;
+        case "debt_display":
+            debt_display.value = format_entered_sum(debt_sum_)
+            break;
+    }
+    if(parseInt(getTotalSum) > (cash_sum_ + card_sum_ + debt_sum_)){
+        accepting_sum.innerText = format_entered_sum(cash_sum_ + card_sum_ + debt_sum_); // Aks holda, raqamni qo'shamiz
+        accepting_sum_int = cash_sum_ + card_sum_ + debt_sum_
         change_sum.innerText = '0'
         change_sum_int = 0
-    }else if(parseInt(getTotalSum) == (cash_sum_ + card_sum_)){
+    }else if(parseInt(getTotalSum) == (cash_sum_ + card_sum_ + debt_sum_)){
         accepting_sum.innerText = format_entered_sum(parseInt(getTotalSum)); // Aks holda, raqamni qo'shamiz
         accepting_sum_int = parseInt(getTotalSum)
-        leaving_sum.innerText = '0'
-        leaving_sum_int = 0
         change_sum.innerText = '0'
         change_sum_int = 0
     }else{
         accepting_sum.innerText = format_entered_sum(parseInt(getTotalSum)); // Aks holda, raqamni qo'shamiz
         accepting_sum_int = parseInt(getTotalSum)
-        leaving_sum.innerText = '0'
-        leaving_sum_int = 0
-        change_sum.innerText = format_entered_sum(cash_sum_ + card_sum_ - parseInt(getTotalSum))
-        change_sum_int = cash_sum_ + card_sum_ - parseInt(getTotalSum)
+        change_sum.innerText = format_entered_sum(cash_sum_ + card_sum_ + debt_sum_ - parseInt(getTotalSum))
+        change_sum_int = cash_sum_ + card_sum_ + debt_sum_ - parseInt(getTotalSum)
     }
 }
+
+let display_or_display_card_or_debt = ''
+let display_edit_payment = ''
+function selected_payment_input_func(){
+    setTimeout(function () {
+        if(debt_display.matches(":focus")){
+            display_or_display_card_or_debt = 'debt_display'
+            display_edit_payment = debt_display
+        }else if(display_card.matches(":focus")){
+            display_or_display_card_or_debt = 'display_card'
+            display_edit_payment = display_card
+        }else{
+            display_or_display_card_or_debt = 'display'
+            display_edit_payment = display
+        }
+    }, 94)
+}
+
+display.addEventListener('click', function () {
+    selected_payment_input_func()
+})
+display_card.addEventListener('click', function () {
+    selected_payment_input_func()
+})
+debt_display.addEventListener('click', function () {
+    selected_payment_input_func()
+})
+selected_payment_input_func()
 
 // Function to append numbers to the display
 function appendNumber(number) {
-    if (display.value == '0') {
-        entered_cash_sum = parseInt(number)
-    } else {
-        entered_cash_sum = String(entered_cash_sum) + number
-    }
-    cash_sum = parseInt(entered_cash_sum)
-    if(is_set_mixed){
-        autoSetCardSum()
-    }
-    setValues(cash_sum, card_sum)
-}
 
-// Function to append numbers to the display
-function appendNumberCard(number) {
-    if (display_card.value == '0') {
-        entered_card_sum = parseInt(number)
-    } else {
-        entered_card_sum = String(entered_card_sum) + number
+    switch (display_or_display_card_or_debt) {
+        case "display":
+            if (display.value == '0') {
+                entered_cash_sum = parseInt(number)
+            } else {
+                entered_cash_sum = String(entered_cash_sum) + number
+            }
+            cash_sum = parseInt(entered_cash_sum)
+            autoSetSum()
+            break;
+        case "display_card":
+            if (display_card.value == '0') {
+                entered_card_sum = parseInt(number)
+            } else {
+                entered_card_sum = String(entered_card_sum) + number
+            }
+            card_sum = parseInt(entered_card_sum)
+            autoSetSum()
+            break;
+        case "debt_display":
+            if (debt_display.value == '0') {
+                entered_debt_sum = parseInt(number)
+            } else {
+                entered_debt_sum = String(entered_debt_sum) + number
+            }
+            debt_sum = parseInt(entered_debt_sum)
+            break;
     }
-    card_sum = parseInt(entered_card_sum)
-    setValues(cash_sum, card_sum)
+    console.log([cash_sum, card_sum, debt_sum, display_or_display_card_or_debt])
+    setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt)
 }
 
 // Function to clear the display
 function clearDisplay() {
-    cash_sum = 0
-    if(is_set_mixed){
-        autoSetCardSum()
+    switch (display_or_display_card_or_debt) {
+        case "display":
+            cash_sum = 0
+            break;
+        case "display_card":
+            card_sum = 0
+            break;
+        case "debt_display":
+            debt_sum = 0
+            break;
     }
-    setValues(cash_sum, card_sum)
+    autoSetSum()
+    setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt)
 }
 
-// Function to clear the display
-function clearDisplayCard() {
-    card_sum = 0
-    setValues(cash_sum, card_sum)
-}
 // Function to remove the last digit (Backspace)
 function backspace() {
-    if (display.value.length > 1) {
-        entered_cash_sum = String(entered_cash_sum).slice(0, -1)
-        cash_sum = parseInt(entered_cash_sum)
-        if(is_set_mixed){
-            autoSetCardSum()
-        }
-        setValues(cash_sum, card_sum)
-    } else {
-        entered_cash_sum = '0'
-        cash_sum = parseInt(entered_cash_sum)
-        if(is_set_mixed){
-            autoSetCardSum()
-        }
-        setValues(cash_sum, card_sum)
+    switch (display_or_display_card_or_debt) {
+        case "display":
+            if (display.value.length > 1) {
+                entered_cash_sum = String(entered_cash_sum).slice(0, -1)
+                cash_sum = parseInt(entered_cash_sum)
+            } else {
+                entered_cash_sum = '0'
+                cash_sum = parseInt(entered_cash_sum)
+            }
+            autoSetSum()
+            break;
+        case "display_card":
+            if (display_card.value.length > 1) {
+                entered_card_sum = String(entered_card_sum).slice(0, -1)
+                card_sum = parseInt(entered_card_sum)
+            } else {
+                entered_card_sum = '0'
+                card_sum = parseInt(entered_card_sum)
+            }
+            autoSetSum()
+            break;
+        case "debt_display":
+            if (debt_display.value.length > 1) {
+                entered_debt_sum = String(entered_debt_sum).slice(0, -1)
+                debt_sum = parseInt(entered_debt_sum)
+            } else {
+                entered_debt_sum = '0'
+                debt_sum = parseInt(entered_debt_sum)
+            }
+            autoSetSum()
+            break;
     }
+    setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt)
 }
 
-// Function to remove the last digit (Backspace)
-function backspaceCard() {
-    if (display_card.value.length > 1) {
-        entered_card_sum = String(entered_card_sum).slice(0, -1)
-        card_sum = parseInt(entered_card_sum)
-        setValues(cash_sum, card_sum)
-    } else {
-        entered_card_sum = '0'
-        card_sum = parseInt(entered_card_sum)
-        setValues(cash_sum, card_sum)
-    }
-}
 // Function to append numbers to the display
 function appendPassword(number) {
     if (display_password.value == '') {
@@ -431,88 +477,32 @@ function backspaceEditProduct() {
 function paymentFunc() {
     getTotalSum = total_all_left_sum
     payment_sum.innerText = format_entered_sum(getTotalSum)
-    change_sum.innerText = '0'
-}
-
-let payment_types = document.querySelectorAll('#payment_modal .btn-outline-secondary')
-
-function setPaymentTypes(button_){
-    for(let ij = 0;ij<payment_types.length; ij++){
-        if(payment_types[ij].classList.contains('active')){
-            payment_types[ij].classList.remove('active')
-        }
-    }
-    if(!button_.classList.contains('active')){
-        button_.classList.add('active')
-    }
-}
-
-function setCash(button__) {
-    if(!cardContent.classList.contains('d-none')){
-        cardContent.classList.add('d-none')
-    }
-    if(!cardCalculator.classList.contains('d-none')){
-        cardCalculator.classList.add('d-none')
-    }
-    if(cashCalculator.classList.contains('d-none')){
-        cashCalculator.classList.remove('d-none')
-    }
-    entered_cash_sum = '0'
-    cash_sum = parseInt(entered_cash_sum)
-    card_sum = 0
-    is_set_mixed = false
-    setValues(cash_sum, card_sum)
-    setPaymentTypes(button__)
-}
-function setCard(button__) {
-    if(cardContent.classList.contains('d-none')){
-        cardContent.classList.remove('d-none')
-    }
-    if(!cashCalculator.classList.contains('d-none')){
-        cashCalculator.classList.add('d-none')
-    }
-    if(!cardCalculator.classList.contains('d-none')){
-        cardCalculator.classList.add('d-none')
-    }
-    card_payment_.value = format_entered_sum(getTotalSum)
-    entered_card_sum = getTotalSum
-    entered_cash_sum = '0'
-    card_sum = parseInt(entered_card_sum)
-    cash_sum = 0
-    is_set_mixed = false
-    setValues(cash_sum, card_sum)
-    setPaymentTypes(button__)
-}
-function setMixed(button__) {
-    if(!cardContent.classList.contains('d-none')){
-        cardContent.classList.add('d-none')
-    }
-    if(cashCalculator.classList.contains('d-none')){
-        cashCalculator.classList.remove('d-none')
-    }
-    if(cardCalculator.classList.contains('d-none')){
-        cardCalculator.classList.remove('d-none')
-    }
-    is_set_mixed = true
-    setValues(cash_sum, card_sum)
-    setPaymentTypes(button__)
+    cash_sum = parseInt(getTotalSum)
+    display.value = format_entered_sum(cash_sum)
+    autoSetSum()
+    setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt)
 }
 
 display.addEventListener('input', () => {
     klaviaturaNumber = 0
     klaviaturaNumber = formatInput(display).replace(/\s+/g, '')
     cash_sum = parseInt(klaviaturaNumber)
-    if(is_set_mixed){
-        autoSetCardSum()
-    }
-    setValues(cash_sum, card_sum)
+    autoSetSum()
+    setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt='display')
 });
 
 display_card.addEventListener('input', () => {
     klaviaturaNumber = 0
     klaviaturaNumber = formatInput(display_card).replace(/\s+/g, '')
     card_sum = parseInt(klaviaturaNumber)
-    setValues(cash_sum, card_sum)
+    autoSetSum()
+    setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt='display_card')
+});
+debt_display.addEventListener('input', () => {
+    klaviaturaNumber = 0
+    klaviaturaNumber = formatInput(debt_display).replace(/\s+/g, '')
+    debt_sum = parseInt(klaviaturaNumber)
+    setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt='debt_display')
 });
 function formatInput(param){
     // Faqat raqamlarni olamiz
@@ -529,12 +519,26 @@ function formatInput(param){
     }
     return param.value
 }
-function autoSetCardSum(){
-    if(parseInt(getTotalSum) - cash_sum>0){
-        card_sum = parseInt(getTotalSum) - cash_sum
-    }else{
-        card_sum = 0
+function autoSetSum(){
+    switch (display_or_display_card_or_debt) {
+        case "display":
+            if(parseInt(getTotalSum) - cash_sum>0){
+                card_sum = parseInt(getTotalSum) - cash_sum
+            }else{
+                card_sum = 0
+            }
+            display_card.value = card_sum
+            break;
+        case "display_card":
+            if(parseInt(getTotalSum) - cash_sum - card_sum>0){
+                debt_sum = parseInt(getTotalSum) - cash_sum - card_sum
+            }else{
+                debt_sum = 0
+            }
+            debt_display.value = debt_sum
+            break;
     }
+
 }
 
 function paymentPayFunc(text) {
@@ -566,6 +570,7 @@ function paymentPayFunc(text) {
                         'return_amount':change_sum_int,
                         'card_sum':card_sum,
                         'cash_sum':cash_sum,
+                        'debt_sum':debt_sum,
                         'text':text,
                         'checklist_changed':checklist_changed
                         // 'client_dicount_price':clientDicountPrice,
@@ -626,7 +631,6 @@ function paymentPayFunc(text) {
 }
 
 function deleteCheckFunc() {
-    console.log([selected_checklist_id, order_data.length])
     if(loader != undefined && loader != null){
         if(loader.classList.contains("d-none")){
             loader.classList.remove("d-none")

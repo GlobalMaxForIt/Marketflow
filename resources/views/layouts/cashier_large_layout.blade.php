@@ -591,51 +591,45 @@
 
 <!-- Full width modal content -->
 <div id="payment_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fullWidthModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-full-width">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content ps-4 pe-4">
             <div class="modal-header">
-                <div class="row width_100_percent">
-                    <div class="col-3">
-                        <div class="text-center">
-                            <strong class="me-auto">{{translate_title('Payment sum', $lang)}}</strong>
-                        </div>
-                        <div class="input-display_" id="payment_sum">0</div>
-                    </div>
-                    <div class="col-3">
-                        <div class="text-center">
-                            <strong class="me-auto">{{translate_title('Accepting sum', $lang)}}</strong>
-                        </div>
-                        <div class="input-display_" id="accepting_sum">0</div>
-                    </div>
-                    <div class="col-3">
-                        <div class="text-center">
-                            <strong class="me-auto">{{translate_title('Leaving sum', $lang)}}</strong>
-                        </div>
-                        <div class="input-display_" id="leaving_sum">0</div>
-                    </div>
-                    <div class="col-3">
-                        <div class="text-center">
-                            <strong class="me-auto">{{translate_title('Change sum', $lang)}}</strong>
-                        </div>
-                        <div class="input-display_" id="change_sum">0</div>
-                    </div>
-                </div>
                 <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
             </div>
-            <div class="modal-header d-flex justify-content-between">
-                <button type="button" class="btn btn-outline-secondary waves-effect active" onclick="setCash(this)"><h6>{{translate_title('Наличные', $lang)}}</h6></button>
-                <button type="button" class="btn btn-outline-secondary waves-effect" onclick="setCard(this)"><h6>{{translate_title('Безналичные', $lang)}}</h6></button>
-                <button type="button" class="btn btn-outline-secondary waves-effect" onclick="setMixed(this)"><h6>{{translate_title('Смешанные', $lang)}}</h6></button>
-            </div>
-            <div class="modal-body d-flex justify-content-between" id="calculators">
-                <div class="mt-2 cash_calculator" id="cashCalculator">
-                    <h4>{{translate_title('Ввод сумма наличие', $lang)}}</h4>
-                    <!-- Sonni ko'rsatish joyi -->
-                    <div class="row">
-                        <div class="col-12">
-                            <input id="display" class="input-display" value="0" type="text">
-                        </div>
+            <div class="d-flex justify-content-between width_100_percent">
+                <div class="text-start width_45_percent">
+                    <div class="text-start">
+                        <h4 class="me-auto">{{translate_title('Payment sum', $lang)}}</h4>
                     </div>
+                    <div class="text-start">
+                        <h4 class="me-auto">{{translate_title('Accepting sum', $lang)}}</h4>
+                    </div>
+                    <div class="text-start">
+                        <h4 class="me-auto">{{translate_title('Change sum', $lang)}}</h4>
+                    </div>
+                </div>
+                <div class="text-center width_45_percent">
+                    <h4 class="" id="payment_sum">0</h4>
+                    <h4 class="" id="accepting_sum">0</h4>
+                    <h4 class="" id="change_sum">0</h4>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between mt-4">
+                <div>
+                    <div class="d-flex position-relative justify-content-between">
+                        <h5>{{translate_title('Наличие', $lang)}}</h5>
+                        <input id="display" class="input-display-lg" value="0" type="text">
+                    </div>
+                    <div class="d-flex position-relative justify-content-between">
+                        <h5>{{translate_title('Карта', $lang)}}</h5>
+                        <input id="display_card" class="input-display-lg" value="0" type="text">
+                    </div>
+                    <div class="d-flex position-relative justify-content-between">
+                        <h5>{{translate_title('Долг', $lang)}}</h5>
+                        <input id="debt_display" class="input-display-lg" value="0" type="text">
+                    </div>
+                </div>
+                <div class="width_344_pixel">
                     <div class="mb-2">
                         <!-- Raqamlar tugmalari -->
                         <div class="row mb-2">
@@ -692,83 +686,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt-2 cash_calculator d-none" id="cardCalculator">
-                    <h4>{{translate_title('Ввод сумма безналичие', $lang)}}</h4>
-                    <!-- Sonni ko'rsatish joyi -->
-                    <div class="row">
-                        <div class="col-12">
-                            <input id="display_card" class="input-display" value="0" type="text">
-                            </input>
-                        </div>
-                        <div class="mb-2">
-                            <!-- Raqamlar tugmalari -->
-                            <div class="row mb-2">
-                                <div class="col-4">
-                                    <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(1)">1</a>
-                                </div>
-                                <div class="col-4">
-                                    <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(2)">2</a>
-                                </div>
-                                <div class="col-4">
-                                    <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(3)">3</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-2">
-                            <div class="row mb-2">
-                                <div class="col-4">
-                                    <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(4)">4</a>
-                                </div>
-                                <div class="col-4">
-                                    <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(5)">5</a>
-                                </div>
-                                <div class="col-4">
-                                    <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(6)">6</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-2">
-                            <div class="row mb-2">
-                                <div class="col-4">
-                                    <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(7)">7</a>
-                                </div>
-                                <div class="col-4">
-                                    <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(8)">8</a>
-                                </div>
-                                <div class="col-4">
-                                    <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(9)">9</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-2">
-                            <div class="row mb-2">
-                                <div class="col-4">
-                                    <a class="btn btn-outline-dark btn-number" onclick="appendNumberCard(0)">0</a>
-                                </div>
-                                <div class="col-4">
-                                    <a class="btn btn-outline-dark btn-number" onclick="clearDisplayCard()">Clear</a>
-                                </div>
-                                <div class="col-4">
-                                    <a class="btn btn-outline-dark btn-number" onclick="backspaceCard()">
-                                        <span class="mdi mdi-backspace"></span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-body d-flex justify-content-center d-none" id="cardContent">
-                    <input class="input-display" type="text" id="card_payment_" readonly>
-                </div>
             </div>
-            <div class="modal-footer">
-                <a class="btn modal_close height_50 me-4" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
-                <button class="btn modal_confirm height_50" data-bs-dismiss="modal" onclick="paymentPayFunc(null)">{{translate_title('Payment', $lang)}}</button>
+            <div class="modal-footer d-flex justify-content-between">
+                <a class="btn modal_close_ height_50 me-4" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
+                <button class="btn modal_confirm_ height_50" data-bs-dismiss="modal" onclick="paymentPayFunc(null)">{{translate_title('Payment', $lang)}}</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 <!-- Standard modal content -->
 <div id="standard-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
     <div class="modal-dialog">

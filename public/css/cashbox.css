@@ -48,6 +48,15 @@ table{
     border-radius: 10px;
     width: 95%;
 }
+.input-display-lg {
+    font-size: 24px;
+    margin-bottom: 14px;
+    text-align: center;
+    padding: 7px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    width: 64%;
+}
 .input-display_ {
     font-size: 16px;
     margin-bottom: 20px;

@@ -869,6 +869,9 @@
 .width_304_pixel{
     width: 304px !important;
 }
+.width_344_pixel{
+    width: 344px !important;
+}
 .width_144_pixel{
     width: 144px !important;
 }
@@ -1763,15 +1766,18 @@ input[type=number]::-webkit-outer-spin-button {
     margin-right: 4px;
 }
 .modal_close_{
+    display: flex;
+    align-items: center;
     background-color: #FB850E;
     transition: 0.14s;
-    color: black;
+    color: white !important;
     margin-right: 4px;
 }
 .modal_confirm_, .modal_confirm_pay_{
     background-color: #3EB944;
     transition: 0.14s;
     display: flex;
+    color: white !important;
     align-items: center;
     justify-content: center;
 }
@@ -2620,4 +2626,7 @@ body[data-layout-color="dark"] .client_selected_product_row:hover, tbody#popover
 }
 .checklist_item h6{
     margin-bottom: 0px !important;
+}
+#payment_modal .modal-content{
+    width: 794px;
 }
