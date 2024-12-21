@@ -39,6 +39,7 @@ function format_entered_sum(numbers){
 }
 
 function setValues(cash_sum_, card_sum_, debt_sum_){
+    console.log([cash_sum_, card_sum_, debt_sum_, display_or_display_card_or_debt])
     switch (display_or_display_card_or_debt) {
         case "display":
             display.value = format_entered_sum(cash_sum_)
@@ -98,25 +99,24 @@ selected_payment_input_func()
 
 // Function to append numbers to the display
 function appendNumber(number) {
-
     switch (display_or_display_card_or_debt) {
         case "display":
             if (display.value == '0') {
-                entered_cash_sum = parseInt(number)
+                entered_cash_sum = String(number)
             } else {
                 entered_cash_sum = String(entered_cash_sum) + number
             }
             cash_sum = parseInt(entered_cash_sum)
-            autoSetSum()
+            autoSetCardSum()
             break;
         case "display_card":
             if (display_card.value == '0') {
-                entered_card_sum = parseInt(number)
+                entered_card_sum = String(number)
             } else {
                 entered_card_sum = String(entered_card_sum) + number
             }
             card_sum = parseInt(entered_card_sum)
-            autoSetSum()
+            autoSetDebtSum()
             break;
         case "debt_display":
             if (debt_display.value == '0') {
@@ -127,7 +127,6 @@ function appendNumber(number) {
             debt_sum = parseInt(entered_debt_sum)
             break;
     }
-    console.log([cash_sum, card_sum, debt_sum, display_or_display_card_or_debt])
     setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt)
 }
 
@@ -136,15 +135,16 @@ function clearDisplay() {
     switch (display_or_display_card_or_debt) {
         case "display":
             cash_sum = 0
+            autoSetCardSum()
             break;
         case "display_card":
             card_sum = 0
+            autoSetDebtSum()
             break;
         case "debt_display":
             debt_sum = 0
             break;
     }
-    autoSetSum()
     setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt)
 }
 
@@ -159,7 +159,7 @@ function backspace() {
                 entered_cash_sum = '0'
                 cash_sum = parseInt(entered_cash_sum)
             }
-            autoSetSum()
+            autoSetCardSum()
             break;
         case "display_card":
             if (display_card.value.length > 1) {
@@ -169,7 +169,7 @@ function backspace() {
                 entered_card_sum = '0'
                 card_sum = parseInt(entered_card_sum)
             }
-            autoSetSum()
+            autoSetDebtSum()
             break;
         case "debt_display":
             if (debt_display.value.length > 1) {
@@ -179,7 +179,6 @@ function backspace() {
                 entered_debt_sum = '0'
                 debt_sum = parseInt(entered_debt_sum)
             }
-            autoSetSum()
             break;
     }
     setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt)
@@ -477,9 +476,10 @@ function backspaceEditProduct() {
 function paymentFunc() {
     getTotalSum = total_all_left_sum
     payment_sum.innerText = format_entered_sum(getTotalSum)
-    cash_sum = parseInt(getTotalSum)
+    entered_cash_sum = parseInt(getTotalSum)
+    cash_sum = entered_cash_sum
     display.value = format_entered_sum(cash_sum)
-    autoSetSum()
+    autoSetCardSum()
     setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt)
 }
 
@@ -487,7 +487,7 @@ display.addEventListener('input', () => {
     klaviaturaNumber = 0
     klaviaturaNumber = formatInput(display).replace(/\s+/g, '')
     cash_sum = parseInt(klaviaturaNumber)
-    autoSetSum()
+    autoSetCardSum()
     setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt='display')
 });
 
@@ -495,7 +495,7 @@ display_card.addEventListener('input', () => {
     klaviaturaNumber = 0
     klaviaturaNumber = formatInput(display_card).replace(/\s+/g, '')
     card_sum = parseInt(klaviaturaNumber)
-    autoSetSum()
+    autoSetDebtSum()
     setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt='display_card')
 });
 debt_display.addEventListener('input', () => {
@@ -519,26 +519,26 @@ function formatInput(param){
     }
     return param.value
 }
-function autoSetSum(){
-    switch (display_or_display_card_or_debt) {
-        case "display":
-            if(parseInt(getTotalSum) - cash_sum>0){
-                card_sum = parseInt(getTotalSum) - cash_sum
-            }else{
-                card_sum = 0
-            }
-            display_card.value = card_sum
-            break;
-        case "display_card":
-            if(parseInt(getTotalSum) - cash_sum - card_sum>0){
-                debt_sum = parseInt(getTotalSum) - cash_sum - card_sum
-            }else{
-                debt_sum = 0
-            }
-            debt_display.value = debt_sum
-            break;
+function autoSetCardSum(){
+    if(parseInt(getTotalSum) - cash_sum>0){
+        card_sum = parseInt(getTotalSum) - cash_sum
+    }else{
+        card_sum = 0
+        debt_sum = 0
     }
+    display.value = format_entered_sum(cash_sum)
+    display_card.value = format_entered_sum(card_sum)
+    debt_display.value = format_entered_sum(debt_sum)
+}
 
+function autoSetDebtSum(){
+    if(parseInt(getTotalSum) - cash_sum - card_sum>0){
+        debt_sum = parseInt(getTotalSum) - cash_sum - card_sum
+    }else{
+        debt_sum = 0
+    }
+    display_card.value = format_entered_sum(card_sum)
+    debt_display.value = format_entered_sum(debt_sum)
 }
 
 function paymentPayFunc(text) {
