@@ -28,7 +28,7 @@ class SalesService
         $this->productsService = $productsService;
     }
 
-    public function salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $text, $checklist_changed){
+    public function salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $text, $checklist_changed, $debt_sum){
         $sales->client_id = $client_id;
         if($text == 'checklist'){
             $sales->status = Constants::CHECKLIST;
@@ -44,19 +44,17 @@ class SalesService
             $order_data_discount = (int)str_replace(' ', '', $orderData['discount']);
             $all_price = $all_price + (float)$orderData['quantity'] * $order_data_price;
             $order_discount_price = $order_discount_price + (float)$orderData['quantity'] * $order_data_discount;
-            if($text == 'checklist' && $checklist_changed == true){
-                $sales_old_items = $sales->salesItems;
-                $salesPayment = $sales->salesPayment;
-                $salesReport = $sales->salesReport;
-                foreach($sales_old_items as $sales_old_item){
-                    $sales_old_item->delete();
-                }
-                if($salesPayment){
-                    $salesPayment->delete();
-                }
-                if($salesReport){
-                    $salesReport->delete();
-                }
+            $sales_old_items = $sales->salesItems;
+            $salesPayment = $sales->salesPayment;
+            $salesReport = $sales->salesReport;
+            foreach($sales_old_items as $sales_old_item){
+                $sales_old_item->delete();
+            }
+            if($salesPayment){
+                $salesPayment->delete();
+            }
+            if($salesReport){
+                $salesReport->delete();
             }
             $sales_items = new SalesItems();
             $product = Products::find($orderData['id']);
@@ -89,6 +87,7 @@ class SalesService
         $sales->paid_amount = $paid_amount;
         $sales->return_amount = $return_amount;
         $sales->total_amount = $total_price;
+        $sales->debt_amount = $debt_sum;
         $sales->save();
         if((int)$card_sum > 0){
             $sales_payments = new SalesPayments();

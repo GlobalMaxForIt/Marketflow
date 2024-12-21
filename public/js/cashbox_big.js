@@ -39,7 +39,6 @@ function format_entered_sum(numbers){
 }
 
 function setValues(cash_sum_, card_sum_, debt_sum_){
-    console.log([cash_sum_, card_sum_, debt_sum_, display_or_display_card_or_debt])
     switch (display_or_display_card_or_debt) {
         case "display":
             display.value = format_entered_sum(cash_sum_)
@@ -53,17 +52,17 @@ function setValues(cash_sum_, card_sum_, debt_sum_){
     }
     if(parseInt(getTotalSum) > (cash_sum_ + card_sum_ + debt_sum_)){
         accepting_sum.innerText = format_entered_sum(cash_sum_ + card_sum_ + debt_sum_); // Aks holda, raqamni qo'shamiz
-        accepting_sum_int = cash_sum_ + card_sum_ + debt_sum_
+        accepting_sum_int = cash_sum_ + card_sum_
         change_sum.innerText = '0'
         change_sum_int = 0
     }else if(parseInt(getTotalSum) == (cash_sum_ + card_sum_ + debt_sum_)){
         accepting_sum.innerText = format_entered_sum(parseInt(getTotalSum)); // Aks holda, raqamni qo'shamiz
-        accepting_sum_int = parseInt(getTotalSum)
+        accepting_sum_int = cash_sum_ + card_sum_
         change_sum.innerText = '0'
         change_sum_int = 0
     }else{
         accepting_sum.innerText = format_entered_sum(parseInt(getTotalSum)); // Aks holda, raqamni qo'shamiz
-        accepting_sum_int = parseInt(getTotalSum)
+        accepting_sum_int = cash_sum_ + card_sum_
         change_sum.innerText = format_entered_sum(cash_sum_ + card_sum_ + debt_sum_ - parseInt(getTotalSum))
         change_sum_int = cash_sum_ + card_sum_ + debt_sum_ - parseInt(getTotalSum)
     }
@@ -576,6 +575,7 @@ function paymentPayFunc(text) {
                         // 'client_dicount_price':clientDicountPrice,
                     },
                     success: function (data) {
+                        console.log(data)
                         hideHasItems()
                         if(data.status == true){
                             if(loader != undefined && loader != null){

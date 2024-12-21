@@ -462,9 +462,10 @@ class CashboxController extends Controller
         $paid_amount = $request->paid_amount;
         $return_amount = $request->return_amount;
         $client_dicount_price = $request->client_dicount_price;
+        $debt_sum = $request->debt_sum;
         $card_sum = $request->card_sum;
         $cash_sum = $request->cash_sum;
-        $response = $this->salesService->salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $text, $checklist_changed);
+        $response = $this->salesService->salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $text, $checklist_changed, $debt_sum);
         return response()->json($response);
     }
 

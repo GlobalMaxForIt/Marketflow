@@ -21,6 +21,7 @@
                 <div class="order-section">
                     <div class="card">
                         <div class="card-body overflow-auto">
+                            <h6 class="d-none" id="check_code"></h6>
                             <table id="popover-container" class="tablesaw table mb-0" data-tablesaw-mode="swipe" data-tablesaw-mode-switch
                                    data-tablesaw-minimap>
                                 <thead>
@@ -523,11 +524,11 @@
         let clientPhoneNumber = document.getElementById('clientPhoneNumber')
         let selected_checklist_id = ''
         let checklist_changed = false
-
         let checklist_items = document.getElementsByName('checklist_item')
         let checklist_content = document.getElementById('checklist_content')
         let this_check_list_code = document.getElementById('this_check_list_code')
         let this__check_list_code = document.getElementById('this__check_list_code')
+        let check_code = document.getElementById('check_code')
         let all_checklist_sales = `{!! $all_checklist_sales !!}`
 
         let set_checklist_button_delete = document.getElementById('set_checklist_button_delete')
@@ -589,11 +590,9 @@
             })
         }
         getCheckAsideFunc()
-
+        let selected_checklist_is_active = false
         function checklistFunc(checklist_data, checklist_id, checklist_code, selected_checklist){
-            selected_checklist_id = checklist_id
             let checklist_items_ = document.getElementsByClassName('checklist_item')
-            checklist_changed = true
             truncuateCashboxFunc()
             for(let k=0; k<checklist_items_.length; k++){
                 if(checklist_items_[k].classList.contains('active')){
@@ -601,18 +600,37 @@
                 }
             }
             if(selected_checklist != null && selected_checklist != undefined){
-                if(!selected_checklist.classList.contains('active')){
-                    selected_checklist.classList.add('active')
+                if(!selected_checklist_is_active){
+                    if(!selected_checklist.classList.contains('active')){
+                        selected_checklist.classList.add('active')
+                        checklistData = JSON.parse(checklist_data)
+                        for(let i=0; i<checklistData.length; i++){
+                            addToOrder(checklistData[i].id, checklistData[i].name, checklistData[i].price, checklistData[i].discount, checklistData[i].discount_percent, checklistData[i].last_price, checklistData[i].amount, checklistData[i].barcode, checklistData[i].stock, checklistData[i].unit, checklistData[i].unit_id, checklistData[i].quantity, checklist_code, null)
+                        }
+                        this_check_list_code.innerText = checklist_code
+                        this__check_list_code.innerText = checklist_code
+                        if(set_checklist_button_delete != undefined && set_checklist_button_delete != null) {
+                            set_checklist_button_delete.disabled = false
+                        }
+                        if(!check_code.classList.contains('d-none')){
+                            check_code.classList.remove('d-none')
+                        }
+                        selected_checklist_is_active = true
+                        checklist_changed = true
+                        set_checklist_button_delete.disabled = false
+                        selected_checklist_id = checklist_id
+
+                    }
+                }else{
+                    selected_checklist.classList.remove('active')
+                    if(check_code.classList.contains('d-none')){
+                        check_code.classList.add('d-none')
+                    }
+                    set_checklist_button_delete.disabled = true
+                    selected_checklist_is_active = false
+                    checklist_changed = false
+                    selected_checklist_id = ''
                 }
-            }
-            checklistData = JSON.parse(checklist_data)
-            for(let i=0; i<checklistData.length; i++){
-                addToOrder(checklistData[i].id, checklistData[i].name, checklistData[i].price, checklistData[i].discount, checklistData[i].discount_percent, checklistData[i].last_price, checklistData[i].amount, checklistData[i].barcode, checklistData[i].stock, checklistData[i].unit, checklistData[i].unit_id, checklistData[i].quantity, checklist_code, null)
-            }
-            this_check_list_code.innerText = checklist_code
-            this__check_list_code.innerText = checklist_code
-            if(set_checklist_button_delete != undefined && set_checklist_button_delete != null) {
-                set_checklist_button_delete.disabled = false
             }
         }
 
