@@ -58,7 +58,7 @@ function setItem(item, index){
                                             <img onclick="showImage('${item.items.product_image}')"  data-bs-toggle="modal" data-bs-target="#images-modal" src="${item.items.product_image}" alt="" width="24px">
                                         </div>
                                         <div class="width_45_percent d-flex flex-column justify-content-center">
-                                            <h6>${item.items.product_name}</h6>
+                                            <h6>${item.items.name + ' '+ item.items.amount}</h6>
                                             <h6>${item.quantity} ${item.items.unit}</h6>
                                             <h6 id="payment_product_amount"></h6>
                                         </div>
