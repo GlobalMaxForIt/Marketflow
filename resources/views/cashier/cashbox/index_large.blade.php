@@ -590,6 +590,7 @@
             })
         }
         getCheckAsideFunc()
+        let old_selected_checklist_id = ''
         let selected_checklist_is_active = false
         function checklistFunc(checklist_data, checklist_id, checklist_code, selected_checklist){
             let checklist_items_ = document.getElementsByClassName('checklist_item')
@@ -600,7 +601,22 @@
                 }
             }
             if(selected_checklist != null && selected_checklist != undefined){
-                if(!selected_checklist_is_active){
+                if(checklist_id != '' && old_selected_checklist_id == checklist_id && !selected_checklist_is_active){
+                    selected_checklist.classList.remove('active')
+                    if(check_code.classList.contains('d-none')){
+                        check_code.classList.add('d-none')
+                    }
+                    set_checklist_button_delete.disabled = true
+                    if(selected_checklist_is_active){
+                        selected_checklist_is_active = false
+                    }else{
+                        selected_checklist_is_active = true
+                    }
+                    checklist_changed = false
+                    selected_checklist_id = ''
+                }else{
+                    selected_checklist_is_active = false
+                    old_selected_checklist_id = checklist_id
                     if(!selected_checklist.classList.contains('active')){
                         selected_checklist.classList.add('active')
                         checklistData = JSON.parse(checklist_data)
@@ -615,21 +631,11 @@
                         if(!check_code.classList.contains('d-none')){
                             check_code.classList.remove('d-none')
                         }
-                        selected_checklist_is_active = true
                         checklist_changed = true
                         set_checklist_button_delete.disabled = false
                         selected_checklist_id = checklist_id
 
                     }
-                }else{
-                    selected_checklist.classList.remove('active')
-                    if(check_code.classList.contains('d-none')){
-                        check_code.classList.add('d-none')
-                    }
-                    set_checklist_button_delete.disabled = true
-                    selected_checklist_is_active = false
-                    checklist_changed = false
-                    selected_checklist_id = ''
                 }
             }
         }

@@ -226,33 +226,43 @@ if(all_products_list_for_selling != undefined && all_products_list_for_selling !
 }
 
 let barcode_status = localStorage.getItem('barcode')
-if(barcode_status == undefined && barcode_status == null){
+if(barcode_status != undefined && barcode_status != null){
     barcodeOnFunc()
-    barcode_on_or_off.checked = true
-    barcode_checked = true
+    if(barcode_on_or_off != undefined && barcode_on_or_off != null){
+        barcode_on_or_off.checked = true
+    }
+    if(barcode_checked != undefined && barcode_checked != null){
+        barcode_checked.checked = true
+    }
 }else if(barcode_status == 'true'){
     barcodeOnFunc()
-    if(!barcode_on_or_off.checked){
-        barcode_on_or_off.checked = true
-        barcode_checked = true
+    if(barcode_on_or_off != undefined && barcode_on_or_off != null){
+        if(!barcode_on_or_off.checked){
+            barcode_on_or_off.checked = true
+            barcode_checked = true
+        }
     }
 }else if(barcode_status == 'false'){
     barcodeOffFunc()
-    if(barcode_on_or_off.checked){
-        barcode_on_or_off.checked = false
-        barcode_checked = false
+    if(barcode_checked != undefined && barcode_checked != null){
+        if(barcode_on_or_off.checked){
+            barcode_on_or_off.checked = false
+            barcode_checked = false
+        }
     }
 }
 
-barcode_on_or_off.addEventListener('click', function (event) {
-    if(barcode_checked){
-        barcodeOffFunc()
-        localStorage.setItem('barcode', 'false')
-    }else{
-        barcodeOnFunc()
-        localStorage.setItem('barcode', 'true')
-    }
-})
+if(barcode_on_or_off != undefined && barcode_on_or_off != null){
+    barcode_on_or_off.addEventListener('click', function (event) {
+        if(barcode_checked){
+            barcodeOffFunc()
+            localStorage.setItem('barcode', 'false')
+        }else{
+            barcodeOnFunc()
+            localStorage.setItem('barcode', 'true')
+        }
+    })
+}
 
 function barcodeOnFunc(){
     if(all_products_list_for_selling_title_barcode != undefined && all_products_list_for_selling_title_barcode != null && all_products_list_for_selling_title_barcode != ''){
@@ -267,14 +277,18 @@ function barcodeOnFunc(){
             }
         }
     }
-    if(!barcode_on_or_off.classList.contains('checkbox_checked')){
-        barcode_on_or_off.classList.add('checkbox_checked')
+    if(barcode_on_or_off != undefined && barcode_on_or_off != null){
+        if(!barcode_on_or_off.classList.contains('checkbox_checked')){
+            barcode_on_or_off.classList.add('checkbox_checked')
+        }
+        if(barcode_on_or_off.classList.contains('checkbox_unchecked')){
+            barcode_on_or_off.classList.remove('checkbox_unchecked')
+        }
+        barcode_on_or_off.checked = true
     }
-    if(barcode_on_or_off.classList.contains('checkbox_unchecked')){
-        barcode_on_or_off.classList.remove('checkbox_unchecked')
+    if(barcode_checked != undefined && barcode_checked != null){
+        barcode_checked = true
     }
-    barcode_on_or_off.checked = true
-    barcode_checked = true
 }
 function barcodeOffFunc(){
     if(all_products_list_for_selling_title_barcode != undefined && all_products_list_for_selling_title_barcode != null && all_products_list_for_selling_title_barcode != ''){
@@ -289,13 +303,17 @@ function barcodeOffFunc(){
             }
         }
     }
-    if(!barcode_on_or_off.classList.contains('checkbox_unchecked')){
-        barcode_on_or_off.classList.add('checkbox_unchecked')
+    if(barcode_on_or_off != undefined && barcode_on_or_off != null){
+        if(!barcode_on_or_off.classList.contains('checkbox_unchecked')){
+            barcode_on_or_off.classList.add('checkbox_unchecked')
+        }
+        if(barcode_on_or_off.classList.contains('checkbox_checked')){
+            barcode_on_or_off.classList.remove('checkbox_checked')
+        }
+        barcode_on_or_off.checked = false
     }
-    if(barcode_on_or_off.classList.contains('checkbox_checked')){
-        barcode_on_or_off.classList.remove('checkbox_checked')
+    if(barcode_checked != undefined && barcode_checked != null){
+        barcode_checked = false
     }
-    barcode_on_or_off.checked = false
-    barcode_checked = false
 }
 

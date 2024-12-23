@@ -54,6 +54,8 @@
           height: 56px;
         }
     </style>
+
+    <link rel="stylesheet" href="{{asset('css/cashbox.css')}}">
 </head>
 
 <body class="loading" data-layout-color="light" data-layout-mode="default" data-layout-size="fluid" id="body_layout"
@@ -644,9 +646,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-
-
-
 <div id="delete_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content modal-filled">
@@ -703,6 +702,103 @@
 </div>
 
 <div class="rightbar-overlay"></div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="edit_product_modal"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true" data-bs-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content width_74_percent">
+            <div class="modal-header card-header">
+                <h4 id="selected_product_name"> Milliy cola</h4>
+            </div>
+            <div class="modal-body card-body">
+                <div class="mt-1">
+                    <!-- Sonni ko'rsatish joyi -->
+                    <div class="row">
+                        <div class="col-5">
+                            <h4>{{translate_title('Sum', $lang)}}</h4>
+                        </div>
+                        <div class="col-7">
+                            <input id="selected_product_price" type="number" min="0" class="input-display_password" value="0">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                            <h4>{{translate_title('Amount', $lang)}}</h4>
+                        </div>
+                        <div class="col-4">
+                            <input id="selected_product_amount" type="number" max="1000" min="0" class="input-display_password" value="0">
+                        </div>
+                        <div class="col-3">
+                            <h6 id="selected_product_unit"></h6>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <!-- Raqamlar tugmalari -->
+                        <div class="row mb-2">
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendEditProduct(1)">1</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendEditProduct(2)">2</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendEditProduct(3)">3</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="row mb-2">
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendEditProduct(4)">4</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendEditProduct(5)">5</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendEditProduct(6)">6</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="row">
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendEditProduct(7)">7</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendEditProduct(8)">8</a>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendEditProduct(9)">9</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="row mb-2">
+                            <div class="col-4 mt-2">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendEditProduct(0)">0</a>
+                            </div>
+                            <div class="col-4 mt-2 d-none" id="dotKeyboard">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="appendDotEditProduct()">.</a>
+                            </div>
+                            <div class="col-4 mt-2">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="backspaceEditProduct()">
+                                    <span class="mdi mdi-backspace"></span>
+                                </a>
+                            </div>
+                            <div class="col-4 mt-2">
+                                <a class="btn btn-outline-dark btn-number-password" onclick="clearDisplayEditProduct()">Clear</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between width_100_percent mt-4">
+                    <a class="btn modal_close" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>
+                    <button type="submit" class="btn modal_confirm" onclick="changeAmountAndPriceReturn()" data-bs-dismiss="modal">{{translate_title('Confirm', $lang)}}</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 </body>
 
 <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
@@ -761,7 +857,6 @@
 <script>
     let carousel_product_images = document.getElementById('carousel_product_images')
     function getImages(images) {
-        console.log(images)
         let all_images = images.split(' ')
         let images_content = ''
         for(let i=0; i<all_images.length; i++){
@@ -848,8 +943,11 @@
 <script src="{{ asset('libs/morris.js06/morris.min.js') }}"></script>
 <script src="{{ asset('libs/raphael/raphael.min.js') }}"></script>
 
-<script src="{{ asset('js/pages/form-pickers.init.js') }}"></script>
+<script src="{{ asset('js/pages/form-pickers.init.js') }}"></script>f
 <script src="{{ asset('js/pages/form-advanced.init.js') }}"></script>
+
+<script src="{{asset('js/payments.js')}}"></script>
+<script src="{{asset('js/cashbox_big.js')}}"></script>
 
 <script>
     "use strict";

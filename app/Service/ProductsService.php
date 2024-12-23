@@ -217,6 +217,18 @@ class ProductsService
             $discount = 0;
             $discount_percent = 0;
         }
+
+        if ($product->image) {
+            $product_image = $product->image;
+        } else {
+            $product_image = 'no';
+        }
+        $image = asset('icon/no_photo.jpg');
+        $image_dir = storage_path("app/public/products/small/$product_image");
+        if(file_exists($image_dir)){
+            $image = asset('storage/products/small/' . $product_image);
+        }
+
         $unit_translation = '';
         if($product->unit){
             $unit_translation = table_translate_title($product->unit, 'unit', $lang);
@@ -225,6 +237,7 @@ class ProductsService
         $array_products = [
             'id'=>$product->id??'',
             'short_name'=>$this->truncateString($product->name)??'',
+            'product_image'=>$image,
             'name'=>$product->name??'',
             'amount'=>$product->amount??'',
             'quantity'=>$sales_item_quantity??'',

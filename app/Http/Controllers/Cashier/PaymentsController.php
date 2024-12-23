@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Sales;
 use App\Models\Clients;
 use App\Service\ClientService;
+use App\Service\ProductsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -17,9 +18,10 @@ class PaymentsController extends Controller
     public $current_page = 'sales';
     public $clientService;
 
-    public function __construct(ClientService $clientService)
+    public function __construct(ClientService $clientService, ProductsService $productsService)
     {
         $this->clientService = $clientService;
+        $this->productsService = $productsService;
         $this->title = $this->getTableTitle('Sales');
     }
 
@@ -93,32 +95,7 @@ class PaymentsController extends Controller
                     $sales_item_all_price = ((int)$salesItem->price - (int)$salesItem->discount_price) * (int)$salesItem->quantity;
                     $sales_item_price = (int)$salesItem->price * (int)$salesItem->quantity;
                     if($product){
-                        if ($product->image) {
-                            $product_image = $product->image;
-                        } else {
-                            $product_image = 'no';
-                        }
-                        $image = asset('icon/no_photo.jpg');
-                        $image_dir = storage_path("app/public/products/small/$product_image");
-                        if(file_exists($image_dir)){
-                            $image = asset('storage/products/small/' . $product_image);
-                        }
-
-                        if($product->amount){
-                            $product_amount_ = ' '.$product->amount;
-                        }else{
-                            $product_amount_ = '';
-                        }
-                        if($product->name){
-                            $product_name_ = $product->name;
-                        }else{
-                            $product_name_ = '';
-                        }
-
-                        $items = [
-                            'product_name'=>$product_name_.''.$product_amount_,
-                            'product_image'=>$image,
-                        ];
+                        $items = $this->productsService->getShortProduct($product, $salesItem->quantity);
                     }
                     $products_data[] = [
                         'items'=>$items,

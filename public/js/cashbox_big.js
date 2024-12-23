@@ -27,8 +27,36 @@ let selected_product_price = document.getElementById('selected_product_price')
 let selected_product_amount = document.getElementById('selected_product_amount')
 let selected_product_unit = document.getElementById('selected_product_unit')
 let dotKeyboard = document.getElementById('dotKeyboard')
+let return_total_amount = document.getElementById('return_total_amount')
 let dot_has = false
 let orderProductData = {}
+
+
+let selectedProductAmount = ''
+let product_element_quantity = ''
+let product_element_sum = ''
+let product_element_id = ''
+let orderProduct_amount = ''
+let orderProduct_barcode = ''
+let orderProduct_discount = ''
+let orderProduct_discount_percent = ''
+let orderProduct_id = ''
+let orderProduct_last_price = ''
+let orderProduct_name = ''
+let orderProduct_price = ''
+let orderProduct_quantity = ''
+let orderProduct_stock = ''
+let orderProduct_unit = ''
+let orderProduct_unit_id = ''
+let amount_or_price = ''
+let display_edit_product = ''
+let orderProductElement = ''
+let payment_product_amount_element = ''
+let payment_product_all_price_element = ''
+let selected_total_sum = ''
+let return_total_sum = 0
+let selected_product_sum = ''
+let selected_product_quantity = ''
 
 function format_entered_sum(numbers){
     if(parseInt(numbers)>0){
@@ -72,28 +100,37 @@ let display_or_display_card_or_debt = ''
 let display_edit_payment = ''
 function selected_payment_input_func(){
     setTimeout(function () {
-        if(debt_display.matches(":focus")){
-            display_or_display_card_or_debt = 'debt_display'
-            display_edit_payment = debt_display
-        }else if(display_card.matches(":focus")){
-            display_or_display_card_or_debt = 'display_card'
-            display_edit_payment = display_card
+        if(debt_display != undefined && debt_display != null) {
+            if (debt_display.matches(":focus")) {
+                display_or_display_card_or_debt = 'debt_display'
+                display_edit_payment = debt_display
+            }
+        }else if(debt_display != undefined && debt_display != null){
+            if(display_card.matches(":focus")){
+                display_or_display_card_or_debt = 'display_card'
+                display_edit_payment = display_card
+            }
         }else{
             display_or_display_card_or_debt = 'display'
             display_edit_payment = display
         }
     }, 94)
 }
-
-display.addEventListener('click', function () {
-    selected_payment_input_func()
-})
-display_card.addEventListener('click', function () {
-    selected_payment_input_func()
-})
-debt_display.addEventListener('click', function () {
-    selected_payment_input_func()
-})
+if(display != undefined && display != null){
+    display.addEventListener('click', function () {
+        selected_payment_input_func()
+    })
+}
+if(display_card != undefined && display_card != null){
+    display_card.addEventListener('click', function () {
+        selected_payment_input_func()
+    })
+}
+if(debt_display != undefined && debt_display != null){
+    debt_display.addEventListener('click', function () {
+        selected_payment_input_func()
+    })
+}
 selected_payment_input_func()
 
 // Function to append numbers to the display
@@ -193,11 +230,12 @@ function appendPassword(number) {
         display_password.value = cashier_password.value; // Aks holda, raqamni qo'shamiz
     }
 }
-
-display_password.addEventListener('input', function (event) {
-    cashier_password.value = String(event.target.value)
-    display_password.value = cashier_password.value; // Aks holda, raqamni qo'shamiz
-})
+if(display_password != undefined && display_password != null){
+    display_password.addEventListener('input', function (event) {
+        cashier_password.value = String(event.target.value)
+        display_password.value = cashier_password.value; // Aks holda, raqamni qo'shamiz
+    })
+}
 
 // Function to clear the display
 function clearDisplayPassword() {
@@ -215,24 +253,9 @@ function backspacePassword() {
         cashier_password.value = ''
     }
 }
-let selectedProductAmount = ''
-let product_element_quantity = ''
-let product_element_sum = ''
-let product_element_id = ''
-let orderProduct_amount = ''
-let orderProduct_barcode = ''
-let orderProduct_discount = ''
-let orderProduct_discount_percent = ''
-let orderProduct_id = ''
-let orderProduct_last_price = ''
-let orderProduct_name = ''
-let orderProduct_price = ''
-let orderProduct_quantity = ''
-let orderProduct_stock = ''
-let orderProduct_unit = ''
-let orderProduct_unit_id = ''
-let client_selected_product_row = document.getElementsByClassName('client_selected_product_row')
 function editProductFunc(orderProduct){
+    orderProductElement = orderProduct
+    let client_selected_product_row = document.getElementsByClassName('client_selected_product_row')
     for(let k=0; k<client_selected_product_row.length; k++){
         if(client_selected_product_row[k].classList.contains('active')){
             client_selected_product_row[k].classList.remove('active')
@@ -268,8 +291,9 @@ function editProductFunc(orderProduct){
         orderProduct_unit = orderProductData.unit
         orderProduct_unit_id = orderProductData.unit_id
     }
+    selected_product_sum = orderProduct_last_price
+    selected_product_quantity = orderProduct_quantity
 }
-let amount_or_price = ''
 function selected_product_input_func(){
     setTimeout(function () {
         if(selected_product_amount.matches(":focus")){
@@ -295,13 +319,16 @@ function selected_product_input_func(){
         }
     }, 94)
 }
-
-selected_product_price.addEventListener('click', function () {
-    selected_product_input_func()
-})
-selected_product_amount.addEventListener('click', function () {
-    selected_product_input_func()
-})
+if(selected_product_price != undefined && selected_product_price != null){
+    selected_product_price.addEventListener('click', function () {
+        selected_product_input_func()
+    })
+}
+if(selected_product_amount != undefined && selected_product_amount != null){
+    selected_product_amount.addEventListener('click', function () {
+        selected_product_input_func()
+    })
+}
 selected_product_input_func()
 
 // Function to append numbers to the display
@@ -351,7 +378,7 @@ document.addEventListener('keydown', function (event) {
 });
 
 function changePriceByAmount(amount__value){
-    if(stock_int > 0) {
+    if(stock_int > 0 || page_name == 'payment') {
         if(amount__value == ''){
             dot_has = true
         }else{
@@ -368,19 +395,22 @@ function changePriceByAmount(amount__value){
 }
 
 function changeAmountByPrice(price__value){
-    if(stock_int > 0) {
+    if(stock_int > 0 || page_name == 'payment') {
         selected_product_price.value = String(price__value); // Aks holda, raqamni qo'shamiz
         selected_product_amount.value = parseInt(selected_product_price.value) / orderProduct_last_price
     }
 }
-
-selected_product_amount.addEventListener('input', function (event) {
-    is_exist = false
-    changePriceByAmount(event.target.value)
-})
-selected_product_price.addEventListener('input', function (event) {
-    changeAmountByPrice(event.target.value)
-})
+if(selected_product_amount != undefined && selected_product_amount != null){
+    selected_product_amount.addEventListener('input', function (event) {
+        is_exist = false
+        changePriceByAmount(event.target.value)
+    })
+}
+if(selected_product_price != undefined && selected_product_price != null){
+    selected_product_price.addEventListener('input', function (event) {
+        changeAmountByPrice(event.target.value)
+    })
+}
 
 function changeAmountAndPrice(){
     checklist_changed = false
@@ -451,6 +481,16 @@ function changeAmountAndPrice(){
     }
 }
 
+function changeAmountAndPriceReturn(){
+    payment_product_amount_element = orderProductElement.parentElement.querySelector('#payment_product_amount')
+    payment_product_all_price_element = orderProductElement.parentElement.querySelector('#payment_product_all_price')
+    // payment_product_all_price_element.innerText = new Intl.NumberFormat('ru-RU').format(selected_product_price.value, 10) + ' ' + sum_text
+    payment_product_amount_element.innerText = selected_product_amount.value + ' '+ orderProductData.unit
+    return_total_sum = return_total_sum + parseInt(selected_product_sum)*(parseFloat(selected_product_quantity) - parseFloat(selected_product_amount.value))
+    return_total_amount.innerText = new Intl.NumberFormat('ru-RU').format(return_total_sum, 10) + ' ' + sum_text
+    console.log([parseFloat(selected_product_quantity), parseFloat(selected_product_amount.value), parseFloat(selected_product_quantity) - parseFloat(selected_product_amount.value)])
+}
+
 // Function to clear the display
 function clearDisplayEditProduct() {
     display_edit_product.value = '0'; // Ekrandagi raqamni tozalash
@@ -482,27 +522,33 @@ function paymentFunc() {
     setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt)
 }
 
-display.addEventListener('input', () => {
-    klaviaturaNumber = 0
-    klaviaturaNumber = formatInput(display).replace(/\s+/g, '')
-    cash_sum = parseInt(klaviaturaNumber)
-    autoSetCardSum()
-    setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt='display')
-});
+if(display != undefined && display != null){
+    display.addEventListener('input', () => {
+        klaviaturaNumber = 0
+        klaviaturaNumber = formatInput(display).replace(/\s+/g, '')
+        cash_sum = parseInt(klaviaturaNumber)
+        autoSetCardSum()
+        setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt='display')
+    });
+}
 
-display_card.addEventListener('input', () => {
-    klaviaturaNumber = 0
-    klaviaturaNumber = formatInput(display_card).replace(/\s+/g, '')
-    card_sum = parseInt(klaviaturaNumber)
-    autoSetDebtSum()
-    setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt='display_card')
-});
-debt_display.addEventListener('input', () => {
-    klaviaturaNumber = 0
-    klaviaturaNumber = formatInput(debt_display).replace(/\s+/g, '')
-    debt_sum = parseInt(klaviaturaNumber)
-    setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt='debt_display')
-});
+if(display_card != undefined && display_card != null){
+    display_card.addEventListener('input', () => {
+        klaviaturaNumber = 0
+        klaviaturaNumber = formatInput(display_card).replace(/\s+/g, '')
+        card_sum = parseInt(klaviaturaNumber)
+        autoSetDebtSum()
+        setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt='display_card')
+    });
+}
+if(debt_display != undefined && debt_display != null){
+    debt_display.addEventListener('input', () => {
+        klaviaturaNumber = 0
+        klaviaturaNumber = formatInput(debt_display).replace(/\s+/g, '')
+        debt_sum = parseInt(klaviaturaNumber)
+        setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt='debt_display')
+    });
+}
 function formatInput(param){
     // Faqat raqamlarni olamiz
     let value = param.value.replace(/\D/g, '');
