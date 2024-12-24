@@ -60,6 +60,12 @@ let set_checklist_button = document.getElementById('set_checklist_button')
 let discountInfo = []
 let discountClientInfo = []
 
+let element_id_name =''
+let element_id =''
+let current_data = {}
+let notify_product_text = ''
+let selected__product__id = ''
+
 function showHasItems(){
     if(has_items != undefined && has_items != null){
         if(has_items.classList.contains('d-none')){
@@ -96,7 +102,6 @@ function hideHasItems() {
         set_checklist_button.disabled = true
     }
 }
-
 
 function showClientDiscount(discount_content_element){
     if(discount_content_element != undefined && discount_content_element != null){
@@ -200,12 +205,9 @@ function truncuateCashboxFunc(){
     order_data_html = setOrderHtml(order_data)
     order_data_content.innerHTML = order_data_html
 }
-let element_id_name =''
-let element_id =''
-let current_data = {}
-let notify_product_text = ''
-function addToOrder(id, name, price, discount, discount_percent, last_price, amount, barcode, stock, unit, unit_id, quantity, code, this_element) {
+function addToOrder(id, name, price, discount, discount_percent, last_price, amount, barcode, stock, unit, unit_id, quantity, code, this_element, fast_selling) {
     checklist_changed = false
+    selected__product__id = id
     stock_int = parseFloat(stock)
     is_exist = false
     order_json = {}
@@ -284,7 +286,9 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
         }
         if(code == null || code == undefined || !code){
             notify_product_text = name+' '+amount + notify_text
-            toastr.success(notify_product_text)
+            if(fast_selling != 'fast_selling'){
+                toastr.success(notify_product_text)
+            }
         }
     }else{
         toastr.warning(name+' '+amount +' '+stock+' '+notify_text_left_in_stock)
@@ -312,7 +316,12 @@ function setOrderHtml(order_data_){
     order_data_html_ = ''
     total_discount.innerText = ''
     let discount_html = ''
+    let active_text = ''
+    console.log(selected__product__id)
     for(let j=0; j<order_data_.length; j++){
+        if(selected__product__id == order_data_[j].id){
+            active_text = 'active'
+        }
         productsPrice = productsPrice + order_data_[j].quantity*parseInt(order_data_[j].price.replace(/\s/g, ''), 10)
         discount_html = ''
         all_sum = all_sum + order_data_[j].quantity*parseInt(order_data_[j].last_price.replace(/\s/g, ''), 10)
@@ -324,7 +333,7 @@ function setOrderHtml(order_data_){
             discount_html = `${order_data_[j].price}`
         }
         order_data_html_ = order_data_html_ +
-            `\n<tr data-product='${JSON.stringify(order_data_[j])}' class="client_selected_product_row" onclick="editProductFunc(this)" data-bs-toggle="modal" data-bs-target="#edit_product_modal">
+            `\n<tr data-product='${JSON.stringify(order_data_[j])}' class="client_selected_product_row ${active_text}" onclick="editProductFunc(this)" data-bs-toggle="modal" data-bs-target="#edit_product_modal">
                 <td><h6><b>${order_data_[j].barcode}</b></h6></td>
                 <td><h6><b class="pre_wrap">${order_data_[j].name+' '+order_data_[j].amount}</b></h6></td>
                 <td>
@@ -333,6 +342,7 @@ function setOrderHtml(order_data_){
                 <td><h6><b class="product__quantity">${order_data_[j].quantity +' '+order_data_[j].unit}</b></h6></td>
                 <td><h6><b class="product__sum">${new Intl.NumberFormat('ru-RU').format(parseFloat(order_data_[j].quantity)*parseInt(order_data_[j].last_price.replace(/\s/g, ''), 10))}</b></h6></td>
             </tr>`
+        active_text = ''
     }
     total_sum.innerText = all_sum_withouth_discount
     setClientPrices()

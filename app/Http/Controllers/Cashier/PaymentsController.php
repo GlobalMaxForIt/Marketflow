@@ -98,6 +98,7 @@ class PaymentsController extends Controller
                         $items = $this->productsService->getShortProduct($product, $salesItem->quantity);
                     }
                     $products_data[] = [
+                        'id'=>$salesItem->id,
                         'items'=>$items,
                         'all_price'=>number_format($sales_item_all_price, 0, '', ' '),
                         'quantity'=>$salesItem->quantity??0,

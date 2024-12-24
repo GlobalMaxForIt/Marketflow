@@ -415,7 +415,7 @@
                         </thead>
                         <tbody id="popover-container">
                         @foreach($allProductsData['products'] as $product)
-                            <tr onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', '{{$product['stock']}}', '{{$product['unit']}}', '{{$product['unit_id']}}', 1, null, null)">
+                            <tr onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', '{{$product['stock']}}', '{{$product['unit']}}', '{{$product['unit_id']}}', 1, null, null, null)">
                                 <td class="market_tables_text_big barcode_number_column">
                                     <span><h6><b>{{$product['barcode']}}</b></h6></span>
                                 </td>

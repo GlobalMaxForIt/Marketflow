@@ -27,7 +27,6 @@ let selected_product_price = document.getElementById('selected_product_price')
 let selected_product_amount = document.getElementById('selected_product_amount')
 let selected_product_unit = document.getElementById('selected_product_unit')
 let dotKeyboard = document.getElementById('dotKeyboard')
-let return_total_amount = document.getElementById('return_total_amount')
 let dot_has = false
 let orderProductData = {}
 
@@ -58,6 +57,8 @@ let selected_total_sum = ''
 let return_total_sum = 0
 let selected_product_sum = ''
 let selected_product_quantity = ''
+let selected_sales_item_id = ''
+let selected_sales_items = []
 
 function format_entered_sum(numbers){
     if(parseInt(numbers)>0){
@@ -254,6 +255,7 @@ function backspacePassword() {
         cashier_password.value = ''
     }
 }
+
 function editProductFunc(orderProduct){
     orderProductElement = orderProduct
     let client_selected_product_row = document.getElementsByClassName('client_selected_product_row')
@@ -291,9 +293,12 @@ function editProductFunc(orderProduct){
         orderProduct_stock = parseFloat(orderProductData.stock)
         orderProduct_unit = orderProductData.unit
         orderProduct_unit_id = orderProductData.unit_id
+        if(orderProductData.sales_item_id != undefined && orderProductData.sales_item_id != null){
+            selected_sales_item_id = orderProductData.sales_item_id
+        }
+        selected_product_sum = orderProduct_last_price
+        selected_product_quantity = orderProduct_quantity
     }
-    selected_product_sum = orderProduct_last_price
-    selected_product_quantity = orderProduct_quantity
 }
 function selected_product_input_func(){
     setTimeout(function () {
@@ -445,16 +450,19 @@ function changeAmountAndPrice(){
         } else {
             hideHasItems()
         }
+
         if (localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null) {
             localStorage.setItem('order_data', JSON.stringify(order_data))
         } else {
             localStorage.removeItem('order_data')
             localStorage.setItem('order_data', JSON.stringify(order_data))
         }
+
         if (order_data_content != undefined && order_data_content != null) {
             order_data_html = setOrderHtml(order_data)
             order_data_content.innerHTML = order_data_html
         }
+
         stock_int = orderProduct_stock;
 
         element_id_name = 'stock__'+orderProduct_id
@@ -483,14 +491,46 @@ function changeAmountAndPrice(){
 }
 
 function changeAmountAndPriceReturn(){
+    return_total_sum = 0
     payment_product_amount_element = orderProductElement.parentElement.querySelector('#payment_product_amount')
     payment_product_return_price_element = orderProductElement.parentElement.querySelector('#payment_product_return_price')
-    if(parseFloat(selected_product_quantity) - parseFloat(selected_product_amount.value)>0){
-        payment_product_amount_element.innerText = selected_product_amount.value + ' '+ orderProductData.unit
-        payment_product_return_price_element.innerText = new Intl.NumberFormat('ru-RU').format(-parseInt(parseInt(selected_product_sum)*(parseFloat(selected_product_quantity) - parseFloat(selected_product_amount.value))), 10) + ' ' + sum_text
-        return_total_sum = return_total_sum + parseInt(parseInt(selected_product_sum)*(parseFloat(selected_product_quantity) - parseFloat(selected_product_amount.value)))
-        return_total_amount.innerText = new Intl.NumberFormat('ru-RU').format(return_total_sum, 10) + ' ' + sum_text
+    for(let i=0; i<selected_sales_items.length; i++){
+        if(selected_sales_item_id == selected_sales_items[i]['sales_item_id']){
+            selected_sales_items.splice(i, 1)
+        }
     }
+    if(selected_sales_items.length == 0){
+        if(!return_modal_button.classList.contains('d-none')){
+            return_modal_button.classList.add('d-none')
+        }
+        if(!return_total_amount.classList.contains('d-none')){
+            return_total_amount.classList.add('d-none')
+        }
+        if(!return_total_amount_text.classList.contains('d-none')){
+            return_total_amount_text.classList.add('d-none')
+        }
+    }
+    if(parseFloat(selected_product_quantity) - parseFloat(selected_product_amount.value)>=0 && parseFloat(selected_product_amount.value)>0){
+        if(return_modal_button.classList.contains('d-none')){
+            return_modal_button.classList.remove('d-none')
+        }
+        if(return_total_amount.classList.contains('d-none')){
+            return_total_amount.classList.remove('d-none')
+        }
+        if(return_total_amount_text.classList.contains('d-none')){
+            return_total_amount_text.classList.remove('d-none')
+        }
+        payment_product_amount_element.innerText = selected_product_amount.value + ' '+ orderProductData.unit
+        payment_product_return_price_element.innerText = new Intl.NumberFormat('ru-RU').format(selected_product_price.value, 10) + ' ' + sum_text
+        selected_sales_items.push({'sales_item_id':selected_sales_item_id, 'quantity':parseFloat(selected_product_amount.value), 'all_sum':parseFloat(selected_product_price.value)})
+    }else if(parseFloat(selected_product_amount.value) <= 0){
+        payment_product_amount_element.innerText = ''
+        payment_product_return_price_element.innerText = ''
+    }
+    for(let i=0; i<selected_sales_items.length; i++){
+        return_total_sum = return_total_sum + parseInt(selected_sales_items[i].all_sum)
+    }
+    return_total_amount.innerText = new Intl.NumberFormat('ru-RU').format(return_total_sum, 10) + ' ' + sum_text
 }
 
 // Function to clear the display

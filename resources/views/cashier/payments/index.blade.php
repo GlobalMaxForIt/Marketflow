@@ -39,11 +39,8 @@
                     <div class="col-4 d-flex flex-column">
                         <div class="main-content-section_bills">
                             <div class="right_options bill_right_option" role="presentation" id="product_full_info_alert">
-                                <div class="d-flex justify-content-between mb-2">
+                                <div class="d-flex justify-content-start mb-2">
                                     <h5 id="payment_history_code"></h5>
-                                    <button class="modal_confirm_pay_ btn d-none" id="return_modal_button"  data-bs-toggle="modal" data-bs-target="#return_modal">
-                                        <h5 class="color_white mb-0">{{translate_title('Return', $lang)}}</h5>
-                                    </button>
                                 </div>
                                 <div class="nav flex-column" id="payment_history_data">
 
@@ -66,11 +63,19 @@
                                 <h6 class="order-info-sum" id="bills_history_discount">0 000 000 {{translate_title('sum', $lang)}}</h6>
                             </div>
                             <div class="d-flex justify-content-between mb-2">
-                                <h6 class="order-info"> {{translate_title('Итог', $lang)}}</h6>
+                                <div>
+                                    <h6 class="order-info"> {{translate_title('Итог', $lang)}}</h6>
+                                    <h6 class="order-info d-none" id="return_total_amount_text"> {{translate_title('Return', $lang)}}</h6>
+                                </div>
                                 <div>
                                     <h6 class="order-info" id="bills_history_total">0 000 000 {{translate_title('sum', $lang)}}</h6>
-                                    <h6 class="order-info-sum" id="return_total_amount">0 000 000 {{translate_title('sum', $lang)}}</h6>
+                                    <h6 class="order-info-sum d-none" id="return_total_amount">0 000 000 {{translate_title('sum', $lang)}}</h6>
                                 </div>
+                            </div>
+                            <div class="d-flex justify-content-end d-none" id="return_modal_button">
+                                <button class="modal_confirm_pay_ btn"  data-bs-toggle="modal" data-bs-target="#return_modal">
+                                    <h6 class="color_white mb-0">{{translate_title('Return', $lang)}}</h6>
+                                </button>
                             </div>
                         </div>
                     </div>

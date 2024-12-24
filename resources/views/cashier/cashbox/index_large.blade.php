@@ -159,7 +159,7 @@
                                         <div class="col-4 mt-1 fast_selling_images_button">
                                             <div></div>
                                             <a class="badge-soft-secondary" style="background-image: url('{{$product['image']}}');">
-                                                <h6 class="pre_wrap" onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', '{{$product['stock']}}', '{{$product['unit']}}', '{{$product['unit_id']}}', 1, null, null)"><b>{{$product['name']}}</b></h6>
+                                                <h6 class="pre_wrap" onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', '{{$product['stock']}}', '{{$product['unit']}}', '{{$product['unit_id']}}', 1, null, null, 'fast_selling')"><b>{{$product['name']}}</b></h6>
                                             </a>
                                         </div>
                                     @endforeach
@@ -622,7 +622,7 @@
                         selected_checklist.classList.add('active')
                         checklistData = JSON.parse(checklist_data)
                         for(let i=0; i<checklistData.length; i++){
-                            addToOrder(checklistData[i].id, checklistData[i].name, checklistData[i].price, checklistData[i].discount, checklistData[i].discount_percent, checklistData[i].last_price, checklistData[i].amount, checklistData[i].barcode, checklistData[i].stock, checklistData[i].unit, checklistData[i].unit_id, checklistData[i].quantity, checklist_code, null)
+                            addToOrder(checklistData[i].id, checklistData[i].name, checklistData[i].price, checklistData[i].discount, checklistData[i].discount_percent, checklistData[i].last_price, checklistData[i].amount, checklistData[i].barcode, checklistData[i].stock, checklistData[i].unit, checklistData[i].unit_id, checklistData[i].quantity, checklist_code, null, null)
                         }
                         this_check_list_code.innerText = checklist_code
                         this__check_list_code.innerText = checklist_code
@@ -665,7 +665,7 @@
         function handleBarcode(barcode) {
             for(let p=0; p<json_products.length; p++){
                 if(json_products[p].barcode == barcode){
-                    addToOrder(json_products[p].id, json_products[p].name, json_products[p].price, json_products[p].discount, json_products[p].discount_percent, json_products[p].last_price, json_products[p].amount, json_products[p].barcode, json_products[p].stock, json_products[p].unit, json_products[p].unit_id, 1, null, null)
+                    addToOrder(json_products[p].id, json_products[p].name, json_products[p].price, json_products[p].discount, json_products[p].discount_percent, json_products[p].last_price, json_products[p].amount, json_products[p].barcode, json_products[p].stock, json_products[p].unit, json_products[p].unit_id, 1, null, null, null)
                 }
             }
         }

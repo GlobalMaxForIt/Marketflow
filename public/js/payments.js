@@ -23,6 +23,8 @@ let client_district = document.getElementById('district')
 let payment_history_code = document.getElementById('payment_history_code')
 let product_full_info_alert = document.getElementById('product_full_info_alert')
 let return_modal_button = document.getElementById('return_modal_button')
+let return_total_amount_text = document.getElementById('return_total_amount_text')
+let return_total_amount = document.getElementById('return_total_amount')
 
 let client_full_name_html = document.getElementById('client_full_name')
 let return_modal_title = document.getElementById('return_modal_title')
@@ -39,7 +41,6 @@ $(document).ready(function () {
         });
     }
 })
-
 
 let bills_history_html = ''
 let client_id = ''
@@ -68,6 +69,7 @@ function setItem(item, index){
                                             <h6 id="payment_product_return_price"></h6>
                                         </div>
                                         <a data-product='${JSON.stringify({
+                                                sales_item_id:item.id,
                                                 amount:item.items.amount,
                                                 barcode:item.items.barcode,
                                                 code:item.items.code,
@@ -102,6 +104,7 @@ function setItem(item, index){
                                             <h6 id="payment_product_return_price"></h6>
                                         </div>
                                         <a data-product='${JSON.stringify({
+                                            sales_item_id:item.id,
                                             amount:item.items.amount,
                                             barcode:item.items.barcode,
                                             code:item.items.code,
@@ -160,9 +163,6 @@ function showBillInfo(this_element, sales_data, code, price, discount_price, tot
     }
     if(!this_element.classList.contains('active')){
         this_element.classList.add('active')
-    }
-    if(return_modal_button.classList.contains('d-none')){
-        return_modal_button.classList.remove('d-none')
     }
     bills_history_html = ''
     payment_history_code.textContent = '#'+code
