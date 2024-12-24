@@ -171,10 +171,10 @@
                                         <div class="payment-content-header">
                                             <div class="payment-content-header_title mb-3 justify-content-between">
                                                 <button class="btn-success btn" data-bs-toggle="modal" data-bs-target="#checklist_modal" id="set_checklist_button">
-                                                    <h6 class="mb-0"><span class="font-16 fa fa-angle-right me-1"></span>{{translate_title('Set aside the check', $lang)}}</h6>
+                                                    <span class="mb-0"><span class="font-16 fa fa-angle-right me-1"></span>{{translate_title('Set aside the check', $lang)}}</span>
                                                 </button>
                                                 <button class="btn-danger btn" data-bs-toggle="modal" data-bs-target="#checklist_modal_delete" id="set_checklist_button_delete">
-                                                    <h6 class="mb-0"><span class="font-16 fa fa-angle-right me-1"></span>{{translate_title('Delete this check', $lang)}}</h6>
+                                                    <span class="mb-0"><span class="font-16 fa fa-angle-right me-1"></span>{{translate_title('Delete this check', $lang)}}</span>
                                                 </button>
                                             </div>
                                             <div class="payment-content-header_user">

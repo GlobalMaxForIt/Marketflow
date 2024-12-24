@@ -2567,11 +2567,11 @@ body[data-leftbar-size=compact] .width_height_confirm_button{
 .tablesaw h6{
     margin-bottom: 0px !important;
 }
-body[data-layout-color="light"] #order_data_content .active, .checklist_item.active{
-    background-color: rgb(0, 0, 0, 0.1);
+body[data-layout-color="light"] #order_data_content .active, body[data-layout-color="light"] .checklist_item.active{
+    background-color: rgb(0, 0, 0, 0.2);
 }
-body[data-layout-color="dark"] #order_data_content .active, .checklist_item.active{
-    background-color: rgba(255, 255, 255, 0.1);
+body[data-layout-color="dark"] #order_data_content .active, body[data-layout-color="dark"] .checklist_item.active{
+    background-color: rgba(255, 255, 255, 0.2);
 }
 .fast_selling_images_button{
     position:relative;
