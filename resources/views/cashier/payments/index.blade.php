@@ -25,9 +25,9 @@
                                 <tbody>
                                     @foreach($all_sales as $key => $all_sale)
                                         <tr class="bill_info_table" onclick="showBillInfo(this, {{ json_encode($all_sales_info[$key]) }}, `{{$all_sale['code']}}`, `{{$all_sale['price']}}`, `{{$all_sale['discount_price']}}`, `{{$all_sale['total_amount']}}`, `{{$all_sale['return_amount']}}`, `{{$all_sale['id']}}`, `{{$all_sale['client_full_name']}}`, `{{$all_sale['client_discount_price']}}`)">
-                                            <td><h6>{{$all_sale['total_amount']}}</h6></td>
-                                            <td><h6>{{$all_sale['paid_amount']}}</h6></td>
-                                            <td><h6>{{$all_sale['return_amount']}}</h6></td>
+                                            <td><h6>{{$all_sale['total_amount'].' '.translate_title('sum', $lang)}}</h6></td>
+                                            <td><h6>{{$all_sale['paid_amount'].' '.translate_title('sum', $lang)}}</h6></td>
+                                            <td><h6>{{$all_sale['return_amount'].' '.translate_title('sum', $lang)}}</h6></td>
                                             <td><h6>{{$all_sale['code']}}</h6></td>
                                             <td><h6>{{$all_sale['updated_at']}}</h6></td>
                                         </tr>

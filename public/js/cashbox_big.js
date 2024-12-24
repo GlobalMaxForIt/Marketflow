@@ -53,6 +53,7 @@ let display_edit_product = ''
 let orderProductElement = ''
 let payment_product_amount_element = ''
 let payment_product_all_price_element = ''
+let payment_product_return_price_element = ''
 let selected_total_sum = ''
 let return_total_sum = 0
 let selected_product_sum = ''
@@ -483,12 +484,13 @@ function changeAmountAndPrice(){
 
 function changeAmountAndPriceReturn(){
     payment_product_amount_element = orderProductElement.parentElement.querySelector('#payment_product_amount')
-    payment_product_all_price_element = orderProductElement.parentElement.querySelector('#payment_product_all_price')
-    // payment_product_all_price_element.innerText = new Intl.NumberFormat('ru-RU').format(selected_product_price.value, 10) + ' ' + sum_text
-    payment_product_amount_element.innerText = selected_product_amount.value + ' '+ orderProductData.unit
-    return_total_sum = return_total_sum + parseInt(selected_product_sum)*(parseFloat(selected_product_quantity) - parseFloat(selected_product_amount.value))
-    return_total_amount.innerText = new Intl.NumberFormat('ru-RU').format(return_total_sum, 10) + ' ' + sum_text
-    console.log([parseFloat(selected_product_quantity), parseFloat(selected_product_amount.value), parseFloat(selected_product_quantity) - parseFloat(selected_product_amount.value)])
+    payment_product_return_price_element = orderProductElement.parentElement.querySelector('#payment_product_return_price')
+    if(parseFloat(selected_product_quantity) - parseFloat(selected_product_amount.value)>0){
+        payment_product_amount_element.innerText = selected_product_amount.value + ' '+ orderProductData.unit
+        payment_product_return_price_element.innerText = new Intl.NumberFormat('ru-RU').format(-parseInt(parseInt(selected_product_sum)*(parseFloat(selected_product_quantity) - parseFloat(selected_product_amount.value))), 10) + ' ' + sum_text
+        return_total_sum = return_total_sum + parseInt(parseInt(selected_product_sum)*(parseFloat(selected_product_quantity) - parseFloat(selected_product_amount.value)))
+        return_total_amount.innerText = new Intl.NumberFormat('ru-RU').format(return_total_sum, 10) + ' ' + sum_text
+    }
 }
 
 // Function to clear the display
@@ -621,7 +623,6 @@ function paymentPayFunc(text) {
                         // 'client_dicount_price':clientDicountPrice,
                     },
                     success: function (data) {
-                        console.log(data)
                         hideHasItems()
                         if(data.status == true){
                             setTimeout(function () {

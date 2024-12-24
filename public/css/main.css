@@ -2633,6 +2633,6 @@ body[data-layout-color="dark"] .client_selected_product_row:hover, tbody#popover
 img.width_20_px{
     width: 20px !important;
 }
-#payment_product_amount{
+#payment_product_amount, #payment_product_return_price{
     color: red;
 }

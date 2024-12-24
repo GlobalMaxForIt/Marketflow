@@ -92,7 +92,7 @@ class PaymentsController extends Controller
                 foreach($salesItems as $salesItem){
                     $items = [];
                     $product = $salesItem->product;
-                    $sales_item_all_price = ((int)$salesItem->price - (int)$salesItem->discount_price) * (int)$salesItem->quantity;
+                    $sales_item_all_price = ((int)$salesItem->price - (int)$salesItem->discount_price) * (float)$salesItem->quantity;
                     $sales_item_price = (int)$salesItem->price * (int)$salesItem->quantity;
                     if($product){
                         $items = $this->productsService->getShortProduct($product, $salesItem->quantity);

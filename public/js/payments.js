@@ -65,6 +65,7 @@ function setItem(item, index){
                                         <div class="width_25_percent text-end bill_info_sum d-flex flex-column">
                                             <h6 id="payment_product_all_price">${item.all_price} ${sum_text}</h6>
                                             <del class="opacity_1">${item.price} ${sum_text}</del>
+                                            <h6 id="payment_product_return_price"></h6>
                                         </div>
                                         <a data-product='${JSON.stringify({
                                                 amount:item.items.amount,
@@ -96,7 +97,10 @@ function setItem(item, index){
                                             <h6>${item.quantity} ${item.items.unit}</h6>
                                             <h6 id="payment_product_amount"></h6>
                                         </div>
-                                        <div class="width_25_percent text-end bill_info_sum"><h6 id="payment_product_all_price">${item.price} ${sum_text}</h6></div>
+                                        <div class="width_25_percent text-end bill_info_sum">
+                                            <h6 id="payment_product_all_price">${item.all_price} ${sum_text}</h6>
+                                            <h6 id="payment_product_return_price"></h6>
+                                        </div>
                                         <a data-product='${JSON.stringify({
                                             amount:item.items.amount,
                                             barcode:item.items.barcode,
