@@ -581,6 +581,7 @@
                         'Authorization': 'Bearer ' + token
                     },
                     success: function (data) {
+                        console.log(data)
                         check_list_set_html(data)
                     },
                     error: function (e) {

@@ -624,16 +624,19 @@ function paymentPayFunc(text) {
                         console.log(data)
                         hideHasItems()
                         if(data.status == true){
-                            if(loader != undefined && loader != null){
-                                if(!loader.classList.contains("d-none")){
-                                    loader.classList.add("d-none")
+                            setTimeout(function () {
+                                if(loader != undefined && loader != null){
+                                    if(!loader.classList.contains("d-none")){
+                                        loader.classList.add("d-none")
+                                    }
                                 }
-                            }
-                            if(myDiv != undefined && myDiv != null){
-                                if(!myDiv.classList.contains("d-none")){
-                                    myDiv.classList.add("d-none")
+                                if(myDiv != undefined && myDiv != null){
+                                    if(!myDiv.classList.contains("d-none")){
+                                        myDiv.classList.add("d-none")
+                                    }
                                 }
-                            }
+                                getCheckAsideFunc()
+                            }, 244)
                             if(localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null){
                                 localStorage.removeItem('order_data')
                             }
@@ -699,7 +702,6 @@ function deleteCheckFunc() {
                     'sale_id':selected_checklist_id,
                 },
                 success: function (data) {
-                    console.log(data)
                     hideHasItems()
                     if(data.status == true){
                         if(set_checklist_button_delete != undefined && set_checklist_button_delete != null) {
