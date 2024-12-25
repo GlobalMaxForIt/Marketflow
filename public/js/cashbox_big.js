@@ -299,6 +299,11 @@ function editProductFunc(orderProduct){
         selected_product_sum = orderProduct_last_price
         selected_product_quantity = orderProduct_quantity
     }
+    if(![4, 7, 8, 10, 11].includes(parseInt(orderProductData.unit_id))){
+        selected_product_price.disabled = true
+    }else{
+        selected_product_price.disabled = false
+    }
 }
 function selected_product_input_func(){
     setTimeout(function () {
@@ -318,10 +323,16 @@ function selected_product_input_func(){
             display_edit_product = selected_product_amount
         }else{
             amount_or_price = 'price'
-            if(!dotKeyboard.classList.contains('d-none')){
-                dotKeyboard.classList.add('d-none')
+            if(![4, 7, 8, 10, 11].includes(parseInt(orderProductData.unit_id))){
+                selected_product_price.disabled = true
+                selected_product_amount.focus()
+            }else{
+                display_edit_product = selected_product_price
+                if(!dotKeyboard.classList.contains('d-none')){
+                    dotKeyboard.classList.add('d-none')
+                }
+                selected_product_price.disabled = false
             }
-            display_edit_product = selected_product_price
         }
     }, 94)
 }
@@ -390,7 +401,7 @@ function changePriceByAmount(amount__value){
         }else{
             if(amount__value[0] == '.' && amount__value.length == 2){
                 selected_product_amount.value = '0.'+String(amount__value).slice(0, 1); // Aks holda, raqamni qo'shamiz
-            } else {
+            }else {
                 selected_product_amount.value = String(amount__value); // Aks holda, raqamni qo'shamiz
             }
             selected_product_amount.value = String(amount__value);

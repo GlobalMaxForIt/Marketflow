@@ -23,7 +23,7 @@ table th{
 .order-section{
     padding: 8px;
 }
-.card{
+.height_74vh{
     min-height: 74vh;
 }
 table{
@@ -149,4 +149,9 @@ table{
 .offcanvas tr:hover{
     transform: scale(1.014);
     background-color: rgb(0, 0, 0, 0.1);
+}
+.input-display_password[disabled] {
+    outline: none !important;
+    pointer-events: none !important; /* Foydalanuvchi bosishiga ruxsat bermaslik */
+    cursor: not-allowed !important; /* Foydalanuvchi uchun ko'rsatma */
 }
