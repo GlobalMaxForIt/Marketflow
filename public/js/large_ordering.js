@@ -317,7 +317,6 @@ function setOrderHtml(order_data_){
     total_discount.innerText = ''
     let discount_html = ''
     let active_text = ''
-    console.log(selected__product__id)
     for(let j=0; j<order_data_.length; j++){
         if(selected__product__id == order_data_[j].id){
             active_text = 'active'
@@ -339,7 +338,7 @@ function setOrderHtml(order_data_){
                 <td>
                     <h6><b>${discount_html}</b></h6>
                 </td>
-                <td><h6><b class="product__quantity">${order_data_[j].quantity +' '+order_data_[j].unit}</b></h6></td>
+                <td><h6><b class="product__quantity">${parseInt(order_data_[j].quantity*1000)/1000 +' '+order_data_[j].unit}</b></h6></td>
                 <td><h6><b class="product__sum">${new Intl.NumberFormat('ru-RU').format(parseFloat(order_data_[j].quantity)*parseInt(order_data_[j].last_price.replace(/\s/g, ''), 10))}</b></h6></td>
             </tr>`
         active_text = ''

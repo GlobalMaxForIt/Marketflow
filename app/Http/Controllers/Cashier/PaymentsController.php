@@ -4,8 +4,14 @@ namespace App\Http\Controllers\Cashier;
 
 use App\Constants;
 use App\Http\Controllers\Controller;
+use App\Models\Discount;
+use App\Models\Products;
+use App\Models\ReturnModel;
 use App\Models\Sales;
 use App\Models\Clients;
+use App\Models\SalesItems;
+use App\Models\SalesPayments;
+use App\Models\SalesReports;
 use App\Service\ClientService;
 use App\Service\ProductsService;
 use Illuminate\Http\Request;
@@ -48,6 +54,7 @@ class PaymentsController extends Controller
             'lang'=>$lang,
             'all_sales'=>$all_sales,
             'clients'=>$clients,
+            'user'=>$user,
             'all_sales_info'=>$all_sales_info,
             'title'=>$this->title,
             'current_page'=>$this->current_page,
@@ -134,6 +141,94 @@ class PaymentsController extends Controller
                 'message'=>'Success'
             ];
         }
+
+        return response()->json($response);
+    }
+
+    function confirmReturn(Request $request){
+        $user = Auth::user();
+        date_default_timezone_set("Asia/Tashkent");
+        $datas = $request->data;
+        $id = $request->id;
+
+        $all_price = 0;
+        $all_cost_price = 0;
+        $order_discount_price = 0;
+        $return_all_sum = 0;
+
+        foreach($datas as $data_) {
+            $data = json_decode($data_);
+            $sales_item = SalesItems::find($data->sales_item_id)->first();
+            if($sales_item){
+                $product = Products::find($sales_item->product_id);
+                $return_model = new ReturnModel();
+                $return_model->sale_id = $sales_item->sale_id;
+                $return_model->sale_item_id = $sales_item->id;
+                $return_model->product_id = $sales_item->product_id;
+                $return_model->quantity = (float)$data->quantity;
+                $return_model->price = $data->all_sum;
+//                    $return_model->reason = $data->reason;
+                $return_model->cashier_id = $user->id;
+                $return_model->save();
+                if($product){
+                    $sales_item->quantity = (float)$sales_item->quantity - (float)$data->quantity;
+                    $return_all_sum = $return_all_sum + $data->all_sum;
+                    $sales_item->save();
+                }
+
+            }
+        }
+        $sale = Sales::find($id);
+        $salesItems = $sale->salesItems;
+        foreach($salesItems as $salesItem) {
+            $order_data_price = (int)$salesItem->price;
+            $order_data_discount = (int)$salesItem->discount_percent;
+            $all_price = $all_price + (float)$salesItem->quantity * $order_data_price;
+            $order_discount_price = $order_discount_price + (float)$salesItem->quantity * $order_data_discount;
+            $product = Products::find($salesItem->id);
+            if($product) {
+                $all_cost_price = $all_cost_price + $product->cost * (float)$salesItem->quantity;
+            }
+        }
+
+        $salesReport = $sale->salesReport;
+        if($salesReport){
+            $salesReport->delete();
+        }
+
+        $discount_modal_percent = 0;
+        if($sale->client_id){
+            $discount_modal = Discount::where('client_id', $sale->client_id)->first();
+            if($discount_modal){
+                $discount_modal_percent = (int)$discount_modal->percent/100;
+            }
+        }
+        if($discount_modal_percent == 0){
+            $client_dicount_price = 0;
+        }
+
+        $sale->price = $all_price;
+        $sale->discount = $order_discount_price;
+        $sale->client_discount_price = $client_dicount_price;
+        $total_price = $all_price - $order_discount_price - $client_dicount_price;
+        $sale->return_amount = (int)$sale->return_amount + $return_all_sum;
+        $sale->total_amount = $total_price;
+        $sale->save();
+
+        if($all_cost_price>0){
+            $sales_reports = new SalesReports();
+            $sales_reports->sale_id = $sale->id;
+            $sales_reports->report_date = date('Y-m-d H:i:s');
+            $sales_reports->revenue = $all_price;
+            $sales_reports->profit = $all_price - $all_cost_price;
+            $sales_reports->save();
+        }
+        $response = [
+            'code'=>$sale->code,
+            'return_all_sum'=>$return_all_sum,
+            'status'=>true,
+            'message'=>'Success'
+        ];
 
         return response()->json($response);
     }

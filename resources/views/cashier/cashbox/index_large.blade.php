@@ -514,6 +514,7 @@
         let total_price_text = "{{translate_title('Total price', $lang)}}"
         let image_src = "{{asset('icon/no_photo.jpg', $lang)}}"
         let cashbox_index = "{{route('indexLarge', $lang)}}"
+        let return_success_text = "{{translate_title('Возврат сделан', $lang)}}"
         let token = "{{$user->token}}"
         let json_products = JSON.parse('{!! $allProductsData['json_products'] !!}')
         let notify_text = "{{translate_title('amount was added successfully!', $lang)}}"
@@ -530,6 +531,7 @@
         let this__check_list_code = document.getElementById('this__check_list_code')
         let check_code = document.getElementById('check_code')
         let all_checklist_sales = `{!! $all_checklist_sales !!}`
+        let return_modal_title = ''
 
         let set_checklist_button_delete = document.getElementById('set_checklist_button_delete')
         if(set_checklist_button_delete != undefined && set_checklist_button_delete != null) {

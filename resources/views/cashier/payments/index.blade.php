@@ -84,18 +84,20 @@
         </div>
     </div>
     <div id="return_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="return_modal-modalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="return_modal_title"></h4>
-                    <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
-                </div>
-                <div class="modal-body" id="return_modal_body">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content modal-filled">
+                <div class="modal-body">
+                    <div class="text-center">
+                        <img src="{{asset('img/delete_icon.png')}}" alt="" height="100px">
+                        <h4 class="mt-2 delete_text_content">{{ translate_title('Вы уверены, что хотите возврат?', $lang)}} <h4 id="return_modal_title"> </h4></h4>
+                        <div class="modal-body" id="return_modal_body">
 
-                </div>
-                <div class="modal-footer">
-                    <a type="button" class="btn btn-light" data-bs-dismiss="modal">{{ translate_title('Close', $lang) }}</a>
-                    <a type="button" class="btn btn-primary">{{ translate_title('Save changes', $lang) }}</a>
+                        </div>
+                        <div class="d-flex justify-content-around">
+                            <a type="button" class="btn btn-danger" data-bs-dismiss="modal">{{ translate_title('Close', $lang) }}</a>
+                            <a type="button" class="btn btn-success" id="return_modal_button_click">{{ translate_title('Confirm', $lang) }}</a>
+                        </div>
+                    </div>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -113,6 +115,9 @@
         let notes_text =  "{{translate_title('Notes', $lang)}}"
         let return_icon = "{{asset('img/return.svg')}}"
         let page_name = 'payment'
+        let token = "{{$user->token}}"
+        let return_success_text = "{{translate_title('Возврат сделан', $lang)}}"
+        let return_modal_title = document.getElementById('return_modal_title')
     </script>
     <script>
         // let bills_history_th = document.querySelector('#bills_history th')

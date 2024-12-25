@@ -27,6 +27,7 @@ let selected_product_price = document.getElementById('selected_product_price')
 let selected_product_amount = document.getElementById('selected_product_amount')
 let selected_product_unit = document.getElementById('selected_product_unit')
 let dotKeyboard = document.getElementById('dotKeyboard')
+let return_modal_button_click = document.querySelector('#return_modal_button_click')
 let dot_has = false
 let orderProductData = {}
 
@@ -59,6 +60,8 @@ let selected_product_sum = ''
 let selected_product_quantity = ''
 let selected_sales_item_id = ''
 let selected_sales_items = []
+let selected_sales_items_object = []
+let return_modal_body = document.getElementById('return_modal_body')
 
 function format_entered_sum(numbers){
     if(parseInt(numbers)>0){
@@ -102,19 +105,17 @@ let display_or_display_card_or_debt = ''
 let display_edit_payment = ''
 function selected_payment_input_func(){
     setTimeout(function () {
-        if(debt_display != undefined && debt_display != null) {
-            if (debt_display.matches(":focus")) {
+        if(debt_display != undefined && debt_display != null && display_card != undefined && display_card != null && display != undefined && display != null){
+            if(debt_display.matches(":focus")) {
                 display_or_display_card_or_debt = 'debt_display'
                 display_edit_payment = debt_display
-            }
-        }else if(debt_display != undefined && debt_display != null){
-            if(display_card.matches(":focus")){
+            }else if(display_card.matches(":focus")){
                 display_or_display_card_or_debt = 'display_card'
                 display_edit_payment = display_card
+            }else{
+                display_or_display_card_or_debt = 'display'
+                display_edit_payment = display
             }
-        }else{
-            display_or_display_card_or_debt = 'display'
-            display_edit_payment = display
         }
     }, 94)
 }
@@ -433,7 +434,7 @@ function changeAmountAndPrice(){
     checklist_changed = false
     element_id = ''
     if(product_element_quantity != '') {
-        product_element_quantity.innerText = selected_product_amount.value
+        product_element_quantity.innerText = parseInt(selected_product_amount.value*1000)/1000
     }
     if(product_element_sum != '') {
         product_element_sum.innerText = selected_product_price.value
@@ -534,6 +535,7 @@ function changeAmountAndPriceReturn(){
         payment_product_amount_element.innerText = selected_product_amount.value + ' '+ orderProductData.unit
         payment_product_return_price_element.innerText = new Intl.NumberFormat('ru-RU').format(selected_product_price.value, 10) + ' ' + sum_text
         selected_sales_items.push({'sales_item_id':selected_sales_item_id, 'quantity':parseFloat(selected_product_amount.value), 'all_sum':parseFloat(selected_product_price.value)})
+        selected_sales_items_object.push(JSON.stringify({'sales_item_id':selected_sales_item_id, 'quantity':parseFloat(selected_product_amount.value), 'all_sum':parseFloat(selected_product_price.value)}))
     }else if(parseFloat(selected_product_amount.value) <= 0){
         payment_product_amount_element.innerText = ''
         payment_product_return_price_element.innerText = ''
@@ -542,6 +544,57 @@ function changeAmountAndPriceReturn(){
         return_total_sum = return_total_sum + parseInt(selected_sales_items[i].all_sum)
     }
     return_total_amount.innerText = new Intl.NumberFormat('ru-RU').format(return_total_sum, 10) + ' ' + sum_text
+    return_modal_body.innerHTML = `<h4> ${new Intl.NumberFormat('ru-RU').format(return_total_sum, 10) + ' ' + sum_text}</h4>`
+}
+
+if(return_modal_button_click != undefined && return_modal_button_click != null){
+    return_modal_button_click.addEventListener('click', function () {
+        if(loader != undefined && loader != null){
+            if(loader.classList.contains("d-none")){
+                loader.classList.remove("d-none")
+            }
+        }
+        if(myDiv != undefined && myDiv != null){
+            if(myDiv.classList.contains("d-none")){
+                myDiv.classList.remove("d-none")
+            }
+        }
+        $(document).ready(function () {
+            $.ajax({
+                url:`/../api/confirm-return`,
+                type:'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'Accept':'application/json'
+                },
+                data:{
+                    'id':bill_id,
+                    'data':selected_sales_items_object
+                },
+                success: function (data) {
+                    if(data.status == true){
+                        setTimeout(function () {
+                            if(loader != undefined && loader != null){
+                                if(!loader.classList.contains("d-none")){
+                                    loader.classList.add("d-none")
+                                }
+                            }
+                            if(myDiv != undefined && myDiv != null){
+                                if(!myDiv.classList.contains("d-none")){
+                                    myDiv.classList.add("d-none")
+                                }
+                            }
+                            location.reload()
+                        }, 244)
+                        toastr.success(return_success_text+' '+data.return_all_sum+' '+data.code)
+                    }
+                },
+                error: function (e) {
+                    console.log(e)
+                }
+            })
+        })
+    })
 }
 
 // Function to clear the display

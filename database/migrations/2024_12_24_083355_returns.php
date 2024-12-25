@@ -13,14 +13,13 @@ return new class extends Migration
     {
         Schema::create('returns', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('sale_id'); // Sotuvga bog'lanish
-            $table->unsignedBigInteger('sale_item_id'); // Sotuv mahsulotiga bog'lanish
-            $table->unsignedBigInteger('product_id'); // Mahsulot
-            $table->decimal('quantity', 10, 2); // Qaytarilgan miqdor
-            $table->decimal('price', 10, 2); // Qaytarilgan mahsulot narxi
-            $table->decimal('total_amount', 10, 2); // Umumiy qaytarilgan summa
+            $table->unsignedBigInteger('sale_id')->unsigned()->nullable(); // Sotuvga bog'lanish
+            $table->unsignedBigInteger('sale_item_id')->unsigned()->nullable(); // Sotuv mahsulotiga bog'lanish
+            $table->unsignedBigInteger('product_id')->unsigned()->nullable(); // Mahsulot
+            $table->decimal('quantity', 10, 2)->unsigned()->nullable(); // Qaytarilgan miqdor
+            $table->decimal('price', 10, 2)->unsigned()->nullable(); // Qaytarilgan mahsulot narxi
             $table->text('reason')->nullable(); // Qaytarish sababi
-            $table->unsignedBigInteger('cashier_id'); // Kim qaytarishni amalga oshirdi
+            $table->unsignedBigInteger('cashier_id')->unsigned()->nullable(); // Kim qaytarishni amalga oshirdi
             $table->timestamps();
         });
 

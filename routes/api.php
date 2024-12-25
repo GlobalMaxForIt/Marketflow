@@ -25,6 +25,7 @@ use App\Http\Controllers\Cashier\PaymentsController;
 Route::group(['middleware'=>'auth:sanctum'], function () {
     Route::post('payment-pay', [CashboxController::class, 'paymentPay'])->name('paymentPay');
     Route::get('get-check-aside', [CashboxController::class, 'getCheckAside'])->name('getCheckAside');
+    Route::post('confirm-return', [PaymentsController::class, 'confirmReturn'])->name('confirmReturn');
     Route::post('payment-delete', [PaymentsController::class, 'paymentDeleteFunc'])->name('paymentDeleteFunc');
 });
 

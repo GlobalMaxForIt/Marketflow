@@ -27,9 +27,6 @@ let return_total_amount_text = document.getElementById('return_total_amount_text
 let return_total_amount = document.getElementById('return_total_amount')
 
 let client_full_name_html = document.getElementById('client_full_name')
-let return_modal_title = document.getElementById('return_modal_title')
-let return_modal_body = document.getElementById('return_modal_body')
-
 let client_max_payment = 0
 let bill_id = ''
 let stock_int = 0
@@ -136,7 +133,6 @@ function setData(item) {
         });
     }
     payment_history_data.innerHTML = bills_history_html
-    return_modal_body.innerHTML = bills_history_html
 }
 
 function showBillInfo(this_element, sales_data, code, price, discount_price, total_amount, return_amount, saleId, client_full_name, client_discount_price){
@@ -166,7 +162,9 @@ function showBillInfo(this_element, sales_data, code, price, discount_price, tot
     }
     bills_history_html = ''
     payment_history_code.textContent = '#'+code
-    return_modal_title.textContent = '#'+code
+    if(return_modal_title == ''){
+        return_modal_title.textContent = '#'+code
+    }
     bills_history_subtotal.textContent = price +' '+ sum_text
     bills_history_client.textContent = client_discount_price +' '+ sum_text
     bills_history_discount.textContent = discount_price +' '+ sum_text
@@ -174,6 +172,16 @@ function showBillInfo(this_element, sales_data, code, price, discount_price, tot
     client_title_text.setAttribute('data-bs-content', client_full_name)
     selected_total_sum = parseInt(total_amount.replace(/\s/g, ''), 10)
     setData(sales_data);
+    if(!return_modal_button.classList.contains('d-none')){
+        return_modal_button.classList.add('d-none')
+    }
+    if(!return_total_amount.classList.contains('d-none')){
+        return_total_amount.classList.add('d-none')
+    }
+    if(!return_total_amount_text.classList.contains('d-none')){
+        return_total_amount_text.classList.add('d-none')
+    }
+    selected_sales_items = []
 }
 
 
