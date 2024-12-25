@@ -39,7 +39,7 @@ class PaymentsController extends Controller
         foreach($clients_ as $client){
             $clients[] = $this->clientService->getClientFullInfo($client);
         }
-        $allSales = Sales::where('store_id', $user->store_id)->get();
+        $allSales = Sales::where('store_id', $user->store_id)->where('status', Constants::NOT_CHECKLIST)->get();
         foreach ($allSales as $allSale){
             $all_sales[] = $this->getSales($allSale);
             $all_sales_info[] = $this->getSalesItem($allSale);
@@ -97,11 +97,12 @@ class PaymentsController extends Controller
                     if($product){
                         $items = $this->productsService->getShortProduct($product, $salesItem->quantity);
                     }
+                    $sales_item_quantity = $salesItem->quantity?rtrim(rtrim($salesItem->quantity, '0'), '.'):0;
                     $products_data[] = [
                         'id'=>$salesItem->id,
                         'items'=>$items,
                         'all_price'=>number_format($sales_item_all_price, 0, '', ' '),
-                        'quantity'=>$salesItem->quantity??0,
+                        'quantity'=>$sales_item_quantity,
                         'price'=>number_format($sales_item_price, 0, '', ' '),
                     ];
                 }

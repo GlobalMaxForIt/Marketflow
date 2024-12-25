@@ -233,7 +233,7 @@ class ProductsService
         if($product->unit){
             $unit_translation = table_translate_title($product->unit, 'unit', $lang);
         }
-        $sales_item_quantity = $sales_item_quantity?rtrim(rtrim($sales_item_quantity, '0'), '.'):'';
+        $sales_item_quantity = $sales_item_quantity?rtrim(rtrim($sales_item_quantity, '0'), '.'):0;
         $array_products = [
             'id'=>$product->id??'',
             'short_name'=>$this->truncateString($product->name)??'',

@@ -145,7 +145,7 @@ function showBillInfo(this_element, sales_data, code, price, discount_price, tot
     bills_history_total.textContent = ''
     bills_history_client.textContent = ''
 
-    bill_id = saleId
+    bill_id = saleIdf
     let pay_total_amount = parseInt(total_amount.split(' ').join(''))
     let pay_return_amount = parseInt(return_amount.split(' ').join(''))
     if(pay_return_amount>0){
