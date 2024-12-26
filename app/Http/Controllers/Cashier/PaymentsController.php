@@ -42,6 +42,7 @@ class PaymentsController extends Controller
         $all_sales_info = [];
         $all_sales_modal = [];
         $all_sales_info_modal = [];
+        $return_modal_all_sum = 0;
         $clients_ = Clients::all();
         $clients = [];
         foreach($clients_ as $client){
@@ -54,12 +55,14 @@ class PaymentsController extends Controller
         }
         $return_modals = ReturnModel::all()->groupBy('sale_id');
         foreach ($return_modals as $key => $return_modal_){
+            $return_modal_all_sum = 0;
             $sales_modal = Sales::find($key);
-            $all_sales_modal[] = $this->getSales($sales_modal);
             foreach($return_modal_ as $return_modal){
+                $return_modal_all_sum = $return_modal_all_sum + (int)$return_modal->price;
                 $sale_item_modal = $return_modal->salesItem;
-                $all_sales_info_modal[] = $this->getSaleItem($sale_item_modal);
+                $all_sales_info_modal[] = $this->getSaleItem($sale_item_modal, $return_modal);
             }
+            $all_sales_modal[] = $this->getSalesModal($sales_modal, $return_modal_all_sum);
         }
         return view('cashier.payments.index', [
             'lang'=>$lang,
@@ -91,7 +94,7 @@ class PaymentsController extends Controller
             'id'=>$sale->id,
             'cashier'=>$sale->cashier,
             'store'=>$sale->store,
-            'code'=>$sale->code,
+            'code'=>'#'.$sale->code,
             'client_full_name'=>$client_full_name,
             'client_info'=>$client_info,
             'client_discount_price'=>$sale->client_discount_price?number_format($sale->client_discount_price, 0, '', ' '):'no',
@@ -100,6 +103,29 @@ class PaymentsController extends Controller
             'total_amount'=>number_format($sale->total_amount, 0, '', ' '),
             'paid_amount'=>number_format($sale->paid_amount, 0, '', ' '),
             'return_amount'=>number_format($sale->return_amount, 0, '', ' '),
+            'updated_at'=>$sale->updated_at
+        ];
+        return $all_sale;
+    }
+    public function getSalesModal($sale, $return_modal_all_sum){
+        $client_id = $sale->client_id;
+        $client_full_name = '';
+        $client_info = [];
+        if($client_id){
+            $client = Clients::find($client_id);
+            if($client){
+                $client_info = $this->clientService->getClientFullInfo($client);
+                $client_full_name = $this->clientService->getClientFullname($client);
+            }
+        }
+        $all_sale = [
+            'id'=>$sale->id,
+            'cashier'=>$sale->cashier,
+            'store'=>$sale->store,
+            'code'=>'#'.$sale->code,
+            'client_full_name'=>$client_full_name,
+            'client_info'=>$client_info,
+            'price'=>$return_modal_all_sum>0?number_format($return_modal_all_sum, 0, '', ' '):'no',
             'updated_at'=>$sale->updated_at
         ];
         return $all_sale;
@@ -131,21 +157,20 @@ class PaymentsController extends Controller
         return $products_data;
     }
 
-    public function getSaleItem($salesItem){
+    public function getSaleItem($salesItem, $return_modal){
         $items = [];
         $product = $salesItem->product;
-        $sales_item_all_price = ((int)$salesItem->price - (int)$salesItem->discount_price) * (float)$salesItem->quantity;
-        $sales_item_price = (int)$salesItem->price * (int)$salesItem->quantity;
+        $sales_item_all_price = $return_modal->price;
         if($product){
             $items = $this->productsService->getShortProduct($product, $salesItem->quantity);
         }
-        $sales_item_quantity = $salesItem->quantity?rtrim(rtrim($salesItem->quantity, '0'), '.'):0;
+        $sales_item_quantity = $salesItem->quantity?rtrim(rtrim($return_modal->quantity, '0'), '.'):0;
         $product_data[] = [
             'id'=>$salesItem->id,
             'items'=>$items,
             'all_price'=>number_format($sales_item_all_price, 0, '', ' '),
             'quantity'=>$sales_item_quantity,
-            'price'=>number_format($sales_item_price, 0, '', ' '),
+            'price'=>0,
         ];
         return $product_data;
     }

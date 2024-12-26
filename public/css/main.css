@@ -2417,7 +2417,6 @@ body[data-leftbar-size=compact] .footer{
 }
 #popover-container b, #popover-container h6{
     font-size: 14px;
-    margin-bottom: 0px !important;
 }
 #all_sum_info thead, #all_sum_info tbody, #all_sum_info th, #all_sum_info tr,#all_sum_info td{
     border: 0px !important;

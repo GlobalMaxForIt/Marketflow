@@ -305,6 +305,7 @@ function editProductFunc(orderProduct){
     }else{
         selected_product_price.disabled = false
     }
+    selected_product_input_func()
 }
 function selected_product_input_func(){
     setTimeout(function () {
@@ -326,13 +327,27 @@ function selected_product_input_func(){
             amount_or_price = 'price'
             if(![4, 7, 8, 10, 11].includes(parseInt(orderProductData.unit_id))){
                 selected_product_price.disabled = true
-                selected_product_amount.focus()
+                setTimeout(function () {
+                    selected_product_amount.focus()
+                    selected_product_amount.addEventListener("blur", (event) => {
+                        event.preventDefault(); // Fokusni saqlash
+                        selected_product_amount.focus(); // Fokusni qayta tiklash
+                    });
+                }, 144)
             }else{
                 display_edit_product = selected_product_price
                 if(!dotKeyboard.classList.contains('d-none')){
                     dotKeyboard.classList.add('d-none')
                 }
                 selected_product_price.disabled = false
+                selected_product_price.blur()
+                setTimeout(function () {
+                    selected_product_price.focus()
+                    selected_product_price.addEventListener("blur", (event) => {
+                        event.preventDefault(); // Fokusni saqlash
+                        selected_product_price.focus(); // Fokusni qayta tiklash
+                    });
+                }, 144)
             }
         }
     }, 94)
@@ -403,9 +418,12 @@ function changePriceByAmount(amount__value){
             if(amount__value[0] == '.' && amount__value.length == 2){
                 selected_product_amount.value = '0.'+String(amount__value).slice(0, 1); // Aks holda, raqamni qo'shamiz
             }else {
-                selected_product_amount.value = String(amount__value); // Aks holda, raqamni qo'shamiz
+                if(amount__value == '0'){
+                    selected_product_amount.value = '0'; // Aks holda, raqamni qo'shamiz
+                }else{
+                    selected_product_amount.value = parseFloat(amount__value); // Aks holda, raqamni qo'shamiz
+                }
             }
-            selected_product_amount.value = String(amount__value);
             selected_product_price.value = orderProduct_last_price * parseFloat(amount__value)
             dot_has = false
         }
@@ -414,7 +432,7 @@ function changePriceByAmount(amount__value){
 
 function changeAmountByPrice(price__value){
     if(stock_int > 0 || page_name == 'payment') {
-        selected_product_price.value = String(price__value); // Aks holda, raqamni qo'shamiz
+        selected_product_price.value = parseFloat(price__value); // Aks holda, raqamni qo'shamiz
         selected_product_amount.value = parseInt(selected_product_price.value) / orderProduct_last_price
     }
 }

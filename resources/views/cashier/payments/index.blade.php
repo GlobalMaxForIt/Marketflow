@@ -101,19 +101,15 @@
                                 <table class="restaurant_tables datatable table table-striped table-bordered dt-responsive nowrap">
                                     <thead>
                                         <tr>
-                                            <th><h6>{{translate_title('Total amount', $lang)}}</h6></th>
-                                            <th><h6>{{translate_title('Paid amount', $lang)}}</h6></th>
-                                            <th><h6>{{translate_title('Returning amount', $lang)}}</h6></th>
+                                            <th><h6>{{translate_title('Price', $lang)}}</h6></th>
                                             <th><h6>{{translate_title('Code', $lang)}}</h6></th>
                                             <th><h6>{{translate_title('Updated at', $lang)}}</h6></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($all_sales_modal as $key => $all_sale_modal)
-                                        <tr class="bill_info_table" onclick="showBillInfo(this, {{ json_encode($all_sales_info_modal[$key]) }}, `{{$all_sale_modal['code']}}`, `{{$all_sale_modal['price']}}`, `{{$all_sale_modal['discount_price']}}`, `{{$all_sale_modal['total_amount']}}`, `{{$all_sale_modal['return_amount']}}`, `{{$all_sale_modal['id']}}`, `{{$all_sale_modal['client_full_name']}}`, `{{$all_sale_modal['client_discount_price']}}`)">
-                                            <td><h6>{{$all_sale_modal['total_amount'].' '.translate_title('sum', $lang)}}</h6></td>
-                                            <td><h6>{{$all_sale_modal['paid_amount'].' '.translate_title('sum', $lang)}}</h6></td>
-                                            <td><h6>{{$all_sale_modal['return_amount'].' '.translate_title('sum', $lang)}}</h6></td>
+                                        <tr class="bill_info_table" onclick="showBillInfoModal(this, {{ json_encode($all_sales_info_modal[$key]) }}, `{{$all_sale_modal['code']}}`, `{{$all_sale_modal['price']}}`, `{{$all_sale_modal['id']}}`, `{{$all_sale_modal['client_full_name']}}`)">
+                                            <td><h6>{{$all_sale_modal['price'].' '.translate_title('sum', $lang)}}</h6></td>
                                             <td><h6>{{$all_sale_modal['code']}}</h6></td>
                                             <td><h6>{{$all_sale_modal['updated_at']}}</h6></td>
                                         </tr>
@@ -134,16 +130,8 @@
                                 </div>
                             </div>
                             <div class="bills_history_content">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <div>
-                                        <h6 class="order-info d-none" id="returned_total_amount_text"> {{translate_title('Return', $lang)}}</h6>
-                                    </div>
-                                    <div>
-                                        <h6 class="order-info-sum d-none" id="returned_total_amount">0 000 000 {{translate_title('sum', $lang)}}</h6>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-end d-none" id="returned_modal_button">
-                                    <button class="modal_confirm_pay_ btn"  data-bs-toggle="modal" data-bs-target="#return_modal">
+                                <div class="d-flex justify-content-end d-none" id="returned_back_modal_button">
+                                    <button class="modal_confirm_pay_ btn"  data-bs-toggle="modal" data-bs-target="#returned_back_modal">
                                         <h6 class="color_white mb-0">{{translate_title('Return', $lang)}}</h6>
                                     </button>
                                 </div>
@@ -162,6 +150,26 @@
                         <img src="{{asset('img/delete_icon.png')}}" alt="" height="100px">
                         <h4 class="mt-2 delete_text_content">{{ translate_title('Вы уверены, что хотите возврат?', $lang)}} <h4 id="return_modal_title"> </h4></h4>
                         <div class="modal-body" id="return_modal_body">
+
+                        </div>
+                        <div class="d-flex justify-content-around">
+                            <a type="button" class="btn btn-danger" data-bs-dismiss="modal">{{ translate_title('Close', $lang) }}</a>
+                            <a type="button" class="btn btn-success" id="return_modal_button_click">{{ translate_title('Confirm', $lang) }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div id="returned_back_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="returned_back_modal-modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content modal-filled">
+                <div class="modal-body">
+                    <div class="text-center">
+                        <img src="{{asset('img/delete_icon.png')}}" alt="" height="100px">
+                        <h4 class="mt-2 delete_text_content">{{ translate_title('Вы уверены, что хотите возврат?', $lang)}} <h4 id="returned_back_modal_title"> </h4></h4>
+                        <div class="modal-body" id="returned_back_modal_body">
 
                         </div>
                         <div class="d-flex justify-content-around">
