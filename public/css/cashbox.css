@@ -147,7 +147,6 @@ table{
     transition: 0.1s;
 }
 .offcanvas tr:hover{
-    transform: scale(1.014);
     background-color: rgb(0, 0, 0, 0.1);
 }
 .input-display_password[disabled] {

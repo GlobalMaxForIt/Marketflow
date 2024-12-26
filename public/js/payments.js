@@ -47,8 +47,13 @@ let refund_modal_form_url = document.getElementById('refund_modal_form')
 function refundBillFunc(url){
     refund_modal_form_url.setAttribute("action", url)
 }
-
+let sale_quantity_html = ''
 function setItem(item, index){
+    if(parseFloat(item.quantity) > 0){
+        sale_quantity_html = `<h6>${item.quantity} ${item.items.unit}</h6>`
+    }else{
+        sale_quantity_html = `<span class="font-14 color_red">${taken_back_text}</span>`
+    }
     if(parseInt(item.price.replace(/\s+/g, "")) > parseInt(item.all_price.replace(/\s+/g, ""))){
         bills_history_html = bills_history_html  + `<div class="bill_info d-flex justify-content-between align-items-center client_selected_product_row">
                                         <div class="width_30_percent d-flex">
@@ -57,7 +62,7 @@ function setItem(item, index){
                                         </div>
                                         <div class="width_45_percent d-flex flex-column justify-content-center">
                                             <h6>${item.items.name + ' '+ item.items.amount}</h6>
-                                            <h6>${item.quantity} ${item.items.unit}</h6>
+                                            <h6>${sale_quantity_html}</h6>
                                             <h6 id="payment_product_amount"></h6>
                                         </div>
                                         <div class="width_25_percent text-end bill_info_sum d-flex flex-column">
@@ -93,7 +98,7 @@ function setItem(item, index){
                                         </div>
                                         <div class="width_45_percent d-flex flex-column justify-content-center">
                                             <h6>${item.items.name + ' ' + item.items.amount}</h6>
-                                            <h6>${item.quantity} ${item.items.unit}</h6>
+                                            <h6>${sale_quantity_html}</h6>
                                             <h6 id="payment_product_amount"></h6>
                                         </div>
                                         <div class="width_25_percent text-end bill_info_sum">

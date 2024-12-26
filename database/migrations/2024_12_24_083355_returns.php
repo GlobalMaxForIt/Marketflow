@@ -20,6 +20,7 @@ return new class extends Migration
             $table->decimal('price', 10, 2)->unsigned()->nullable(); // Qaytarilgan mahsulot narxi
             $table->text('reason')->nullable(); // Qaytarish sababi
             $table->unsignedBigInteger('cashier_id')->unsigned()->nullable(); // Kim qaytarishni amalga oshirdi
+            $table->unsignedBigInteger('store_id')->unsigned()->nullable(); // Kim qaytarishni amalga oshirdi
             $table->timestamps();
         });
 

@@ -307,7 +307,7 @@
                 </a>
             </li>
             <li>
-                <h4>@yield('title')</h4>
+                <h4 class="mb-0">@yield('title')</h4>
             </li>
         </ul>
         <div class="clearfix"></div>

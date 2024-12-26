@@ -521,6 +521,7 @@
         let notify_text_left_in_stock = "{{translate_title('left in stock', $lang)}}"
         let payment_success_text = "{{translate_title('The payment was made successfully', $lang)}}"
         let set_aside_success_text = "{{translate_title('The check successfull set aside', $lang)}}"
+        let taken_back_text = ""
         let client_total_sales = 0
         let clientPhoneNumber = document.getElementById('clientPhoneNumber')
         let selected_checklist_id = ''
@@ -608,6 +609,7 @@
                     if(check_code.classList.contains('d-none')){
                         check_code.classList.add('d-none')
                     }
+                    check_code.innerText = ''
                     set_checklist_button_delete.disabled = true
                     if(selected_checklist_is_active){
                         selected_checklist_is_active = false
@@ -625,12 +627,13 @@
                         for(let i=0; i<checklistData.length; i++){
                             addToOrder(checklistData[i].id, checklistData[i].name, checklistData[i].price, checklistData[i].discount, checklistData[i].discount_percent, checklistData[i].last_price, checklistData[i].amount, checklistData[i].barcode, checklistData[i].stock, checklistData[i].unit, checklistData[i].unit_id, checklistData[i].quantity, checklist_code, null, null)
                         }
-                        this_check_list_code.innerText = checklist_code
-                        this__check_list_code.innerText = checklist_code
+                        this_check_list_code.innerText = '#'+checklist_code
+                        this__check_list_code.innerText = '#'+checklist_code
+                        check_code.innerText = '#'+checklist_code
                         if(set_checklist_button_delete != undefined && set_checklist_button_delete != null) {
                             set_checklist_button_delete.disabled = false
                         }
-                        if(!check_code.classList.contains('d-none')){
+                        if(check_code.classList.contains('d-none')){
                             check_code.classList.remove('d-none')
                         }
                         checklist_changed = true

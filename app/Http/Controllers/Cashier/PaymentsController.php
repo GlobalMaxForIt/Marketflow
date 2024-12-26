@@ -40,6 +40,8 @@ class PaymentsController extends Controller
         $user = Auth::user();
         $all_sales = [];
         $all_sales_info = [];
+        $all_sales_modal = [];
+        $all_sales_info_modal = [];
         $clients_ = Clients::all();
         $clients = [];
         foreach($clients_ as $client){
@@ -50,12 +52,23 @@ class PaymentsController extends Controller
             $all_sales[] = $this->getSales($allSale);
             $all_sales_info[] = $this->getSalesItem($allSale);
         }
+        $return_modals = ReturnModel::all()->groupBy('sale_id');
+        foreach ($return_modals as $key => $return_modal_){
+            $sales_modal = Sales::find($key);
+            $all_sales_modal[] = $this->getSales($sales_modal);
+            foreach($return_modal_ as $return_modal){
+                $sale_item_modal = $return_modal->salesItem;
+                $all_sales_info_modal[] = $this->getSaleItem($sale_item_modal);
+            }
+        }
         return view('cashier.payments.index', [
             'lang'=>$lang,
             'all_sales'=>$all_sales,
+            'all_sales_modal'=>$all_sales_modal,
             'clients'=>$clients,
             'user'=>$user,
             'all_sales_info'=>$all_sales_info,
+            'all_sales_info_modal'=>$all_sales_info_modal,
             'title'=>$this->title,
             'current_page'=>$this->current_page,
             'quantity'=>[
@@ -116,6 +129,25 @@ class PaymentsController extends Controller
             }
         }
         return $products_data;
+    }
+
+    public function getSaleItem($salesItem){
+        $items = [];
+        $product = $salesItem->product;
+        $sales_item_all_price = ((int)$salesItem->price - (int)$salesItem->discount_price) * (float)$salesItem->quantity;
+        $sales_item_price = (int)$salesItem->price * (int)$salesItem->quantity;
+        if($product){
+            $items = $this->productsService->getShortProduct($product, $salesItem->quantity);
+        }
+        $sales_item_quantity = $salesItem->quantity?rtrim(rtrim($salesItem->quantity, '0'), '.'):0;
+        $product_data[] = [
+            'id'=>$salesItem->id,
+            'items'=>$items,
+            'all_price'=>number_format($sales_item_all_price, 0, '', ' '),
+            'quantity'=>$sales_item_quantity,
+            'price'=>number_format($sales_item_price, 0, '', ' '),
+        ];
+        return $product_data;
     }
 
     function paymentDeleteFunc(Request $request){
@@ -185,7 +217,7 @@ class PaymentsController extends Controller
             $order_discount_price = $order_discount_price + (float)$salesItem->quantity * $order_data_discount;
             $product = Products::find($salesItem->id);
             if($product) {
-                $all_cost_price = $all_cost_price + $product->cost * (float)$salesItem->quantity;
+                $all_cost_price = $all_cost_price + (int)$product->cost * (float)$salesItem->quantity;
             }
         }
 
