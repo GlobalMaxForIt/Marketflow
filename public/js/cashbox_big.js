@@ -572,6 +572,7 @@ if(return_modal_button_click != undefined && return_modal_button_click != null){
                     'data':selected_sales_items_object
                 },
                 success: function (data) {
+                    console.log(data)
                     if(data.status == true){
                         setTimeout(function () {
                             if(loader != undefined && loader != null){

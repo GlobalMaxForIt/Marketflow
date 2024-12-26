@@ -155,10 +155,9 @@ class PaymentsController extends Controller
         $all_cost_price = 0;
         $order_discount_price = 0;
         $return_all_sum = 0;
-
         foreach($datas as $data_) {
             $data = json_decode($data_);
-            $sales_item = SalesItems::find($data->sales_item_id)->first();
+            $sales_item = SalesItems::find($data->sales_item_id);
             if($sales_item){
                 $product = Products::find($sales_item->product_id);
                 $return_model = new ReturnModel();
@@ -175,7 +174,6 @@ class PaymentsController extends Controller
                     $return_all_sum = $return_all_sum + $data->all_sum;
                     $sales_item->save();
                 }
-
             }
         }
         $sale = Sales::find($id);
