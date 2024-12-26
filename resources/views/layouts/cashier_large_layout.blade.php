@@ -413,19 +413,21 @@
                                 <th><h6><b>{{translate_title('Stock', $lang)}}</b></h6></th>
                             </tr>
                         </thead>
-                        <tbody id="popover-container">
+                        <tbody id="popover-container_">
                         @foreach($allProductsData['products'] as $product)
                             <tr onclick="addToOrder('{{$product['id']}}', '{{$product['name']}}', '{{$product['price']}}', '{{$product['discount']}}', '{{$product['discount_percent']}}', '{{$product['last_price']}}', '{{$product['amount']}}', '{{$product['barcode']}}', '{{$product['stock']}}', '{{$product['unit']}}', '{{$product['unit_id']}}', 1, null, null, null)">
                                 <td class="market_tables_text_big barcode_number_column">
                                     <span><h6><b>{{$product['barcode']}}</b></h6></span>
                                 </td>
                                 <td class="market_tables_text_big">
-                                    <div class="me-2">
-                                        <h6>
-                                            <a class="product_name" tabindex="0" data-bs-container="#popover-container" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="{{$product['name']}}" data-original-title="">{{$product['short_name']}}</a>
-                                        </h6>
+                                    <div class="d-flex">
+                                        <div class="me-2">
+                                            <h6>
+                                                <a class="product_name word_wrap" tabindex="0" data-bs-container="#popover-container_" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="{{$product['name']}}" data-original-title="">{{$product['short_name']}}</a>
+                                            </h6>
+                                        </div>
+                                        <div><h6><b>{{$product['amount']}}</b></h6></div>
                                     </div>
-                                    <div><h6><b>{{$product['amount']}}</b></h6></div>
                                 </td>
                                 <td class="market_tables_text_big">
                                     <div><span><h6><b>{{$product['last_price']}}</b></h6></span></div>
@@ -1085,6 +1087,10 @@
             let all_products_list_input = document.querySelector("#offcanvasTop input[type='search'][aria-controls='all_products_list_for_selling']")
             all_products_list_input.value = '';
             all_products_list_input.focus();
+            all_products_list_input.addEventListener("blur", (event) => {
+                event.preventDefault(); // Fokusni saqlash
+                all_products_list_input.focus();
+            });
         }, 444)
     })
     // if (window.innerWidth < 1000) {

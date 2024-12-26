@@ -533,6 +533,7 @@
         let check_code = document.getElementById('check_code')
         let all_checklist_sales = `{!! $all_checklist_sales !!}`
         let return_modal_title = ''
+        let returned_back_modal_title = ''
 
         let set_checklist_button_delete = document.getElementById('set_checklist_button_delete')
         if(set_checklist_button_delete != undefined && set_checklist_button_delete != null) {

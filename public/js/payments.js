@@ -1,4 +1,5 @@
 let bill_info_table = document.getElementsByClassName('bill_info_table')
+let return_bill_info_table = document.getElementsByClassName('return_bill_info_table')
 
 let bills_history_subtotal = document.getElementById('bills_history_subtotal')
 let bills_history_client = document.getElementById('bills_history_client')
@@ -7,6 +8,7 @@ let bills_history_total = document.getElementById('bills_history_total')
 let client_title_text = document.getElementById('client_title_text')
 
 let payment_history_data = document.getElementById('payment_history_data')
+let returned_back_history_data = document.getElementById('returned_back_history_data')
 
 let client_name = document.getElementById('client_name')
 let client_surname = document.getElementById('client_surname')
@@ -21,10 +23,14 @@ let client_notes = document.getElementById('client_notes')
 let client_region = document.getElementById('region')
 let client_district = document.getElementById('district')
 let payment_history_code = document.getElementById('payment_history_code')
+let returned_back_history_code = document.getElementById('returned_back_history_code')
 let product_full_info_alert = document.getElementById('product_full_info_alert')
 let return_modal_button = document.getElementById('return_modal_button')
+let returned_back_modal_button = document.getElementById('returned_back_modal_button')
 let return_total_amount_text = document.getElementById('return_total_amount_text')
 let return_total_amount = document.getElementById('return_total_amount')
+let returned_back_total_amount_text = document.getElementById('returned_back_total_amount_text')
+let returned_back_total_amount = document.getElementById('returned_back_total_amount')
 
 let client_full_name_html = document.getElementById('client_full_name')
 let client_max_payment = 0
@@ -54,8 +60,32 @@ function setItem(item, index){
     }else{
         sale_quantity_html = `<span class="font-14 color_red">${taken_back_text}</span>`
     }
-    if(parseInt(item.price.replace(/\s+/g, "")) > parseInt(item.all_price.replace(/\s+/g, ""))){
-        bills_history_html = bills_history_html  + `<div class="bill_info d-flex justify-content-between align-items-center client_selected_product_row">
+    if(item.price <= 0){
+        setPaymentHistoryHtmlWithouthDiscount(item, index)
+    }else if(parseInt(item.price.replace(/\s+/g, "")) > parseInt(item.all_price.replace(/\s+/g, ""))){
+        setPaymentHistoryHtmlWithDiscount(item, index)
+    }else{
+        setPaymentHistoryHtmlWithouthDiscount(item, index)
+    }
+}
+
+function setReturnedItem(item, index){
+    if(parseFloat(item.quantity) > 0){
+        sale_quantity_html = `<h6>${item.quantity} ${item.items.unit}</h6>`
+    }else{
+        sale_quantity_html = `<span class="font-14 color_red">${taken_back_text}</span>`
+    }
+    if(item.price <= 0){
+        setReturnedPaymentHistoryHtmlWithouthDiscount(item, index)
+    }else if(parseInt(item.price.replace(/\s+/g, "")) > parseInt(item.all_price.replace(/\s+/g, ""))){
+        setReturnedPaymentHistoryHtmlWithDiscount(item, index)
+    }else{
+        setReturnedPaymentHistoryHtmlWithouthDiscount(item, index)
+    }
+}
+
+function setPaymentHistoryHtmlWithDiscount(item, index){
+    bills_history_html = bills_history_html  + `<div class="bill_info d-flex justify-content-between align-items-center client_selected_product_row">
                                         <div class="width_30_percent d-flex">
                                             <h6 class="me-2">${index+1}.</h6>
                                             <img onclick="showImage('${item.items.product_image}')"  data-bs-toggle="modal" data-bs-target="#images-modal" src="${item.items.product_image}" alt="" width="24px">
@@ -68,6 +98,43 @@ function setItem(item, index){
                                         <div class="width_25_percent text-end bill_info_sum d-flex flex-column">
                                             <h6 id="payment_product_all_price">${item.all_price} ${sum_text}</h6>
                                             <del class="opacity_1">${item.price} ${sum_text}</del>
+                                            <h6 id="payment_product_return_price"></h6>
+                                        </div>
+                                        <a data-product='${JSON.stringify({
+                                                    sales_item_id:item.id,
+                                                    amount:item.items.amount,
+                                                    barcode:item.items.barcode,
+                                                    code:item.items.code,
+                                                    discount:item.items.discount,
+                                                    discount_percent:item.items.discount_percent,
+                                                    id:item.items.id,
+                                                    last_price:item.items.last_price,
+                                                    name:item.items.name,
+                                                    price:item.items.price,
+                                                    quantity:item.items.quantity,
+                                                    stock:item.items.stock,
+                                                    unit:item.items.unit,
+                                                    unit_id:item.items.unit_id
+                                                })}' 
+                                        onclick="editProductFunc(this)" data-bs-toggle="modal" data-bs-target="#edit_product_modal">
+                                            <img src="${return_icon}" class="width_20_px">
+                                        </a>
+                                    </div>`
+}
+
+function setPaymentHistoryHtmlWithouthDiscount(item, index){
+    bills_history_html = bills_history_html  + `<div class="bill_info d-flex justify-content-between align-items-center client_selected_product_row">
+                                        <div class="width_30_percent d-flex">
+                                            <h6 class="me-2">${index+1}.</h6>
+                                            <img onclick="showImage('${item.items.product_image}')" data-bs-toggle="modal" data-bs-target="#images-modal" src="${item.items.product_image}" alt="" height="44px">
+                                        </div>
+                                        <div class="width_45_percent d-flex flex-column justify-content-center">
+                                            <h6>${item.items.name + ' ' + item.items.amount}</h6>
+                                            <h6>${sale_quantity_html}</h6>
+                                            <h6 id="payment_product_amount"></h6>
+                                        </div>
+                                        <div class="width_25_percent text-end bill_info_sum">
+                                            <h6 id="payment_product_all_price">${item.all_price} ${sum_text}</h6>
                                             <h6 id="payment_product_return_price"></h6>
                                         </div>
                                         <a data-product='${JSON.stringify({
@@ -86,12 +153,53 @@ function setItem(item, index){
                                                 unit:item.items.unit,
                                                 unit_id:item.items.unit_id
                                             })}' 
+                                            data-product-left=""
+                                            onclick="editProductFunc(this)" data-bs-toggle="modal" data-bs-target="#edit_product_modal">
+                                            <img src="${return_icon}" class="width_20_px">
+                                        </a>
+                                    </div>`
+}
+
+function setReturnedPaymentHistoryHtmlWithDiscount(item, index){
+    bills_history_html = bills_history_html  + `<div class="bill_info d-flex justify-content-between align-items-center client_selected_product_row">
+                                        <div class="width_30_percent d-flex">
+                                            <h6 class="me-2">${index+1}.</h6>
+                                            <img onclick="showImage('${item.items.product_image}')"  data-bs-toggle="modal" data-bs-target="#images-modal" src="${item.items.product_image}" alt="" width="24px">
+                                        </div>
+                                        <div class="width_45_percent d-flex flex-column justify-content-center">
+                                            <h6>${item.items.name + ' '+ item.items.amount}</h6>
+                                            <h6>${sale_quantity_html}</h6>
+                                            <h6 id="payment_product_amount"></h6>
+                                        </div>
+                                        <div class="width_25_percent text-end bill_info_sum d-flex flex-column">
+                                            <h6 id="payment_product_all_price">${item.all_price} ${sum_text}</h6>
+                                            <del class="opacity_1">${item.price} ${sum_text}</del>
+                                            <h6 id="payment_product_return_price"></h6>
+                                        </div>
+                                        <a data-product='${JSON.stringify({
+                                                    sales_item_id:item.id,
+                                                    amount:item.items.amount,
+                                                    barcode:item.items.barcode,
+                                                    code:item.items.code,
+                                                    discount:item.items.discount,
+                                                    discount_percent:item.items.discount_percent,
+                                                    id:item.items.id,
+                                                    last_price:item.items.last_price,
+                                                    name:item.items.name,
+                                                    price:item.items.price,
+                                                    quantity:item.items.quantity,
+                                                    stock:item.items.stock,
+                                                    unit:item.items.unit,
+                                                    unit_id:item.items.unit_id
+                                                })}' 
                                         onclick="editProductFunc(this)" data-bs-toggle="modal" data-bs-target="#edit_product_modal">
                                             <img src="${return_icon}" class="width_20_px">
                                         </a>
                                     </div>`
-    }else{
-        bills_history_html = bills_history_html  + `<div class="bill_info d-flex justify-content-between align-items-center client_selected_product_row">
+}
+
+function setReturnedPaymentHistoryHtmlWithouthDiscount(item, index){
+    bills_history_html = bills_history_html  + `<div class="bill_info d-flex justify-content-between align-items-center client_selected_product_row">
                                         <div class="width_30_percent d-flex">
                                             <h6 class="me-2">${index+1}.</h6>
                                             <img onclick="showImage('${item.items.product_image}')" data-bs-toggle="modal" data-bs-target="#images-modal" src="${item.items.product_image}" alt="" height="44px">
@@ -106,27 +214,26 @@ function setItem(item, index){
                                             <h6 id="payment_product_return_price"></h6>
                                         </div>
                                         <a data-product='${JSON.stringify({
-                                            sales_item_id:item.id,
-                                            amount:item.items.amount,
-                                            barcode:item.items.barcode,
-                                            code:item.items.code,
-                                            discount:item.items.discount,
-                                            discount_percent:item.items.discount_percent,
-                                            id:item.items.id,
-                                            last_price:item.items.last_price,
-                                            name:item.items.name,
-                                            price:item.items.price,
-                                            quantity:item.items.quantity,
-                                            stock:item.items.stock,
-                                            unit:item.items.unit,
-                                            unit_id:item.items.unit_id
-                                        })}' 
-                                        data-product-left=""
-                                        onclick="editProductFunc(this)" data-bs-toggle="modal" data-bs-target="#edit_product_modal">
+                                                sales_item_id:item.id,
+                                                amount:item.items.amount,
+                                                barcode:item.items.barcode,
+                                                code:item.items.code,
+                                                discount:item.items.discount,
+                                                discount_percent:item.items.discount_percent,
+                                                id:item.items.id,
+                                                last_price:item.items.last_price,
+                                                name:item.items.name,
+                                                price:item.items.price,
+                                                quantity:item.items.quantity,
+                                                stock:item.items.stock,
+                                                unit:item.items.unit,
+                                                unit_id:item.items.unit_id
+                                            })}' 
+                                            data-product-left=""
+                                            onclick="editProductFunc(this)" data-bs-toggle="modal" data-bs-target="#edit_product_modal">
                                             <img src="${return_icon}" class="width_20_px">
                                         </a>
                                     </div>`
-    }
 }
 
 function setData(item) {
@@ -138,6 +245,17 @@ function setData(item) {
         });
     }
     payment_history_data.innerHTML = bills_history_html
+}
+
+function setReturnedData(item) {
+    returned_back_history_data.innerHTML = ''
+    bills_history_html = ''
+    if(item != null && item != undefined){
+        item.forEach((item_, index_) =>{
+            setReturnedItem(item_, index_)
+        });
+    }
+    returned_back_history_data.innerHTML = bills_history_html
 }
 
 function showBillInfo(this_element, sales_data, code, price, discount_price, total_amount, return_amount, saleId, client_full_name, client_discount_price){
@@ -198,39 +316,38 @@ function showBillInfoModal(this_element, sales_data, code, price, saleId, client
 
     bill_id = saleId
 
-    for(let j=0; j<bill_info_table.length; j++){
-        if(bill_info_table[j].classList.contains('active')){
-            bill_info_table[j].classList.remove('active')
+    for(let j=0; j<return_bill_info_table.length; j++){
+        if(return_bill_info_table[j].classList.contains('active')){
+            return_bill_info_table[j].classList.remove('active')
         }
     }
     if(!this_element.classList.contains('active')){
         this_element.classList.add('active')
     }
     bills_history_html = ''
-    payment_history_code.textContent = code
-    if(return_modal_title == ''){
-        return_modal_title.textContent = code
+    returned_back_history_code.textContent = code
+    if(returned_back_modal_title == ''){
+        returned_back_modal_title.textContent = code
     }
     bills_history_subtotal.textContent = price +' '+ sum_text
     client_title_text.setAttribute('data-bs-content', client_full_name)
-    setData(sales_data);
-    if(!return_modal_button.classList.contains('d-none')){
-        return_modal_button.classList.add('d-none')
+    setReturnedData(sales_data);
+    if(!returned_back_modal_button.classList.contains('d-none')){
+        returned_back_modal_button.classList.add('d-none')
     }
-    if(!return_total_amount.classList.contains('d-none')){
-        return_total_amount.classList.add('d-none')
+    if(!returned_back_total_amount.classList.contains('d-none')){
+        returned_back_total_amount.classList.add('d-none')
     }
-    if(!return_total_amount_text.classList.contains('d-none')){
-        return_total_amount_text.classList.add('d-none')
+    if(!returned_back_total_amount_text.classList.contains('d-none')){
+        returned_back_total_amount_text.classList.add('d-none')
     }
-    selected_sales_items = []
 }
 
 
 function removeActive(){
-    for(let j=0; j<bill_info_table.length; j++){
-        if(bill_info_table[j].classList.contains('active')){
-            bill_info_table[j].classList.remove('active')
+    for(let j=0; j<return_bill_info_table.length; j++){
+        if(return_bill_info_table[j].classList.contains('active')){
+            return_bill_info_table[j].classList.remove('active')
         }
     }
 }

@@ -108,7 +108,7 @@
                                     </thead>
                                     <tbody>
                                     @foreach($all_sales_modal as $key => $all_sale_modal)
-                                        <tr class="bill_info_table" onclick="showBillInfoModal(this, {{ json_encode($all_sales_info_modal[$key]) }}, `{{$all_sale_modal['code']}}`, `{{$all_sale_modal['price']}}`, `{{$all_sale_modal['id']}}`, `{{$all_sale_modal['client_full_name']}}`)">
+                                        <tr class="return_bill_info_table" onclick="showBillInfoModal(this, {{ json_encode($all_sales_info_modal[$key]) }}, `{{$all_sale_modal['code']}}`, `{{$all_sale_modal['price']}}`, `{{$all_sale_modal['id']}}`, `{{$all_sale_modal['client_full_name']}}`)">
                                             <td><h6>{{$all_sale_modal['price'].' '.translate_title('sum', $lang)}}</h6></td>
                                             <td><h6>{{$all_sale_modal['code']}}</h6></td>
                                             <td><h6>{{$all_sale_modal['updated_at']}}</h6></td>
@@ -127,6 +127,14 @@
                                     <div class="nav flex-column" id="returned_back_history_data">
 
                                     </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <div>
+                                    <h6 class="order-info d-none" id="returned_back_total_amount_text"> {{translate_title('Return', $lang)}}</h6>
+                                </div>
+                                <div>
+                                    <h6 class="order-info-sum d-none" id="returned_back_total_amount">0 000 000 {{translate_title('sum', $lang)}}</h6>
                                 </div>
                             </div>
                             <div class="bills_history_content">
@@ -198,6 +206,7 @@
         let token = "{{$user->token}}"
         let return_success_text = "{{translate_title('Возврат сделан', $lang)}}"
         let return_modal_title = document.getElementById('return_modal_title')
+        let returned_back_modal_title = document.getElementById('returned_back_modal_title')
     </script>
     <script>
         // let bills_history_th = document.querySelector('#bills_history th')

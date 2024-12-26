@@ -62,6 +62,14 @@ let selected_sales_item_id = ''
 let selected_sales_items = []
 let selected_sales_items_object = []
 let return_modal_body = document.getElementById('return_modal_body')
+let selected_product_amount_clicked = false
+let selected_product_price_clicked = false
+let display_or_display_card_or_debt = ''
+let display_edit_payment = ''
+
+let selected_display_clicked = false
+let selected_display_card_clicked = false
+let selected_debt_display_clicked = false
 
 function format_entered_sum(numbers){
     if(parseInt(numbers)>0){
@@ -101,40 +109,70 @@ function setValues(cash_sum_, card_sum_, debt_sum_){
     }
 }
 
-let display_or_display_card_or_debt = ''
-let display_edit_payment = ''
 function selected_payment_input_func(){
     setTimeout(function () {
         if(debt_display != undefined && debt_display != null && display_card != undefined && display_card != null && display != undefined && display != null){
-            if(debt_display.matches(":focus")) {
-                display_or_display_card_or_debt = 'debt_display'
-                display_edit_payment = debt_display
-            }else if(display_card.matches(":focus")){
-                display_or_display_card_or_debt = 'display_card'
-                display_edit_payment = display_card
+            if(selected_debt_display_clicked){
+                setTimeout(function(){
+                    debt_display.focus()
+                    debt_display.addEventListener('blur', function () {
+                        if(selected_debt_display_clicked) {
+                            debt_display.focus()
+                        }
+                    })
+                    display_or_display_card_or_debt = 'debt_display'
+                    display_edit_payment = debt_display
+                }, 44)
+            }else if(selected_display_card_clicked){
+                setTimeout(function(){
+                    display_card.focus()
+                    display_card.addEventListener('blur', function () {
+                        if(selected_display_card_clicked) {
+                            display_card.focus()
+                        }
+                        display_or_display_card_or_debt = 'display_card'
+                        display_edit_payment = display_card
+                    })
+                }, 44)
             }else{
-                display_or_display_card_or_debt = 'display'
-                display_edit_payment = display
+                setTimeout(function(){
+                    display.focus()
+                    display.addEventListener('blur', function () {
+                        if(selected_display_clicked) {
+                            display.focus()
+                        }
+                        display_or_display_card_or_debt = 'display'
+                        display_edit_payment = display
+                    })
+                }, 94)
             }
         }
     }, 94)
 }
 if(display != undefined && display != null){
     display.addEventListener('click', function () {
+        selected_display_clicked = true
+        selected_display_card_clicked = false
+        selected_debt_display_clicked = false
         selected_payment_input_func()
     })
 }
 if(display_card != undefined && display_card != null){
     display_card.addEventListener('click', function () {
+        selected_display_clicked = false
+        selected_display_card_clicked = true
+        selected_debt_display_clicked = false
         selected_payment_input_func()
     })
 }
 if(debt_display != undefined && debt_display != null){
     debt_display.addEventListener('click', function () {
+        selected_display_clicked = false
+        selected_display_card_clicked = false
+        selected_debt_display_clicked = true
         selected_payment_input_func()
     })
 }
-selected_payment_input_func()
 
 // Function to append numbers to the display
 function appendNumber(number) {
@@ -302,63 +340,87 @@ function editProductFunc(orderProduct){
     }
     if(![4, 7, 8, 10, 11].includes(parseInt(orderProductData.unit_id))){
         selected_product_price.disabled = true
+        selected_product_amount_clicked = true
+        selected_product_price_clicked = false
     }else{
+        selected_product_price_clicked = true
+        selected_product_amount_clicked = false
         selected_product_price.disabled = false
     }
     selected_product_input_func()
 }
 function selected_product_input_func(){
     setTimeout(function () {
-        if(selected_product_amount.matches(":focus")){
+        if(selected_product_amount_clicked){
             amount_or_price = 'amount'
-            if(Object.keys(orderProductData).length>0){
-                if([4, 7, 8, 10, 11].includes(parseInt(orderProductData.unit_id))){
-                    if(dotKeyboard.classList.contains('d-none')){
-                        dotKeyboard.classList.remove('d-none')
-                    }
-                }else{
-                    if(!dotKeyboard.classList.contains('d-none')){
-                        dotKeyboard.classList.add('d-none')
-                    }
-                }
-            }
             display_edit_product = selected_product_amount
+            setTimeout(function () {
+                selected_product_amount.focus(); // Fokusni qayta tiklash
+                selected_product_amount.addEventListener('blur', function (event) {
+                    event.preventDefault()
+                    if(selected_product_amount_clicked) {
+                        selected_product_amount.focus()
+                    }
+                })
+            }, 94)
+            if([4, 7, 8, 10, 11].includes(parseInt(orderProductData.unit_id))) {
+                openDotKeyboard()
+            }
         }else{
             amount_or_price = 'price'
             if(![4, 7, 8, 10, 11].includes(parseInt(orderProductData.unit_id))){
                 selected_product_price.disabled = true
                 setTimeout(function () {
-                    selected_product_amount.focus()
-                    selected_product_amount.addEventListener("blur", (event) => {
-                        event.preventDefault(); // Fokusni saqlash
-                        selected_product_amount.focus(); // Fokusni qayta tiklash
-                    });
-                }, 144)
+                    selected_product_amount.focus(); // Fokusni qayta tiklash
+                    selected_product_amount.addEventListener('blur', function (event) {
+                    event.preventDefault()
+                        if(selected_product_amount_clicked) {
+                            selected_product_amount.focus()
+                        }
+                    })
+                }, 94)
+                closeDotKeyboard()
             }else{
                 display_edit_product = selected_product_price
-                if(!dotKeyboard.classList.contains('d-none')){
-                    dotKeyboard.classList.add('d-none')
-                }
                 selected_product_price.disabled = false
-                selected_product_price.blur()
                 setTimeout(function () {
-                    selected_product_price.focus()
-                    selected_product_price.addEventListener("blur", (event) => {
-                        event.preventDefault(); // Fokusni saqlash
-                        selected_product_price.focus(); // Fokusni qayta tiklash
-                    });
-                }, 144)
+                    selected_product_price.focus(); // Fokusni qayta tiklash
+                    selected_product_price.addEventListener('blur', function (event) {
+                        event.preventDefault()
+                        if(selected_product_price_clicked) {
+                            selected_product_price.focus()
+                        }
+                    })
+                }, 94)
+                closeDotKeyboard()
             }
         }
     }, 94)
 }
+function openDotKeyboard(){
+    if(Object.keys(orderProductData).length>0){
+        if(dotKeyboard.classList.contains('d-none')){
+            dotKeyboard.classList.remove('d-none')
+        }
+    }
+}
+function closeDotKeyboard(){
+    if(!dotKeyboard.classList.contains('d-none')){
+        dotKeyboard.classList.add('d-none')
+    }
+}
+
 if(selected_product_price != undefined && selected_product_price != null){
     selected_product_price.addEventListener('click', function () {
+        selected_product_price_clicked = true
+        selected_product_amount_clicked = false
         selected_product_input_func()
     })
 }
 if(selected_product_amount != undefined && selected_product_amount != null){
     selected_product_amount.addEventListener('click', function () {
+        selected_product_amount_clicked = true
+        selected_product_price_clicked = false
         selected_product_input_func()
     })
 }
@@ -527,6 +589,7 @@ function changeAmountAndPriceReturn(){
     for(let i=0; i<selected_sales_items.length; i++){
         if(selected_sales_item_id == selected_sales_items[i]['sales_item_id']){
             selected_sales_items.splice(i, 1)
+            selected_sales_items_object.splice(i, 1)
         }
     }
     if(selected_sales_items.length == 0){
@@ -590,7 +653,6 @@ if(return_modal_button_click != undefined && return_modal_button_click != null){
                     'data':selected_sales_items_object
                 },
                 success: function (data) {
-                    console.log(data)
                     if(data.status == true){
                         setTimeout(function () {
                             if(loader != undefined && loader != null){
@@ -638,6 +700,9 @@ function backspaceEditProduct() {
 }
 
 function paymentFunc() {
+    setTimeout(function () {
+        display.focus()
+    }, 94)
     getTotalSum = total_all_left_sum
     payment_sum.innerText = format_entered_sum(getTotalSum)
     entered_cash_sum = parseInt(getTotalSum)
@@ -645,6 +710,8 @@ function paymentFunc() {
     display.value = format_entered_sum(cash_sum)
     autoSetCardSum()
     setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt)
+    selected_display_clicked = true
+    selected_payment_input_func()
 }
 
 if(display != undefined && display != null){

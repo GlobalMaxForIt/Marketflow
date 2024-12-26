@@ -1267,6 +1267,10 @@ input[type=number]::-webkit-outer-spin-button {
     overflow: auto;
     width: 344px;
 }
+.word_wrap{
+    word-wrap: break-word;
+    white-space: normal;
+}
 .description_column{
     width: 144px;
     word-wrap: break-word;
@@ -2032,7 +2036,7 @@ del{
 .bill_info_sum{
     color: #FB850E;
 }
-.bill_info_table{
+.bill_info_table, .return_bill_info_table{
     cursor: pointer;
     transition: 0.14s;
 }
@@ -2588,10 +2592,10 @@ body[data-layout-color="dark"] #order_data_content .active, body[data-layout-col
     background-size: cover;
     background-position: center;
 }
-body[data-layout-color="light"] .client_selected_product_row:hover, body[data-layout-color="light"] tbody#popover-container tr:hover, body[data-layout-color="light"] .checklist_item:hover, body[data-layout-color="light"] .bill_info_table:hover, body[data-layout-color="light"] .bill_info_table.active{
+body[data-layout-color="light"] .client_selected_product_row:hover, body[data-layout-color="light"] tbody#popover-container tr:hover, body[data-layout-color="light"] .checklist_item:hover, body[data-layout-color="light"] .bill_info_table:hover, body[data-layout-color="light"] .bill_info_table.active, body[data-layout-color="light"] .return_bill_info_table:hover, body[data-layout-color="light"] .return_bill_info_table.active{
     background-color: rgb(0, 0, 0, 0.1);
 }
-body[data-layout-color="dark"] .client_selected_product_row:hover, body[data-layout-color="dark"] tbody#popover-container tr:hover, body[data-layout-color="dark"] .checklist_item:hover, body[data-layout-color="dark"] .bill_info_table:hover, body[data-layout-color="dark"] .bill_info_table.active{
+body[data-layout-color="dark"] .client_selected_product_row:hover, body[data-layout-color="dark"] tbody#popover-container tr:hover, body[data-layout-color="dark"] .checklist_item:hover, body[data-layout-color="dark"] .bill_info_table:hover, body[data-layout-color="dark"] .bill_info_table.active, body[data-layout-color="dark"] .return_bill_info_table:hover, body[data-layout-color="dark"] .return_bill_info_table.active{
     background-color: rgba(255, 255, 255, 0.1);
 }
 #all_products_list_for_selling{
@@ -2631,13 +2635,13 @@ img.width_20_px{
 
 @media only screen and (min-width: 1374px) {
     body[data-leftbar-size=condensed] #open_all_products_list{
-        width:calc(74vh + 144px);
+        width:calc(68vh + 144px);
     }
     body[data-leftbar-size=compact] #open_all_products_list{
-        width:calc(74vh + 54px);
+        width:calc(68vh + 54px);
     }
     body[data-leftbar-size=default] #open_all_products_list{
-        width:74vh;
+        width:68vh;
     }
 }
 @media only screen and (min-width: 1174px) and (max-width: 1373px) {
