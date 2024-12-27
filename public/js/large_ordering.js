@@ -65,6 +65,8 @@ let element_id =''
 let current_data = {}
 let notify_product_text = ''
 let selected__product__id = ''
+let selected_products_id = []
+let selected_products_quantity = []
 
 function showHasItems(){
     if(has_items != undefined && has_items != null){
@@ -207,44 +209,47 @@ function truncuateCashboxFunc(){
 }
 function addToOrder(id, name, price, discount, discount_percent, last_price, amount, barcode, stock, unit, unit_id, quantity, code, this_element, fast_selling) {
     checklist_changed = false
-    selected__product__id = id
     stock_int = parseFloat(stock)
+    selected__product__id = id
     is_exist = false
     order_json = {}
     current_data = {}
     element_id = ''
-    if(stock_int > 0) {
-        if (order_data.length > 0) {
-            for (let i = 0; i < order_data.length; i++) {
-                if (order_data[i].id == id) {
-                    order_data[i].quantity = parseFloat(order_data[i].quantity)+1
-                    stock_int = stock_int - parseFloat(order_data[i].quantity);
-                    minusStockFunc(stock_int, this_element, id)
-                    is_exist = true
-                    current_data = order_data[i]
+    if(!selected_products_id.includes(id)){
+        successfullyAddToOrder('', id, name, price, discount, discount_percent, last_price, amount, barcode, stock, unit, unit_id, quantity, code, this_element, fast_selling)
+    }else{
+        for(let i=0; i<selected_products_id.length; i++){
+            if(selected_products_id[i] == id) {
+                if(selected_products_quantity[i]>0) {
+                    successfullyAddToOrder(i, id, name, price, discount, discount_percent, last_price, amount, barcode, stock, unit, unit_id, quantity, code, this_element, fast_selling)
+                }else{
+                    toastr.warning(name+' '+amount +' '+selected_products_quantity[i]+' '+notify_text_left_in_stock)
                 }
             }
-            if (!is_exist) {
-                order_json = {
-                    'id': id,
-                    'name': name,
-                    'price': price,
-                    'code': code,
-                    'discount': discount,
-                    'discount_percent': discount_percent,
-                    'last_price': last_price,
-                    'amount': amount,
-                    'quantity': quantity,
-                    'barcode': barcode,
-                    'stock': stock,
-                    'unit': unit,
-                    'unit_id': unit_id
+        }
+        if(!is_exist){
+            toastr.warning(name+' '+amount +' '+stock_int+' '+notify_text_left_in_stock)
+        }
+    }
+}
+function successfullyAddToOrder(index_, id, name, price, discount, discount_percent, last_price, amount, barcode, stock, unit, unit_id, quantity, code, this_element, fast_selling){
+    if (order_data.length > 0) {
+        for (let i = 0; i < order_data.length; i++) {
+            if (order_data[i].id == id) {
+                order_data[i].quantity = parseFloat(order_data[i].quantity)+1
+                stock_int = stock_int - parseFloat(order_data[i].quantity);
+                if(!selected_products_id.includes(id)){
+                    selected_products_id.push(id)
+                    selected_products_quantity.push(stock_int)
+                }else{
+                    selected_products_quantity[index_] = stock_int
                 }
-                stock_int = stock_int - parseFloat(quantity);
                 minusStockFunc(stock_int, this_element, id)
-                current_data = order_json
+                is_exist = true
+                current_data = order_data[i]
             }
-        } else {
+        }
+        if (!is_exist) {
             order_json = {
                 'id': id,
                 'name': name,
@@ -264,34 +269,51 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
             minusStockFunc(stock_int, this_element, id)
             current_data = order_json
         }
-        if (Object.keys(order_json).length != 0) {
-            order_data.push(order_json)
+    } else {
+        order_json = {
+            'id': id,
+            'name': name,
+            'price': price,
+            'code': code,
+            'discount': discount,
+            'discount_percent': discount_percent,
+            'last_price': last_price,
+            'amount': amount,
+            'quantity': quantity,
+            'barcode': barcode,
+            'stock': stock,
+            'unit': unit,
+            'unit_id': unit_id
         }
-        if (order_data.length > 0) {
-            showHasItems()
-        } else {
-            hideHasItems()
+        stock_int = stock_int - parseFloat(quantity);
+        minusStockFunc(stock_int, this_element, id)
+        current_data = order_json
+    }
+    if (Object.keys(order_json).length != 0) {
+        order_data.push(order_json)
+    }
+    if (order_data.length > 0) {
+        showHasItems()
+    } else {
+        hideHasItems()
+    }
+    order_selected_product_name.innerText = name+' '+amount
+    order_selected_product_info.innerHTML = `${last_price} * ${current_data.quantity} = ${new Intl.NumberFormat('ru-RU').format(parseInt(last_price.replace(/\s/g, ''), 10)*parseFloat(current_data.quantity), 10)}`
+    if (localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null) {
+        localStorage.setItem('order_data', JSON.stringify(order_data))
+    } else {
+        localStorage.removeItem('order_data')
+        localStorage.setItem('order_data', JSON.stringify(order_data))
+    }
+    if (order_data_content != undefined && order_data_content != null) {
+        order_data_html = setOrderHtml(order_data)
+        order_data_content.innerHTML = order_data_html
+    }
+    if(code == null || code == undefined || !code){
+        notify_product_text = name+' '+amount + notify_text
+        if(fast_selling != 'fast_selling'){
+            toastr.success(notify_product_text)
         }
-        order_selected_product_name.innerText = name+' '+amount
-        order_selected_product_info.innerHTML = `${last_price} * ${current_data.quantity} = ${new Intl.NumberFormat('ru-RU').format(parseInt(last_price.replace(/\s/g, ''), 10)*parseFloat(current_data.quantity), 10)}`
-        if (localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null) {
-            localStorage.setItem('order_data', JSON.stringify(order_data))
-        } else {
-            localStorage.removeItem('order_data')
-            localStorage.setItem('order_data', JSON.stringify(order_data))
-        }
-        if (order_data_content != undefined && order_data_content != null) {
-            order_data_html = setOrderHtml(order_data)
-            order_data_content.innerHTML = order_data_html
-        }
-        if(code == null || code == undefined || !code){
-            notify_product_text = name+' '+amount + notify_text
-            if(fast_selling != 'fast_selling'){
-                toastr.success(notify_product_text)
-            }
-        }
-    }else{
-        toastr.warning(name+' '+amount +' '+stock+' '+notify_text_left_in_stock)
     }
 }
 

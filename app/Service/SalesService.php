@@ -68,6 +68,8 @@ class SalesService
                 $all_cost_price = $all_cost_price + $product->cost * (float)$orderData['quantity'];
                 $sales_items->price = $order_data_price;
                 $sales_items->save();
+                $product->stock = $product->stock - (float)$orderData['quantity'];
+                $product->save();
             }
         }
         $discount_modal_percent = 0;

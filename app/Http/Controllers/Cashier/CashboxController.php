@@ -435,7 +435,6 @@ class CashboxController extends Controller
     }
 
 
-
     public function paymentPay(Request $request){
         $user = Auth::user();
         date_default_timezone_set("Asia/Tashkent");

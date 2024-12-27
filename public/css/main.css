@@ -1541,7 +1541,7 @@ input[type=number]::-webkit-outer-spin-button {
 .modal-body input[type="email"] {
     border-radius: 10px;
     height: 50px;
-    color: #adb5bd !important
+    color: black !important
 }
 .modal-content form .select2-selection{
     padding: 5px 14px;
@@ -2610,6 +2610,10 @@ body[data-layout-color="dark"] .client_selected_product_row:hover, body[data-lay
 #all_products_list_for_selling{
     margin-bottom: 0px !important;
     margin-top: 4px !important;
+}
+
+.input-display_password, .input-display-lg, input[aria-controls="all_products_list_for_selling"]{
+    color: black !important;
 }
 .big_keyboard_card{
     padding-top: 7px;
