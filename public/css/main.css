@@ -1882,6 +1882,9 @@ table{
 .market_tables_text_big{
     padding: 4px 0px !important;
 }
+.market_tables_text_big h6{
+    margin-bottom: 0px !important;
+}
 .bootstrap-touchspin-down, .bootstrap-touchspin-up{
     border: 1px solid #CED4DA !important;
     background-color: transparent !important;
