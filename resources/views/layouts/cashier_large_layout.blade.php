@@ -919,8 +919,17 @@
     let keyboard_selected_lang = localStorage.getItem('selected_lang')
     let keyboard_ru = document.getElementById('keyboard_ru')
     let keyboard_en = document.getElementById('keyboard_en')
-    if(keyboard_selected_lang == 'ru'){
-        keyboard_lang_change_func.click()
+    if(keyboard_selected_lang != undefined && keyboard_selected_lang != null){
+        if(keyboard_selected_lang == 'en'){
+            openEnKeyboardFunc()
+        }else if(keyboard_selected_lang == 'ru'){
+            keyboard_lang_change_func.click()
+            openRuKeyboardFunc()
+        }else{
+            openEnKeyboardFunc()
+        }
+    }else{
+        openEnKeyboardFunc()
     }
     keyboard_lang_change_func.addEventListener('change', function (e) {
         if(e.target.value == 'on'){
