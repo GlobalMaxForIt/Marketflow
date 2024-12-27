@@ -2360,9 +2360,12 @@ body[data-leftbar-size=compact] .footer{
 }
 .keyboard_big {
     display: grid;
-    grid-template-columns: repeat(10, 34px);
-    gap: 10px;
+    grid-template-columns: repeat(14, 34px);
+    gap: 4px 14px;
     justify-content: center;
+}
+.big_keyboard_card .form-label{
+    margin-bottom: 0px !important;
 }
 .key_big, .key_big_fast {
     display: flex;
@@ -2383,7 +2386,7 @@ body[data-leftbar-size=compact] .footer{
     align-items: center;
     justify-content: center;
     width: 94px;
-    height: 44px;
+    height: 39px;
     background-color: #ddd;
     text-align: center;
     /*line-height: 50px;*/
@@ -2432,8 +2435,8 @@ body[data-leftbar-size=compact] .footer{
     width: 44%;
 }
 .offcanvas-top{
-    max-height: 549px !important;
-    min-height: 394px !important;
+    max-height: 644px !important;
+    min-height: max-content !important;
 }
 .offcanvas-body{
     padding: 0px !important;
