@@ -448,73 +448,72 @@
                     <div class="accordion" id="accordionExample">
                         <div class="accordion-item">
                             <div class="accordion-body d-flex justify-content-around">
-                                <div></div>
                                 <div class="keyboard_big d-none" id="keyboard_en">
                                     <!-- Harflar raqamlar -->
-                                    <div class="key_big"><h6>1</h6></div><div class="key_big"><h6>2</h6></div><div class="key_big"><h6>3</h6></div><div class="key_big"><h6>4</h6></div>
-                                    <div class="key_big"><h6>5</h6></div><div class="key_big"><h6>6</h6></div><div class="key_big"><h6>7</h6></div><div class="key_big"><h6>8</h6></div>
-                                    <div class="key_big"><h6>9</h6></div><div class="key_big"><h6>0</h6></div>
-                                    <div class="key_big"><h6>-</h6></div><div class="key_big"><h6>_</h6></div><div class="key_big"><h6>(</h6></div><div class="key_big"><h6>)</h6></div>
-
                                     <div class="key_big"><h6>Q</h6></div><div class="key_big"><h6>W</h6></div>
                                     <div class="key_big"><h6>E</h6></div><div class="key_big"><h6>R</h6></div><div class="key_big"><h6>T</h6></div><div class="key_big"><h6>Y</h6></div>
                                     <div class="key_big"><h6>U</h6></div><div class="key_big"><h6>I</h6></div><div class="key_big"><h6>O</h6></div><div class="key_big"><h6>P</h6></div>
-                                    <div class="key_big"><h6>[</h6></div><div class="key_big"><h6>]</h6></div><div class="key_big"><h6>{</h6></div><div class="key_big"><h6>}</h6></div>
+                                    <div class="key_big"><h6>[</h6></div><div class="key_big"><h6>]</h6></div><div class="key_big"><h6>-</h6></div><div class="key_big"><h6>_</h6></div>
+                                    <div class="key_big ms-3"><h6>1</h6></div><div class="key_big ms-3"><h6>2</h6></div><div class="key_big ms-3"><h6>3</h6></div><div class="key_big ms-3"><h6>4</h6></div>
 
                                     <div class="key_big"><h6>A</h6></div><div class="key_big"><h6>B</h6></div><div class="key_big"><h6>D</h6></div><div class="key_big"><h6>F</h6></div>
                                     <div class="key_big"><h6>G</h6></div><div class="key_big"><h6>H</h6></div><div class="key_big"><h6>J</h6></div><div class="key_big"><h6>K</h6></div>
                                     <div class="key_big"><h6>L</h6></div><div class="key_big"><h6>;</h6></div>
-                                        <div class="key_big"><h6>*</h6></div><div class="key_big"><h6>@</h6></div><div class="key_big"><h6>#</h6></div><div class="key_big"><h6>$</h6></div>
-
+                                    <div class="key_big"><h6>*</h6></div><div class="key_big"><h6>@</h6></div><div class="key_big"><h6>#</h6></div><div class="key_big"><h6>$</h6></div>
+                                    <div class="key_big ms-3"><h6>5</h6></div><div class="key_big ms-3"><h6>6</h6></div><div class="key_big ms-3"><h6>7</h6></div><div class="key_big ms-3"><h6>8</h6></div>
                                     <div class="key_big"><h6>Z</h6></div><div class="key_big"><h6>X</h6></div>
                                     <div class="key_big"><h6>C</h6></div><div class="key_big"><h6>V</h6></div><div class="key_big"><h6>B</h6></div><div class="key_big"><h6>N</h6></div>
-                                    <div class="key_big"><h6>M</h6></div><div class="key_big"><h6>,</h6></div><div class="key_big"><h6>.</h6></div><div class="key_big"><h6>/</h6></div>
+                                    <div class="key_big"><h6>M</h6></div><div class="key_big"><h6>{</h6></div><div class="key_big"><h6>}</h6></div><div class="key_big"><h6>/</h6></div>
                                     <div class="key_big"><h6>%</h6></div><div class="key_big"><h6>#</h6></div><div class="key_big"><h6>:</h6></div><div class="key_big"><h6>|</h6></div>
+                                    <div class="key_big ms-3"><h6>9</h6></div><div class="key_big ms-3"><h6>0</h6></div><div class="key_big ms-3"><h6>,</h6></div><div class="key_big ms-3"><h6>.</h6></div>
 
                                     <!-- Raqamlar -->
 
                                     <div class="key_big"><h6>&</h6></div><div class="key_big"><h6>€</h6></div><div class="key_big"><h6>£</h6></div><div class="key_big"><h6>₩</h6></div><!-- Probel -->
-                                    <div class="d-flex justify-content-between width_304_pixel">
+                                    <div class="key_big"><h6>(</h6></div><div class="key_big"><h6>)</h6></div>
+                                    <div class="d-flex justify-content-between width_354_pixel">
                                         <div class="key_space_big"><h6>Space</h6></div>
                                         <div class="key_space_big" onclick="clearKeyboardDisplay()"><h6>Clear</h6></div>
                                         <div class="key_space_big" onclick="backspaceKeyboard()"><h6><span class="mdi mdi-backspace"></span></h6></div>
+                                        <div class="d-flex align-items-center">
+                                            <h6 class="me-2">EN</h6>
+                                            <input type="checkbox" data-plugin="switchery" id="keyboard_lang_change_en_func" data-color="#1bb99a" data-secondary-color="#ff5d48"/>
+                                            <h6 class="ms-2">RU</h6>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="keyboard_big" id="keyboard_ru">
                                     <!-- Harflar raqamlar -->
-                                    <div class="key_big"><h6>1</h6></div><div class="key_big"><h6>2</h6></div><div class="key_big"><h6>3</h6></div><div class="key_big"><h6>4</h6></div>
-                                    <div class="key_big"><h6>5</h6></div><div class="key_big"><h6>6</h6></div><div class="key_big"><h6>7</h6></div><div class="key_big"><h6>8</h6></div>
-                                    <div class="key_big"><h6>9</h6></div><div class="key_big"><h6>0</h6></div>
-                                    <div class="key_big"><h6>-</h6></div><div class="key_big"><h6>_</h6></div><div class="key_big"><h6>(</h6></div><div class="key_big"><h6>)</h6></div>
-
                                     <div class="key_big"><h6>Й</h6></div><div class="key_big"><h6>Ц</h6></div>
                                     <div class="key_big"><h6>У</h6></div><div class="key_big"><h6>К</h6></div><div class="key_big"><h6>Е</h6></div><div class="key_big"><h6>Н</h6></div>
                                     <div class="key_big"><h6>Г</h6></div><div class="key_big"><h6>Ш</h6></div><div class="key_big"><h6>Щ</h6></div><div class="key_big"><h6>З</h6></div>
-                                    <div class="key_big"><h6>[</h6></div><div class="key_big"><h6>]</h6></div><div class="key_big"><h6>{</h6></div><div class="key_big"><h6>}</h6></div>
-
+                                    <div class="key_big"><h6>[</h6></div><div class="key_big"><h6>]</h6></div><div class="key_big"><h6>-</h6></div><div class="key_big"><h6>_</h6></div>
+                                    <div class="key_big ms-3"><h6>1</h6></div><div class="key_big ms-3"><h6>2</h6></div><div class="key_big ms-3"><h6>3</h6></div><div class="key_big ms-3"><h6>4</h6></div>
                                     <div class="key_big"><h6>Ф</h6></div><div class="key_big"><h6>Ы</h6></div><div class="key_big"><h6>В</h6></div><div class="key_big"><h6>А</h6></div>
                                     <div class="key_big"><h6>П</h6></div><div class="key_big"><h6>Р</h6></div><div class="key_big"><h6>О</h6></div><div class="key_big"><h6>Л</h6></div>
                                     <div class="key_big"><h6>Д</h6></div><div class="key_big"><h6>;</h6></div>
-                                        <div class="key_big"><h6>*</h6></div><div class="key_big"><h6>@</h6></div><div class="key_big"><h6>#</h6></div><div class="key_big"><h6>$</h6></div>
-
+                                    <div class="key_big"><h6>*</h6></div><div class="key_big"><h6>@</h6></div><div class="key_big"><h6>#</h6></div><div class="key_big"><h6>$</h6></div>
+                                    <div class="key_big ms-3"><h6>5</h6></div><div class="key_big ms-3"><h6>6</h6></div><div class="key_big ms-3"><h6>7</h6></div><div class="key_big ms-3"><h6>8</h6></div>
                                     <div class="key_big"><h6>Я</h6></div><div class="key_big"><h6>Ч</h6></div>
                                     <div class="key_big"><h6>С</h6></div><div class="key_big"><h6>М</h6></div><div class="key_big"><h6>И</h6></div><div class="key_big"><h6>Т</h6></div>
-                                    <div class="key_big"><h6>Ь</h6></div><div class="key_big"><h6>,</h6></div><div class="key_big"><h6>.</h6></div><div class="key_big"><h6>/</h6></div>
+                                    <div class="key_big"><h6>Ь</h6></div><div class="key_big"><h6>{</h6></div><div class="key_big"><h6>}</h6></div><div class="key_big"><h6>/</h6></div>
                                     <div class="key_big"><h6>%</h6></div><div class="key_big"><h6>#</h6></div><div class="key_big"><h6>:</h6></div><div class="key_big"><h6>|</h6></div>
+                                    <div class="key_big ms-3"><h6>9</h6></div><div class="key_big ms-3"><h6>0</h6></div><div class="key_big ms-3"><h6>,</h6></div><div class="key_big ms-3"><h6>.</h6></div>
 
                                     <!-- Raqamlar -->
 
                                     <div class="key_big"><h6>&</h6></div><div class="key_big"><h6>€</h6></div><div class="key_big"><h6>£</h6></div><div class="key_big"><h6>₩</h6></div><!-- Probel -->
-                                    <div class="d-flex justify-content-between width_304_pixel">
+                                    <div class="key_big"><h6>(</h6></div><div class="key_big"><h6>)</h6></div>
+                                    <div class="d-flex justify-content-between width_354_pixel">
                                         <div class="key_space_big"><h6>Space</h6></div>
                                         <div class="key_space_big" onclick="clearKeyboardDisplay()"><h6>Clear</h6></div>
                                         <div class="key_space_big" onclick="backspaceKeyboard()"><h6><span class="mdi mdi-backspace"></span></h6></div>
+                                        <div class="d-flex align-items-center">
+                                            <h6 class="me-2">EN</h6>
+                                            <input type="checkbox" data-plugin="switchery" id="keyboard_lang_change_ru_func" data-color="#1bb99a" data-secondary-color="#ff5d48"/>
+                                            <h6 class="ms-2">RU</h6>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="d-flex justify-content-center align-items-center ms-4">
-                                    <b class="me-2"><h6>EN</h6></b>
-                                    <input type="checkbox" data-plugin="switchery" id="keyboard_lang_change_func" data-color="#1bb99a" data-secondary-color="#ff5d48"/>
-                                    <b class="ms-2"><h6>RU</h6></b>
                                 </div>
                             </div>
                         </div>
@@ -915,37 +914,37 @@
 <script>
     let items_selected_text = "{{translate_title('items selected', $lang)}}"
     let search_client_text = "{{translate_title('Поиск', $lang)}}"
-    let keyboard_lang_change_func = document.getElementById('keyboard_lang_change_func')
+    let keyboard_lang_change_en_func = document.getElementById('keyboard_lang_change_en_func')
+    let keyboard_lang_change_ru_func = document.getElementById('keyboard_lang_change_ru_func')
     let keyboard_selected_lang = localStorage.getItem('selected_lang')
     let keyboard_ru = document.getElementById('keyboard_ru')
     let keyboard_en = document.getElementById('keyboard_en')
-    if(keyboard_selected_lang != undefined && keyboard_selected_lang != null){
-        if(keyboard_selected_lang == 'en'){
-            openEnKeyboardFunc()
-        }else if(keyboard_selected_lang == 'ru'){
-            keyboard_lang_change_func.click()
-            openRuKeyboardFunc()
-        }else{
-            openEnKeyboardFunc()
-        }
-    }else{
-        openEnKeyboardFunc()
-    }
-    keyboard_lang_change_func.addEventListener('change', function (e) {
+
+    keyboard_lang_change_en_func.addEventListener('change', function (e) {
         if(e.target.value == 'on'){
-            if(keyboard_selected_lang != undefined && keyboard_selected_lang != null){
-                if(keyboard_selected_lang == 'en'){
-                    openRuKeyboardFunc()
-                }else if(keyboard_selected_lang == 'ru'){
-                    openEnKeyboardFunc()
-                }else{
-                    openEnKeyboardFunc()
-                }
+            keyboardChangerFunc()
+        }
+    })
+    keyboard_lang_change_ru_func.addEventListener('change', function (e) {
+        if(e.target.value == 'on'){
+            keyboardChangerFunc()
+        }
+    })
+    function keyboardChangerFunc(){
+        if(keyboard_selected_lang != undefined && keyboard_selected_lang != null){
+            if(keyboard_selected_lang == 'en'){
+                openRuKeyboardFunc()
+            }else if(keyboard_selected_lang == 'ru'){
+                keyboard_lang_change_en_func.click()
+                keyboard_lang_change_ru_func.click()
+                openEnKeyboardFunc()
             }else{
                 openEnKeyboardFunc()
             }
+        }else{
+            openEnKeyboardFunc()
         }
-    })
+    }
 
     function openRuKeyboardFunc(){
         localStorage.setItem('selected_lang', 'ru')

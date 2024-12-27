@@ -872,6 +872,9 @@
 .width_344_pixel{
     width: 344px !important;
 }
+.width_354_pixel{
+    width: 354px !important;
+}
 .width_144_pixel{
     width: 144px !important;
 }
@@ -2360,7 +2363,7 @@ body[data-leftbar-size=compact] .footer{
 }
 .keyboard_big {
     display: grid;
-    grid-template-columns: repeat(14, 34px);
+    grid-template-columns: repeat(18, 34px);
     gap: 4px 14px;
     justify-content: center;
 }
@@ -2385,7 +2388,7 @@ body[data-leftbar-size=compact] .footer{
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 94px;
+    width: 74px;
     height: 39px;
     background-color: #ddd;
     text-align: center;
@@ -2435,7 +2438,7 @@ body[data-leftbar-size=compact] .footer{
     width: 44%;
 }
 .offcanvas-top{
-    max-height: 644px !important;
+    max-height: 604px !important;
     min-height: max-content !important;
 }
 .offcanvas-body{
