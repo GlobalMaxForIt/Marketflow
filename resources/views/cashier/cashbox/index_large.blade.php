@@ -406,7 +406,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content width_74_percent">
                 <div class="modal-header card-header">
-                    <h4 id="selected_product_name"> Milliy cola</h4>
+                    <h4 id="selected_product_name"></h4>
                 </div>
                 <div class="modal-body card-body">
                     <div class="mt-1">
