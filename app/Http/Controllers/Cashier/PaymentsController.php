@@ -222,6 +222,8 @@ class PaymentsController extends Controller
                 $return_model->sale_item_id = $sales_item->id;
                 $return_model->product_id = $sales_item->product_id;
                 $return_model->quantity = (float)$data->quantity;
+
+                $product->stock = $product->stock + (float)$data->quantity;
                 $return_model->price = $data->all_sum;
 //                    $return_model->reason = $data->reason;
                 $return_model->cashier_id = $user->id;

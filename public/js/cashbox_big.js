@@ -14,6 +14,7 @@ let debt_sum = 0
 let accepting_sum_int = 0
 let change_sum_int = 0
 let klaviaturaNumber = 0
+let selected_product_price_value = 0
 
 let getTotalSum = 0
 let payment_sum = document.getElementById('payment_sum')
@@ -72,6 +73,11 @@ let selected_display_card_clicked = false
 let selected_debt_display_clicked = false
 let is_edit_product_modal_opened_for_price = false
 let is_edit_product_modal_opened_for_amount = false
+
+let is_payment_modal_opened_for_cash = false
+let is_payment_modal_opened_for_card = false
+let is_payment_modal_opened_for_debt = false
+
 
 function format_entered_sum(numbers){
     if(parseInt(numbers)>0){
@@ -183,7 +189,12 @@ function appendNumber(number) {
             if (display.value == '0') {
                 entered_cash_sum = String(number)
             } else {
-                entered_cash_sum = String(entered_cash_sum) + number
+                if(!is_payment_modal_opened_for_cash){
+                    entered_cash_sum = String(entered_cash_sum) + number
+                }else{
+                    entered_cash_sum = String(number)
+                    is_payment_modal_opened_for_cash = false
+                }
             }
             cash_sum = parseInt(entered_cash_sum)
             autoSetCardSum()
@@ -192,7 +203,12 @@ function appendNumber(number) {
             if (display_card.value == '0') {
                 entered_card_sum = String(number)
             } else {
-                entered_card_sum = String(entered_card_sum) + number
+                if(!is_payment_modal_opened_for_card){
+                    entered_card_sum = String(entered_card_sum) + number
+                }else{
+                    entered_card_sum = String(number)
+                    is_payment_modal_opened_for_card = false
+                }
             }
             card_sum = parseInt(entered_card_sum)
             autoSetDebtSum()
@@ -201,7 +217,12 @@ function appendNumber(number) {
             if (debt_display.value == '0') {
                 entered_debt_sum = parseInt(number)
             } else {
-                entered_debt_sum = String(entered_debt_sum) + number
+                if(!is_payment_modal_opened_for_debt){
+                    entered_debt_sum = String(entered_debt_sum) + number
+                }else{
+                    entered_debt_sum = String(number)
+                    is_payment_modal_opened_for_debt = false
+                }
             }
             debt_sum = parseInt(entered_debt_sum)
             break;
@@ -320,7 +341,8 @@ function editProductFunc(orderProduct){
     orderProductData = JSON.parse(orderProduct.getAttribute('data-product'))
     if(Object.keys(orderProductData).length>0){
         selected_product_name.innerText = orderProductData.name + ' '+orderProductData.amount
-        selected_product_price.value = parseFloat(orderProductData.quantity)*parseInt(orderProductData.last_price.replace(/\s/g, ''), 10)
+        selected_product_price_value = parseInt(parseFloat(orderProductData.quantity)*parseInt(orderProductData.last_price.replace(/\s/g, ''), 10))
+        selected_product_price.value = format_entered_sum(selected_product_price_value)
         selected_product_amount.value = parseFloat(orderProductData.quantity)
         selected_product_unit.innerText = orderProductData.unit
         selectedProductAmount = parseFloat(selected_product_amount.value)
@@ -437,7 +459,12 @@ function appendEditProduct(number) {
         if(dot_has){
             display_edit_product.value = '0.'+String(number);
         }else{
-            display_edit_product.value = String(number);
+            if(amount_or_price == 'amount'){
+                display_edit_product.value = String(number);
+            }else{
+                selected_product_price_value = parseInt(number.replace(/\s/g, ''))
+                display_edit_product.value = format_entered_sum(selected_product_price_value);
+            }
         }
     } else {
         if(dot_has){
@@ -450,10 +477,12 @@ function appendEditProduct(number) {
                 }
             }else{
                 if(is_edit_product_modal_opened_for_price){
-                    display_edit_product.value = String(number);
+                    selected_product_price_value = parseInt(number.replace(/\s/g, ''))
+                    display_edit_product.value = format_entered_sum(selected_product_price_value);
                     is_edit_product_modal_opened_for_price = false
                 }else{
-                    display_edit_product.value = String(display_edit_product.value)+'.'+String(number);
+                    selected_product_price_value = parseInt(display_edit_product.value.replace(/\s/g, '')+'.'+String(number))
+                    display_edit_product.value = format_entered_sum(selected_product_price_value);
                 }
             }
         }else{
@@ -466,19 +495,23 @@ function appendEditProduct(number) {
                 }
             }else{
                 if(is_edit_product_modal_opened_for_price){
-                    display_edit_product.value = String(number);
+                    selected_product_price_value = parseInt(number.replace(/\s/g, ''))
+                    display_edit_product.value = format_entered_sum(selected_product_price_value);
                     is_edit_product_modal_opened_for_price = false
                 }else{
-                    display_edit_product.value = String(display_edit_product.value)+String(number);
+                    selected_product_price_value = parseInt(display_edit_product.value.replace(/\s/g, '')+String(number))
+                    display_edit_product.value = format_entered_sum(selected_product_price_value);
                 }
             }
         }
     }
     dot_has = false
     if(amount_or_price == 'amount'){
-        selected_product_price.value = orderProduct_last_price * parseFloat(display_edit_product.value)
+        selected_product_price_value = parseInt(orderProduct_last_price * parseFloat(display_edit_product.value.replace(/\s/g, '')))
+        selected_product_price.value = format_entered_sum(selected_product_price_value)
     }else{
-        selected_product_amount.value = parseInt(selected_product_price.value)/orderProduct_last_price
+        selected_product_price_value = parseInt(selected_product_price.value.replace(/\s/g, ''))/orderProduct_last_price
+        selected_product_amount.value = format_entered_sum(selected_product_price_value)
     }
 }
 
@@ -495,9 +528,11 @@ document.addEventListener('keydown', function (event) {
             }
         }
         if(selected_product_price.matches(":focus")) {
-            if (selected_product_price.value.length > 1) {
-                selected_product_price.value = String(event.target.value).slice(0, -1); // Oxirgi belgini o'chirish
+            if (selected_product_price_value.length > 1) {
+                selected_product_price_value = parseInt(String(event.target.value.replace(/\s/g, '')).slice(0, -1)); // Oxirgi belgini o'chirish
+                selected_product_price.value = format_entered_sum(selected_product_price_value); // Oxirgi belgini o'chirish
             } else {
+                selected_product_price_value = 0
                 selected_product_price.value = '0'; // Agar faqat bir raqam qolgan bo'lsa, uni 0 ga o'zgartiramiz
             }
         }
@@ -510,7 +545,8 @@ function changePriceByAmount(amount__value, last__value){
             if(amount__value != ''){
                 selected_product_amount.value = last__value
             }
-            selected_product_price.value = orderProduct_last_price * parseFloat(last__value)
+            selected_product_price_value = orderProduct_last_price * parseFloat(last__value)
+            selected_product_price.value = format_entered_sum(selected_product_price_value)
             dot_has = false
             is_edit_product_modal_opened_for_amount = false
         }else{
@@ -526,7 +562,8 @@ function changePriceByAmount(amount__value, last__value){
                         selected_product_amount.value = parseFloat(amount__value); // Aks holda, raqamni qo'shamiz
                     }
                 }
-                selected_product_price.value = orderProduct_last_price * parseFloat(amount__value)
+                selected_product_price_value = orderProduct_last_price * parseFloat(amount__value.replace(/\s/g, ''))
+                selected_product_price.value = format_entered_sum(selected_product_price_value)
                 dot_has = false
             }
         }
@@ -536,12 +573,14 @@ function changePriceByAmount(amount__value, last__value){
 function changeAmountByPrice(price__value, last__value){
     if(stock_int > 0 || page_name == 'payment') {
         if(is_edit_product_modal_opened_for_price) {
-            selected_product_price.value = parseFloat(last__value); // Aks holda, raqamni qo'shamiz
+            selected_product_price_value = parseInt(last__value.replace(/\s/g, '')); // Aks holda, raqamni qo'shamiz
+            selected_product_price.value = format_entered_sum(selected_product_price_value); // Aks holda, raqamni qo'shamiz
             is_edit_product_modal_opened_for_price = false
         }else{
-            selected_product_price.value = parseFloat(price__value); // Aks holda, raqamni qo'shamiz
+            selected_product_price_value = parseInt(price__value.replace(/\s/g, '')); // Aks holda, raqamni qo'shamiz
+            selected_product_price.value = format_entered_sum(selected_product_price_value); // Aks holda, raqamni qo'shamiz
         }
-        selected_product_amount.value = parseInt(selected_product_price.value) / orderProduct_last_price
+        selected_product_amount.value = parseInt(selected_product_price_value) / orderProduct_last_price
     }
 }
 if(selected_product_amount != undefined && selected_product_amount != null){
@@ -567,7 +606,7 @@ function changeAmountAndPrice(){
     }
     orderProduct_stock = orderProduct_stock
     orderProduct_quantity = parseFloat(selected_product_amount.value)
-    orderProduct_last_price = selected_product_price.value
+    orderProduct_last_price = selected_product_price_value
     orderProduct_stock = orderProduct_stock - orderProduct_quantity
     if(orderProduct_stock > 0) {
         if (order_data.length > 0) {
@@ -620,7 +659,7 @@ function changeAmountAndPrice(){
         selected_product_name.innerText = orderProductData.name + ' '+orderProductData.amount
         selected_product_unit.innerText = orderProductData.unit
         selectedProductAmount = parseFloat(selected_product_amount.value)
-        orderProduct_last_price = parseInt(selected_product_price.value)/selectedProductAmount
+        orderProduct_last_price = parseInt(selected_product_price_value/selectedProductAmount)
     }
     if(orderProduct_quantity>0){
         order_selected_product_name.innerText = orderProductData.name+' '+orderProduct_amount
@@ -660,9 +699,9 @@ function changeAmountAndPriceReturn(){
             return_total_amount_text.classList.remove('d-none')
         }
         payment_product_amount_element.innerText = selected_product_amount.value + ' '+ orderProductData.unit
-        payment_product_return_price_element.innerText = new Intl.NumberFormat('ru-RU').format(selected_product_price.value, 10) + ' ' + sum_text
-        selected_sales_items.push({'sales_item_id':selected_sales_item_id, 'quantity':parseFloat(selected_product_amount.value), 'all_sum':parseFloat(selected_product_price.value)})
-        selected_sales_items_object.push(JSON.stringify({'sales_item_id':selected_sales_item_id, 'quantity':parseFloat(selected_product_amount.value), 'all_sum':parseFloat(selected_product_price.value)}))
+        payment_product_return_price_element.innerText = new Intl.NumberFormat('ru-RU').format(selected_product_price_value, 10) + ' ' + sum_text
+        selected_sales_items.push({'sales_item_id':selected_sales_item_id, 'quantity':parseFloat(selected_product_amount.value), 'all_sum':parseInt(selected_product_price_value)})
+        selected_sales_items_object.push(JSON.stringify({'sales_item_id':selected_sales_item_id, 'quantity':parseFloat(selected_product_amount.value), 'all_sum':parseInt(selected_product_price_value)}))
     }else if(parseFloat(selected_product_amount.value) <= 0){
         payment_product_amount_element.innerText = ''
         payment_product_return_price_element.innerText = ''
@@ -729,6 +768,7 @@ function clearDisplayEditProduct() {
     display_edit_product.value = '0'; // Ekrandagi raqamni tozalash
     selected_product_amount.value = '0'; // Ekrandagi raqamni tozalash
     selected_product_price.value = '0'; // Ekrandagi raqamni tozalash
+    selected_product_price_value = 0; // Ekrandagi raqamni tozalash
 }
 
 // Function to remove the last digit (Backspace)
@@ -739,13 +779,17 @@ function backspaceEditProduct() {
         display_edit_product.value = '0'; // Agar faqat bir raqam qolgan bo'lsa, uni 0 ga o'zgartiramiz
     }
     if(amount_or_price == 'amount'){
-        selected_product_price.value = orderProduct_last_price * parseFloat(display_edit_product.value)
+        selected_product_price_value = orderProduct_last_price * parseFloat(display_edit_product.value.replace(/\s/g, ''))
+        selected_product_price.value = format_entered_sum(selected_product_price_value)
     }else{
-        selected_product_amount.value = parseInt(selected_product_price.value)/orderProduct_last_price
+        selected_product_amount.value = parseInt(selected_product_price_value)/orderProduct_last_price
     }
 }
-
 function paymentFunc() {
+    is_payment_modal_opened_for_cash = true
+    is_payment_modal_opened_for_card = true
+    is_payment_modal_opened_for_debt = true
+
     setTimeout(function () {
         display.focus()
     }, 94)
@@ -761,9 +805,14 @@ function paymentFunc() {
 }
 
 if(display != undefined && display != null){
-    display.addEventListener('input', () => {
+    display.addEventListener('input', (e) => {
         klaviaturaNumber = 0
-        klaviaturaNumber = formatInput(display).replace(/\s+/g, '')
+        if(!is_payment_modal_opened_for_cash){
+            klaviaturaNumber = formatInput(display).replace(/\s+/g, '')
+        }else{
+            klaviaturaNumber = e.data
+            is_payment_modal_opened_for_cash = false
+        }
         cash_sum = parseInt(klaviaturaNumber)
         autoSetCardSum()
         setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt='display')
@@ -773,7 +822,12 @@ if(display != undefined && display != null){
 if(display_card != undefined && display_card != null){
     display_card.addEventListener('input', () => {
         klaviaturaNumber = 0
-        klaviaturaNumber = formatInput(display_card).replace(/\s+/g, '')
+        if(!is_payment_modal_opened_for_card){
+            klaviaturaNumber = formatInput(display_card).replace(/\s+/g, '')
+        }else{
+            klaviaturaNumber = e.data
+            is_payment_modal_opened_for_card = false
+        }
         card_sum = parseInt(klaviaturaNumber)
         autoSetDebtSum()
         setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt='display_card')
@@ -782,7 +836,12 @@ if(display_card != undefined && display_card != null){
 if(debt_display != undefined && debt_display != null){
     debt_display.addEventListener('input', () => {
         klaviaturaNumber = 0
-        klaviaturaNumber = formatInput(debt_display).replace(/\s+/g, '')
+        if(!is_payment_modal_opened_for_debt){
+            klaviaturaNumber = formatInput(debt_display).replace(/\s+/g, '')
+        }else{
+            klaviaturaNumber = e.data
+            is_payment_modal_opened_for_debt = false
+        }
         debt_sum = parseInt(klaviaturaNumber)
         setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt='debt_display')
     });
