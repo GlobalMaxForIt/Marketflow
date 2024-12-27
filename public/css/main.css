@@ -869,11 +869,11 @@
 .width_304_pixel{
     width: 304px !important;
 }
+.width_244_pixel{
+    width: 244px !important;
+}
 .width_344_pixel{
     width: 344px !important;
-}
-.width_354_pixel{
-    width: 354px !important;
 }
 .width_144_pixel{
     width: 144px !important;
@@ -2450,7 +2450,7 @@ body[data-leftbar-size=compact] .footer{
 .color_white{
     color: white !important;
 }
-.accordion-item, .accordion-header,.accordion-button{
+.accordion-item, .accordion-header, .accordion-button{
     background-color: transparent !important;
 }
 @media (max-width: 991.98px) {
@@ -2716,4 +2716,9 @@ body[data-layout-color="dark"] #open_all_products_list{
 #check_code{
     text-align: end;
     font-weight: 400;
+}
+.language_changer_content{
+    display: flex;
+    position: absolute;
+    margin-bottom: 44px;
 }

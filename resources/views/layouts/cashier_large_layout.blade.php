@@ -447,7 +447,7 @@
 
                     <div class="accordion" id="accordionExample">
                         <div class="accordion-item">
-                            <div class="accordion-body d-flex justify-content-around">
+                            <div class="accordion-body d-flex justify-content-center">
                                 <div class="keyboard_big d-none" id="keyboard_en">
                                     <!-- Harflar raqamlar -->
                                     <div class="key_big"><h6>Q</h6></div><div class="key_big"><h6>W</h6></div>
@@ -471,15 +471,10 @@
 
                                     <div class="key_big"><h6>&</h6></div><div class="key_big"><h6>€</h6></div><div class="key_big"><h6>£</h6></div><div class="key_big"><h6>₩</h6></div><!-- Probel -->
                                     <div class="key_big"><h6>(</h6></div><div class="key_big"><h6>)</h6></div>
-                                    <div class="d-flex justify-content-between width_354_pixel">
+                                    <div class="d-flex justify-content-between width_244_pixel">
                                         <div class="key_space_big"><h6>Space</h6></div>
                                         <div class="key_space_big" onclick="clearKeyboardDisplay()"><h6>Clear</h6></div>
                                         <div class="key_space_big" onclick="backspaceKeyboard()"><h6><span class="mdi mdi-backspace"></span></h6></div>
-                                        <div class="d-flex align-items-center">
-                                            <h6 class="me-2">EN</h6>
-                                            <input type="checkbox" data-plugin="switchery" id="keyboard_lang_change_en_func" data-color="#1bb99a" data-secondary-color="#ff5d48"/>
-                                            <h6 class="ms-2">RU</h6>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="keyboard_big" id="keyboard_ru">
@@ -504,16 +499,18 @@
 
                                     <div class="key_big"><h6>&</h6></div><div class="key_big"><h6>€</h6></div><div class="key_big"><h6>£</h6></div><div class="key_big"><h6>₩</h6></div><!-- Probel -->
                                     <div class="key_big"><h6>(</h6></div><div class="key_big"><h6>)</h6></div>
-                                    <div class="d-flex justify-content-between width_354_pixel">
+                                    <div class="d-flex justify-content-between width_244_pixel">
                                         <div class="key_space_big"><h6>Space</h6></div>
                                         <div class="key_space_big" onclick="clearKeyboardDisplay()"><h6>Clear</h6></div>
                                         <div class="key_space_big" onclick="backspaceKeyboard()"><h6><span class="mdi mdi-backspace"></span></h6></div>
-                                        <div class="d-flex align-items-center">
-                                            <h6 class="me-2">EN</h6>
-                                            <input type="checkbox" data-plugin="switchery" id="keyboard_lang_change_ru_func" data-color="#1bb99a" data-secondary-color="#ff5d48"/>
-                                            <h6 class="ms-2">RU</h6>
-                                        </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-end justify-content-end">
+                                <div class="language_changer_content">
+                                    <h6 class="me-2">EN</h6>
+                                    <input type="checkbox" data-plugin="switchery" id="keyboard_lang_change_func" data-color="#1bb99a" data-secondary-color="#ff5d48"/>
+                                    <h6 class="ms-2">RU</h6>
                                 </div>
                             </div>
                         </div>
@@ -914,18 +911,16 @@
 <script>
     let items_selected_text = "{{translate_title('items selected', $lang)}}"
     let search_client_text = "{{translate_title('Поиск', $lang)}}"
-    let keyboard_lang_change_en_func = document.getElementById('keyboard_lang_change_en_func')
-    let keyboard_lang_change_ru_func = document.getElementById('keyboard_lang_change_ru_func')
+    let keyboard_lang_change_func = document.getElementById('keyboard_lang_change_func')
     let keyboard_selected_lang = localStorage.getItem('selected_lang')
     let keyboard_ru = document.getElementById('keyboard_ru')
     let keyboard_en = document.getElementById('keyboard_en')
 
-    keyboard_lang_change_en_func.addEventListener('change', function (e) {
-        if(e.target.value == 'on'){
-            keyboardChangerFunc()
-        }
-    })
-    keyboard_lang_change_ru_func.addEventListener('change', function (e) {
+    if(keyboard_selected_lang == 'ru'){
+        keyboard_lang_change_func.click()
+    }
+
+    keyboard_lang_change_func.addEventListener('change', function (e) {
         if(e.target.value == 'on'){
             keyboardChangerFunc()
         }
@@ -935,8 +930,6 @@
             if(keyboard_selected_lang == 'en'){
                 openRuKeyboardFunc()
             }else if(keyboard_selected_lang == 'ru'){
-                keyboard_lang_change_en_func.click()
-                keyboard_lang_change_ru_func.click()
                 openEnKeyboardFunc()
             }else{
                 openEnKeyboardFunc()
@@ -1089,6 +1082,7 @@
 <script src="{{asset('libs/mohithg-switchery/switchery.min.js')}}"></script>
 <script src="{{asset('libs/multiselect/js/jquery.multi-select.js')}}"></script>
 <script src="{{asset('libs/select2/js/select2.min.js')}}"></script>
+<script src="{{asset('libs/jquery-mockjax/jquery.mockjax.min.js')}}"></script>
 <script src="{{asset('libs/devbridge-autocomplete/jquery.autocomplete.min.js')}}"></script>
 <script src="{{asset('libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js')}}"></script>
 <script src="{{asset('libs/bootstrap-maxlength/bootstrap-maxlength.min.js')}}"></script>
