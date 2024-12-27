@@ -236,7 +236,7 @@
             </li>
             <li>
                 <a class="btn mt-2 mt-md-0 color_white" id="open_all_products_list" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
-                    <h6 class="mt_10">
+                    <h6>
                         <i class="fe-search"></i>
                     </h6>
                 </a>

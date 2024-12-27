@@ -172,29 +172,10 @@ function setReturnedPaymentHistoryHtmlWithDiscount(item, index){
                                             <h6 id="payment_product_amount"></h6>
                                         </div>
                                         <div class="width_25_percent text-end bill_info_sum d-flex flex-column">
-                                            <h6 id="payment_product_all_price">${item.all_price} ${sum_text}</h6>
+                                            <h6 id="returned_product_all_price">${item.all_price} ${sum_text}</h6>
                                             <del class="opacity_1">${item.price} ${sum_text}</del>
                                             <h6 id="payment_product_return_price"></h6>
                                         </div>
-                                        <a data-product='${JSON.stringify({
-                                                    sales_item_id:item.id,
-                                                    amount:item.items.amount,
-                                                    barcode:item.items.barcode,
-                                                    code:item.items.code,
-                                                    discount:item.items.discount,
-                                                    discount_percent:item.items.discount_percent,
-                                                    id:item.items.id,
-                                                    last_price:item.items.last_price,
-                                                    name:item.items.name,
-                                                    price:item.items.price,
-                                                    quantity:item.items.quantity,
-                                                    stock:item.items.stock,
-                                                    unit:item.items.unit,
-                                                    unit_id:item.items.unit_id
-                                                })}' 
-                                        onclick="editProductFunc(this)" data-bs-toggle="modal" data-bs-target="#edit_product_modal">
-                                            <img src="${return_icon}" class="width_20_px">
-                                        </a>
                                     </div>`
 }
 
@@ -210,29 +191,9 @@ function setReturnedPaymentHistoryHtmlWithouthDiscount(item, index){
                                             <h6 id="payment_product_amount"></h6>
                                         </div>
                                         <div class="width_25_percent text-end bill_info_sum">
-                                            <h6 id="payment_product_all_price">${item.all_price} ${sum_text}</h6>
+                                            <h6 id="returned_product_all_price">${item.all_price} ${sum_text}</h6>
                                             <h6 id="payment_product_return_price"></h6>
                                         </div>
-                                        <a data-product='${JSON.stringify({
-                                                sales_item_id:item.id,
-                                                amount:item.items.amount,
-                                                barcode:item.items.barcode,
-                                                code:item.items.code,
-                                                discount:item.items.discount,
-                                                discount_percent:item.items.discount_percent,
-                                                id:item.items.id,
-                                                last_price:item.items.last_price,
-                                                name:item.items.name,
-                                                price:item.items.price,
-                                                quantity:item.items.quantity,
-                                                stock:item.items.stock,
-                                                unit:item.items.unit,
-                                                unit_id:item.items.unit_id
-                                            })}' 
-                                            data-product-left=""
-                                            onclick="editProductFunc(this)" data-bs-toggle="modal" data-bs-target="#edit_product_modal">
-                                            <img src="${return_icon}" class="width_20_px">
-                                        </a>
                                     </div>`
 }
 
@@ -307,7 +268,6 @@ function showBillInfo(this_element, sales_data, code, price, discount_price, tot
     selected_sales_items = []
 }
 
-
 function showBillInfoModal(this_element, sales_data, code, price, saleId, client_full_name){
     bills_history_subtotal.textContent = ''
     bills_history_discount.textContent = ''
@@ -329,20 +289,19 @@ function showBillInfoModal(this_element, sales_data, code, price, saleId, client
     if(returned_back_modal_title == ''){
         returned_back_modal_title.textContent = code
     }
-    bills_history_subtotal.textContent = price +' '+ sum_text
     client_title_text.setAttribute('data-bs-content', client_full_name)
     setReturnedData(sales_data);
-    if(!returned_back_modal_button.classList.contains('d-none')){
-        returned_back_modal_button.classList.add('d-none')
+    if(returned_back_modal_button.classList.contains('d-none')){
+        returned_back_modal_button.classList.remove('d-none')
     }
-    if(!returned_back_total_amount.classList.contains('d-none')){
-        returned_back_total_amount.classList.add('d-none')
+    if(returned_back_total_amount.classList.contains('d-none')){
+        returned_back_total_amount.classList.remove('d-none')
+        returned_back_total_amount.innerText = price +' '+ sum_text
     }
-    if(!returned_back_total_amount_text.classList.contains('d-none')){
-        returned_back_total_amount_text.classList.add('d-none')
+    if(returned_back_total_amount_text.classList.contains('d-none')){
+        returned_back_total_amount_text.classList.remove('d-none')
     }
 }
-
 
 function removeActive(){
     for(let j=0; j<return_bill_info_table.length; j++){

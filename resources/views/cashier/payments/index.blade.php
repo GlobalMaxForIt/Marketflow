@@ -129,18 +129,18 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-between mb-2">
-                                <div>
-                                    <h6 class="order-info d-none" id="returned_back_total_amount_text"> {{translate_title('Return', $lang)}}</h6>
-                                </div>
-                                <div>
-                                    <h6 class="order-info-sum d-none" id="returned_back_total_amount">0 000 000 {{translate_title('sum', $lang)}}</h6>
-                                </div>
-                            </div>
                             <div class="bills_history_content">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <div>
+                                        <h6 class="order-info d-none" id="returned_back_total_amount_text"> {{translate_title('Return', $lang)}}</h6>
+                                    </div>
+                                    <div>
+                                        <h6 class="order-info-sum d-none" id="returned_back_total_amount">0 000 000 {{translate_title('sum', $lang)}}</h6>
+                                    </div>
+                                </div>
                                 <div class="d-flex justify-content-end d-none" id="returned_back_modal_button">
                                     <button class="modal_confirm_pay_ btn"  data-bs-toggle="modal" data-bs-target="#returned_back_modal">
-                                        <h6 class="color_white mb-0">{{translate_title('Return', $lang)}}</h6>
+                                        <h6 class="color_white mb-0">{{translate_title('Cancell', $lang)}}</h6>
                                     </button>
                                 </div>
                             </div>
