@@ -1541,7 +1541,6 @@ input[type=number]::-webkit-outer-spin-button {
 .modal-body input[type="email"] {
     border-radius: 10px;
     height: 50px;
-    color: black !important
 }
 .modal-content form .select2-selection{
     padding: 5px 14px;
@@ -2744,4 +2743,29 @@ body[data-layout-color="light"] #payment_input_month::-webkit-calendar-picker-in
 }
 body[data-layout-color="dark"] #payment_input_month::-webkit-calendar-picker-indicator, body[data-layout-color="dark"] #payment_input_date::-webkit-calendar-picker-indicator{
     filter: invert(100%) brightness(100%);
+}
+
+body[data-layout-color="light"] .modal-content input[type="text"],
+body[data-layout-color="light"] .modal-content input[type="number"],
+body[data-layout-color="light"] .modal-content input[type="password"],
+body[data-layout-color="light"] .modal-content input[type="email"],
+body[data-layout-color="light"] .modal-content select,
+body[data-layout-color="light"] .modal-content form .select2-selection,
+body[data-layout-color="light"] .modal-body input[type="text"],
+body[data-layout-color="light"] .modal-body input[type="number"],
+body[data-layout-color="light"] .modal-body input[type="password"],
+body[data-layout-color="light"] .modal-body input[type="email"] {
+    color: black !important
+}
+body[data-layout-color="dark"] .modal-content input[type="text"],
+body[data-layout-color="dark"] .modal-content input[type="number"],
+body[data-layout-color="dark"] .modal-content input[type="password"],
+body[data-layout-color="dark"] .modal-content input[type="email"],
+body[data-layout-color="dark"] .modal-content select,
+body[data-layout-color="dark"] .modal-content .select2-selection,
+body[data-layout-color="dark"] .modal-body input[type="text"],
+body[data-layout-color="dark"] .modal-body input[type="number"],
+body[data-layout-color="dark"] .modal-body input[type="password"],
+body[data-layout-color="dark"] .modal-body input[type="email"] {
+    color: white !important
 }

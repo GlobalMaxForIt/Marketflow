@@ -303,25 +303,25 @@
                         <div class="text-center">
                             <strong class="me-auto">{{translate_title('Payment sum', $lang)}}</strong>
                         </div>
-                        <div class="input-display_" id="payment_sum">0</div>
+                        <div class="input-display_ form-control" id="payment_sum">0</div>
                     </div>
                     <div class="col-3">
                         <div class="text-center">
                             <strong class="me-auto">{{translate_title('Accepting sum', $lang)}}</strong>
                         </div>
-                        <div class="input-display_" id="accepting_sum">0</div>
+                        <div class="input-display_ form-control" id="accepting_sum">0</div>
                     </div>
                     <div class="col-3">
                         <div class="text-center">
                             <strong class="me-auto">{{translate_title('Leaving sum', $lang)}}</strong>
                         </div>
-                        <div class="input-display_" id="leaving_sum">0</div>
+                        <div class="input-display_ form-control" id="leaving_sum">0</div>
                     </div>
                     <div class="col-3">
                         <div class="text-center">
                             <strong class="me-auto">{{translate_title('Change sum', $lang)}}</strong>
                         </div>
-                        <div class="input-display_" id="change_sum">0</div>
+                        <div class="input-display_ form-control" id="change_sum">0</div>
                     </div>
                 </div>
                 <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
@@ -462,7 +462,7 @@
                 </div>
             </div>
             <div class="modal-body d-flex justify-content-center d-none" id="cardContent">
-                <input class="input-display" type="text" id="card_payment_" readonly>
+                <input class="input-display form-control" type="text" id="card_payment_" readonly>
             </div>
             <div class="modal-footer">
                 <a class="btn modal_close height_50 me-4" data-bs-dismiss="modal">{{translate_title('Close', $lang)}}</a>

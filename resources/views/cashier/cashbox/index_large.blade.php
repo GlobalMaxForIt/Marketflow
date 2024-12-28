@@ -93,7 +93,7 @@
                                             <div class="payment-content-header_user">
                                                 <div class="d-flex justify-content-center">
                                                     <div class="position-relative mb-2 width_100_percent">
-                                                        <select class="input-default payment-content-header-user_name" name="client_id" data-toggle="select2" data-width="100%" required id="client_select_id_2">
+                                                        <select class="input-default form-control payment-content-header-user_name" name="client_id" data-toggle="select2" data-width="100%" required id="client_select_id_2">
                                                             <option value="" selected disabled>{{translate_title('Select a client', $lang)}}</option>
                                                             <optgroup label="Clients">
                                                                 @foreach($clients_for_discount as $client_for_discount)
@@ -126,28 +126,28 @@
                                                     <i class="mdi mdi-percent"></i>
                                                     <span class="payment-method-name_">&nbsp;{{translate_title('История покупок', $lang)}}</span>
                                                 </h6>
-                                                <input class="input-default_ payment-method-sum" placeholder="0 сум" type="text" id="clients_total__sum">
+                                                <input class="input-default_ form-control payment-method-sum" placeholder="0 сум" type="text" id="clients_total__sum">
                                             </div>
                                             <div class="payment-method d-flex justify-content-between mt-3">
                                                 <h6 class="payment-method-title d-flex align-items-center">
                                                     <i class="mdi mdi-percent"></i>
                                                     <span class="payment-method-name_">&nbsp;{{translate_title('Скидка клиета', $lang)}}</span>
                                                 </h6>
-                                                <input class="input-default_ payment-method-sum" placeholder="0 сум" type="text" id="clients_discount__sum">
+                                                <input class="input-default_ form-control payment-method-sum" placeholder="0 сум" type="text" id="clients_discount__sum">
                                             </div>
                                             <div class="payment-method d-flex justify-content-between mt-3 d-none">
                                                 <h6 class="payment-method-title d-flex align-items-center">
                                                     <i class="mdi mdi-percent"></i>
                                                     <span class="payment-method-name_">&nbsp;{{translate_title('Обшая скидка', $lang)}}</span>
                                                 </h6>
-                                                <input class="input-default_ payment-method-sum" placeholder="0 сум" type="text" id="clients_total_discount__sum">
+                                                <input class="input-default_ form-control payment-method-sum" placeholder="0 сум" type="text" id="clients_total_discount__sum">
                                             </div>
                                             <div class="payment-method d-flex justify-content-between mt-3 d-none">
                                                 <h6 class="payment-method-title d-flex align-items-center">
                                                     <i class="mdi mdi-cash"></i>
                                                     <span class="payment-method-name_">&nbsp;{{translate_title('Итоговая сумма', $lang)}}</span>
                                                 </h6>
-                                                <input class="input-default_ payment-method-sum" placeholder="0 сум" type="text" id="total__sum">
+                                                <input class="input-default_ form-control payment-method-sum" placeholder="0 сум" type="text" id="total__sum">
                                             </div>
                                         </div>
                                     </div>
@@ -416,7 +416,7 @@
                                 <h4>{{translate_title('Sum', $lang)}}</h4>
                             </div>
                             <div class="col-7">
-                                <input id="selected_product_price" type="text" class="input-display_password" value="0">
+                                <input id="selected_product_price" type="text" class="input-display_password form-control" value="0">
                             </div>
                         </div>
                         <div class="row">
@@ -424,7 +424,7 @@
                                 <h4>{{translate_title('Amount', $lang)}}</h4>
                             </div>
                             <div class="col-4">
-                                <input id="selected_product_amount" type="number" max="1000" min="0" class="input-display_password" value="0">
+                                <input id="selected_product_amount" type="number" max="1000" min="0" class="input-display_password form-control" value="0">
                             </div>
                             <div class="col-3">
                                 <h6 id="selected_product_stock"></h6>

@@ -458,7 +458,6 @@ selected_product_input_func()
 
 // Function to append numbers to the display
 function appendEditProduct(number) {
-
     if (display_edit_product.value == '0' || display_edit_product.value == '') {
         if(dot_has){
             display_edit_product.value = '0.'+String(number);

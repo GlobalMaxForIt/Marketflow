@@ -253,7 +253,9 @@ function showBillInfo(this_element, sales_data, code, price, discount_price, tot
     bills_history_client.textContent = client_discount_price +' '+ sum_text
     bills_history_discount.textContent = discount_price +' '+ sum_text
     bills_history_total.textContent = total_amount +' '+ sum_text
-    client_title_text.setAttribute('data-bs-content', client_full_name)
+    if(client_title_text != undefined && client_title_text != null){
+        client_title_text.setAttribute('data-bs-content', client_full_name)
+    }
     selected_total_sum = parseInt(total_amount.replace(/\s/g, ''), 10)
     setData(sales_data);
     if(!return_modal_button.classList.contains('d-none')){
@@ -311,6 +313,8 @@ function removeActive(){
     }
 }
 
-client_title_text.addEventListener('click', function () {
+if(client_title_text != undefined && client_title_text != null) {
+    client_title_text.addEventListener('click', function () {
 
-})
+    })
+}

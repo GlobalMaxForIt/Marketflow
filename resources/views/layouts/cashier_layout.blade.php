@@ -102,7 +102,7 @@
                 <form class="app-search">
                     <div class="app-search-box">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search..." id="top-search">
+                            <input type="text" class="form-control form-control" placeholder="Search..." id="top-search">
                             <a class="btn" type="submit">
                                 <i class="fe-search"></i>
                             </a>
@@ -526,13 +526,13 @@
                 <div class="p-3">
                     <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">{{ translate_title('Color Scheme', $lang)}}</h6>
                     <div class="form-check form-switch mb-1">
-                        <input type="checkbox" class="form-check-input" name="layout-color" value="light"
+                        <input type="checkbox" class="form-check-input form-control" name="layout-color" value="light"
                                id="light-mode-check" />
                         <label class="form-check-label" for="light-mode-check">{{ translate_title('Light Mode', $lang)}}</label>
                     </div>
 
                     <div class="form-check form-switch mb-1">
-                        <input type="checkbox" class="form-check-input" name="layout-color" value="dark"
+                        <input type="checkbox" class="form-check-input form-control" name="layout-color" value="dark"
                                id="dark-mode-check" checked/>
                         <label class="form-check-label" for="dark-mode-check">{{ translate_title('Dark Mode', $lang)}}</label>
                     </div>
@@ -541,13 +541,13 @@
                     <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">{{ translate_title('Menus (Leftsidebar and Topbar) Positon', $lang)}}</h6>
 
                     <div class="form-check form-switch mb-1">
-                        <input type="checkbox" class="form-check-input" name="leftbar-position" value="fixed"
+                        <input type="checkbox" class="form-check-input form-control" name="leftbar-position" value="fixed"
                                id="fixed-check" checked />
                         <label class="form-check-label" for="fixed-check">{{ translate_title('Fixed', $lang)}}</label>
                     </div>
 
                     <div class="form-check form-switch mb-1">
-                        <input type="checkbox" class="form-check-input" name="leftbar-position"
+                        <input type="checkbox" class="form-check-input form-control" name="leftbar-position"
                                value="scrollable" id="scrollable-check" />
                         <label class="form-check-label" for="scrollable-check">{{ translate_title('Scrollable', $lang)}}</label>
                     </div>
@@ -556,25 +556,25 @@
                     <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">{{ translate_title('Left Sidebar Color', $lang)}}</h6>
 
                     <div class="form-check form-switch mb-1">
-                        <input type="checkbox" class="form-check-input" name="leftbar-color" value="light"
+                        <input type="checkbox" class="form-check-input form-control" name="leftbar-color" value="light"
                                id="light" />
                         <label class="form-check-label" for="light-check">{{ translate_title('Light', $lang)}}</label>
                     </div>
 
                     <div class="form-check form-switch mb-1">
-                        <input type="checkbox" class="form-check-input" name="leftbar-color" value="dark"
+                        <input type="checkbox" class="form-check-input form-control" name="leftbar-color" value="dark"
                                id="dark" checked />
                         <label class="form-check-label" for="dark-check">{{ translate_title('Dark', $lang)}}</label>
                     </div>
 
                     <div class="form-check form-switch mb-1">
-                        <input type="checkbox" class="form-check-input" name="leftbar-color" value="brand"
+                        <input type="checkbox" class="form-check-input form-control" name="leftbar-color" value="brand"
                                id="brand" />
                         <label class="form-check-label" for="brand-check">{{ translate_title('Brand', $lang)}}</label>
                     </div>
 
                     <div class="form-check form-switch mb-3">
-                        <input type="checkbox" class="form-check-input" name="leftbar-color" value="gradient"
+                        <input type="checkbox" class="form-check-input form-control" name="leftbar-color" value="gradient"
                                id="gradient" />
                         <label class="form-check-label" for="gradient-check">{{ translate_title('Gradient', $lang)}}</label>
                     </div>
@@ -583,19 +583,19 @@
                     <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">{{ translate_title('Left Sidebar Size', $lang)}}</h6>
 
                     <div class="form-check form-switch mb-1">
-                        <input type="checkbox" class="form-check-input" name="leftbar-size" value="default"
+                        <input type="checkbox" class="form-check-input form-control" name="leftbar-size" value="default"
                                id="default-size-check" checked />
                         <label class="form-check-label" for="default-size-check">{{ translate_title('Default', $lang)}}</label>
                     </div>
 
                     <div class="form-check form-switch mb-1">
-                        <input type="checkbox" class="form-check-input" name="leftbar-size" value="condensed"
+                        <input type="checkbox" class="form-check-input form-control" name="leftbar-size" value="condensed"
                                id="condensed-check" />
                         <label class="form-check-label" for="condensed-check">{{ translate_title('Condensed', $lang)}} <small>{{ translate_title('(Extra Small size)', $lang)}}</small></label>
                     </div>
 
                     <div class="form-check form-switch mb-1">
-                        <input type="checkbox" class="form-check-input" name="leftbar-size" value="compact"
+                        <input type="checkbox" class="form-check-input form-control" name="leftbar-size" value="compact"
                                id="compact-check" />
                         <label class="form-check-label" for="compact-check">{{ translate_title('Compact', $lang)}} <small>{{ translate_title('(Small size)', $lang)}}</small></label>
                     </div>
@@ -724,7 +724,7 @@
                             <h4>{{translate_title('Sum', $lang)}}</h4>
                         </div>
                         <div class="col-7">
-                            <input id="selected_product_price" type="number" min="0" class="input-display_password" value="0">
+                            <input id="selected_product_price" type="number" min="0" class="input-display_password form-control" value="0">
                         </div>
                     </div>
                     <div class="row">
@@ -732,7 +732,7 @@
                             <h4>{{translate_title('Amount', $lang)}}</h4>
                         </div>
                         <div class="col-4">
-                            <input id="selected_product_amount" type="number" max="1000" min="0" class="input-display_password" value="0">
+                            <input id="selected_product_amount" type="number" max="1000" min="0" class="input-display_password form-control" value="0">
                         </div>
                         <div class="col-3">
                             <h6 id="selected_product_unit"></h6>

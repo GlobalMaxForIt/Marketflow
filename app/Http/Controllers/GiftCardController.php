@@ -37,26 +37,27 @@ class GiftCardController extends Controller
      */
     public function store(Request $request)
     {
-        $coupon = new GiftCard();
-        $coupon->name = $request->name;
+        $gift_card = new GiftCard();
+        $gift_card->name = $request->name;
         if ($request->coupon_type == "price") {
-            $coupon->price = $request->price;
-            $coupon->percent = NULL;
+            $gift_card->price = $request->price;
+            $gift_card->percent = NULL;
         }elseif ($request->coupon_type == "percent") {
-            $coupon->price = NULL;
-            $coupon->percent = $request->percent;
+            $gift_card->price = NULL;
+            $gift_card->percent = $request->percent;
         }
-        $coupon->min_price = $request->min_price;
-        if ($request->coupon__type == "quantity") {
-            $coupon->order_quantity = $request->order_quantity;
-            $coupon->order_number = NULL;
-        }elseif ($request->coupon__type == "number") {
-            $coupon->order_quantity = NULL;
-            $coupon->order_number = $request->order_number;
+        $gift_card->min_price = $request->min_price;
+        $start_end_date_ = [];
+        if($request->start_end_date){
+            $start_end_date_ = explode(' ', $request->start_end_date);
         }
-        $coupon->start_date = $request->start_date;
-        $coupon->end_date = $request->end_date;
-        $coupon->save();
+        if(isset($start_end_date_[0])){
+            $gift_card->start_date = $start_end_date_[0];
+        }
+        if(isset($start_end_date_[2])){
+            $gift_card->end_date = $start_end_date_[2];
+        }
+        $gift_card->save();
         return redirect()->route('gift-cards.index')->with('status', translate_title('Successfully created', $this->lang));
     }
 
@@ -65,8 +66,7 @@ class GiftCardController extends Controller
      */
     public function show(string $id)
     {
-        $model = GiftCard::find($id);
-        return view('gift-cards.show', ['model'=>$model, 'lang'=>$this->lang]);
+
     }
 
     /**
@@ -74,8 +74,15 @@ class GiftCardController extends Controller
      */
     public function edit(string $id)
     {
-        $coupon = GiftCard::find($id);
-        return view('gift-cards.edit', ['coupon'=> $coupon, 'lang'=>$this->lang]);
+        $gift_card = GiftCard::find($id);
+        $start_date = explode(' ', $gift_card->start_date);
+        $end_date = explode(' ', $gift_card->end_date);
+        if(isset($start_date[0]) && isset($end_date[0])){
+            $start_end_date = $start_date[0].' to '.$end_date[0];
+        }else{
+            $start_end_date = '';
+        }
+        return view('gift-cards.edit', ['gift_card'=> $gift_card, 'start_end_date'=>$start_end_date, 'lang'=>$this->lang]);
     }
 
     /**
@@ -83,32 +90,27 @@ class GiftCardController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $coupon = GiftCard::find($id);
-        $coupon->name = $request->name;
+        $gift_card = GiftCard::find($id);
+        $gift_card->name = $request->name;
         if ($request->coupon_type == "price") {
-            $coupon->price = $request->price;
-            $coupon->percent = NULL;
+            $gift_card->price = $request->price;
+            $gift_card->percent = NULL;
         } elseif ($request->coupon_type == "percent") {
-            $coupon->price = NULL;
-            $coupon->percent = $request->percent;
+            $gift_card->price = NULL;
+            $gift_card->percent = $request->percent;
         }
-        if(isset($request->min_price)){
-            $coupon->min_price = $request->min_price;
+        $gift_card->min_price = $request->min_price;
+        $start_end_date_ = [];
+        if($request->start_end_date){
+            $start_end_date_ = explode(' ', $request->start_end_date);
         }
-        if ($request->coupon__type == "quantity") {
-            $coupon->order_quantity = $request->order_quantity;
-            $coupon->order_number = NULL;
-        }elseif ($request->coupon__type == "number") {
-            $coupon->order_quantity = NULL;
-            $coupon->order_number = $request->order_number;
+        if(isset($start_end_date_[0])){
+            $gift_card->start_date = $start_end_date_[0];
         }
-        if(isset($request->start_date)){
-            $coupon->start_date = $request->start_date;
+        if(isset($start_end_date_[2])){
+            $gift_card->end_date = $start_end_date_[2];
         }
-        if(isset($request->end_date)){
-            $coupon->end_date = $request->end_date;
-        }
-        $coupon->save();
+        $gift_card->save();
         return redirect()->route('gift-cards.index')->with('status', translate_title('Successfully created', $this->lang));
     }
 

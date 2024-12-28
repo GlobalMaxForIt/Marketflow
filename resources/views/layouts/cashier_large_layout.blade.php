@@ -665,15 +665,15 @@
                 <div>
                     <div class="d-flex position-relative justify-content-between">
                         <h5>{{translate_title('Наличие', $lang)}}</h5>
-                        <input id="display" class="input-display-lg" value="0" type="text">
+                        <input id="display" class="input-display-lg form-control" value="0" type="text">
                     </div>
                     <div class="d-flex position-relative justify-content-between">
                         <h5>{{translate_title('Карта', $lang)}}</h5>
-                        <input id="display_card" class="input-display-lg" value="0" type="text">
+                        <input id="display_card" class="input-display-lg form-control" value="0" type="text">
                     </div>
                     <div class="d-flex position-relative justify-content-between" id="debt_display_content">
                         <h5>{{translate_title('Долг', $lang)}}</h5>
-                        <input id="debt_display" class="input-display-lg" value="0" type="text">
+                        <input id="debt_display" class="input-display-lg form-control" value="0" type="text">
                     </div>
                 </div>
                 <div class="width_344_pixel">
@@ -840,7 +840,7 @@
                     <!-- Sonni ko'rsatish joyi -->
                     <div class="row">
                         <div class="col-12">
-                            <input id="display_password" type="text" class="input-display_password" value="">
+                            <input id="display_password" type="text" class="input-display_password form-control" value="">
                         </div>
                     </div>
                     <div class="mb-2">

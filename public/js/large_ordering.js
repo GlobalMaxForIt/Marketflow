@@ -158,7 +158,7 @@ function setClientPrices() {
     }
     total_sum.innerText = all_sum_withouth_discount
     clients_discount__sum.value = clientDicountPrice
-    total_left_sum.innerText = total_all_left_sum
+    total_left_sum.innerText = format_entered_sum(total_all_left_sum)
     clients_total_discount__sum.value = (productsPrice - total_all_left_sum).toFixed(2)
     total_discount.innerText = (productsPrice - total_all_left_sum).toFixed(2)
     total__sum.value = total_all_left_sum

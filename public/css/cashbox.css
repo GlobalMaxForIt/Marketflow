@@ -1,9 +1,6 @@
 .img-thumbnail{
     height: 56px;
 }
-#wrapper{
-    font-size: 12px !important;
-}
 .container-fluid, .col-3, .col-5, .col-4, .col-sm-12, .col-12{
     padding: 0px !important;
 }
