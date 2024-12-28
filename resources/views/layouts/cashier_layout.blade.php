@@ -454,6 +454,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{route('gift-cards.index')}}">
+                            <i class="mdi mdi-gift me-1"></i>
+                            <span> {{translate_title('Gift cards', $lang)}} </span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{route('clients.index')}}">
                             <i class="fa fa-user me-1"></i>
                             <span> {{translate_title('Client', $lang)}} </span>

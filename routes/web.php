@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ClientsController;
+use App\Http\Controllers\GiftCardController;
 use App\Http\Controllers\Cashier\CashierProductsController;
 use App\Http\Controllers\Cashier\CashierDiscountController;
 use App\Http\Controllers\Cashier\PaymentsController;
@@ -42,6 +43,7 @@ Route::group(['middleware'=>['auth', 'language']], function(){
     Route::get('api/get-districts', [HomeController::class, 'getCities']);
     Route::resource('clients', ClientsController::class);
     Route::get('api/subcategory/{id}', [\App\Http\Controllers\Superadmin\ProductsCategoriesController::class, 'getSubcategory'])->name('get_subcategory');
+    Route::resource('gift-cards', GiftCardController::class);
 });
 
 Route::group(['middleware'=>['isAdmin', 'language'], 'prefix'=>'admin'], function(){

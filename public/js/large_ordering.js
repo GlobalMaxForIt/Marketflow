@@ -169,6 +169,7 @@ function removeClientDiscountFunc(){
     discountValue = 0
     clientDiscount.innerText = ''
     percent_v = 0
+    client_id = ''
     hideClientDiscount(clientDiscountContent)
     client_select_id_2.value = ''
     clientDicountPrice = 0

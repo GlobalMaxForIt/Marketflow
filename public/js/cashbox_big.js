@@ -374,6 +374,8 @@ function editProductFunc(orderProduct){
         selected_product_price.disabled = false
     }
     selected_product_input_func()
+    order_selected_product_name.innerText = orderProductData.name+' '+orderProduct_amount
+    order_selected_product_info.innerHTML = `${orderProduct_last_price} * ${selectedProductAmount} = ${new Intl.NumberFormat('ru-RU').format(orderProduct_last_price*selectedProductAmount, 10)}`
 }
 function selected_product_input_func(){
     setTimeout(function () {
@@ -785,7 +787,9 @@ function backspaceEditProduct() {
         selected_product_amount.value = parseInt(selected_product_price_value)/orderProduct_last_price
     }
 }
+let debt_display_content = document.getElementById('debt_display_content')
 function paymentFunc() {
+    console.log([client_id, percent_v])
     is_payment_modal_opened_for_cash = true
     is_payment_modal_opened_for_card = true
     is_payment_modal_opened_for_debt = true
@@ -798,6 +802,15 @@ function paymentFunc() {
     entered_cash_sum = parseInt(getTotalSum)
     cash_sum = entered_cash_sum
     display.value = format_entered_sum(cash_sum)
+    if(parseInt(client_id)>0){
+        if(debt_display_content.classList.contains('d-none')){
+            debt_display_content.classList.remove('d-none')
+        }
+    }else{
+        if(!debt_display_content.classList.contains('d-none')){
+            debt_display_content.classList.add('d-none')
+        }
+    }
     autoSetCardSum()
     setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt)
     selected_display_clicked = true

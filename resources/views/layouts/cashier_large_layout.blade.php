@@ -350,6 +350,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{route('gift-cards.index')}}">
+                            <i class="mdi mdi-gift me-1"></i>
+                            <span> {{translate_title('Gift cards', $lang)}} </span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{route('clients.index')}}">
                             <i class="fa fa-user me-1"></i>
                             <span> {{translate_title('Client', $lang)}} </span>
@@ -665,7 +671,7 @@
                         <h5>{{translate_title('Карта', $lang)}}</h5>
                         <input id="display_card" class="input-display-lg" value="0" type="text">
                     </div>
-                    <div class="d-flex position-relative justify-content-between">
+                    <div class="d-flex position-relative justify-content-between" id="debt_display_content">
                         <h5>{{translate_title('Долг', $lang)}}</h5>
                         <input id="debt_display" class="input-display-lg" value="0" type="text">
                     </div>
