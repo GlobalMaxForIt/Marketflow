@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\GiftCard;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 class GiftCardController extends Controller
 {
@@ -37,6 +38,7 @@ class GiftCardController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
         $gift_card = new GiftCard();
         $gift_card->name = $request->name;
         if ($request->coupon_type == "price") {
@@ -57,6 +59,7 @@ class GiftCardController extends Controller
         if(isset($start_end_date_[2])){
             $gift_card->end_date = $start_end_date_[2];
         }
+        $gift_card->store_id = $user->store_id;
         $gift_card->save();
         return redirect()->route('gift-cards.index')->with('status', translate_title('Successfully created', $this->lang));
     }
@@ -90,6 +93,7 @@ class GiftCardController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $user = Auth::user();
         $gift_card = GiftCard::find($id);
         $gift_card->name = $request->name;
         if ($request->coupon_type == "price") {
@@ -110,6 +114,7 @@ class GiftCardController extends Controller
         if(isset($start_end_date_[2])){
             $gift_card->end_date = $start_end_date_[2];
         }
+        $gift_card->store_id = $user->store_id;
         $gift_card->save();
         return redirect()->route('gift-cards.index')->with('status', translate_title('Successfully created', $this->lang));
     }
