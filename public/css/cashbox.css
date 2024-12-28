@@ -139,7 +139,7 @@ table{
 .dataTables_wrapper .dataTables_filter input{
     height: 34px !important;
 }
-.dataTables_length{
+.dataTables_length[id="all_products_list_for_selling_length"]{
     display: none !important;
 }
 .offcanvas tr{

@@ -16,6 +16,7 @@ use App\Models\SalesReports;
 use App\Models\ServicePrice;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class SalesService
 {
@@ -29,6 +30,7 @@ class SalesService
     }
 
     public function salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $text, $checklist_changed, $debt_sum){
+        $lang = App::getLocale();
         $sales->client_id = $client_id;
         if($text == 'checklist'){
             $sales->status = Constants::CHECKLIST;
@@ -69,6 +71,11 @@ class SalesService
                 $sales_items->price = $order_data_price;
                 $sales_items->save();
                 $product->stock = $product->stock - (float)$orderData['quantity'];
+
+                if((float)$product->stock<=5){
+                    $message = $product->name.' '. $product->amount.' '.translate_title('has left ', $lang). ' '.$product->stock;
+                    event(new PostNotification($message));
+                }
                 $product->save();
             }
         }

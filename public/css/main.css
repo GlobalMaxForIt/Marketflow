@@ -2726,3 +2726,8 @@ body[data-layout-color="dark"] #open_all_products_list{
     position: absolute;
     margin-bottom: 44px;
 }
+.payment_sort_by_date{
+    position: absolute;
+    border: 0px !important;
+    width: 44px !important;
+}

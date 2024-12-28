@@ -25,7 +25,11 @@
                     <div class="row">
                         <div class="card col-8">
                             <div class="card-body overflow-auto">
-                                <table class="restaurant_tables datatable table table-striped table-bordered dt-responsive nowrap">
+                                <div class="d-flex justify-content-end">
+                                    <input class="payment_sort_by_date form-control me-5" id="payment_input_month" type="month" name="month">
+                                    <input class="payment_sort_by_date form-control" id="payment_input_date" type="date" name="date">
+                                </div>
+                                <table class="restaurant_tables table table-striped table-bordered dt-responsive nowrap" id="datatable-buttons">
                                     <thead>
                                         <tr>
                                             <th><h6>{{translate_title('Total amount', $lang)}}</h6></th>
@@ -209,15 +213,18 @@
         let returned_back_modal_title = document.getElementById('returned_back_modal_title')
     </script>
     <script>
-        // let bills_history_th = document.querySelector('#bills_history th')
-        // let opened_bills_th = document.querySelector('#opened_bills th')
-        // let closed_bills_th = document.querySelector('#closed_bills th')
-        // let pay_off_debt_th = document.querySelector('#pay_off_debt th')
-        // setTimeout(function () {
-        //     bills_history_th.click()
-        //     opened_bills_th.click()
-        //     closed_bills_th.click()
-        //     pay_off_debt_th.click()
-        // }, 1000)
+        let payment_input_month = document.getElementById('payment_input_month')
+        let payment_input_date = document.getElementById('payment_input_date')
+        payment_input_month.addEventListener('change', function (e) {
+            setTimeout(function () {
+                $('#datatable-buttons').DataTable().search(e.target.value).draw();
+            }, 144)
+        })
+        payment_input_date.addEventListener('change', function (e) {
+            setTimeout(function () {
+                $('#datatable-buttons').DataTable().search(e.target.value).draw();
+            }, 144)
+        })
+
     </script>
 @endsection

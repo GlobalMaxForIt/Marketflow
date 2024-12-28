@@ -10,10 +10,10 @@ channel.bind('post-event', function(data) {
         toastr.success(data.message)
     }
 });
-var channel_reload = pusher.subscribe('reload-order');
-channel_reload.bind('reload-event', function(data) {
-    if(data.message != null && data.message != undefined){
-        toastr.success(data.message)
-
-    }
-});
+// var channel_reload = pusher.subscribe('reload-order');
+// channel_reload.bind('reload-event', function(data) {
+//     if(data.message != null && data.message != undefined){
+//         toastr.success(data.message)
+//
+//     }
+// });
