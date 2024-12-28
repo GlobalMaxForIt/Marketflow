@@ -427,6 +427,7 @@
                                 <input id="selected_product_amount" type="number" max="1000" min="0" class="input-display_password" value="0">
                             </div>
                             <div class="col-3">
+                                <h6 id="selected_product_stock"></h6>
                                 <h6 id="selected_product_unit"></h6>
                             </div>
                         </div>
@@ -501,6 +502,7 @@
     <script>
 
         let sum_text =  "{{translate_title('sum', $lang)}}"
+        let left_text =  "{{translate_title('are left', $lang)}}"
         let items_text =  "{{translate_title('items', $lang)}}"
         let not_found =  "{{translate_title('Not found', $lang)}}"
         let phone_text =  "{{translate_title('Phone', $lang)}}"

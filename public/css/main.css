@@ -2543,9 +2543,9 @@ body[data-leftbar-size=compact] .width_height_confirm_button{
     width: 44%!important;
     border-radius: 14px !important;
 }
-#selected_product_unit{
+#selected_product_unit, #selected_product_stock{
     font-size: 12px !important;
-    margin-top: 14px;
+    margin-top: 4px;
     margin-left: 4px;
 }
 .pre_wrap{
@@ -2724,10 +2724,24 @@ body[data-layout-color="dark"] #open_all_products_list{
 .language_changer_content{
     display: flex;
     position: absolute;
-    margin-bottom: 44px;
+    margin-bottom: 14px;
 }
 .payment_sort_by_date{
     position: absolute;
     border: 0px !important;
     width: 44px !important;
+}
+#payment_input_month, #payment_input_date{
+    background-color: transparent !important;
+    color: #9097A7 !important;
+}
+#payment_input_month::-webkit-calendar-picker-indicator, #payment_input_date::-webkit-calendar-picker-indicator {
+    cursor: pointer; /* Qo'shimcha: ko'rsatkichni o'zgartirish */
+}
+
+body[data-layout-color="light"] #payment_input_month::-webkit-calendar-picker-indicator, body[data-layout-color="light"] #payment_input_date::-webkit-calendar-picker-indicator{
+    filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg);
+}
+body[data-layout-color="dark"] #payment_input_month::-webkit-calendar-picker-indicator, body[data-layout-color="dark"] #payment_input_date::-webkit-calendar-picker-indicator{
+    filter: invert(100%) brightness(100%);
 }

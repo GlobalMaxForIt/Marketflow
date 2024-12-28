@@ -196,6 +196,7 @@
 
     <script>
         let sum_text =  "{{translate_title('sum', $lang)}}"
+        let left_text =  "{{translate_title('are left', $lang)}}"
         let items_text =  "{{translate_title('items', $lang)}}"
         let not_found =  "{{translate_title('Not found', $lang)}}"
         let phone_text =  "{{translate_title('Phone', $lang)}}"

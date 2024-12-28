@@ -27,6 +27,7 @@ let selected_product_name = document.getElementById('selected_product_name')
 let selected_product_price = document.getElementById('selected_product_price')
 let selected_product_amount = document.getElementById('selected_product_amount')
 let selected_product_unit = document.getElementById('selected_product_unit')
+let selected_product_stock = document.getElementById('selected_product_stock')
 let dotKeyboard = document.getElementById('dotKeyboard')
 let return_modal_button_click = document.querySelector('#return_modal_button_click')
 let dot_has = false
@@ -345,6 +346,7 @@ function editProductFunc(orderProduct){
         selected_product_price.value = format_entered_sum(selected_product_price_value)
         selected_product_amount.value = parseFloat(orderProductData.quantity)
         selected_product_unit.innerText = orderProductData.unit
+        selected_product_stock.innerText = parseFloat(orderProductData.stock) - parseFloat(orderProductData.quantity)+' '+left_text
         selectedProductAmount = parseFloat(selected_product_amount.value)
         orderProduct_amount = orderProductData.amount
         orderProduct_barcode = orderProductData.barcode
@@ -464,7 +466,7 @@ function appendEditProduct(number) {
             if(amount_or_price == 'amount'){
                 display_edit_product.value = String(number);
             }else{
-                selected_product_price_value = parseInt(number.replace(/\s/g, ''))
+                selected_product_price_value = parseInt(number)
                 display_edit_product.value = format_entered_sum(selected_product_price_value);
             }
         }
@@ -479,7 +481,7 @@ function appendEditProduct(number) {
                 }
             }else{
                 if(is_edit_product_modal_opened_for_price){
-                    selected_product_price_value = parseInt(number.replace(/\s/g, ''))
+                    selected_product_price_value = parseInt(number)
                     display_edit_product.value = format_entered_sum(selected_product_price_value);
                     is_edit_product_modal_opened_for_price = false
                 }else{
@@ -497,7 +499,7 @@ function appendEditProduct(number) {
                 }
             }else{
                 if(is_edit_product_modal_opened_for_price){
-                    selected_product_price_value = parseInt(number.replace(/\s/g, ''))
+                    selected_product_price_value = parseInt(number)
                     display_edit_product.value = format_entered_sum(selected_product_price_value);
                     is_edit_product_modal_opened_for_price = false
                 }else{
@@ -512,8 +514,7 @@ function appendEditProduct(number) {
         selected_product_price_value = parseInt(orderProduct_last_price * parseFloat(display_edit_product.value.replace(/\s/g, '')))
         selected_product_price.value = format_entered_sum(selected_product_price_value)
     }else{
-        selected_product_price_value = parseInt(selected_product_price.value.replace(/\s/g, ''))/orderProduct_last_price
-        selected_product_amount.value = format_entered_sum(selected_product_price_value)
+        selected_product_amount.value = (parseInt(selected_product_price.value.replace(/\s/g, ''))/orderProduct_last_price).toFixed(2)
     }
 }
 
