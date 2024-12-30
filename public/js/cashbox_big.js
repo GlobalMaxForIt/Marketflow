@@ -176,6 +176,7 @@ if(display_card != undefined && display_card != null){
         selected_payment_input_func()
     })
 }
+
 if(debt_display != undefined && debt_display != null){
     debt_display.addEventListener('click', function () {
         selected_display_clicked = false
@@ -346,9 +347,12 @@ function editProductFunc(orderProduct){
         selected_product_name.innerText = orderProductData.name + ' '+orderProductData.amount
         selected_product_price_value = parseInt(parseFloat(orderProductData.quantity)*parseInt(orderProductData.last_price.replace(/\s/g, ''), 10))
         selected_product_price.value = format_entered_sum(selected_product_price_value)
+        console.log([selected_product_price_value, selected_product_price.value])
         selected_product_amount.value = parseFloat(orderProductData.quantity)
         selected_product_unit.innerText = orderProductData.unit
-        selected_product_stock.innerText = parseFloat(orderProductData.stock) - parseFloat(orderProductData.quantity)+' '+left_text
+        if(selected_product_stock != undefined && selected_product_stock != null){
+            selected_product_stock.innerText = parseFloat(orderProductData.stock) - parseFloat(orderProductData.quantity)+' '+left_text
+        }
         selectedProductAmount = parseFloat(selected_product_amount.value)
         orderProduct_amount = orderProductData.amount
         orderProduct_barcode = orderProductData.barcode
@@ -378,8 +382,12 @@ function editProductFunc(orderProduct){
         selected_product_price.disabled = false
     }
     selected_product_input_func()
-    order_selected_product_name.innerText = orderProductData.name+' '+orderProduct_amount
-    order_selected_product_info.innerHTML = `${orderProduct_last_price} * ${selectedProductAmount} = ${new Intl.NumberFormat('ru-RU').format(orderProduct_last_price*selectedProductAmount, 10)}`
+    if(order_selected_product_name != '' && order_selected_product_name != null && order_selected_product_name != undefined){
+        order_selected_product_name.innerText = orderProductData.name+' '+orderProduct_amount
+    }
+    if(order_selected_product_info != '' && order_selected_product_info != null && order_selected_product_info != undefined){
+        order_selected_product_info.innerHTML = `${orderProduct_last_price} * ${selectedProductAmount} = ${new Intl.NumberFormat('ru-RU').format(orderProduct_last_price*selectedProductAmount, 10)}`
+    }
 }
 function selected_product_input_func(){
     setTimeout(function () {
@@ -517,7 +525,9 @@ function appendEditProduct(number) {
     }else{
         selected_product_amount.value = (parseInt(selected_product_price.value.replace(/\s/g, ''))/orderProduct_last_price).toFixed(2)
     }
-    selected_product_stock.innerText = orderProduct_stock - parseFloat(selected_product_amount.value)
+    if(selected_product_stock != undefined && selected_product_stock != null){
+        selected_product_stock.innerText = orderProduct_stock - parseFloat(selected_product_amount.value)
+    }
 }
 
 function appendDotEditProduct(){
@@ -582,12 +592,14 @@ function changePriceByAmount(amount__value, last__value){
                         selected_product_amount.value = parseFloat(amount__value); // Aks holda, raqamni qo'shamiz
                     }
                 }
-                selected_product_price_value = orderProduct_last_price * parseFloat(amount__value.replace(/\s/g, ''))
-                selected_product_price.value = format_entered_sum(selected_product_price_value)
                 dot_has = false
             }
+            selected_product_price_value = orderProduct_last_price * parseFloat(amount__value.replace(/\s/g, ''))
+            selected_product_price.value = format_entered_sum(selected_product_price_value)
         }
-        selected_product_stock.innerText = orderProduct_stock - parseFloat(selected_product_amount.value)
+        if(selected_product_stock != undefined && selected_product_stock != null){
+            selected_product_stock.innerText = orderProduct_stock - parseFloat(selected_product_amount.value)
+        }
     }
 }
 
@@ -609,7 +621,9 @@ function changeAmountByPrice(price__value, last__value){
         }else{
             selected_product_amount.value = '0';
         }
-        selected_product_stock.innerText = orderProduct_stock - parseFloat(selected_product_amount.value)
+        if(selected_product_stock != undefined && selected_product_stock != null){
+            selected_product_stock.innerText = orderProduct_stock - parseFloat(selected_product_amount.value)
+        }
     }
 }
 if(selected_product_amount != undefined && selected_product_amount != null){
@@ -645,8 +659,12 @@ function changeAmountAndPrice(){
                         order_data[i].quantity = orderProduct_quantity
                     }else{
                         order_data.splice(i, 1)
-                        order_selected_product_name.innerText = ''
-                        order_selected_product_info.innerHTML = ''
+                        if(order_selected_product_name != '' && order_selected_product_name != null && order_selected_product_name != undefined){
+                            order_selected_product_name.innerText = ''
+                        }
+                        if(order_selected_product_info != '' && order_selected_product_info != null && order_selected_product_info != undefined) {
+                            order_selected_product_info.innerHTML = ''
+                        }
                     }
                 }
             }
@@ -691,8 +709,12 @@ function changeAmountAndPrice(){
         orderProduct_last_price = parseInt(selected_product_price_value/selectedProductAmount)
     }
     if(orderProduct_quantity>0){
-        order_selected_product_name.innerText = orderProductData.name+' '+orderProduct_amount
-        order_selected_product_info.innerHTML = `${orderProduct_last_price} * ${selectedProductAmount} = ${new Intl.NumberFormat('ru-RU').format(orderProduct_last_price*selectedProductAmount, 10)}`
+        if(order_selected_product_name != '' && order_selected_product_name != null && order_selected_product_name != undefined){
+            order_selected_product_name.innerText = orderProductData.name+' '+orderProduct_amount
+        }
+        if(order_selected_product_info != '' && order_selected_product_info != null && order_selected_product_info != undefined){
+            order_selected_product_info.innerHTML = `${orderProduct_last_price} * ${selectedProductAmount} = ${new Intl.NumberFormat('ru-RU').format(orderProduct_last_price*selectedProductAmount, 10)}`
+        }
     }
 }
 
@@ -798,7 +820,9 @@ function clearDisplayEditProduct() {
     selected_product_amount.value = '0'; // Ekrandagi raqamni tozalash
     selected_product_price.value = '0'; // Ekrandagi raqamni tozalash
     selected_product_price_value = 0; // Ekrandagi raqamni tozalash
-    selected_product_stock.innerText = orderProduct_stock
+    if(selected_product_stock != undefined && selected_product_stock != null){
+        selected_product_stock.innerText = orderProduct_stock
+    }
 }
 
 // Function to remove the last digit (Backspace)
@@ -814,7 +838,9 @@ function backspaceEditProduct() {
     }else{
         selected_product_amount.value = parseInt(display_edit_product.value.replace(/\s/g, ''))/orderProduct_last_price
     }
-    selected_product_stock.innerText = stock_int - parseFloat(selected_product_amount.value)
+    if(selected_product_stock != undefined && selected_product_stock != null){
+        selected_product_stock.innerText = stock_int - parseFloat(selected_product_amount.value)
+    }
 }
 let debt_display_content = document.getElementById('debt_display_content')
 function paymentFunc() {

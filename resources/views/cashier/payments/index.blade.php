@@ -212,6 +212,8 @@
         let return_success_text = "{{translate_title('Возврат сделан', $lang)}}"
         let return_modal_title = document.getElementById('return_modal_title')
         let returned_back_modal_title = document.getElementById('returned_back_modal_title')
+        let order_selected_product_name = ''
+        let order_selected_product_info = ''
     </script>
     <script>
         let payment_input_month = document.getElementById('payment_input_month')

@@ -724,7 +724,7 @@
                             <h4>{{translate_title('Sum', $lang)}}</h4>
                         </div>
                         <div class="col-7">
-                            <input id="selected_product_price" type="number" min="0" class="input-display_password form-control" value="0">
+                            <input id="selected_product_price" type="text" min="0" class="input-display_password form-control" value="0">
                         </div>
                     </div>
                     <div class="row">
