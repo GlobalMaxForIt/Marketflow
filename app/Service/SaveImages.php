@@ -6,6 +6,7 @@ namespace App\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Intervention\Image\Facades\Image;
+use Mockery\Exception;
 
 class SaveImages
 {
@@ -69,11 +70,12 @@ class SaveImages
                 // Yangi fayl nomini yaratish
                 $random = $this->setRandom();
                 $product_image_name = $random . ''. date('Y-m-d_h-i-s') . '.' . $image->extension();
+                Image::configure(['driver'=>'imagick']);
                 $img = Image::make($image);
                 // Agar kichraytirish parametri mavjud bo'lsa
                 if ($shrink_percent <100) {
                     // Sifatni kamaytirish
-                   $img->encode($image->extension(), $shrink_percent);  // Sifatni 75% ga kamaytirish
+                    $img->encode($image->extension(), $shrink_percent);  // Sifatni 75% ga kamaytirish
                 }
 
                 $img->resize(800, null, function ($constraint) {
@@ -135,6 +137,7 @@ class SaveImages
         $product_image_name = $random . '_' . date('Y-m-d_h-i-s') . '.' . $image->extension();
 
         // Tasvirni yaratish (Intervention Image orqali)
+        Image::configure(['driver'=>'imagick']);
         $small_img = Image::make($image);
 
         // Zarur bo'lsa, shrinking (resizing) amalga oshiriladi

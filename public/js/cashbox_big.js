@@ -28,6 +28,7 @@ let selected_product_price = document.getElementById('selected_product_price')
 let selected_product_amount = document.getElementById('selected_product_amount')
 let selected_product_unit = document.getElementById('selected_product_unit')
 let selected_product_stock = document.getElementById('selected_product_stock')
+let changeAmountAndPriceId = document.getElementById('changeAmountAndPriceId')
 let dotKeyboard = document.getElementById('dotKeyboard')
 let return_modal_button_click = document.querySelector('#return_modal_button_click')
 let dot_has = false
@@ -89,6 +90,7 @@ function format_entered_sum(numbers){
 }
 
 function setValues(cash_sum_, card_sum_, debt_sum_){
+    console.log([cash_sum_, card_sum_, debt_sum_])
     switch (display_or_display_card_or_debt) {
         case "display":
             display.value = format_entered_sum(cash_sum_)
@@ -515,6 +517,7 @@ function appendEditProduct(number) {
     }else{
         selected_product_amount.value = (parseInt(selected_product_price.value.replace(/\s/g, ''))/orderProduct_last_price).toFixed(2)
     }
+    selected_product_stock.innerText = orderProduct_stock - parseFloat(selected_product_amount.value)
 }
 
 function appendDotEditProduct(){
@@ -551,6 +554,12 @@ function changePriceByAmount(amount__value, last__value){
         if(is_edit_product_modal_opened_for_amount) {
             if(amount__value != ''){
                 selected_product_amount.value = last__value
+            }else if(amount__value == '') {
+                if (last__value == '.' && amount__value.length < 1 ) {
+                    dot_has = true
+                }else{
+                    selected_product_amount.value = '0'
+                }
             }
             selected_product_price_value = orderProduct_last_price * parseFloat(last__value)
             selected_product_price.value = format_entered_sum(selected_product_price_value)
@@ -558,9 +567,13 @@ function changePriceByAmount(amount__value, last__value){
             is_edit_product_modal_opened_for_amount = false
         }else{
             if (amount__value == '') {
-                dot_has = true
+                if (last__value == '.' && amount__value.length < 1 ) {
+                    dot_has = true
+                }else{
+                    selected_product_amount.value = '0'
+                }
             } else {
-                if (amount__value[0] == '.' && amount__value.length == 2) {
+                if(amount__value.length == 1 && dot_has) {
                     selected_product_amount.value = '0.' + String(amount__value).slice(0, 1); // Aks holda, raqamni qo'shamiz
                 } else {
                     if (amount__value == '0') {
@@ -574,6 +587,7 @@ function changePriceByAmount(amount__value, last__value){
                 dot_has = false
             }
         }
+        selected_product_stock.innerText = orderProduct_stock - parseFloat(selected_product_amount.value)
     }
 }
 
@@ -587,11 +601,15 @@ function changeAmountByPrice(price__value, last__value){
             selected_product_price.value = format_entered_sum(selected_product_price_value); // Aks holda, raqamni qo'shamiz
             is_edit_product_modal_opened_for_price = false
         }else{
-            console.log([price__value.replace(/\s/g, ''), selected_product_price_value, orderProduct_last_price])
             selected_product_price_value = parseInt(price__value.replace(/\s/g, '')); // Aks holda, raqamni qo'shamiz
             selected_product_price.value = format_entered_sum(selected_product_price_value); // Aks holda, raqamni qo'shamiz
         }
-        selected_product_amount.value = parseInt(selected_product_price_value) / orderProduct_last_price
+        if(selected_product_price_value>0){
+            selected_product_amount.value = parseInt((parseInt(selected_product_price_value) / orderProduct_last_price)*100)/100
+        }else{
+            selected_product_amount.value = '0';
+        }
+        selected_product_stock.innerText = orderProduct_stock - parseFloat(selected_product_amount.value)
     }
 }
 if(selected_product_amount != undefined && selected_product_amount != null){
@@ -780,6 +798,7 @@ function clearDisplayEditProduct() {
     selected_product_amount.value = '0'; // Ekrandagi raqamni tozalash
     selected_product_price.value = '0'; // Ekrandagi raqamni tozalash
     selected_product_price_value = 0; // Ekrandagi raqamni tozalash
+    selected_product_stock.innerText = orderProduct_stock
 }
 
 // Function to remove the last digit (Backspace)
@@ -795,6 +814,7 @@ function backspaceEditProduct() {
     }else{
         selected_product_amount.value = parseInt(display_edit_product.value.replace(/\s/g, ''))/orderProduct_last_price
     }
+    selected_product_stock.innerText = stock_int - parseFloat(selected_product_amount.value)
 }
 let debt_display_content = document.getElementById('debt_display_content')
 function paymentFunc() {
@@ -842,7 +862,7 @@ if(display != undefined && display != null){
 }
 
 if(display_card != undefined && display_card != null){
-    display_card.addEventListener('input', () => {
+    display_card.addEventListener('input', (e) => {
         klaviaturaNumber = 0
         if(!is_payment_modal_opened_for_card){
             klaviaturaNumber = formatInput(display_card).replace(/\s+/g, '')
@@ -856,7 +876,7 @@ if(display_card != undefined && display_card != null){
     });
 }
 if(debt_display != undefined && debt_display != null){
-    debt_display.addEventListener('input', () => {
+    debt_display.addEventListener('input', (e) => {
         klaviaturaNumber = 0
         if(!is_payment_modal_opened_for_debt){
             klaviaturaNumber = formatInput(debt_display).replace(/\s+/g, '')
