@@ -29,8 +29,12 @@
                             <tr>
                                 <td><h6>{{$gift_card['id']}}</h6></td>
                                 <td><h6>{{$gift_card['name']}}</h6></td>
-                                <td><h6>{{$gift_card['price']}}</h6></td>
-                                <td><h6>{{$gift_card['min_price']}}</h6></td>
+                                @if($gift_card['price'])
+                                    <td><h6>{{$gift_card['price']}} {{translate_title('sum', $lang)}}</h6></td>
+                                @else
+                                    <td><h6>{{$gift_card['percent']}} %</h6></td>
+                                @endif
+                                <td><h6>{{$gift_card['min_price']}} {{translate_title('sum', $lang)}}</h6></td>
                                 <td><h6>{{$gift_card['status']}}</h6></td>
                                 <td>
                                     <div class="d-flex justify-content-around align-items-center height_50 function_buttons">

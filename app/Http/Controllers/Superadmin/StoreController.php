@@ -239,6 +239,6 @@ class StoreController extends Controller
             'status'=>true,
             'data'=>$stores
         ];
-        return response()->json($response);
+        return response()->json($response, 200);
     }
 }

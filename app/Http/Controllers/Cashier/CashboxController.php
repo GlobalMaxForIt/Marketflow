@@ -225,7 +225,7 @@ class CashboxController extends Controller
         foreach($check_lists as $check_list){
             $all_checklist_sales[] = $this->salesService->getSales($check_list);
         }
-        return response()->json($all_checklist_sales);
+        return response()->json($all_checklist_sales, 200);
     }
     /**
      * Display a listing of the resource.
@@ -450,7 +450,7 @@ class CashboxController extends Controller
                     'status'=>false,
                     'message'=>'Success'
                 ];
-                return response()->json($response_);
+                return response()->json($response_, 200);
             }
         }else{
             $sales = new Sales();
@@ -465,7 +465,7 @@ class CashboxController extends Controller
         $card_sum = $request->card_sum;
         $cash_sum = $request->cash_sum;
         $response = $this->salesService->salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $text, $checklist_changed, $debt_sum);
-        return response()->json($response);
+        return response()->json($response, 200);
     }
 
     /**

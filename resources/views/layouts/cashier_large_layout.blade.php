@@ -662,7 +662,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-between mt-4">
-                <div>
+                <div class="me-3">
                     <div class="d-flex position-relative justify-content-between">
                         <h5>{{translate_title('Наличие', $lang)}}</h5>
                         <input id="display" class="input-display-lg form-control" value="0" type="text">
@@ -674,6 +674,20 @@
                     <div class="d-flex position-relative justify-content-between" id="debt_display_content">
                         <h5>{{translate_title('Долг', $lang)}}</h5>
                         <input id="debt_display" class="input-display-lg form-control" value="0" type="text">
+                    </div>
+                    <div class="d-flex position-relative justify-content-between" id="_display_content">
+                        <div>
+                            <h6 class="font-14">{{translate_title('Gift card', $lang)}}</h6>
+                            <div class="d-flex align-items-center mt-1">
+                                <h6 class="me-2">Off</h6>
+                                <input type="checkbox" data-plugin="switchery" id="gift_card_change_func" data-color="#1bb99a" data-secondary-color="#ffffff"/>
+                                <h6 class="ms-2">On</h6>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between d-none mt-2" id="gift_card_content">
+                            <input id="gift_card_input" class="input-display-lg form-control" placeholder="Enter promocode" value="" type="text">
+                            <button class="btn modal_confirm_ height_38" onclick="giftCardConfirm()">ok</button>
+                        </div>
                     </div>
                 </div>
                 <div class="width_344_pixel">
@@ -918,6 +932,8 @@
     let items_selected_text = "{{translate_title('items selected', $lang)}}"
     let search_client_text = "{{translate_title('Поиск', $lang)}}"
     let keyboard_lang_change_func = document.getElementById('keyboard_lang_change_func')
+    let gift_card_change_func = document.getElementById('gift_card_change_func')
+    let gift_card_content = document.getElementById('gift_card_content')
     let keyboard_selected_lang = localStorage.getItem('selected_lang')
     let keyboard_ru = document.getElementById('keyboard_ru')
     let keyboard_en = document.getElementById('keyboard_en')
@@ -964,6 +980,20 @@
         }
         if(keyboard_en.classList.contains('d-none')){
             keyboard_en.classList.remove('d-none')
+        }
+    }
+
+    gift_card_change_func.addEventListener('change', function (e) {
+        if(e.target.value == 'on'){
+            giftCardChangerFunc()
+        }
+    })
+
+    function giftCardChangerFunc(){
+        if(gift_card_content.classList.contains('d-none')){
+            gift_card_content.classList.remove('d-none')
+        }else{
+            gift_card_content.classList.add('d-none')
         }
     }
     // $(document).ready(function() {

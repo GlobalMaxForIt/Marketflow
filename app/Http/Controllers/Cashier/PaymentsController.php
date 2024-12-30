@@ -199,7 +199,7 @@ class PaymentsController extends Controller
             ];
         }
 
-        return response()->json($response);
+        return response()->json($response, 200);
     }
 
     function confirmReturn(Request $request){
@@ -287,6 +287,6 @@ class PaymentsController extends Controller
             'message'=>'Success'
         ];
 
-        return response()->json($response);
+        return response()->json($response, 200);
     }
 }

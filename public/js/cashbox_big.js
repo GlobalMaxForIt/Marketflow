@@ -8,9 +8,11 @@ let cashier_password = document.getElementById('cashier_password')
 let entered_cash_sum = '0'
 let entered_card_sum = '0'
 let entered_debt_sum = '0'
+let entered_gift_card = '0'
 let cash_sum = 0
 let card_sum = 0
 let debt_sum = 0
+let gift_card = 0
 let accepting_sum_int = 0
 let change_sum_int = 0
 let klaviaturaNumber = 0
@@ -23,6 +25,7 @@ let change_sum = document.getElementById('change_sum')
 
 let calculators = document.getElementById('calculators')
 let debt_display = document.getElementById('debt_display')
+let gift_card_input = document.getElementById('gift_card_input')
 let selected_product_name = document.getElementById('selected_product_name')
 let selected_product_price = document.getElementById('selected_product_price')
 let selected_product_amount = document.getElementById('selected_product_amount')
@@ -73,12 +76,14 @@ let display_edit_payment = ''
 let selected_display_clicked = false
 let selected_display_card_clicked = false
 let selected_debt_display_clicked = false
+let gift_card_display_clicked = false
 let is_edit_product_modal_opened_for_price = false
 let is_edit_product_modal_opened_for_amount = false
 
 let is_payment_modal_opened_for_cash = false
 let is_payment_modal_opened_for_card = false
 let is_payment_modal_opened_for_debt = false
+let is_payment_modal_opened_for_gift_card = false
 
 
 function format_entered_sum(numbers){
@@ -89,8 +94,7 @@ function format_entered_sum(numbers){
     }
 }
 
-function setValues(cash_sum_, card_sum_, debt_sum_){
-    console.log([cash_sum_, card_sum_, debt_sum_])
+function setValues(cash_sum_, card_sum_, debt_sum_, gift_card_){
     switch (display_or_display_card_or_debt) {
         case "display":
             display.value = format_entered_sum(cash_sum_)
@@ -100,6 +104,9 @@ function setValues(cash_sum_, card_sum_, debt_sum_){
             break;
         case "debt_display":
             debt_display.value = format_entered_sum(debt_sum_)
+            break;
+        case "gift_card_input":
+            gift_card_input.value = gift_card_
             break;
     }
     if(parseInt(getTotalSum) > (cash_sum_ + card_sum_ + debt_sum_)){
@@ -145,6 +152,17 @@ function selected_payment_input_func(){
                         display_edit_payment = display_card
                     })
                 }, 444)
+            }else if(gift_card_display_clicked){
+                setTimeout(function(){
+                    gift_card_input.focus()
+                    gift_card_input.addEventListener('blur', function () {
+                        if(gift_card_display_clicked) {
+                            gift_card_input.focus()
+                        }
+                        display_or_display_card_or_debt = 'gift_card_input'
+                        display_edit_payment = gift_card_input
+                    })
+                }, 444)
             }else{
                 setTimeout(function(){
                     display.focus()
@@ -165,6 +183,7 @@ if(display != undefined && display != null){
         selected_display_clicked = true
         selected_display_card_clicked = false
         selected_debt_display_clicked = false
+        gift_card_display_clicked = false
         selected_payment_input_func()
     })
 }
@@ -173,6 +192,7 @@ if(display_card != undefined && display_card != null){
         selected_display_clicked = false
         selected_display_card_clicked = true
         selected_debt_display_clicked = false
+        gift_card_display_clicked = false
         selected_payment_input_func()
     })
 }
@@ -181,7 +201,18 @@ if(debt_display != undefined && debt_display != null){
     debt_display.addEventListener('click', function () {
         selected_display_clicked = false
         selected_display_card_clicked = false
+        gift_card_display_clicked = false
         selected_debt_display_clicked = true
+        selected_payment_input_func()
+    })
+}
+
+if(gift_card_input != undefined && gift_card_input != null){
+    gift_card_input.addEventListener('click', function () {
+        selected_display_clicked = false
+        selected_display_card_clicked = false
+        selected_debt_display_clicked = false
+        gift_card_display_clicked = true
         selected_payment_input_func()
     })
 }
@@ -230,8 +261,21 @@ function appendNumber(number) {
             }
             debt_sum = parseInt(entered_debt_sum)
             break;
+        case "gift_card_input":
+            if (gift_card_input.value == '0') {
+                entered_gift_card = parseInt(number)
+            } else {
+                if(!is_payment_modal_opened_for_gift_card){
+                    entered_gift_card = String(entered_gift_card) + number
+                }else{
+                    entered_gift_card = String(number)
+                    is_payment_modal_opened_for_gift_card = false
+                }
+            }
+            gift_card = parseInt(entered_gift_card)
+            break;
     }
-    setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt)
+    setValues(cash_sum, card_sum, debt_sum, gift_card, display_or_display_card_or_debt)
 }
 
 // Function to clear the display
@@ -248,8 +292,11 @@ function clearDisplay() {
         case "debt_display":
             debt_sum = 0
             break;
+        case "gift_card_input":
+            gift_card = 0
+            break;
     }
-    setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt)
+    setValues(cash_sum, card_sum, debt_sum, gift_card, display_or_display_card_or_debt)
 }
 
 // Function to remove the last digit (Backspace)
@@ -284,8 +331,17 @@ function backspace() {
                 debt_sum = parseInt(entered_debt_sum)
             }
             break;
+        case "gift_card_input":
+            if (gift_card_input.value.length > 1) {
+                entered_gift_card = String(entered_gift_card).slice(0, -1)
+                gift_card = parseInt(entered_gift_card)
+            } else {
+                entered_gift_card = '0'
+                gift_card = parseInt(entered_gift_card)
+            }
+            break;
     }
-    setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt)
+    setValues(cash_sum, card_sum, debt_sum, gift_card, display_or_display_card_or_debt)
 }
 
 // Function to append numbers to the display
@@ -347,7 +403,6 @@ function editProductFunc(orderProduct){
         selected_product_name.innerText = orderProductData.name + ' '+orderProductData.amount
         selected_product_price_value = parseInt(parseFloat(orderProductData.quantity)*parseInt(orderProductData.last_price.replace(/\s/g, ''), 10))
         selected_product_price.value = format_entered_sum(selected_product_price_value)
-        console.log([selected_product_price_value, selected_product_price.value])
         selected_product_amount.value = parseFloat(orderProductData.quantity)
         selected_product_unit.innerText = orderProductData.unit
         if(selected_product_stock != undefined && selected_product_stock != null){
@@ -533,32 +588,6 @@ function appendEditProduct(number) {
 function appendDotEditProduct(){
     dot_has = true
 }
-// document.addEventListener('keydown', function (event) {
-//     if (event.key === "Backspace") {
-//         if(selected_product_amount.matches(":focus")) {
-//             if (String(selected_product_amount.value).length > 1) {
-//                 selected_product_amount.value = String(event.target.value).slice(0, -1); // Oxirgi belgini o'chirish
-//             } else {
-//                 selected_product_amount.value = '0'; // Agar faqat bir raqam qolgan bo'lsa, uni 0 ga o'zgartiramiz
-//             }
-//
-//             selected_product_price_value = parseInt(orderProduct_last_price * parseFloat(display_edit_product.value.replace(/\s/g, '')))
-//             selected_product_price.value = format_entered_sum(selected_product_price_value)
-//         }
-//         if(selected_product_price.matches(":focus")) {
-//             console.log({'b':event.target.value.replace(/\s/g, '')})
-//             if (String(selected_product_price_value).length > 1) {
-//                 selected_product_price_value = parseInt(String(event.target.value.replace(/\s/g, '')).slice(0, -1)); // Oxirgi belgini o'chirish
-//                 selected_product_price.value = format_entered_sum(selected_product_price_value); // Oxirgi belgini o'chirish
-//             } else {
-//                 selected_product_price_value = 0
-//                 selected_product_price.value = '0'; // Agar faqat bir raqam qolgan bo'lsa, uni 0 ga o'zgartiramiz
-//             }
-//             selected_product_amount.value = (parseInt(selected_product_price.value.replace(/\s/g, ''))/orderProduct_last_price).toFixed(2)
-//         }
-//     }
-// });
-
 function changePriceByAmount(amount__value, last__value){
     if(stock_int > 0 || page_name == 'payment') {
         if(is_edit_product_modal_opened_for_amount) {
@@ -778,7 +807,7 @@ if(return_modal_button_click != undefined && return_modal_button_click != null){
         }
         $(document).ready(function () {
             $.ajax({
-                url:`/../api/confirm-return`,
+                url: cashbox_big_url,
                 type:'POST',
                 headers: {
                     'Authorization': 'Bearer ' + token,
@@ -844,10 +873,10 @@ function backspaceEditProduct() {
 }
 let debt_display_content = document.getElementById('debt_display_content')
 function paymentFunc() {
-    console.log([client_id, percent_v])
     is_payment_modal_opened_for_cash = true
     is_payment_modal_opened_for_card = true
     is_payment_modal_opened_for_debt = true
+    is_payment_modal_opened_for_gift_card = true
 
     setTimeout(function () {
         display.focus()
@@ -881,6 +910,7 @@ if(display != undefined && display != null){
             klaviaturaNumber = e.data
             is_payment_modal_opened_for_cash = false
         }
+        entered_cash_sum = klaviaturaNumber
         cash_sum = parseInt(klaviaturaNumber)
         autoSetCardSum()
         setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt='display')
@@ -896,6 +926,7 @@ if(display_card != undefined && display_card != null){
             klaviaturaNumber = e.data
             is_payment_modal_opened_for_card = false
         }
+        entered_card_sum = klaviaturaNumber
         card_sum = parseInt(klaviaturaNumber)
         autoSetDebtSum()
         setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt='display_card')
@@ -910,10 +941,82 @@ if(debt_display != undefined && debt_display != null){
             klaviaturaNumber = e.data
             is_payment_modal_opened_for_debt = false
         }
+        entered_debt_sum = klaviaturaNumber
         debt_sum = parseInt(klaviaturaNumber)
         setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt='debt_display')
     });
 }
+if(gift_card_input != undefined && gift_card_input != null){
+    gift_card_input.addEventListener('input', (e) => {
+        klaviaturaNumber = 0
+        if(!is_payment_modal_opened_for_gift_card){
+            klaviaturaNumber = formatInput(gift_card_input).replace(/\s+/g, '')
+        }else{
+            klaviaturaNumber = e.data
+            is_payment_modal_opened_for_gift_card = false
+        }
+        entered_gift_card = klaviaturaNumber
+        gift_card = parseInt(klaviaturaNumber)
+        setValues(cash_sum, card_sum, debt_sum, gift_card, display_or_display_card_or_debt='gift_card_input')
+    });
+}
+
+function giftCardConfirm(){
+    if(loader != undefined && loader != null){
+        if(loader.classList.contains("d-none")){
+            loader.classList.remove("d-none")
+        }
+    }
+    if(myDiv != undefined && myDiv != null){
+        if(myDiv.classList.contains("d-none")){
+            myDiv.classList.remove("d-none")
+        }
+    }
+    $(document).ready(function () {
+        try{
+            $.ajax({
+                url: gift_card_url,
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                data:{
+                    'set_gift_card_text':gift_card,
+                },
+                success: function (data) {
+                    hideHasItems()
+                    if(data.status == true){
+                        setTimeout(function () {
+                            if(loader != undefined && loader != null){
+                                if(!loader.classList.contains("d-none")){
+                                    loader.classList.add("d-none")
+                                }
+                            }
+                            if(myDiv != undefined && myDiv != null){
+                                if(!myDiv.classList.contains("d-none")){
+                                    myDiv.classList.add("d-none")
+                                }
+                            }
+                        }, 244)
+                        if(localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null){
+                            localStorage.removeItem('order_data')
+                        }
+                        toastr.success(set_aside_success_text+' '+data.code)
+                        truncuateCashboxFunc()
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors here
+                    console.log(xhr.responseText); // Log the error response from the server
+                    toastr.error('An error occurred: ' + xhr.status + ' ' + error); // Show error message
+                }
+            })
+        }catch (e) {
+            console.log(e)
+        }
+    })
+}
+
 function formatInput(param){
     // Faqat raqamlarni olamiz
     let value = param.value.replace(/\D/g, '');
@@ -962,15 +1065,17 @@ function paymentPayFunc(text) {
             myDiv.classList.remove("d-none")
         }
     }
+
     $(document).ready(function () {
         if(order_data.length>0){
             try{
                 $.ajax({
-                    url: "/../api/payment-pay",
+                    url: payment_pay_url,
                     method: 'POST',
                     headers: {
-                        'Authorization': 'Bearer ' + token
+                        'Authorization': 'Bearer ' + token.trim()
                     },
+                    dataType: 'json', // Javobni JSON formatida tahlil qilish
                     data:{
                         'order_data':order_data,
                         'client_id':client_id,

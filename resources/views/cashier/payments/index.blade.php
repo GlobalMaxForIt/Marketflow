@@ -214,6 +214,10 @@
         let returned_back_modal_title = document.getElementById('returned_back_modal_title')
         let order_selected_product_name = ''
         let order_selected_product_info = ''
+        let payment_pay_url = "{{route('paymentPay')}}"
+        let gift_card_url = "{{route('giftCard')}}"
+        let get_check_aside_url = "{{route('getCheckAside')}}"
+        let cashbox_big_url = "{{route('confirmReturn')}}"
     </script>
     <script>
         let payment_input_month = document.getElementById('payment_input_month')

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sales;
 use Illuminate\Http\Request;
 use App\Models\GiftCard;
 use Illuminate\Support\Facades\App;
@@ -128,5 +129,24 @@ class GiftCardController extends Controller
         $model = GiftCard::find($id);
         $model->delete();
         return redirect()->route('gift-cards.index')->with('status', translate_title('Successfully created', $this->lang));
+    }
+
+    public function giftCard(){
+        $user = Auth::user();
+        date_default_timezone_set("Asia/Tashkent");
+        if($text == 'checklist'){
+            $response = [
+                'code'=>$sales->code,
+                'status'=>false,
+                'message'=>'Success'
+            ];
+        }else{
+            $response = [
+                'code'=>$sales->code,
+                'status'=>true,
+                'message'=>'Success'
+            ];
+        }
+        return response()->json($response);
     }
 }

@@ -10,6 +10,7 @@ use App\Http\Controllers\Superadmin\StoreController;
 use App\Http\Controllers\Cashier\CashboxController;
 use App\Http\Controllers\Cashier\CashierProductsController;
 use App\Http\Controllers\Cashier\PaymentsController;
+use App\Http\Controllers\GiftCardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ use App\Http\Controllers\Cashier\PaymentsController;
 
 Route::group(['middleware'=>'auth:sanctum'], function () {
     Route::post('payment-pay', [CashboxController::class, 'paymentPay'])->name('paymentPay');
+    Route::post('gift-card', [GiftCardController::class, 'giftCard'])->name('giftCard');
     Route::get('get-check-aside', [CashboxController::class, 'getCheckAside'])->name('getCheckAside');
     Route::post('confirm-return', [PaymentsController::class, 'confirmReturn'])->name('confirmReturn');
     Route::post('payment-delete', [PaymentsController::class, 'paymentDeleteFunc'])->name('paymentDeleteFunc');

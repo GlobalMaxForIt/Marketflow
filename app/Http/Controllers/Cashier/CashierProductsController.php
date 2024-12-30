@@ -518,7 +518,7 @@ class CashierProductsController extends Controller
             'message'=>$message,
             'status'=>false,
             'data'=>$data
-        ]);
+        ], 200);
     }
 
 }

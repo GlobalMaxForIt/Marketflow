@@ -522,7 +522,8 @@
         let notify_text = "{{translate_title('amount was added successfully!', $lang)}}"
         let notify_text_left_in_stock = "{{translate_title('left in stock', $lang)}}"
         let payment_success_text = "{{translate_title('The payment was made successfully', $lang)}}"
-        let set_aside_success_text = "{{translate_title('The check successfull set aside', $lang)}}"
+        let set_aside_success_text = "{{translate_title('The check successfully set aside', $lang)}}"
+        let set_gift_card_text = "{{translate_title('The gift card successfully set', $lang)}}"
         let taken_back_text = ""
         let client_total_sales = 0
         let clientPhoneNumber = document.getElementById('clientPhoneNumber')
@@ -536,6 +537,10 @@
         let all_checklist_sales = `{!! $all_checklist_sales !!}`
         let return_modal_title = ''
         let returned_back_modal_title = ''
+        let payment_pay_url = "{{route('paymentPay')}}"
+        let gift_card_url = "{{route('giftCard')}}"
+        let get_check_aside_url = "{{route('getCheckAside')}}"
+        let cashbox_big_url = "{{route('confirmReturn')}}"
 
         let set_checklist_button_delete = document.getElementById('set_checklist_button_delete')
         if(set_checklist_button_delete != undefined && set_checklist_button_delete != null) {
@@ -581,7 +586,7 @@
         function getCheckAsideFunc(){
             $(document).ready(function () {
                 $.ajax({
-                    url:`/../api/get-check-aside`,
+                    url: get_check_aside_url,
                     type:'GET',
                     headers: {
                         'Authorization': 'Bearer ' + token
