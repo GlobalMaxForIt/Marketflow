@@ -107,7 +107,10 @@
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">{{translate_title('Email', $lang)}}</label>
-                        <input type="email" id="email" class="form-control" name="email">
+                        <input type="email" id="email" class="form-control" name="email" required>
+                        <div class="invalid-tooltip">
+                            {{translate_title('Please enter email.', $lang)}}
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="male">{{translate_title('Male', $lang)}}</label>

@@ -8,6 +8,10 @@ let keyboard_body = document.getElementById('keyboard_body')
 let content_page = document.querySelector('.content-page')
 let modal_content = document.querySelector('.modal-content')
 let layout_local = localStorage.getItem('layout_local')
+if(layout_local == undefined || layout_local == null){
+    localStorage.setItem('layout_local', 'light')
+    layout_local = 'light'
+}
 let keys_keyboard = document.getElementsByClassName('key')
 let keys_keyboard_big = document.getElementsByClassName('key_big')
 let keys_keyboard_big_fast = document.getElementsByClassName('key_big_fast')

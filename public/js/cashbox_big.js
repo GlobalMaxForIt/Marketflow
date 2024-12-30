@@ -131,7 +131,7 @@ function selected_payment_input_func(){
                     })
                     display_or_display_card_or_debt = 'debt_display'
                     display_edit_payment = debt_display
-                }, 44)
+                }, 444)
             }else if(selected_display_card_clicked){
                 setTimeout(function(){
                     display_card.focus()
@@ -142,7 +142,7 @@ function selected_payment_input_func(){
                         display_or_display_card_or_debt = 'display_card'
                         display_edit_payment = display_card
                     })
-                }, 44)
+                }, 444)
             }else{
                 setTimeout(function(){
                     display.focus()
@@ -153,7 +153,7 @@ function selected_payment_input_func(){
                         display_or_display_card_or_debt = 'display'
                         display_edit_payment = display
                     })
-                }, 94)
+                }, 444)
             }
         }
     }, 94)
@@ -392,7 +392,7 @@ function selected_product_input_func(){
                         selected_product_amount.focus()
                     }
                 })
-            }, 94)
+            }, 444)
             if([4, 7, 8, 10, 11].includes(parseInt(orderProductData.unit_id))) {
                 openDotKeyboard()
             }
@@ -408,7 +408,7 @@ function selected_product_input_func(){
                             selected_product_amount.focus()
                         }
                     })
-                }, 94)
+                }, 444)
                 closeDotKeyboard()
             }else{
                 display_edit_product = selected_product_price
@@ -421,7 +421,7 @@ function selected_product_input_func(){
                             selected_product_price.focus()
                         }
                     })
-                }, 94)
+                }, 444)
                 closeDotKeyboard()
             }
         }
@@ -520,26 +520,31 @@ function appendEditProduct(number) {
 function appendDotEditProduct(){
     dot_has = true
 }
-document.addEventListener('keydown', function (event) {
-    if (event.key === "Backspace") {
-        if(selected_product_amount.matches(":focus")) {
-            if (selected_product_amount.value.length > 1) {
-                selected_product_amount.value = String(event.target.value).slice(0, -1); // Oxirgi belgini o'chirish
-            } else {
-                selected_product_amount.value = '0'; // Agar faqat bir raqam qolgan bo'lsa, uni 0 ga o'zgartiramiz
-            }
-        }
-        if(selected_product_price.matches(":focus")) {
-            if (selected_product_price_value.length > 1) {
-                selected_product_price_value = parseInt(String(event.target.value.replace(/\s/g, '')).slice(0, -1)); // Oxirgi belgini o'chirish
-                selected_product_price.value = format_entered_sum(selected_product_price_value); // Oxirgi belgini o'chirish
-            } else {
-                selected_product_price_value = 0
-                selected_product_price.value = '0'; // Agar faqat bir raqam qolgan bo'lsa, uni 0 ga o'zgartiramiz
-            }
-        }
-    }
-});
+// document.addEventListener('keydown', function (event) {
+//     if (event.key === "Backspace") {
+//         if(selected_product_amount.matches(":focus")) {
+//             if (String(selected_product_amount.value).length > 1) {
+//                 selected_product_amount.value = String(event.target.value).slice(0, -1); // Oxirgi belgini o'chirish
+//             } else {
+//                 selected_product_amount.value = '0'; // Agar faqat bir raqam qolgan bo'lsa, uni 0 ga o'zgartiramiz
+//             }
+//
+//             selected_product_price_value = parseInt(orderProduct_last_price * parseFloat(display_edit_product.value.replace(/\s/g, '')))
+//             selected_product_price.value = format_entered_sum(selected_product_price_value)
+//         }
+//         if(selected_product_price.matches(":focus")) {
+//             console.log({'b':event.target.value.replace(/\s/g, '')})
+//             if (String(selected_product_price_value).length > 1) {
+//                 selected_product_price_value = parseInt(String(event.target.value.replace(/\s/g, '')).slice(0, -1)); // Oxirgi belgini o'chirish
+//                 selected_product_price.value = format_entered_sum(selected_product_price_value); // Oxirgi belgini o'chirish
+//             } else {
+//                 selected_product_price_value = 0
+//                 selected_product_price.value = '0'; // Agar faqat bir raqam qolgan bo'lsa, uni 0 ga o'zgartiramiz
+//             }
+//             selected_product_amount.value = (parseInt(selected_product_price.value.replace(/\s/g, ''))/orderProduct_last_price).toFixed(2)
+//         }
+//     }
+// });
 
 function changePriceByAmount(amount__value, last__value){
     if(stock_int > 0 || page_name == 'payment') {
@@ -575,10 +580,14 @@ function changePriceByAmount(amount__value, last__value){
 function changeAmountByPrice(price__value, last__value){
     if(stock_int > 0 || page_name == 'payment') {
         if(is_edit_product_modal_opened_for_price) {
+            if(last__value == undefined || last__value == null){
+                last__value = '0'
+            }
             selected_product_price_value = parseInt(last__value.replace(/\s/g, '')); // Aks holda, raqamni qo'shamiz
             selected_product_price.value = format_entered_sum(selected_product_price_value); // Aks holda, raqamni qo'shamiz
             is_edit_product_modal_opened_for_price = false
         }else{
+            console.log([price__value.replace(/\s/g, ''), selected_product_price_value, orderProduct_last_price])
             selected_product_price_value = parseInt(price__value.replace(/\s/g, '')); // Aks holda, raqamni qo'shamiz
             selected_product_price.value = format_entered_sum(selected_product_price_value); // Aks holda, raqamni qo'shamiz
         }
@@ -775,7 +784,7 @@ function clearDisplayEditProduct() {
 
 // Function to remove the last digit (Backspace)
 function backspaceEditProduct() {
-    if (display_edit_product.value.length > 1) {
+    if (String(selected_product_price_value).length > 1) {
         display_edit_product.value = String(display_edit_product.value).slice(0, -1); // Oxirgi belgini o'chirish
     } else {
         display_edit_product.value = '0'; // Agar faqat bir raqam qolgan bo'lsa, uni 0 ga o'zgartiramiz
@@ -784,7 +793,7 @@ function backspaceEditProduct() {
         selected_product_price_value = orderProduct_last_price * parseFloat(display_edit_product.value.replace(/\s/g, ''))
         selected_product_price.value = format_entered_sum(selected_product_price_value)
     }else{
-        selected_product_amount.value = parseInt(selected_product_price_value)/orderProduct_last_price
+        selected_product_amount.value = parseInt(display_edit_product.value.replace(/\s/g, ''))/orderProduct_last_price
     }
 }
 let debt_display_content = document.getElementById('debt_display_content')

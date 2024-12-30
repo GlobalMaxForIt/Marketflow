@@ -9,8 +9,27 @@ let organization = document.getElementById('organization')
 let store = document.getElementById('store')
 
 floatingSelect.addEventListener('change', function () {
-    console.log(floatingSelect.value)
     switch(floatingSelect.value){
+        case '1':
+            if(!company_content.classList.contains('d-none')){
+                company_content.classList.add('d-none')
+            }
+            if(!organization_content.classList.contains('d-none')){
+                organization_content.classList.add('d-none')
+            }
+            if(!store_content.classList.contains('d-none')){
+                store_content.classList.add('d-none')
+            }
+            if(company.required == true){
+                company.required = false
+            }
+            if(organization.required == true){
+                organization.required = false
+            }
+            if(store.required == true){
+                store.required = false
+            }
+            break;
         case '2':
             if(!company_content.classList.contains('d-none')){
                 company_content.classList.add('d-none')
@@ -71,9 +90,6 @@ floatingSelect.addEventListener('change', function () {
             }
             company.required = true
             break;
-    }
-    if(company_content.classList){
-
     }
 })
 

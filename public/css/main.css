@@ -2442,6 +2442,7 @@ body[data-leftbar-size=compact] .footer{
 }
 .offcanvas-body{
     padding: 0px !important;
+    overflow-y: clip !important;
 }
 .offcanvas{
     background-color: transparent !important;

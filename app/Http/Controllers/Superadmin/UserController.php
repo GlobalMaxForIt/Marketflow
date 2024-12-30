@@ -167,10 +167,10 @@ class UserController extends Controller
         $users->organization_id = $request->organization;
         $users->store_id = $request->store;
         $users->password = Hash::make($request->new_password);
-
+        $users->personal_info_id = $personal_info->id;
+        $users->save();
         $token = $users->createToken('myapptoken')->plainTextToken;
         $users->token = $token;
-        $users->personal_info_id = $personal_info->id;
         $users->save();
         return redirect()->route('users.index')->with('success', translate_title('Successfully created', $this->lang));
     }
