@@ -131,9 +131,11 @@ class GiftCardController extends Controller
         return redirect()->route('gift-cards.index')->with('status', translate_title('Successfully created', $this->lang));
     }
 
-    public function giftCard(){
+    public function giftCard(Request $request){
         $user = Auth::user();
         date_default_timezone_set("Asia/Tashkent");
+        $set_gift_card_text = $request->set_gift_card_text;
+        $gift_card = GiftCard::where('name', $set_gift_card_text)->first();
         if($text == 'checklist'){
             $response = [
                 'code'=>$sales->code,

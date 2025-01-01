@@ -1209,6 +1209,9 @@ input[type=number]::-webkit-outer-spin-button {
 .right_section .tab-content{
     height: 100%;
 }
+.tab-content{
+ padding: 14px 0px 0px 0px !important;
+}
 .order_item{
     width: 22%;
     height: 104px;
@@ -2541,6 +2544,10 @@ body[data-leftbar-size=compact] .width_height_confirm_button{
 }
 #fast_selling_goods_modal .badge-soft-secondary h6{
     font-size: 12px !important;
+}
+#fast_selling_goods_modal, #client_modal, #list_aside_the_check{
+    height: 194px;
+    overflow-y: auto;
 }
 #edit_product_modal .modal_close, #edit_product_modal .modal_confirm{
     width: 44%!important;
