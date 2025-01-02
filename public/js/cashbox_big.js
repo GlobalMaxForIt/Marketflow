@@ -1019,8 +1019,6 @@ function giftCardConfirm(){
                         }
                         gift_card_sum.innerText = gift_card_sum_html
                         toastr.success(data__.message)
-
-
                         entered_cash_sum = entered_cash_sum - gift_card_price
                         payment_sum.innerText = format_entered_sum(entered_cash_sum)
                         entered_cash_sum = parseInt(getTotalSum)
