@@ -13,6 +13,8 @@
     <link href="{{ asset('libs/toastr/build/toastr.min.css') }}" type="text/css" rel="stylesheet"/>
     <!-- third party css -->
 
+    <link href="{{ asset('css/input-switch.css') }}" rel="stylesheet" type="text/css" />
+
     <link href="{{ asset('libs/mohithg-switchery/switchery.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
@@ -514,9 +516,11 @@
                             </div>
                             <div class="d-flex align-items-end justify-content-end">
                                 <div class="language_changer_content">
-                                    <h6 class="me-2">EN</h6>
-                                    <input type="checkbox" data-plugin="switchery" id="keyboard_lang_change_func" data-color="#1bb99a" data-secondary-color="#ff5d48"/>
-                                    <h6 class="ms-2">RU</h6>
+                                    <div class="square-switch">
+                                        <input type="checkbox" id="keyboard_lang_change_func" switch="none" checked/>
+                                        <label for="keyboard_lang_change_func" data-on-label="EN"
+                                               data-off-label="RU"></label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -645,6 +649,9 @@
             </div>
             <div class="d-flex justify-content-between width_100_percent">
                 <div class="text-start width_45_percent">
+                    <div class="text-start d-none" id="gift_card_sum_text">
+                        <h6 class="me-auto">{{translate_title('Gift card sum', $lang)}}</h6>
+                    </div>
                     <div class="text-start">
                         <h4 class="me-auto">{{translate_title('Payment sum', $lang)}}</h4>
                     </div>
@@ -656,6 +663,13 @@
                     </div>
                 </div>
                 <div class="text-center width_45_percent">
+                    <div class="d-flex d-none" id="gift_card_sum_content">
+                        <h6 id="gift_card_sum">0</h6>
+                        <a type="button" class="btn delete_button btn-sm waves-effect me-1" onclick="removeGiftCard()">
+                            <img src="{{asset('img/trash_icon.png')}}" alt="" height="18px">
+                        </a>
+                    </div>
+                    <h6 class="d-none" id="gift_card_sum">0</h6>
                     <h4 class="" id="payment_sum">0</h4>
                     <h4 class="" id="accepting_sum">0</h4>
                     <h4 class="" id="change_sum">0</h4>
@@ -679,14 +693,16 @@
                         <div>
                             <h6 class="font-14">{{translate_title('Gift card', $lang)}}</h6>
                             <div class="d-flex align-items-center mt-1">
-                                <h6 class="me-2">Off</h6>
-                                <input type="checkbox" data-plugin="switchery" id="gift_card_change_func" data-color="#1bb99a" data-secondary-color="#ffffff"/>
-                                <h6 class="ms-2">On</h6>
+                                <div class="square-switch">
+                                    <input type="checkbox" id="gift_card_change_func" switch="none"/>
+                                    <label for="gift_card_change_func" data-on-label="On"
+                                           data-off-label="Off"></label>
+                                </div>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between d-none mt-2" id="gift_card_content">
                             <input id="gift_card_input" class="input-display-lg form-control" placeholder="Enter promocode" value="" type="text">
-                            <button class="btn modal_confirm_ height_38" onclick="giftCardConfirm()">ok</button>
+                            <button class="btn modal_confirm_ height_38" onclick="giftCardConfirm()" id="giftCardConfirmButton">ok</button>
                         </div>
                     </div>
                 </div>
@@ -1117,11 +1133,11 @@
 <script src="{{asset('libs/selectize/js/standalone/selectize.min.js')}}"></script>
 <script src="{{asset('libs/mohithg-switchery/switchery.min.js')}}"></script>
 <script src="{{asset('libs/multiselect/js/jquery.multi-select.js')}}"></script>
-<script src="{{asset('libs/select2/js/select2.min.js')}}"></script>
+{{--<script src="{{asset('libs/select2/js/select2.min.js')}}"></script>--}}
 <script src="{{asset('libs/jquery-mockjax/jquery.mockjax.min.js')}}"></script>
 <script src="{{asset('libs/devbridge-autocomplete/jquery.autocomplete.min.js')}}"></script>
-<script src="{{asset('libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js')}}"></script>
-<script src="{{asset('libs/bootstrap-maxlength/bootstrap-maxlength.min.js')}}"></script>
+{{--<script src="{{asset('libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js')}}"></script>--}}
+{{--<script src="{{asset('libs/bootstrap-maxlength/bootstrap-maxlength.min.js')}}"></script>--}}
 
 <script src="{{ asset('js/pages/datatables.init.js') }}"></script>
 <script src="{{ asset('js/app.min.js') }}"></script>

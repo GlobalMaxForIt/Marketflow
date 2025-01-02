@@ -22,7 +22,8 @@ class GiftCardController extends Controller
 
     public function index()
     {
-        $gift_cards = GiftCard::all();
+        $user = Auth::user();
+        $gift_cards = GiftCard::where('store_id', $user->store_id)->get();
         return view('gift-cards.index', ['gift_cards'=> $gift_cards, 'lang'=>$this->lang]);
     }
 
@@ -41,28 +42,35 @@ class GiftCardController extends Controller
     {
         $user = Auth::user();
         $gift_card = new GiftCard();
-        $gift_card->name = $request->name;
-        if ($request->coupon_type == "price") {
-            $gift_card->price = $request->price;
-            $gift_card->percent = NULL;
-        }elseif ($request->coupon_type == "percent") {
-            $gift_card->price = NULL;
-            $gift_card->percent = $request->percent;
+
+        $is_exist_gift_card = GiftCard::where('name', $request->name)->first();
+        if($is_exist_gift_card){
+            $gift_card->name = $request->name;
+            if ($request->coupon_type == "price") {
+                $gift_card->price = $request->price;
+                $gift_card->percent = NULL;
+            }elseif ($request->coupon_type == "percent") {
+                $gift_card->price = NULL;
+                $gift_card->percent = $request->percent;
+            }
+            $gift_card->min_price = $request->min_price;
+            $start_end_date_ = [];
+            if($request->start_end_date){
+                $start_end_date_ = explode(' ', $request->start_end_date);
+            }
+            if(isset($start_end_date_[0])){
+                $gift_card->start_date = $start_end_date_[0];
+            }
+            if(isset($start_end_date_[2])){
+                $gift_card->end_date = $start_end_date_[2];
+            }
+            $gift_card->store_id = $user->store_id;
+            $gift_card->save();
+            return redirect()->route('gift-cards.index')->with('status', translate_title('Successfully created', $this->lang));
+        }else{
+            $code_is_exist = $request->name.' '.translate_title('is exist. Enter another one', $this->lang);
+            return redirect()->back()->with('status', $code_is_exist);
         }
-        $gift_card->min_price = $request->min_price;
-        $start_end_date_ = [];
-        if($request->start_end_date){
-            $start_end_date_ = explode(' ', $request->start_end_date);
-        }
-        if(isset($start_end_date_[0])){
-            $gift_card->start_date = $start_end_date_[0];
-        }
-        if(isset($start_end_date_[2])){
-            $gift_card->end_date = $start_end_date_[2];
-        }
-        $gift_card->store_id = $user->store_id;
-        $gift_card->save();
-        return redirect()->route('gift-cards.index')->with('status', translate_title('Successfully created', $this->lang));
     }
 
     /**
@@ -78,7 +86,8 @@ class GiftCardController extends Controller
      */
     public function edit(string $id)
     {
-        $gift_card = GiftCard::find($id);
+        $user = Auth::user();
+        $gift_card = GiftCard::where('store_id', $user->store_id)->where('id', $id)->first();
         $start_date = explode(' ', $gift_card->start_date);
         $end_date = explode(' ', $gift_card->end_date);
         if(isset($start_date[0]) && isset($end_date[0])){
@@ -95,7 +104,7 @@ class GiftCardController extends Controller
     public function update(Request $request, string $id)
     {
         $user = Auth::user();
-        $gift_card = GiftCard::find($id);
+        $gift_card = GiftCard::where('store_id', $user->store_id)->where('id', $id)->first();
         $gift_card->name = $request->name;
         if ($request->coupon_type == "price") {
             $gift_card->price = $request->price;
@@ -126,7 +135,8 @@ class GiftCardController extends Controller
      */
     public function destroy(string $id)
     {
-        $model = GiftCard::find($id);
+        $user = Auth::user();
+        $model = GiftCard::where('store_id', $user->store_id)->where('id', $id)->first();
         $model->delete();
         return redirect()->route('gift-cards.index')->with('status', translate_title('Successfully created', $this->lang));
     }
@@ -134,21 +144,37 @@ class GiftCardController extends Controller
     public function giftCard(Request $request){
         $user = Auth::user();
         date_default_timezone_set("Asia/Tashkent");
-        $set_gift_card_text = $request->set_gift_card_text;
-        $gift_card = GiftCard::where('name', $set_gift_card_text)->first();
-        if($text == 'checklist'){
-            $response = [
-                'code'=>$sales->code,
-                'status'=>false,
-                'message'=>'Success'
-            ];
+        $gift_card_code = $request->gift_card_code;
+        $get_total_sum = $request->get_total_sum;
+        $time_now = date('Y-m-d');
+        $gift_card = GiftCard::where('name', $gift_card_code)->where('start_date', '<=', $time_now)->where('end_date', '>=', $time_now)->where('store_id', $user->store_id)->first();
+        $data = [];
+        $status = false;
+        if($gift_card){
+            if((int)$get_total_sum >= (int)$gift_card->min_price){
+                if($gift_card->price){
+                    $price = $gift_card->price;
+                }else{
+                    $price = (int)$get_total_sum * $gift_card->percent/100;
+                }
+                $message = translate_title('Successfully set', $this->lang).' '. $price;
+                $data = [
+                    'price'=>$price,
+                    'percent'=>$gift_card->percent??'',
+                ];
+                $status = true;
+            }else{
+                $message = $gift_card_code.' '.translate_title('Sale minimum price must be', $this->lang).' '. $gift_card->min_price;
+            }
         }else{
-            $response = [
-                'code'=>$sales->code,
-                'status'=>true,
-                'message'=>'Success'
-            ];
+            $message = translate_title('this gift card is not found or expired', $this->lang);
         }
-        return response()->json($response);
+        $response = [
+            'code'=>$gift_card_code,
+            'data'=>$data,
+            'status'=>$status,
+            'message'=>$message
+        ];
+        return response()->json($response, 200);
     }
 }

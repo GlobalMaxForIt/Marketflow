@@ -66,10 +66,10 @@
                     @csrf
                     @method('POST')
                     <div class="position-relative mb-3">
-                        <label for="name" class="form-label">{{translate_title('Coupon name', $lang)}}</label>
-                        <input type="text" id="name" class="form-control" name="name" required>
+                        <label for="name" class="form-label">{{translate_title('Code', $lang)}}</label>
+                        <input type="number" id="name" class="form-control" name="name" required>
                         <div class="invalid-tooltip">
-                            {{translate_title('Please enter name.', $lang)}}
+                            {{translate_title('Please enter code.', $lang)}}
                         </div>
                     </div>
                     <div class="position-relative mb-3">

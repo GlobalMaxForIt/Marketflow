@@ -16,10 +16,10 @@
                         @method('PUT')
                         <div class="row">
                             <div class="position-relative col-6 mb-3">
-                                <label for="name" class="form-label">{{translate_title('Coupon name', $lang)}}</label>
-                                <input type="text" id="name" class="form-control" name="name" required value="{{$gift_card->name}}">
+                                <label for="name" class="form-label">{{translate_title('Code', $lang)}}</label>
+                                <input type="number" id="name" class="form-control" name="name" required value="{{$gift_card->name}}">
                                 <div class="invalid-tooltip">
-                                    {{translate_title('Please enter name.', $lang)}}
+                                    {{translate_title('Please enter code.', $lang)}}
                                 </div>
                             </div>
                             <div class="position-relative col-6 mb-3 mt-4">
@@ -65,8 +65,8 @@
                             </div>
                             <div class="col-6 form-floating mb-3">
                                 <select class="form-select" name="status" id="gift_card_status" aria-label="Floating label select example">
-                                    <option value="1" {{$gift_card->status != \App\Constants::ACTIVE?'selected':''}}>{{translate_title('Active', $lang)}}</option>
-                                    <option value="0" {{$gift_card->status != \App\Constants::NOT_ACTIVE?'selected':''}}>{{translate_title('Not active', $lang)}}</option>
+                                    <option value="1" {{$gift_card->status == \App\Constants::ACTIVE?'selected':''}}>{{translate_title('Active', $lang)}}</option>
+                                    <option value="0" {{$gift_card->status == \App\Constants::NOT_ACTIVE?'selected':''}}>{{translate_title('Not active', $lang)}}</option>
                                 </select>
                                 <label for="gift_card_status" class="ms-3">{{translate_title('Status', $lang)}}</label>
                             </div>

@@ -2546,7 +2546,7 @@ body[data-leftbar-size=compact] .width_height_confirm_button{
     font-size: 12px !important;
 }
 #fast_selling_goods_modal, #client_modal, #list_aside_the_check{
-    height: 194px;
+    height: 254px;
     overflow-y: auto;
 }
 #edit_product_modal .modal_close, #edit_product_modal .modal_confirm{

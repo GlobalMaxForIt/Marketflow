@@ -33,6 +33,10 @@ let selected_product_unit = document.getElementById('selected_product_unit')
 let selected_product_stock = document.getElementById('selected_product_stock')
 let changeAmountAndPriceId = document.getElementById('changeAmountAndPriceId')
 let dotKeyboard = document.getElementById('dotKeyboard')
+let gift_card_sum_text = document.getElementById('gift_card_sum_text')
+let gift_card_sum = document.getElementById('gift_card_sum')
+let gift_card_sum_content = document.getElementById('gift_card_sum_content')
+let giftCardConfirmButton = document.getElementById('giftCardConfirmButton')
 let return_modal_button_click = document.querySelector('#return_modal_button_click')
 let dot_has = false
 let orderProductData = {}
@@ -960,8 +964,9 @@ if(gift_card_input != undefined && gift_card_input != null){
         setValues(cash_sum, card_sum, debt_sum, gift_card, display_or_display_card_or_debt='gift_card_input')
     });
 }
-
+let gift_card_sum_html = ''
 function giftCardConfirm(){
+    gift_card_sum_html = ''
     if(loader != undefined && loader != null){
         if(loader.classList.contains("d-none")){
             loader.classList.remove("d-none")
@@ -978,34 +983,49 @@ function giftCardConfirm(){
                 url: gift_card_url,
                 method: 'POST',
                 headers: {
-                    'Authorization': 'Bearer ' + token
+                    'Authorization': 'Bearer ' + token,
+                    'Accept':'application/json'
                 },
                 data:{
-                    'set_gift_card_text':gift_card,
+                    'gift_card_code':gift_card,
+                    'get_total_sum':getTotalSum
                 },
-                success: function (data) {
+                success: function (data__) {
+                    console.log(data__)
                     hideHasItems()
-                    if(data.status == true){
-                        setTimeout(function () {
-                            if(loader != undefined && loader != null){
-                                if(!loader.classList.contains("d-none")){
-                                    loader.classList.add("d-none")
-                                }
+                    setTimeout(function () {
+                        if(loader != undefined && loader != null){
+                            if(!loader.classList.contains("d-none")){
+                                loader.classList.add("d-none")
                             }
-                            if(myDiv != undefined && myDiv != null){
-                                if(!myDiv.classList.contains("d-none")){
-                                    myDiv.classList.add("d-none")
-                                }
-                            }
-                        }, 244)
-                        if(localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null){
-                            localStorage.removeItem('order_data')
                         }
-                        toastr.success(set_aside_success_text+' '+data.code)
-                        truncuateCashboxFunc()
+                        if(myDiv != undefined && myDiv != null){
+                            if(!myDiv.classList.contains("d-none")){
+                                myDiv.classList.add("d-none")
+                            }
+                        }
+                    }, 244)
+                    if(data__.status == true){
+                        if(gift_card_sum_text.classList.contains('d-none')){
+                            gift_card_sum_text.classList.remove('d-none')
+                        }
+                        if(gift_card_sum_content.classList.contains('d-none')){
+                            gift_card_sum_content.classList.remove('d-none')
+                        }
+                        giftCardConfirmButton.disabled = true
+                        if(data__.data.percent){
+                            gift_card_sum_html = `(${data__.data.percent}) ${data__.data.price} ${sum_text}`
+                        }else{
+                            gift_card_sum_html = `${data__.data.price} ${sum_text}`
+                        }
+                        gift_card_sum.innerText = gift_card_sum_html
+                        toastr.success(data__.message)
+                    }else{
+                        toastr.warning(data__.message)
                     }
                 },
                 error: function (xhr, status, error) {
+                    console.log(error)
                     // Handle errors here
                     console.log(xhr.responseText); // Log the error response from the server
                     toastr.error('An error occurred: ' + xhr.status + ' ' + error); // Show error message
@@ -1015,6 +1035,17 @@ function giftCardConfirm(){
             console.log(e)
         }
     })
+}
+
+function removeGiftCard(){
+    if(!gift_card_sum_text.classList.contains('d-none')){
+        gift_card_sum_text.classList.add('d-none')
+    }
+    if(!gift_card_sum_content.classList.contains('d-none')){
+        gift_card_sum_content.classList.add('d-none')
+    }
+    giftCardConfirmButton.disabled = false
+    gift_card_sum.innerText = ''
 }
 
 function formatInput(param){
