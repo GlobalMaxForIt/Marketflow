@@ -1133,11 +1133,10 @@
 <script src="{{asset('libs/selectize/js/standalone/selectize.min.js')}}"></script>
 <script src="{{asset('libs/mohithg-switchery/switchery.min.js')}}"></script>
 <script src="{{asset('libs/multiselect/js/jquery.multi-select.js')}}"></script>
-{{--<script src="{{asset('libs/select2/js/select2.min.js')}}"></script>--}}
-<script src="{{asset('libs/jquery-mockjax/jquery.mockjax.min.js')}}"></script>
+<script src="{{asset('libs/select2/js/select2.min.js')}}"></script>
 <script src="{{asset('libs/devbridge-autocomplete/jquery.autocomplete.min.js')}}"></script>
-{{--<script src="{{asset('libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js')}}"></script>--}}
-{{--<script src="{{asset('libs/bootstrap-maxlength/bootstrap-maxlength.min.js')}}"></script>--}}
+<script src="{{asset('libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js')}}"></script>
+<script src="{{asset('libs/bootstrap-maxlength/bootstrap-maxlength.min.js')}}"></script>
 
 <script src="{{ asset('js/pages/datatables.init.js') }}"></script>
 <script src="{{ asset('js/app.min.js') }}"></script>
