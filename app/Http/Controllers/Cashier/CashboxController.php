@@ -191,18 +191,6 @@ class CashboxController extends Controller
         $products_json = Products::where('store_id', $user->store_id)->whereNotNull('barcode')->get();
         $allProducts = $this->productsService->getProducts($products_);
         $allProductsFast = $this->productsService->getProducts($products_fast);
-
-
-        $allProductsFast = array_merge($allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast,
-            $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast,
-            $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast,
-            $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast,
-            $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast,
-            $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast,
-            $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast,
-            $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast,
-            $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast, $allProductsFast);
-
         $allProductsJson = $this->productsService->getProducts($products_json);
         $allProductsData = [
             'products'=>$allProducts,
