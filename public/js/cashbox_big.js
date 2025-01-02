@@ -35,7 +35,6 @@ let changeAmountAndPriceId = document.getElementById('changeAmountAndPriceId')
 let dotKeyboard = document.getElementById('dotKeyboard')
 let gift_card_sum_text = document.getElementById('gift_card_sum_text')
 let gift_card_sum = document.getElementById('gift_card_sum')
-let gift_card_sum_content = document.getElementById('gift_card_sum_content')
 let giftCardConfirmButton = document.getElementById('giftCardConfirmButton')
 let return_modal_button_click = document.querySelector('#return_modal_button_click')
 let dot_has = false
@@ -900,7 +899,7 @@ function paymentFunc() {
         }
     }
     autoSetCardSum()
-    setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt)
+    setValues(cash_sum, card_sum, debt_sum, gift_card, display_or_display_card_or_debt)
     selected_display_clicked = true
     selected_payment_input_func()
 }
@@ -917,7 +916,7 @@ if(display != undefined && display != null){
         entered_cash_sum = klaviaturaNumber
         cash_sum = parseInt(klaviaturaNumber)
         autoSetCardSum()
-        setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt='display')
+        setValues(cash_sum, card_sum, debt_sum, gift_card, display_or_display_card_or_debt='display')
     });
 }
 
@@ -933,7 +932,7 @@ if(display_card != undefined && display_card != null){
         entered_card_sum = klaviaturaNumber
         card_sum = parseInt(klaviaturaNumber)
         autoSetDebtSum()
-        setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt='display_card')
+        setValues(cash_sum, card_sum, debt_sum, gift_card, display_or_display_card_or_debt='display_card')
     });
 }
 if(debt_display != undefined && debt_display != null){
@@ -947,7 +946,7 @@ if(debt_display != undefined && debt_display != null){
         }
         entered_debt_sum = klaviaturaNumber
         debt_sum = parseInt(klaviaturaNumber)
-        setValues(cash_sum, card_sum, debt_sum, display_or_display_card_or_debt='debt_display')
+        setValues(cash_sum, card_sum, debt_sum, gift_card, display_or_display_card_or_debt='debt_display')
     });
 }
 if(gift_card_input != undefined && gift_card_input != null){
@@ -965,6 +964,7 @@ if(gift_card_input != undefined && gift_card_input != null){
     });
 }
 let gift_card_sum_html = ''
+let gift_card_price = 0
 function giftCardConfirm(){
     gift_card_sum_html = ''
     if(loader != undefined && loader != null){
@@ -991,8 +991,6 @@ function giftCardConfirm(){
                     'get_total_sum':getTotalSum
                 },
                 success: function (data__) {
-                    console.log(data__)
-                    hideHasItems()
                     setTimeout(function () {
                         if(loader != undefined && loader != null){
                             if(!loader.classList.contains("d-none")){
@@ -1013,13 +1011,25 @@ function giftCardConfirm(){
                             gift_card_sum_content.classList.remove('d-none')
                         }
                         giftCardConfirmButton.disabled = true
+                        gift_card_price = parseInt(data__.data.price)
                         if(data__.data.percent){
-                            gift_card_sum_html = `(${data__.data.percent}) ${data__.data.price} ${sum_text}`
+                            gift_card_sum_html = `(${data__.data.percent} %) ${gift_card_price} ${sum_text}`
                         }else{
-                            gift_card_sum_html = `${data__.data.price} ${sum_text}`
+                            gift_card_sum_html = `${format_entered_sum(gift_card_price)} ${sum_text}`
                         }
                         gift_card_sum.innerText = gift_card_sum_html
                         toastr.success(data__.message)
+
+
+                        entered_cash_sum = entered_cash_sum - gift_card_price
+                        payment_sum.innerText = format_entered_sum(entered_cash_sum)
+                        entered_cash_sum = parseInt(getTotalSum)
+                        cash_sum = entered_cash_sum
+                        card_sum = 0
+                        debt_sum = 0
+                        gift_card = data__.code
+                        setValues(cash_sum, card_sum, debt_sum, gift_card, display_or_display_card_or_debt)
+                        selected_payment_input_func()
                     }else{
                         toastr.warning(data__.message)
                     }
@@ -1142,7 +1152,6 @@ function paymentPayFunc(text) {
                             }
                             toastr.success(payment_success_text+' '+data.code)
                             truncuateCashboxFunc()
-
                         }else if(data.status == false){
                             setTimeout(function () {
                                 if(loader != undefined && loader != null){
@@ -1178,7 +1187,6 @@ function paymentPayFunc(text) {
         }
     })
 }
-
 function deleteCheckFunc() {
     if(loader != undefined && loader != null){
         if(loader.classList.contains("d-none")){

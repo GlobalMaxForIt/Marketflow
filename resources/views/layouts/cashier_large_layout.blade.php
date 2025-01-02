@@ -649,7 +649,7 @@
             </div>
             <div class="d-flex justify-content-between width_100_percent">
                 <div class="text-start width_45_percent">
-                    <div class="text-start d-none" id="gift_card_sum_text">
+                    <div class="text-start mb-2 d-none" id="gift_card_sum_text">
                         <h6 class="me-auto">{{translate_title('Gift card sum', $lang)}}</h6>
                     </div>
                     <div class="text-start">
@@ -663,13 +663,12 @@
                     </div>
                 </div>
                 <div class="text-center width_45_percent">
-                    <div class="d-flex d-none" id="gift_card_sum_content">
+                    <div class="d-flex justify-content-center align-items-center mb-2 d-none" id="gift_card_sum_content">
                         <h6 id="gift_card_sum">0</h6>
-                        <a type="button" class="btn delete_button btn-sm waves-effect me-1" onclick="removeGiftCard()">
+                        <a type="button" class="btn delete_button btn-sm waves-effect ms-1" onclick="removeGiftCard()">
                             <img src="{{asset('img/trash_icon.png')}}" alt="" height="18px">
                         </a>
                     </div>
-                    <h6 class="d-none" id="gift_card_sum">0</h6>
                     <h4 class="" id="payment_sum">0</h4>
                     <h4 class="" id="accepting_sum">0</h4>
                     <h4 class="" id="change_sum">0</h4>
@@ -950,6 +949,7 @@
     let keyboard_lang_change_func = document.getElementById('keyboard_lang_change_func')
     let gift_card_change_func = document.getElementById('gift_card_change_func')
     let gift_card_content = document.getElementById('gift_card_content')
+    let gift_card_sum_content = document.getElementById('gift_card_sum_content')
     let keyboard_selected_lang = localStorage.getItem('selected_lang')
     let keyboard_ru = document.getElementById('keyboard_ru')
     let keyboard_en = document.getElementById('keyboard_en')
@@ -1010,6 +1010,18 @@
             gift_card_content.classList.remove('d-none')
         }else{
             gift_card_content.classList.add('d-none')
+        }
+        if(gift_card_sum.innerText.length>1){
+            if(gift_card_sum_content.classList.contains('d-none')){
+                gift_card_sum_content.classList.remove('d-none')
+            }else{
+                gift_card_sum_content.classList.add('d-none')
+            }
+            if(gift_card_sum_text.classList.contains('d-none')){
+                gift_card_sum_text.classList.remove('d-none')
+            }else{
+                gift_card_sum_text.classList.add('d-none')
+            }
         }
     }
     // $(document).ready(function() {

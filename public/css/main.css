@@ -2787,6 +2787,9 @@ body[data-layout-color="dark"] .modal-body input[type="password"],
 body[data-layout-color="dark"] .modal-body input[type="email"] {
     color: white !important
 }
-#_display_content h6{
+#_display_content h6, #gift_card_sum{
     margin-bottom: 0px !important;
+}
+#gift_card_sum{
+    color: #FB850E;
 }
