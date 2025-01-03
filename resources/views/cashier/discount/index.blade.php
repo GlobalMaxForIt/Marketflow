@@ -44,6 +44,7 @@
                                     {{translate_title('Новый Скидка', $lang)}}
                                 </button>
                             </div>
+
                             <div class="card-body">
                                 <table class="datatable restaurant_tables table table-striped table-bordered dt-responsive nowrap">
                                     <thead>
@@ -291,17 +292,13 @@
                         <select class="form-control" name="client_id" data-toggle="select2" data-width="100%" required id="client_select_id">
                             <option value="" selected disabled>{{translate_title('Select a client', $lang)}}</option>
                             <optgroup label="Clients">
-                                @foreach($clients_for_discount as $client_for_discount)
-                                    <option value="{{$client_for_discount['id']}}">{{$client_for_discount['name']}}</option>
+                                @foreach($clients as $client)
+                                    <option value="{{$client['id']}}">{{$client['name']}}</option>
                                 @endforeach
                             </optgroup>
                         </select>
                         <div class="invalid-tooltip">
                             {{translate_title('Select a client', $lang)}}
-                        </div>
-
-                        <div class="invalid-tooltip">
-                            {{translate_title('Please select client.', $lang)}}
                         </div>
                         <label class="form-label" for="client_select_id">{{translate_title('Clients', $lang)}}</label>
                     </div>
@@ -345,7 +342,6 @@
                 });
             }
         })
-
     </script>
 
     <script src="{{asset('js/discount.js')}}"></script>

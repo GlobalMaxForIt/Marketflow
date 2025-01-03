@@ -37,14 +37,6 @@ let client_max_payment = 0
 let bill_id = ''
 let stock_int = 0
 
-$(document).ready(function () {
-    if($('#client_select_id') != undefined && $('#client_select_id') != null){
-        $('#client_select_id').select2({
-            dropdownParent: $('#select_client') // modal ID ni kiriting
-        });
-    }
-})
-
 let bills_history_html = ''
 let client_id = ''
 let client_info = {}

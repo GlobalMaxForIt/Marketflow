@@ -12,6 +12,7 @@
     <title>@yield('title')</title>
     <link href="{{ asset('libs/toastr/build/toastr.min.css') }}" type="text/css" rel="stylesheet"/>
     <!-- third party css -->
+    <link href="{{ asset('css/input-switch.css') }}" rel="stylesheet" type="text/css" />
 
     <link href="{{ asset('libs/mohithg-switchery/switchery.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" type="text/css" />
@@ -38,7 +39,7 @@
     <link rel="stylesheet" href="{{asset('css/font/font.css')}}">
     <link rel="stylesheet" href="{{asset('css/bootstrap/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/fontawesome/css/all.css')}}">
-    <link rel="stylesheet" href="{{asset('css/basket.css')}}">
+{{--    <link rel="stylesheet" href="{{asset('css/basket.css')}}">--}}
     <link rel="stylesheet" href="{{asset('css/main.css')}}">
     <link rel="stylesheet" href="{{asset('css/main_manage.css')}}">
     <link rel="stylesheet" href="{{asset('css/datatable_style.css')}}">
@@ -889,10 +890,8 @@
 <script src="{{ asset('js/datatables_style.js') }}"></script>
 <!-- Vendor -->
 
-
 <script src="{{ asset('libs/jstree/jstree.min.js') }}"></script>
 <script src="{{ asset('js/pages/treeview.init.js') }}"></script>
-
 
 <script src="{{ asset('libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('libs/simplebar/simplebar.min.js') }}"></script>
@@ -907,7 +906,6 @@
 
 <!-- Init js-->
 <script src="{{ asset('js/pages/form-xeditable.init.js') }}"></script>
-
 
 <script src="{{ asset('js/pages/form-validation.init.js') }}"></script>
 
@@ -949,7 +947,7 @@
 <script src="{{ asset('libs/morris.js06/morris.min.js') }}"></script>
 <script src="{{ asset('libs/raphael/raphael.min.js') }}"></script>
 
-<script src="{{ asset('js/pages/form-pickers.init.js') }}"></script>f
+<script src="{{ asset('js/pages/form-pickers.init.js') }}"></script>
 <script src="{{ asset('js/pages/form-advanced.init.js') }}"></script>
 
 <script src="{{asset('js/payments.js')}}"></script>

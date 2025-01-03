@@ -4,7 +4,6 @@
     {{translate_title('Bills', $lang)}}
 @endsection
 @section('content')
-
     <div class="main-content-section">
         <div class="order-section p_right_0">
             <!-- Tab panes -->

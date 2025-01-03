@@ -1117,7 +1117,6 @@
 <!-- Init js-->
 <script src="{{ asset('js/pages/form-xeditable.init.js') }}"></script>
 
-
 <script src="{{ asset('js/pages/form-validation.init.js') }}"></script>
 
 <script src="{{ asset('libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
