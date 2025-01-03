@@ -7,6 +7,7 @@ use App\Constants;
 use App\Events\PostNotification;
 use App\Models\Clients;
 use App\Models\Discount;
+use App\Models\giftCard;
 use App\Models\OrderItems;
 use App\Models\Orders;
 use App\Models\Products;
@@ -29,7 +30,7 @@ class SalesService
         $this->productsService = $productsService;
     }
 
-    public function salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $text, $checklist_changed, $debt_sum){
+    public function salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $gift_card, $text, $checklist_changed, $debt_sum){
         $lang = App::getLocale();
         $sales->client_id = $client_id;
         if($text == 'checklist'){
@@ -72,10 +73,10 @@ class SalesService
                 $sales_items->save();
                 $product->stock = $product->stock - (float)$orderData['quantity'];
 
-                if((float)$product->stock<=5){
-                    $message = $product->name.' '. $product->amount.' '.translate_title('has left ', $lang). ' '.$product->stock;
-                    event(new PostNotification($message));
-                }
+//                if((float)$product->stock<=5){
+//                    $message = $product->name.' '. $product->amount.' '.translate_title('has left ', $lang). ' '.$product->stock;
+//                    event(new PostNotification($message));
+//                }
                 $product->save();
             }
         }
@@ -93,6 +94,18 @@ class SalesService
         $sales->discount = $order_discount_price;
         $sales->client_discount_price = (int)$client_dicount_price;
         $total_price = $all_price - $order_discount_price - (int)$client_dicount_price;
+
+        $gift_card_code = $gift_card->name;
+        if($gift_card->price){
+            $price = $gift_card->price;
+        }else{
+            $price = (int)$total_price * $gift_card->percent/100;
+        }
+        $gift_data = [
+            'price'=>$price,
+            'percent'=>$gift_card->percent??'',
+        ];
+
         $sales->paid_amount = $paid_amount;
         $sales->return_amount = $return_amount;
         $sales->total_amount = $total_price;
@@ -136,18 +149,17 @@ class SalesService
         $sales->code = $sales_code;
         $sales->save();
         if($text == 'checklist'){
-            $response = [
-                'code'=>$sales->code,
-                'status'=>false,
-                'message'=>'Success'
-            ];
+            $status = false;
         }else{
-            $response = [
-                'code'=>$sales->code,
-                'status'=>true,
-                'message'=>'Success'
-            ];
+            $status = true;
         }
+        $response = [
+            'code'=>$sales->code,
+            'gift_card_code'=>$gift_card_code,
+            'gift_data'=>$gift_data,
+            'status'=>$status,
+            'message'=>'Success'
+        ];
 
         return $response;
     }

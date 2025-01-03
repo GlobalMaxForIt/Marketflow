@@ -6,6 +6,7 @@ use App\Constants;
 use App\Http\Controllers\Controller;
 use App\Models\Clients;
 use App\Models\Discount;
+use App\Models\giftCard;
 use App\Models\Products;
 use App\Models\ProductsCategories;
 use App\Models\Sales;
@@ -464,7 +465,22 @@ class CashboxController extends Controller
         $debt_sum = $request->debt_sum;
         $card_sum = $request->card_sum;
         $cash_sum = $request->cash_sum;
-        $response = $this->salesService->salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $text, $checklist_changed, $debt_sum);
+        $gift_card_code = $request->gift_card;
+
+        $time_now = date('Y-m-d');
+        $gift_card = GiftCard::where('name', $gift_card_code)->where('start_date', '<=', $time_now)->where('end_date', '>=', $time_now)->where('store_id', $user->store_id)->first();
+        if(!$gift_card){
+            $message = translate_title('this gift card is not found or expired', $this->lang);
+            $response = [
+                'code'=>'',
+                'gift_card_code'=>'',
+                'gift_data'=>[],
+                'status'=>false,
+                'message'=>$message
+            ];
+            return response()->json($response, 200);
+        }
+        $response = $this->salesService->salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $gift_card, $text, $checklist_changed, $debt_sum);
         return response()->json($response, 200);
     }
 

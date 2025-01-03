@@ -1136,6 +1136,7 @@ function paymentPayFunc(text) {
                         'card_sum':card_sum,
                         'cash_sum':cash_sum,
                         'debt_sum':debt_sum,
+                        'gift_card':gift_card,
                         'text':text,
                         'checklist_changed':checklist_changed
                         // 'client_dicount_price':clientDicountPrice,
@@ -1161,7 +1162,7 @@ function paymentPayFunc(text) {
                             }
                             toastr.success(payment_success_text+' '+data.code)
                             truncuateCashboxFunc()
-                        }else if(data.status == false){
+                        }else if(data.status == false && data.code){
                             setTimeout(function () {
                                 if(loader != undefined && loader != null){
                                     if(!loader.classList.contains("d-none")){
@@ -1180,6 +1181,20 @@ function paymentPayFunc(text) {
                             }
                             toastr.success(set_aside_success_text+' '+data.code)
                             truncuateCashboxFunc()
+                        }else{
+                            setTimeout(function () {
+                                if(loader != undefined && loader != null){
+                                    if(!loader.classList.contains("d-none")){
+                                        loader.classList.add("d-none")
+                                    }
+                                }
+                                if(myDiv != undefined && myDiv != null){
+                                    if(!myDiv.classList.contains("d-none")){
+                                        myDiv.classList.add("d-none")
+                                    }
+                                }
+                            }, 244)
+                            toastr.warning(data.message)
                         }
                     },
                     error: function (xhr, status, error) {
