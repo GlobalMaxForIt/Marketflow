@@ -36,4 +36,8 @@ class Sales extends Model
         return $this->hasOne(SalesReports::class, 'sale_id', 'id');
     }
 
+    public function giftCard(){
+        return $this->hasOne(giftCard::class, 'id', 'sale_id');
+    }
+
 }

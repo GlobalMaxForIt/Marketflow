@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('store_id');
             $table->unsignedBigInteger('cashier_id');
             $table->unsignedInteger('client_id')->nullable();
-            $table->unsignedInteger('gift_card_id')->nullable();
+            $table->unsignedInteger('gift_card_percent')->nullable();
             $table->unsignedInteger('gift_card_sum')->nullable();
             $table->decimal('price', 10, 2)->default(0);
             $table->decimal('discount', 10, 2)->nullable();

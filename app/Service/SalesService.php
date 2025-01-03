@@ -105,7 +105,9 @@ class SalesService
             'price'=>$price,
             'percent'=>$gift_card->percent??'',
         ];
-
+        $total_price = $total_price - $price;
+        $sales->gift_card_sum = $price;
+        $sales->gift_card_percent = $gift_card->percent;
         $sales->paid_amount = $paid_amount;
         $sales->return_amount = $return_amount;
         $sales->total_amount = $total_price;

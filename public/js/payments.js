@@ -5,6 +5,10 @@ let bills_history_subtotal = document.getElementById('bills_history_subtotal')
 let bills_history_client = document.getElementById('bills_history_client')
 let bills_history_discount = document.getElementById('bills_history_discount')
 let bills_history_total = document.getElementById('bills_history_total')
+let bills_history_gift_card = document.getElementById('bills_history_gift_card')
+let return_back_history_gift_card = document.getElementById('return_back_history_gift_card')
+let bills_history_gift_card_sum = document.querySelector('#bills_history_gift_card .order-info-sum')
+let return_back_history_gift_card_sum = document.querySelector('#return_back_history_gift_card .order-info-sum')
 let client_title_text = document.getElementById('client_title_text')
 
 let payment_history_data = document.getElementById('payment_history_data')
@@ -40,6 +44,8 @@ let stock_int = 0
 let bills_history_html = ''
 let client_id = ''
 let client_info = {}
+let payment_gift_card = {}
+let payment_returned_gift_card = {}
 
 let refund_modal_form_url = document.getElementById('refund_modal_form')
 function refundBillFunc(url){
@@ -193,7 +199,7 @@ function setData(item) {
     payment_history_data.innerHTML = ''
     bills_history_html = ''
     if(item != null && item != undefined){
-        item.forEach((item_, index_) =>{
+        JSON.parse(item).forEach((item_, index_) =>{
             setItem(item_, index_)
         });
     }
@@ -204,19 +210,35 @@ function setReturnedData(item) {
     returned_back_history_data.innerHTML = ''
     bills_history_html = ''
     if(item != null && item != undefined){
-        item.forEach((item_, index_) =>{
+        JSON.parse(item).forEach((item_, index_) =>{
             setReturnedItem(item_, index_)
         });
     }
     returned_back_history_data.innerHTML = bills_history_html
 }
 
-function showBillInfo(this_element, sales_data, code, price, discount_price, total_amount, return_amount, saleId, client_full_name, client_discount_price){
+function showBillInfo(this_element, sales_data, sales_gift_card_data, code, price, discount_price, total_amount, return_amount, saleId, client_full_name, client_discount_price){
     bills_history_subtotal.textContent = ''
     bills_history_discount.textContent = ''
     bills_history_total.textContent = ''
     bills_history_client.textContent = ''
-
+    bills_history_gift_card_sum.textContent = ''
+    payment_gift_card = JSON.parse(sales_gift_card_data)
+    if(Object.keys(payment_gift_card).length>0){
+        if(bills_history_gift_card.classList.contains('d-none')){
+            bills_history_gift_card.classList.remove('d-none')
+        }
+        if(payment_gift_card.percent){
+            bills_history_gift_card_sum.textContent = `(${payment_gift_card.percent} %) ${format_entered_sum(payment_gift_card.sum)} ${sum_text}`
+        }else{
+            bills_history_gift_card_sum.textContent = `${format_entered_sum(payment_gift_card.sum)} ${sum_text}`
+        }
+    }else{
+        if(!bills_history_gift_card.classList.contains('d-none')){
+            bills_history_gift_card.classList.add('d-none')
+        }
+        bills_history_gift_card_sum.textContent = ''
+    }
     bill_id = saleId
     let pay_total_amount = parseInt(total_amount.split(' ').join(''))
     let pay_return_amount = parseInt(return_amount.split(' ').join(''))
@@ -262,14 +284,29 @@ function showBillInfo(this_element, sales_data, code, price, discount_price, tot
     selected_sales_items = []
 }
 
-function showBillInfoModal(this_element, sales_data, code, price, saleId, client_full_name){
+function showBillInfoModal(this_element, sales_data, sales_gift_card_data, code, price, saleId, client_full_name){
     bills_history_subtotal.textContent = ''
     bills_history_discount.textContent = ''
     bills_history_total.textContent = ''
     bills_history_client.textContent = ''
-
+    bills_history_gift_card_sum.textContent = ''
+    payment_returned_gift_card = JSON.parse(sales_gift_card_data)
+    if(Object.keys(payment_returned_gift_card).length>0){
+        if(return_back_history_gift_card.classList.contains('d-none')){
+            return_back_history_gift_card.classList.remove('d-none')
+        }
+        if(payment_returned_gift_card.percent){
+            return_back_history_gift_card_sum.textContent = `(${payment_returned_gift_card.percent} %) ${format_entered_sum(payment_returned_gift_card.sum)} ${sum_text}`
+        }else{
+            return_back_history_gift_card_sum.textContent = `${format_entered_sum(payment_returned_gift_card.sum)} ${sum_text}`
+        }
+    }else{
+        if(!return_back_history_gift_card.classList.contains('d-none')){
+            return_back_history_gift_card.classList.add('d-none')
+        }
+        return_back_history_gift_card_sum.textContent = ''
+    }
     bill_id = saleId
-
     for(let j=0; j<return_bill_info_table.length; j++){
         if(return_bill_info_table[j].classList.contains('active')){
             return_bill_info_table[j].classList.remove('active')

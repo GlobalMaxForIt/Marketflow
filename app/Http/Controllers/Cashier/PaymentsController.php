@@ -42,7 +42,6 @@ class PaymentsController extends Controller
         $all_sales_info = [];
         $all_sales_modal = [];
         $all_sales_info_modal = [];
-        $return_modal_all_sum = 0;
         $clients_ = Clients::all();
         $clients = [];
         foreach($clients_ as $client){
@@ -52,6 +51,14 @@ class PaymentsController extends Controller
         foreach ($allSales as $allSale){
             $all_sales[] = $this->getSales($allSale);
             $all_sales_info[] = $this->getSalesItem($allSale);
+            if($allSale->gift_card_sum){
+                $all_sales_gift_card[] = [
+                    'percent'=>$allSale->gift_card_percent,
+                    'sum'=>$allSale->gift_card_sum
+                ];
+            }else{
+                $all_sales_gift_card[] = [];
+            }
         }
         $return_modals = ReturnModel::all()->groupBy('sale_id');
         foreach ($return_modals as $key => $return_modal_){
@@ -61,6 +68,14 @@ class PaymentsController extends Controller
                 $return_modal_all_sum = $return_modal_all_sum + (int)$return_modal->price;
                 $sale_item_modal = $return_modal->salesItem;
                 $all_sales_info_modal[] = $this->getSaleItem($sale_item_modal, $return_modal);
+                if($allSale->gift_card_sum){
+                    $all_sales_info_gift_card[] = [
+                        'percent'=>$allSale->gift_card_percent,
+                        'sum'=>$allSale->gift_card_sum
+                    ];
+                }else{
+                    $all_sales_info_gift_card[] = [];
+                }
             }
             $all_sales_modal[] = $this->getSalesModal($sales_modal, $return_modal_all_sum);
         }
@@ -71,7 +86,9 @@ class PaymentsController extends Controller
             'clients'=>$clients,
             'user'=>$user,
             'all_sales_info'=>$all_sales_info,
+            'all_sales_gift_card'=>$all_sales_gift_card,
             'all_sales_info_modal'=>$all_sales_info_modal,
+            'all_sales_info_gift_card'=>$all_sales_info_gift_card,
             'title'=>$this->title,
             'current_page'=>$this->current_page,
             'quantity'=>[

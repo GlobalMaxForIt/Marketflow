@@ -40,7 +40,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach($all_sales as $key => $all_sale)
-                                            <tr class="bill_info_table" onclick="showBillInfo(this, {{ json_encode($all_sales_info[$key]) }}, `{{$all_sale['code']}}`, `{{$all_sale['price']}}`, `{{$all_sale['discount_price']}}`, `{{$all_sale['total_amount']}}`, `{{$all_sale['return_amount']}}`, `{{$all_sale['id']}}`, `{{$all_sale['client_full_name']}}`, `{{$all_sale['client_discount_price']}}`)">
+                                            <tr class="bill_info_table" onclick="showBillInfo(this, `{{ json_encode($all_sales_info[$key]) }}`, `{{ json_encode($all_sales_gift_card[$key]) }}`, `{{$all_sale['code']}}`, `{{$all_sale['price']}}`, `{{$all_sale['discount_price']}}`, `{{$all_sale['total_amount']}}`, `{{$all_sale['return_amount']}}`, `{{$all_sale['id']}}`, `{{$all_sale['client_full_name']}}`, `{{$all_sale['client_discount_price']}}`)">
                                                 <td><h6>{{$all_sale['total_amount'].' '.translate_title('sum', $lang)}}</h6></td>
                                                 <td><h6>{{$all_sale['paid_amount'].' '.translate_title('sum', $lang)}}</h6></td>
                                                 <td><h6>{{$all_sale['return_amount'].' '.translate_title('sum', $lang)}}</h6></td>
@@ -64,21 +64,25 @@
                                 </div>
                             </div>
                             <div class="bills_history_content">
-                                <div class="d-flex justify-content-between mb-2">
+                                <div class="d-flex justify-content-between">
                                     <h6 class="order-info-title"> {{translate_title('Подитог', $lang)}}</h6>
                                     <div>
                                         <h6 class="order-info-sum" id="bills_history_subtotal">0 000 000 {{translate_title('sum', $lang)}}</h6>
                                     </div>
                                 </div>
-                                <div class="d-flex justify-content-between mb-2" id="popover-container">
+                                <div class="d-flex justify-content-between" id="popover-container">
                                     <a class="order-info-title" id="client_title_text" tabindex="0" data-bs-container="#popover-container" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="good" data-original-title=""> {{translate_title('Скидка клиента', $lang)}}</a>
                                     <h6 class="order-info-sum" id="bills_history_client">0 000 000 {{translate_title('sum', $lang)}}</h6>
                                 </div>
-                                <div class="d-flex justify-content-between mb-2">
+                                <div class="d-flex justify-content-between d-none" id="bills_history_gift_card">
+                                    <h6 class="order-info-title">{{translate_title('Gift card', $lang)}}</h6>
+                                    <h6 class="order-info-sum">0 000 000 {{translate_title('sum', $lang)}}</h6>
+                                </div>
+                                <div class="d-flex justify-content-between">
                                     <h6 class="order-info-title">{{translate_title('Скидка', $lang)}}</h6>
                                     <h6 class="order-info-sum" id="bills_history_discount">0 000 000 {{translate_title('sum', $lang)}}</h6>
                                 </div>
-                                <div class="d-flex justify-content-between mb-2">
+                                <div class="d-flex justify-content-between">
                                     <div>
                                         <h6 class="order-info"> {{translate_title('Итог', $lang)}}</h6>
                                         <h6 class="order-info d-none" id="return_total_amount_text"> {{translate_title('Return', $lang)}}</h6>
@@ -111,7 +115,7 @@
                                     </thead>
                                     <tbody>
                                     @foreach($all_sales_modal as $key => $all_sale_modal)
-                                        <tr class="return_bill_info_table" onclick="showBillInfoModal(this, {{ json_encode($all_sales_info_modal[$key]) }}, `{{$all_sale_modal['code']}}`, `{{$all_sale_modal['price']}}`, `{{$all_sale_modal['id']}}`, `{{$all_sale_modal['client_full_name']}}`)">
+                                        <tr class="return_bill_info_table" onclick="showBillInfoModal(this, `{{ json_encode($all_sales_info_modal[$key]) }}`, `{{ json_encode($all_sales_info_gift_card[$key]) }}`, `{{$all_sale_modal['code']}}`, `{{$all_sale_modal['price']}}`, `{{$all_sale_modal['id']}}`, `{{$all_sale_modal['client_full_name']}}`)">
                                             <td><h6>{{$all_sale_modal['price'].' '.translate_title('sum', $lang)}}</h6></td>
                                             <td><h6>{{$all_sale_modal['code']}}</h6></td>
                                             <td><h6>{{$all_sale_modal['updated_at']}}</h6></td>
@@ -133,12 +137,20 @@
                                 </div>
                             </div>
                             <div class="bills_history_content">
-                                <div class="d-flex justify-content-between mb-2">
+                                <div class="d-flex justify-content-between">
                                     <div>
                                         <h6 class="order-info d-none" id="returned_back_total_amount_text"> {{translate_title('Return', $lang)}}</h6>
                                     </div>
                                     <div>
                                         <h6 class="order-info-sum d-none" id="returned_back_total_amount">0 000 000 {{translate_title('sum', $lang)}}</h6>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between d-none" id="return_back_history_gift_card">
+                                    <div>
+                                        <h6 class="order-info"> {{translate_title('Return', $lang)}}</h6>
+                                    </div>
+                                    <div>
+                                        <h6 class="order-info-sum">0 000 000 {{translate_title('sum', $lang)}}</h6>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end d-none" id="returned_back_modal_button">
