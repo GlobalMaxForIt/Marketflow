@@ -158,18 +158,18 @@ class GiftCardController extends Controller
         if($gift_card){
             if((int)$get_total_sum >= (int)$gift_card->min_price){
                 if($gift_card->price){
-                    $price = $gift_card->price;
+                    $price = (int)$gift_card->price;
                 }else{
-                    $price = (int)$get_total_sum * $gift_card->percent/100;
+                    $price = (int)((int)$get_total_sum * $gift_card->percent/100);
                 }
-                $message = translate_title('Successfully set', $this->lang).' '. $price;
+                $message = translate_title('Successfully set', $this->lang).' '. number_format($price, 0, '', ' ');
                 $data = [
                     'price'=>$price,
                     'percent'=>$gift_card->percent??'',
                 ];
                 $status = true;
             }else{
-                $message = $gift_card_code.' '.translate_title('Sale minimum price must be', $this->lang).' '. $gift_card->min_price;
+                $message = $gift_card_code.' '.translate_title('Sale minimum price must be', $this->lang).' '. number_format($gift_card->min_price, 0,'',' ');
             }
         }else{
             $message = translate_title('this gift card is not found or expired', $this->lang);
