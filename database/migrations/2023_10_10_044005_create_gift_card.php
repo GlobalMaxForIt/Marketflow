@@ -23,7 +23,6 @@ return new class extends Migration
             $table->unsignedBigInteger('store_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
-
         });
     }
 
