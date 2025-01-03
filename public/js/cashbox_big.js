@@ -1051,7 +1051,6 @@ function removeGiftCard(){
 
     getTotalSum = parseInt(getTotalSum) + gift_card_price
     gift_card_price = 0
-    gift_card = ''
     setWithOrWithouthGiftCard()
 }
 
