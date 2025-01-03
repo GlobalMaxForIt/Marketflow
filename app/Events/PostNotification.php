@@ -35,6 +35,12 @@ class PostNotification implements ShouldBroadcast
         return [new Channel('post-order')];
     }
 
+    public function broadcastWith()
+    {
+        return [
+            'message' => $this->message,
+        ];
+    }
     public function broadcastAs()
     {
         return 'post-event';

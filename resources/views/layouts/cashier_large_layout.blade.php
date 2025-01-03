@@ -44,7 +44,27 @@
     <link rel="stylesheet" href="{{asset('css/main_manage.css')}}">
     <link rel="stylesheet" href="{{asset('css/datatable_style.css')}}">
 
+{{--    <script src="{{asset('js/pusher_commands.js')}}"></script>--}}
     <script src="{{ asset('js/jquery.min.js') }}"></script>
+
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script>
+            Pusher.logToConsole = true;
+
+            var pusher_ = new Pusher('c269e7cb3a6819f86947', {
+                cluster: 'ap1'
+            });
+
+            var channel_ = pusher_.subscribe('post-order');
+            console.log(channel_)
+            channel_.bind('post-event', function(data) {
+                console.log(data)
+                if(data.message != null && data.message != undefined){
+                    toastr.success(data.message)
+                }
+            });
+    </script>
+
     <script src="{{ asset('libs/toastr/build/toastr.min.js') }}"></script>
 
     <style>
@@ -940,9 +960,6 @@
 
 </body>
 
-<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-
-<script src="{{asset('js/pusher_commands.js')}}"></script>
 <script>
     let items_selected_text = "{{translate_title('items selected', $lang)}}"
     let search_client_text = "{{translate_title('Поиск', $lang)}}"

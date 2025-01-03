@@ -73,10 +73,10 @@ class SalesService
                 $sales_items->save();
                 $product->stock = $product->stock - (float)$orderData['quantity'];
 
-//                if((float)$product->stock<=5){
-//                    $message = $product->name.' '. $product->amount.' '.translate_title('has left ', $lang). ' '.$product->stock;
-//                    event(new PostNotification($message));
-//                }
+                if((float)$product->stock<=5){
+                    $message = $product->name.' '. $product->amount.' '.translate_title('has left ', $lang). ' '.$product->stock;
+                    event(new PostNotification($message));
+                }
                 $product->save();
             }
         }

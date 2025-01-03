@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Cashier;
 
+use App\Events\PostNotification;
 use App\Models\ProductInfo;
 use App\Models\Products;
 use App\Models\Unit;

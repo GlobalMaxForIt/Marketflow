@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PostNotification;
 use App\Models\Sales;
+use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
 use App\Models\GiftCard;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class GiftCardController extends Controller
 {
@@ -152,9 +155,16 @@ class GiftCardController extends Controller
         $gift_card_code = $request->gift_card_code;
         $get_total_sum = $request->get_total_sum;
         $time_now = date('Y-m-d');
+        $lang = App::getLocale();
         $gift_card = GiftCard::where('name', $gift_card_code)->where('start_date', '<=', $time_now)->where('end_date', '>=', $time_now)->where('store_id', $user->store_id)->first();
         $data = [];
         $status = false;
+
+        $message_data = 'Apple 1kg '.translate_title('has left ', $lang). ' 5';
+        event(new PostNotification($message_data));
+//        Notification::send($users, new OrderNotification($data));
+
+        
         if($gift_card){
             if((int)$get_total_sum >= (int)$gift_card->min_price){
                 if($gift_card->price){
@@ -174,6 +184,7 @@ class GiftCardController extends Controller
         }else{
             $message = translate_title('this gift card is not found or expired', $this->lang);
         }
+
         $response = [
             'code'=>$gift_card_code,
             'data'=>$data,

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Cashier;
 
 use App\Constants;
+use App\Events\PostNotification;
 use App\Http\Controllers\Controller;
 use App\Models\Clients;
 use App\Models\Discount;
