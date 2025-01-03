@@ -42,6 +42,7 @@ class PaymentsController extends Controller
         $all_sales_info = [];
         $all_sales_modal = [];
         $all_sales_info_modal = [];
+        $all_sales_info_gift_card = [];
         $clients_ = Clients::all();
         $clients = [];
         foreach($clients_ as $client){
