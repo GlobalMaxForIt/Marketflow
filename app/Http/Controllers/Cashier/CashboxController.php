@@ -6,7 +6,7 @@ use App\Constants;
 use App\Http\Controllers\Controller;
 use App\Models\Clients;
 use App\Models\Discount;
-use App\Models\giftCard;
+use App\Models\GiftCard;
 use App\Models\Products;
 use App\Models\ProductsCategories;
 use App\Models\Sales;
