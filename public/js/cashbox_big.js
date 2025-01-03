@@ -1019,15 +1019,9 @@ function giftCardConfirm(){
                         }
                         gift_card_sum.innerText = gift_card_sum_html
                         toastr.success(data__.message)
-                        entered_cash_sum = entered_cash_sum - gift_card_price
-                        payment_sum.innerText = format_entered_sum(entered_cash_sum)
-                        entered_cash_sum = parseInt(getTotalSum)
-                        cash_sum = entered_cash_sum
-                        card_sum = 0
-                        debt_sum = 0
+                        getTotalSum = parseInt(getTotalSum) - gift_card_price
                         gift_card = data__.code
-                        setValues(cash_sum, card_sum, debt_sum, gift_card, display_or_display_card_or_debt)
-                        selected_payment_input_func()
+                        setWithOrWithouthGiftCard()
                     }else{
                         toastr.warning(data__.message)
                     }
@@ -1054,6 +1048,24 @@ function removeGiftCard(){
     }
     giftCardConfirmButton.disabled = false
     gift_card_sum.innerText = ''
+
+    getTotalSum = parseInt(getTotalSum) + gift_card_price
+    gift_card_price = 0
+    gift_card = ''
+    setWithOrWithouthGiftCard()
+}
+
+function setWithOrWithouthGiftCard(){
+    entered_cash_sum = getTotalSum
+    payment_sum.innerText = format_entered_sum(entered_cash_sum)
+    cash_sum = entered_cash_sum
+    card_sum = 0
+    debt_sum = 0
+    setValues(cash_sum, card_sum, debt_sum, gift_card, display_or_display_card_or_debt)
+    selected_payment_input_func()
+    display.value = format_entered_sum(cash_sum)
+    display_card.value = '0'
+    debt_display.value = '0'
 }
 
 function formatInput(param){
