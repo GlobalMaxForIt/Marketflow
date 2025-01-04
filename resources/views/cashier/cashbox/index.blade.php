@@ -296,7 +296,6 @@
         let kitchen_index = "{{route('cashbox.index', $lang)}}"
         let json_products = JSON.parse('{!! $allProductsData['json_products'] !!}')
         let page = false
-
         $(document).ready(function () {
             if($('#client_select_id_2') != undefined && $('#client_select_id_2') != null){
                 $('#client_select_id_2').select2({

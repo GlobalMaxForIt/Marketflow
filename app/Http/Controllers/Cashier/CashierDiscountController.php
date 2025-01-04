@@ -11,6 +11,7 @@ use App\Models\ProductsCategories;
 use App\Service\ClientService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 class CashierDiscountController extends Controller
 {
@@ -28,6 +29,7 @@ class CashierDiscountController extends Controller
     public function index()
     {
         $lang = App::getLocale();
+        $user = Auth::user();
         $products_categories = ProductsCategories::where('step', 0)->orderBy('id', 'asc')->get();
         $discounts_distinct = Discount::distinct('discount_number')->whereNull('client_id')->get();
         $discounts_client_distinct = Discount::distinct('discount_number')->whereNotNull('client_id')->get();
@@ -68,6 +70,7 @@ class CashierDiscountController extends Controller
             'products_categories'=>$products_categories,
             'title'=>$this->title,
             'clients'=>$clients,
+            'user'=>$user,
             'clients_for_discount'=>$clients_for_discount,
             'lang'=>$lang,
             'current_page'=>$this->current_page
@@ -134,11 +137,13 @@ class CashierDiscountController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
         $lang = App::getLocale();
         $categories = ProductsCategories::where('step', 0)->orderBy('id', 'asc')->get();
         return view('cashier.discount.create', [
             'categories'=>$categories,
             'lang'=>$lang,
+            'user'=>$user,
             'current_page'=>$this->current_page
         ]);
     }
@@ -215,6 +220,7 @@ class CashierDiscountController extends Controller
     public function edit(string $id)
     {
         $lang = App::getLocale();
+        $user = Auth::user();
         $discount = Discount::find($id);
         $clients = [];
         $clients_ = Clients::all();
@@ -290,6 +296,7 @@ class CashierDiscountController extends Controller
             'quantity'=>$quantity,
             'title'=>$this->title,
             'lang'=>$lang,
+            'user'=>$user,
             'current_page'=>$this->current_page
         ]);
     }

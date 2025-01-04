@@ -10,13 +10,14 @@ use Illuminate\Notifications\Notification;
 class StockNotification extends Notification
 {
     use Queueable;
+    public $data;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+        $this->data = $data;
     }
 
     /**
@@ -48,11 +49,11 @@ class StockNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'id'=>$this->order['id'],
-            'product'=>$this->order['product_data'],
-            'message'=>$this->order['message'],
-            'created_at'=>$this->order['created_at'],
-            'updated_at'=>$this->order['updated_at'],
+            'product'=>$this->data['product_image'],
+            'product_id'=>$this->data['product_id'],
+            'message'=>$this->data['message'],
+            'created_at'=>$this->data['created_at'],
+            'updated_at'=>$this->data['updated_at'],
         ];
     }
 }

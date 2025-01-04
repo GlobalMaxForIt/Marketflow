@@ -14,15 +14,17 @@ class PostNotification implements ShouldBroadcast
 {
 
     public $message;
+    public $users_id;
 
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($message)
+    public function __construct($message, $users_id)
     {
         $this->message = $message;
+        $this->users_id = $users_id;
     }
 
     /**
@@ -39,6 +41,7 @@ class PostNotification implements ShouldBroadcast
     {
         return [
             'message' => $this->message,
+            'users_id' => $this->users_id,
         ];
     }
     public function broadcastAs()

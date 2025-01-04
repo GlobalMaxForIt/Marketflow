@@ -1009,7 +1009,19 @@
 </body>
 
 <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+<script>
 
+    @if(isset($user))
+        let current_user_id = "{{$user->id}}"
+        let token = "{{$user->token}}"
+    @else
+        let current_user_id = ""
+        let token = ""
+    @endif
+    let get_notifications_url = "{{route('getNotification')}}"
+    let cashier_product_url = "{{route('cashier-product.show', '=')}}"
+    let no_notification_text = "{{translate_title('No notifications', $lang)}}"
+</script>
 <script src="{{asset('js/pusher_commands.js')}}"></script>
 <script>
     let items_selected_text = "{{translate_title('items selected', $lang)}}"

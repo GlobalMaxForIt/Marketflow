@@ -102,11 +102,13 @@ class LanguageController extends Controller
     {
         $languages = Language::orderBy('id', 'ASC')->get();
         $lang = App::getLocale();
+        $user = Auth::user();
         return view('language.index', [
             'languages' => $languages,
             'title'=>$this->title,
             'current_page' => $this->current_page,
-            'lang'=>$lang
+            'lang'=>$lang,
+            'user'=>$user,
         ]);
 
 
@@ -171,11 +173,13 @@ class LanguageController extends Controller
     {
 
         $lang = App::getLocale();
+        $user = Auth::user();
         $languages = Language::get();
         return view('language.create', [
             'languages'=>$languages,
             'title'=>$this->title,
             'current_page' => $this->current_page,
+            'user'=>$user,
             'lang'=>$lang
             ]);
     }
@@ -215,10 +219,12 @@ class LanguageController extends Controller
 
         $lang = App::getLocale();
         // $languages = Language::get();
+        $user = Auth::user();
         $language = Language::findOrFail(decrypt($id));
         return view('language.edit', [
             'language'=>$language,
             'title'=>$this->title,
+            'user'=>$user,
             'current_page' => $this->current_page,
             'lang'=>$lang
         ]);

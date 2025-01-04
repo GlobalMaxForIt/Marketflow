@@ -517,7 +517,6 @@
         let image_src = "{{asset('icon/no_photo.jpg', $lang)}}"
         let cashbox_index = "{{route('indexLarge', $lang)}}"
         let return_success_text = "{{translate_title('Возврат сделан', $lang)}}"
-        let token = "{{$user->token}}"
         let json_products = JSON.parse('{!! $allProductsData['json_products'] !!}')
         let notify_text = "{{translate_title('amount was added successfully!', $lang)}}"
         let notify_text_left_in_stock = "{{translate_title('left in stock', $lang)}}"

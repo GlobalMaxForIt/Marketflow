@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Models\Cities;
 use Illuminate\Support\Facades\Auth;
@@ -111,5 +112,20 @@ class HomeController extends Controller
                 'message' => 'No cities'
             ], 200, [], JSON_INVALID_UTF8_SUBSTITUTE); // $error_type
         }
+    }
+
+    public function getNotification(){
+        $user = Auth::user();
+        $notification_data = [];
+        $notifications = $user->unreadnotifications;
+        foreach($notifications as $notification){
+            $notification_data[] = $notification->data;
+        }
+        $response = [
+            'data'=>$notification_data,
+            'status'=>true,
+            'message'=>'success'
+        ];
+        return response()->json($response, 200);
     }
 }

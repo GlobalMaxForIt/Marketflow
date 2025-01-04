@@ -20,9 +20,11 @@ class IndexController extends Controller
 
     public function index(){
         $lang = App::getLocale();
+        $user = Auth::user();
         return view('manager.index', [
             'title'=>$this->title,
             'lang'=>$lang,
+            'user'=>$user,
             'current_page'=>$this->current_page
         ]);
     }

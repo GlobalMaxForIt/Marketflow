@@ -11,20 +11,20 @@
                     <h4 class="mt-0 header-title">{{translate_title('Edit employee', $lang)}}</h4>
                 </div>
                 <div class="card-body">
-                    <form class="modal-body needs-validation" action="{{route('users.update', $user['id'])}}" method="POST" enctype="multipart/form-data" novalidate>
+                    <form class="modal-body needs-validation" action="{{route('users.update', $this_user['id'])}}" method="POST" enctype="multipart/form-data" novalidate>
                         @csrf
                         @method('PUT')
                         <div class="row">
                             <div class="position-relative col-6 mb-3">
                                 <label for="name" class="form-label">{{translate_title('Name', $lang)}}</label>
-                                <input type="text" id="name" class="form-control" name="name" value="{{$user['name']}}" required>
+                                <input type="text" id="name" class="form-control" name="name" value="{{$this_user['name']}}" required>
                                 <div class="invalid-tooltip">
                                     {{translate_title('Please enter percent.', $lang)}}
                                 </div>
                             </div>
                             <div class="position-relative col-6 mb-3">
                                 <label for="surname" class="form-label">{{translate_title('Surname', $lang)}}</label>
-                                <input type="text" id="surname" class="form-control" name="surname" value="{{$user['surname']}}" required>
+                                <input type="text" id="surname" class="form-control" name="surname" value="{{$this_user['surname']}}" required>
                                 <div class="invalid-tooltip">
                                     {{translate_title('Please enter percent.', $lang)}}
                                 </div>
@@ -33,16 +33,16 @@
                         <div class="row">
                             <div class="col-6 mb-3">
                                 <label for="middlename" class="form-label">{{translate_title('Middlename', $lang)}}</label>
-                                <input type="text" id="middlename" class="form-control" name="middlename"  value="{{$user['middlename']}}">
+                                <input type="text" id="middlename" class="form-control" name="middlename"  value="{{$this_user['middlename']}}">
                             </div>
                             <div class="col-6 mb-3">
                                 <label for="phone" class="form-label">{{translate_title('Phone', $lang)}}</label>
-                                <input type="text" id="phone" class="form-control" name="phone" value="{{$user['phone']}}">
+                                <input type="text" id="phone" class="form-control" name="phone" value="{{$this_user['phone']}}">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6 mb-3">
-                                <img onclick="showImage('{{$user['image']?asset("storage/users/".$user['image']):asset('icon/no_photo.jpg')}}')" data-bs-toggle="modal" data-bs-target="#images-modal" src="{{$user['image']?asset("storage/users/".$user['image']):asset('icon/no_photo.jpg')}}" alt="" height="144px">
+                                <img onclick="showImage('{{$this_user['image']?asset("storage/users/".$this_user['image']):asset('icon/no_photo.jpg')}}')" data-bs-toggle="modal" data-bs-target="#images-modal" src="{{$this_user['image']?asset("storage/users/".$this_user['image']):asset('icon/no_photo.jpg')}}" alt="" height="144px">
                             </div>
                             <div class="col-6 mb-3">
                                 <label for="name" class="form-label">{{translate_title('Image', $lang)}}</label>
@@ -52,23 +52,23 @@
                         <div class="row">
                             <div class="col-6 mb-3">
                                 <label for="email" class="form-label">{{translate_title('Email', $lang)}}</label>
-                                <input type="text" id="email" class="form-control" name="email" value="{{$user['email']}}">
+                                <input type="text" id="email" class="form-control" name="email" value="{{$this_user['email']}}">
                             </div>
                             <div class="col-4 mb-3 d-flex align-items-center">
                                 <label for="male" class="me-2 form-check-label">{{translate_title('Male', $lang)}}</label>
-                                <input type="radio" name="gender" id="male" value="{{\App\Constants::MALE}}" {{$user['gender'] == \App\Constants::MALE?'checked':''}} class="me-4 form-check-input">
+                                <input type="radio" name="gender" id="male" value="{{\App\Constants::MALE}}" {{$this_user['gender'] == \App\Constants::MALE?'checked':''}} class="me-4 form-check-input">
                                 <label for="female" class="me-2 form-check-label">{{translate_title('Female', $lang)}}</label>
-                                <input type="radio" name="gender" id="female" class="form-check-input" value="{{\App\Constants::FEMALE}}" {{$user['gender'] == \App\Constants::FEMALE?'checked':''}}>
+                                <input type="radio" name="gender" id="female" class="form-check-input" value="{{\App\Constants::FEMALE}}" {{$this_user['gender'] == \App\Constants::FEMALE?'checked':''}}>
                             </div>
                             <div class="col-2 mb-3 d-flex align-items-center">
                                 <label class="form-check-label me-2" for="status_">{{translate_title('Status', $lang)}}</label>
-                                <input class="form-check-input rounded-circle" type="checkbox" name="status" id="status_" {{(int)$user['status'] == 0?'checked':''}}>
+                                <input class="form-check-input rounded-circle" type="checkbox" name="status" id="status_" {{(int)$this_user['status'] == 0?'checked':''}}>
                             </div>
                         </div>
                         <div class="row">
                             <div class="mb-3 col-4">
                                 <label for="birth_date" class="form-label" for="status_">{{translate_title('Birth date', $lang)}}</label>
-                                <input type="text" name="birth_date" id="basic-datepicker" class="form-control" placeholder="Birth date" value="{{$user['birth_date']}}">
+                                <input type="text" name="birth_date" id="basic-datepicker" class="form-control" placeholder="Birth date" value="{{$this_user['birth_date']}}">
                             </div>
                             <div class="mb-3 col-4">
                                 <div class="mb-3">
@@ -100,7 +100,7 @@
                         <div class="row">
                             <div class="col-6 mb-3">
                                 <label for="address" class="form-label">{{translate_title('Address', $lang)}}</label>
-                                <input type="text" id="address" class="form-control" name="address" value="{{$user['address']?$user['address']->name:''}}">
+                                <input type="text" id="address" class="form-control" name="address" value="{{$this_user['address']?$this_user['address']->name:''}}">
                             </div>
                             <div class="col-6 mb-3">
                                 <label for="password" class="form-label">{{translate_title('Current password', $lang)}}</label>
@@ -135,7 +135,7 @@
                                 <div class="form-floating mb-3">
                                     <select class="form-select" name="role" id="floatingSelect" aria-label="Floating label select example">
                                         @foreach($roles as $role)
-                                            <option value="{{$role['value']}}" {{$user['role'] == $role['value']?'selected':''}}>{{$role['name']}}</option>
+                                            <option value="{{$role['value']}}" {{$this_user['role'] == $role['value']?'selected':''}}>{{$role['name']}}</option>
                                         @endforeach
                                     </select>
                                     <label for="floatingSelect">{{translate_title('Role', $lang)}}</label>
@@ -191,10 +191,10 @@
     <script src="{{asset('js/stuffs.js')}}"></script>
     <script>
         let page = true
-        @if($user['address'])
-            @if($user['address']->cities)
-                let current_region = "{{$user['address']->cities->region?$user['address']->cities->region->id:''}}"
-                let current_district = "{{$user['address']->cities->id??''}}"
+        @if($this_user['address'])
+            @if($this_user['address']->cities)
+                let current_region = "{{$this_user['address']->cities->region?$this_user['address']->cities->region->id:''}}"
+                let current_district = "{{$this_user['address']->cities->id??''}}"
             @else
                 let current_region = ''
                 let current_district = ''

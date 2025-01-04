@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\PostNotification;
 use App\Models\Sales;
+use App\Models\User;
 use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
 use App\Models\GiftCard;
@@ -27,7 +28,7 @@ class GiftCardController extends Controller
     {
         $user = Auth::user();
         $gift_cards = GiftCard::where('store_id', $user->store_id)->get();
-        return view('gift-cards.index', ['gift_cards'=> $gift_cards, 'lang'=>$this->lang]);
+        return view('gift-cards.index', ['gift_cards'=> $gift_cards, 'lang'=>$this->lang, 'user'=>$user]);
     }
 
     /**
@@ -97,7 +98,7 @@ class GiftCardController extends Controller
         }else{
             $start_end_date = '';
         }
-        return view('gift-cards.edit', ['gift_card'=> $gift_card, 'start_end_date'=>$start_end_date, 'lang'=>$this->lang]);
+        return view('gift-cards.edit', ['gift_card'=> $gift_card, 'start_end_date'=>$start_end_date, 'user'=>$user, 'lang'=>$this->lang]);
     }
 
     /**
@@ -159,12 +160,14 @@ class GiftCardController extends Controller
         $gift_card = GiftCard::where('name', $gift_card_code)->where('start_date', '<=', $time_now)->where('end_date', '>=', $time_now)->where('store_id', $user->store_id)->first();
         $data = [];
         $status = false;
-
+        $users = User::where('store_id', $user->store_id)->get();
+        $this_store_users_id = User::where('store_id', $user->store_id)->pluck('id');
         $message_data = 'Apple 1kg '.translate_title('has left ', $lang). ' 5';
-        event(new PostNotification($message_data));
+
+        event(new PostNotification($message_data, $this_store_users_id));
 //        Notification::send($users, new OrderNotification($data));
 
-        
+
         if($gift_card){
             if((int)$get_total_sum >= (int)$gift_card->min_price){
                 if($gift_card->price){

@@ -31,6 +31,8 @@ class OrganizationController extends Controller
     public function index()
     {
         $lang = App::getLocale();
+        $user = Auth::user();
+        $user = Auth::user();
         $organizations_ = Organization::all();
         $organizations = [];
         foreach($organizations_ as $organization) {
@@ -66,6 +68,8 @@ class OrganizationController extends Controller
             'organizations'=>$organizations,
             'title'=>$this->title,
             'lang'=>$lang,
+            'user'=>$user,
+            'user'=>$user,
             'current_page'=>$this->current_page
         ]);
     }
@@ -104,6 +108,7 @@ class OrganizationController extends Controller
     public function edit(string $id)
     {
         $lang = App::getLocale();
+        $user = Auth::user();
         $organization_ = Organization::find($id);
         $images = [];
         $images_ = [];
@@ -138,6 +143,7 @@ class OrganizationController extends Controller
             'images'=>$images_,
             'title'=>$this->title,
             'lang'=>$lang,
+            'user'=>$user,
             'current_page'=>$this->current_page
         ]);
     }

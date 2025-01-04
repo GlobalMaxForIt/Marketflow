@@ -28,6 +28,7 @@ class ProductsCategoriesController extends Controller
     public function index()
     {
         $language = App::getLocale();
+        $user = Auth::user();
         $products_categories_ = ProductsCategories::where('step', 0)->get();
         $products_sub_categories = [];
         $products_categories = [];
@@ -43,6 +44,7 @@ class ProductsCategoriesController extends Controller
             'products_categories'=>$products_categories,
             'title'=>$this->title,
             'lang'=>$language,
+            'user'=>$user,
             'current_page'=>$this->current_page
         ]);
     }
@@ -88,11 +90,13 @@ class ProductsCategoriesController extends Controller
     public function edit(string $id)
     {
         $lang = App::getLocale();
+        $user = Auth::user();
         $products_category = ProductsCategories::where('step', 0)->find($id);
         return view('superadmin.products_categories.edit', [
             'products_category'=>$products_category,
             'title'=>$this->title,
             'lang'=>$lang,
+            'user'=>$user,
             'current_page'=>$this->current_page
         ]);
     }

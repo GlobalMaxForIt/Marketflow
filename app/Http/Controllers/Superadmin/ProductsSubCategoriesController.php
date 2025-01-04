@@ -56,11 +56,13 @@ class ProductsSubCategoriesController extends Controller
         $products_sub_category = ProductsCategories::where('step', 1)->find($id);
         $products_categories = ProductsCategories::where('step', 0)->get();
         $lang = App::getLocale();
+        $user = Auth::user();
         return view('superadmin.products_sub_categories.edit', [
             'products_sub_category'=>$products_sub_category,
             'products_categories'=>$products_categories,
             'title'=>$this->title,
             'lang'=>$lang,
+            'user'=>$user,
             'current_page'=>$this->current_page
         ]);
     }

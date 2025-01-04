@@ -15,9 +15,12 @@ use App\Models\SalesItems;
 use App\Models\SalesPayments;
 use App\Models\SalesReports;
 use App\Models\ServicePrice;
+use App\Models\User;
+use App\Notifications\StockNotification;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Notification;
 
 class SalesService
 {
@@ -30,7 +33,7 @@ class SalesService
         $this->productsService = $productsService;
     }
 
-    public function salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $gift_card, $text, $checklist_changed, $debt_sum){
+    public function salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $gift_card, $text, $checklist_changed, $debt_sum, $user){
         $lang = App::getLocale();
         $sales->client_id = $client_id;
         if($text == 'checklist'){
@@ -72,10 +75,23 @@ class SalesService
                 $sales_items->price = $order_data_price;
                 $sales_items->save();
                 $product->stock = $product->stock - (float)$orderData['quantity'];
-
                 if((float)$product->stock<=5){
                     $message = $product->name.' '. $product->amount.' '.translate_title('has left ', $lang). ' '.$product->stock;
-                    event(new PostNotification($message));
+                    $this_store_users_id = User::where('store_id', $user->store_id)->pluck('id');
+                    $users = User::where('store_id', $user->store_id)->get();
+                    $product_small_image = storage_path('app/public/products/small/'.$product->image);
+                    if(file_exists($product_small_image)){
+                        $small_image = asset('storage/products/small/'.$product->image);
+                    }else{
+                        $small_image = asset('icon/no_photo.jpg');
+                    }
+                    $product_data = [
+                        'product_image'=>$small_image,
+                        'product_id'=>$product->id,
+                        'message'=>$message,
+                    ];
+                    Notification::send($users, new StockNotification($product_data));
+                    event(new PostNotification($message, $this_store_users_id));
                 }
                 $product->save();
             }

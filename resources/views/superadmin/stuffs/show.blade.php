@@ -22,67 +22,67 @@
                 <tbody>
                     <tr>
                         <th><h6>{{translate_title('Name', $lang)}}</h6></th>
-                        <td><h6>{{$user['name']??''}}</h6></td>
+                        <td><h6>{{$this_user['name']??''}}</h6></td>
                     </tr>
                     <tr>
                         <th><h6>{{translate_title('Surname', $lang)}}</h6></th>
-                        <td><h6>{{$user['surname']??''}}</h6></td>
+                        <td><h6>{{$this_user['surname']??''}}</h6></td>
                     </tr>
                     <tr>
                         <th><h6>{{translate_title('Middlename', $lang)}}</h6></th>
-                        <td><h6>{{$user['middlename']??''}}</h6></td>
+                        <td><h6>{{$this_user['middlename']??''}}</h6></td>
                     </tr>
                     <tr>
                         <th><h6>{{translate_title('Phone', $lang)}}</h6></th>
-                        <td><h6>{{$user['phone']??''}}</h6></td>
+                        <td><h6>{{$this_user['phone']??''}}</h6></td>
                     </tr>
                     <tr>
                         <th><h6>{{translate_title('Old', $lang)}}</h6></th>
-                        <td><h6>{{$user['old']??''}}</h6></td>
+                        <td><h6>{{$this_user['old']??''}}</h6></td>
                     </tr>
                     <tr>
                         <th><h6>{{translate_title('Gender', $lang)}}</h6></th>
-                        <td><h6>{{$user['gender']??''}}</h6></td>
+                        <td><h6>{{$this_user['gender']??''}}</h6></td>
                     </tr>
                     <tr>
                         <th><h6>{{translate_title('Role', $lang)}}</h6></th>
-                        <td><h6>{{$user['role']??''}}</h6></td>
+                        <td><h6>{{$this_user['role']??''}}</h6></td>
                     </tr>
                     <tr>
                         <th><h6>{{translate_title('Email', $lang)}}</h6></th>
-                        <td><h6>{{$user['email']??''}}</h6></td>
+                        <td><h6>{{$this_user['email']??''}}</h6></td>
                     </tr>
                     <tr>
                         <th><h6>{{translate_title('Status', $lang)}}</h6></th>
-                        <td><h6>{{$user['status']}}</h6></td>
+                        <td><h6>{{$this_user['status']}}</h6></td>
                     </tr>
                     <tr>
                         <th><h6>{{translate_title('Address', $lang)}}</h6></th>
-                        <td><h6>{{$user['address']??''}}</h6></td>
+                        <td><h6>{{$this_user['address']??''}}</h6></td>
                     </tr>
                     <tr>
                         <th><h6>{{translate_title('Passport', $lang)}}</h6></th>
-                        <td><h6>{{$user['passport']??''}}</h6></td>
+                        <td><h6>{{$this_user['passport']??''}}</h6></td>
                     </tr>
                     <tr>
                         <th><h6>{{translate_title('Company', $lang)}}</h6></th>
-                        <td><h6>{{$user['company']??''}}</h6></td>
+                        <td><h6>{{$this_user['company']??''}}</h6></td>
                     </tr>
                     <tr>
                         <th><h6>{{translate_title('Organization', $lang)}}</h6></th>
-                        <td><h6>{{$user['organization']??''}}</h6></td>
+                        <td><h6>{{$this_user['organization']??''}}</h6></td>
                     </tr>
                     <tr>
                         <th><h6>{{translate_title('image', $lang)}}</h6></th>
                         <td>
                             <div style="margin-right: 2px">
-                                <img onclick="showImage('{{$user['image']}}')" src="{{$user['image']}}" data-bs-toggle="modal" data-bs-target="#images-modal" alt="" height="144px">
+                                <img onclick="showImage('{{$this_user['image']}}')" src="{{$this_user['image']}}" data-bs-toggle="modal" data-bs-target="#images-modal" alt="" height="144px">
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <th><h6>{{translate_title('Updated at', $lang)}}</h6></th>
-                        <td><h6>{{$user['updated_at']??''}}</h6></td>
+                        <td><h6>{{$this_user['updated_at']??''}}</h6></td>
                     </tr>
                 </tbody>
             </table>

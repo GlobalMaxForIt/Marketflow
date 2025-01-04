@@ -30,7 +30,7 @@
                                             <th><h6>{{translate_title('Functions', $lang)}}</h6></th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody>F
                                     @foreach($users as $user)
                                         <tr>
                                             <td class="show_page">{{$user['id']}}</h6></td>

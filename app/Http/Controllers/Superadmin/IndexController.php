@@ -24,8 +24,10 @@ class IndexController extends Controller
         $cancelled_orders = 2;
         $accepted_orders = 2;
         $lang = App::getLocale();
+        $user = Auth::user();
         return view('superadmin.index', [
             'title'=>$this->title,
+            'user'=>$user,
             'ordered_orders'=>$ordered_orders,
             'performed_orders'=>$performed_orders,
             'cancelled_orders'=>$cancelled_orders,

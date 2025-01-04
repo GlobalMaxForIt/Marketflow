@@ -34,6 +34,7 @@ class StoreController extends Controller
         $stores_ = Store::all();
         $stores = [];
         $lang = App::getLocale();
+        $user = Auth::user();
         foreach($stores_ as $store) {
             $images = [];
             if ($store->images) {
@@ -77,6 +78,7 @@ class StoreController extends Controller
             'organizations'=>$organizations,
             'title'=>$this->title,
             'lang'=>$lang,
+            'user'=>$user,
             'current_page'=>$this->current_page
         ]);
     }
@@ -118,6 +120,7 @@ class StoreController extends Controller
         $lang = App::getLocale();
         $store_ = Store::find($id);
         $images = [];
+        $user = Auth::user();
         $images_ = [];
         if ($store_->images) {
             $images_ = json_decode($store_->images);
@@ -161,6 +164,7 @@ class StoreController extends Controller
             'organizations'=>$organizations,
             'title'=>$this->title,
             'lang'=>$lang,
+            'user'=>$user,
             'current_page'=>$this->current_page
         ]);
     }

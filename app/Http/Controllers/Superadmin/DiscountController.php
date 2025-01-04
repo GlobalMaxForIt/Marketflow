@@ -29,6 +29,7 @@ class DiscountController extends Controller
 
     public function index()
     {
+        $user = Auth::user();
         $lang = App::getLocale();
         $products_categories = ProductsCategories::where('step', 0)->orderBy('id', 'asc')->get();
         $discounts_distinct = Discount::distinct('discount_number')->whereNull('client_id')->get();
@@ -72,6 +73,7 @@ class DiscountController extends Controller
             'clients'=>$clients,
             'clients_for_discount'=>$clients_for_discount,
             'lang'=>$lang,
+            'user'=>$user,
             'current_page'=>$this->current_page
         ]);
     }
@@ -137,10 +139,12 @@ class DiscountController extends Controller
     public function create()
     {
         $lang = App::getLocale();
+        $user = Auth::user();
         $categories = ProductsCategories::where('step', 0)->orderBy('id', 'asc')->get();
         return view('superadmin.discount.create', [
             'categories'=>$categories,
             'lang'=>$lang,
+            'user'=>$user,
             'current_page'=>$this->current_page
         ]);
     }
@@ -217,6 +221,7 @@ class DiscountController extends Controller
     public function edit(string $id)
     {
         $lang = App::getLocale();
+        $user = Auth::user();
         $discount = Discount::find($id);
         $clients = [];
         $clients_ = Clients::all();
@@ -292,6 +297,7 @@ class DiscountController extends Controller
             'quantity'=>$quantity,
             'title'=>$this->title,
             'lang'=>$lang,
+            'user'=>$user,
             'current_page'=>$this->current_page
         ]);
     }

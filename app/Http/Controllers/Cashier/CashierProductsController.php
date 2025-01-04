@@ -118,6 +118,7 @@ class CashierProductsController extends Controller
             'productsSubCategories'=>$productsSubCategories,
             'title'=>$this->title,
             'lang'=>$language,
+            'user'=>$user,
             'current_page'=>$this->current_page
         ]);
     }
@@ -335,7 +336,7 @@ class CashierProductsController extends Controller
         }else{
             return redirect()->back()->with('status', 'array_products');
         }
-        return view('cashier.products.show', ['array_product'=>$array_product, 'lang'=>$language, 'current_page'=>$this->current_page]);
+        return view('cashier.products.show', ['array_product'=>$array_product, 'lang'=>$language, 'user'=>$user, 'current_page'=>$this->current_page]);
     }
 
     /**

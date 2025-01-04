@@ -33,6 +33,7 @@ class UserController extends Controller
 
     public function index()
     {
+        $user = Auth::user();
         $users_ = User::all();
         $users = [];
         $lang = App::getLocale();
@@ -113,6 +114,7 @@ class UserController extends Controller
             'organizations'=>$organizations,
             'title'=>$this->title,
             'roles'=>$roles,
+            'user'=>$user,
             'lang'=>$lang,
             'current_page'=>$this->current_page
         ]);
@@ -180,7 +182,8 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        $user = User::find($id);
+        $this_user = User::find($id);
+        $user = Auth::user();
         $lang = App::getLocale();
         $roles = [
             ['value'=>1, 'name'=>'superadmin'],
@@ -190,7 +193,7 @@ class UserController extends Controller
             ['value'=>5, 'name'=>'suppliers']
         ];
         $user_ = [];
-        if($user) {
+        if($this_user) {
             $gender = '';
             $middlename = '';
             $phone = '';
@@ -198,7 +201,7 @@ class UserController extends Controller
             $image = asset('icon/no_photo.jpg');
             $address = '';
             $passport = '';
-            $personal_info = $user->personalInfo;
+            $personal_info = $this_user->personalInfo;
             if($personal_info){
                 if ($personal_info->gender == \App\Constants::MALE) {
                     $gender = translate_title('Male', $this->lang);
@@ -222,12 +225,12 @@ class UserController extends Controller
                 $passport = $personal_info->passport;
             }
 
-            if ($user['status'] == \App\Constants::NOT_ACTIVE) {
+            if ($this_user['status'] == \App\Constants::NOT_ACTIVE) {
                 $status = translate_title('Not active', $this->lang);
-            }elseif($user['status'] == \App\Constants::ACTIVE){
+            }elseif($this_user['status'] == \App\Constants::ACTIVE){
                 $status = translate_title('Active', $this->lang);
             }
-            switch($user['role']){
+            switch($this_user['role']){
                 case \App\Constants::SUPERADMIN:
                     $role = translate_title('Superadmin', $this->lang);
                     break;
@@ -248,22 +251,22 @@ class UserController extends Controller
             }
 
             $user_ = [
-                'id'=>$user->id,
-                'name'=>$user->name,
-                'surname'=>$user->surname,
+                'id'=>$this_user->id,
+                'name'=>$this_user->name,
+                'surname'=>$this_user->surname,
                 'middlename'=>$middlename,
                 'phone'=>$phone,
                 'birth_date'=>$birth_date,
                 'image'=>$image,
                 'gender'=>$gender,
                 'role'=>$role,
-                'email'=>$user->email,
+                'email'=>$this_user->email,
                 'status'=>$status,
                 'address'=>$address,
                 'passport'=>$passport,
-                'company'=>$user->company?$user->company->name:'',
-                'organization'=>$user->organization?$user->organization->name:'',
-                'updated_at'=>$user->updated_at,
+                'company'=>$this_user->company?$this_user->company->name:'',
+                'organization'=>$this_user->organization?$this_user->organization->name:'',
+                'updated_at'=>$this_user->updated_at,
             ];
         }
 
@@ -286,7 +289,8 @@ class UserController extends Controller
             ];
         }
         return view('superadmin.stuffs.edit', [
-            'user'=>$user_,
+            'this_user'=>$user_,
+            'user'=>$user,
             'roles'=>$roles,
             'companies'=>$companies,
             'organizations'=>$organizations,
@@ -298,10 +302,11 @@ class UserController extends Controller
 
     public function show(string $id)
     {
-        $user = User::find($id);
+        $this_user = User::find($id);
+        $user = Auth::user();
         $user_ = [];
         $lang = App::getLocale();
-        if($user) {
+        if($this_user) {
             $gender = '';
             $middlename = '';
             $phone = '';
@@ -309,7 +314,7 @@ class UserController extends Controller
             $image = asset('icon/no_photo.jpg');
             $address = '';
             $passport = '';
-            $personal_info = $user->personalInfo;
+            $personal_info = $this_user->personalInfo;
             if($personal_info){
                 if ($personal_info->gender == \App\Constants::MALE) {
                     $gender = translate_title('Male', $this->lang);
@@ -333,12 +338,12 @@ class UserController extends Controller
                 $passport = $personal_info->passport;
             }
 
-            if ($user['status'] == \App\Constants::NOT_ACTIVE) {
+            if ($this_user['status'] == \App\Constants::NOT_ACTIVE) {
                 $status = translate_title('Not active', $this->lang);
-            }elseif($user['status'] == \App\Constants::ACTIVE){
+            }elseif($this_user['status'] == \App\Constants::ACTIVE){
                 $status = translate_title('Active', $this->lang);
             }
-            switch($user['role']){
+            switch($this_user['role']){
                 case \App\Constants::SUPERADMIN:
                     $role = translate_title('Superadmin', $this->lang);
                     break;
@@ -359,22 +364,22 @@ class UserController extends Controller
             }
 
             $user_ = [
-                'id'=>$user->id,
-                'name'=>$user->name,
-                'surname'=>$user->surname,
+                'id'=>$this_user->id,
+                'name'=>$this_user->name,
+                'surname'=>$this_user->surname,
                 'middlename'=>$middlename,
                 'phone'=>$phone,
                 'old'=>$old,
                 'image'=>$image,
                 'gender'=>$gender,
                 'role'=>$role,
-                'email'=>$user->email,
+                'email'=>$this_user->email,
                 'status'=>$status,
                 'address'=>$address,
                 'passport'=>$passport,
-                'company'=>$user->company?$user->company->name:'',
-                'organization'=>$user->organization?$user->organization->name:'',
-                'updated_at'=>$user->updated_at,
+                'company'=>$this_user->company?$this_user->company->name:'',
+                'organization'=>$this_user->organization?$this_user->organization->name:'',
+                'updated_at'=>$this_user->updated_at,
             ];
         }
 
@@ -389,6 +394,7 @@ class UserController extends Controller
 //        }
         return view('superadmin.stuffs.show', [
             'user'=>$user_,
+            'this_user'=>$user,
             'title'=>$this->title,
             'lang'=>$lang,
             'current_page'=>$this->current_page

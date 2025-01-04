@@ -31,6 +31,7 @@ class CompanyController extends Controller
     public function index()
     {
         $lang = App::getLocale();
+        $user = Auth::user();
         $companies_ = Company::all();
         $companies = [];
         foreach($companies_ as $company) {
@@ -65,6 +66,7 @@ class CompanyController extends Controller
             'companies'=>$companies,
             'title'=>$this->title,
             'lang'=>$lang,
+            'user'=>$user,
             'current_page'=>$this->current_page
         ]);
     }
@@ -102,6 +104,7 @@ class CompanyController extends Controller
      */
     public function edit(string $id)
     {
+        $user = Auth::user();
         $lang = App::getLocale();
         $company_ = Company::find($id);
         $images = [];
@@ -137,6 +140,7 @@ class CompanyController extends Controller
             'images'=>$images_,
             'title'=>$this->title,
             'lang'=>$lang,
+            'user'=>$user,
             'current_page'=>$this->current_page
         ]);
     }

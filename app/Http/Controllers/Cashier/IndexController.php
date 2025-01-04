@@ -21,6 +21,7 @@ class IndexController extends Controller
     public function index(){
         $ordered_orders = 14;
         $lang = App::getLocale();
+        $user = Auth::user();
         $performed_orders = 10;
         $cancelled_orders = 2;
         $accepted_orders = 2;
@@ -31,6 +32,7 @@ class IndexController extends Controller
             'cancelled_orders'=>$cancelled_orders,
             'accepted_orders'=>$accepted_orders,
             'lang'=>$lang,
+            'user'=>$user,
             'current_page'=>$this->current_page
         ]);
     }

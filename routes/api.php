@@ -28,6 +28,7 @@ Route::group(['middleware'=>'auth:sanctum'], function () {
     Route::post('gift-card', [GiftCardController::class, 'giftCard'])->name('giftCard');
     Route::get('get-check-aside', [CashboxController::class, 'getCheckAside'])->name('getCheckAside');
     Route::post('confirm-return', [PaymentsController::class, 'confirmReturn'])->name('confirmReturn');
+    Route::post('get-notification', [HomeController::class, 'getNotification'])->name('getNotification');
     Route::post('payment-delete', [PaymentsController::class, 'paymentDeleteFunc'])->name('paymentDeleteFunc');
 });
 

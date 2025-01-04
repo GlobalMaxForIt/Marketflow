@@ -22,6 +22,7 @@ class IndexController extends Controller
 
     public function index(){
         $lang = App::getLocale();
+        $user = Auth::user();
         $ordered_orders = 14;
         $performed_orders = 10;
         $cancelled_orders = 2;
@@ -33,14 +34,17 @@ class IndexController extends Controller
             'cancelled_orders'=>$cancelled_orders,
             'accepted_orders'=>$accepted_orders,
             'lang'=>$lang,
+            'user'=>$user,
             'current_page'=>$this->current_page
         ]);
     }
 
     public function table(){
+        $user = Auth::user();
         return view('admin.table', [
             'title'=>$this->title,
-            'lang'=>$this->lang
+            'lang'=>$this->lang,
+            'user'=>$user,
         ]);
     }
 }

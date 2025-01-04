@@ -46,6 +46,7 @@ class ProductsController extends Controller
             'quantity'=>0,
         ];
         $units = Unit::all();
+        $user = Auth::user();
         foreach($products_categories as $category){
             $sub_categories = $category->subcategory;
             $sub_categories_quantity = count($sub_categories);
@@ -112,6 +113,7 @@ class ProductsController extends Controller
             'productsSubCategories'=>$productsSubCategories,
             'title'=>$this->title,
             'lang'=>$language,
+            'user'=>$user,
             'current_page'=>$this->current_page
         ]);
     }
@@ -175,6 +177,7 @@ class ProductsController extends Controller
     {
         $units = Unit::all();
         $product = Products::find($id);
+        $user = Auth::user();
         $category_product = $product->products_categories;
         if($category_product){
             $current_category = $category_product->category;
@@ -209,6 +212,7 @@ class ProductsController extends Controller
             'images'=>$images, 'title'=>$this->title,
             'units'=>$units,
             'lang'=>$lang,
+            'user'=>$user,
             'current_page'=>$this->current_page
         ]);
     }
@@ -218,6 +222,7 @@ class ProductsController extends Controller
         $language = App::getLocale();
         $product = Products::find($id);
         $array_product = [];
+        $user = Auth::user();
         if($product){
             $images = [];
             $product_info = $product->product_info;
@@ -314,7 +319,7 @@ class ProductsController extends Controller
         }else{
             return redirect()->back()->with('status', 'array_products');
         }
-        return view('superadmin.products.show', ['array_product'=>$array_product, 'lang'=>$language, 'current_page'=>$this->current_page]);
+        return view('superadmin.products.show', ['array_product'=>$array_product, 'user'=>$user, 'lang'=>$language, 'current_page'=>$this->current_page]);
     }
 
     /**

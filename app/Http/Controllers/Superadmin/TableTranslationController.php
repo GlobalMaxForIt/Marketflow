@@ -34,9 +34,11 @@ class TableTranslationController extends Controller
     public function index()
     {
         $lang = App::getLocale();
+        $user = Auth::user();
         return view('language.tables', [
             'title'=>$this->title,
             'lang'=>$lang,
+            'user'=>$user,
             'current_page'=>$this->current_page
         ]);
     }
@@ -44,11 +46,13 @@ class TableTranslationController extends Controller
     public function show($type){
         $languages = Language::orderBy('id', 'ASC')->get();
         $lang = App::getLocale();
+        $user = Auth::user();
         return view('language.table_lang', [
             'type'=>$type,
             'languages'=>$languages,
             'title'=>$this->title,
             'lang'=>$lang,
+            'user'=>$user,
             'current_page'=>$this->current_page
         ]);
     }
@@ -57,6 +61,7 @@ class TableTranslationController extends Controller
         $type=$request->type;
         $id=$request->language_id;
         $lang = App::getLocale();
+        $user = Auth::user();
         $language = Language::findOrFail($id);
        // $lang_keys = Translation::where('lang', env('DEFAULT_LANGUAGE', 'en'))->get();
         $sort_search = null;
@@ -74,6 +79,7 @@ class TableTranslationController extends Controller
                     'type'=>$type,
                     'current_page'=>$this->current_page,
                     'title'=>$this->title,
+                    'user'=>$user,
                     'lang'=>$lang
                 ]);
                 break;
@@ -90,6 +96,7 @@ class TableTranslationController extends Controller
                     'type'=>$type,
                     'current_page'=>$this->current_page,
                     'title'=>$this->title,
+                    'user'=>$user,
                     'lang'=>$lang
                 ]);
                 break;
@@ -106,6 +113,7 @@ class TableTranslationController extends Controller
                     'type'=>$type,
                     'current_page'=>$this->current_page,
                     'title'=>$this->title,
+                    'user'=>$user,
                     'lang'=>$lang
                 ]);
                 break;
@@ -122,6 +130,7 @@ class TableTranslationController extends Controller
                     'type'=>$type,
                     'current_page'=>$this->current_page,
                     'title'=>$this->title,
+                    'user'=>$user,
                     'lang'=>$lang
                 ]);
                 break;
@@ -138,6 +147,7 @@ class TableTranslationController extends Controller
                     'type'=>$type,
                     'current_page'=>$this->current_page,
                     'title'=>$this->title,
+                    'user'=>$user,
                     'lang'=>$lang
                 ]);
                 break;

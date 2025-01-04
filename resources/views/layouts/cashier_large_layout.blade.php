@@ -44,26 +44,9 @@
     <link rel="stylesheet" href="{{asset('css/main_manage.css')}}">
     <link rel="stylesheet" href="{{asset('css/datatable_style.css')}}">
 
-{{--    <script src="{{asset('js/pusher_commands.js')}}"></script>--}}
     <script src="{{ asset('js/jquery.min.js') }}"></script>
 
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-    <script>
-            Pusher.logToConsole = true;
-
-            var pusher_ = new Pusher('c269e7cb3a6819f86947', {
-                cluster: 'ap1'
-            });
-
-            var channel_ = pusher_.subscribe('post-order');
-            console.log(channel_)
-            channel_.bind('post-event', function(data) {
-                console.log(data)
-                if(data.message != null && data.message != undefined){
-                    toastr.success(data.message)
-                }
-            });
-    </script>
 
     <script src="{{ asset('libs/toastr/build/toastr.min.js') }}"></script>
 
@@ -203,33 +186,12 @@
                         </h5>
                     </div>
 
-                    <div class="noti-scroll" data-simplebar>
-                        @forelse($current_user->unreadnotifications as $notification)
-                            @if($notification->type == "App\Notifications\OrderNotification")
-                                @if(!empty($notification->data))
-                                    <a href="#" class="dropdown-item notify-item">
-                                        <div class="notify-icon" style="background-image: url({{isset($notification->data['product_images'])?$notification->data['product_images']:''}})"></div>
-                                        <p class="notify-details">
-                                            @if(isset($notification->data['product_name']))
-                                                {{strlen($notification->data['product_name'])>24?substr($notification->data['product_name'], 0, 24):$notification->data['product_name']}}...  <b>{{$notification->data['order_all_price']}}</b>
-                                            @endif
-                                        </p>
-                                        <p class="text-muted mb-0 user-msg">
-                                            @if(isset($notification->data['user']))
-                                                <small>{{$notification->data['user']?$notification->data['user']:''}}</small>
-                                            @endif
-                                        </p>
-                                    </a>
-                                    <hr style="margin: 0px">
-                                @endif
-                            @endif
-                        @empty
-                            <a href="javascript:void(0);"
-                               class="dropdown-item text-center text-primary notify-item notify-all">
-                                {{ translate_title('No notifications', $lang)}}
-                                <i class="fe-arrow-right"></i>
-                            </a>
-                        @endforelse
+                    <div class="noti-scroll" data-simplebar id="current_user_notifications">
+                        <a href="javascript:void(0);"
+                           class="dropdown-item text-center text-primary notify-item notify-all">
+                            {{ translate_title('No notifications', $lang)}}
+                            <i class="fe-arrow-right"></i>
+                        </a>
                     </div>
                     <!-- All-->
                     <a href="#"
@@ -960,6 +922,20 @@
 
 </body>
 
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+<script>
+    @if(isset($user))
+        let current_user_id = "{{$user->id}}"
+        let token = "{{$user->token}}"
+    @else
+        let current_user_id = ""
+        let token = ""
+    @endif
+    let get_notifications_url = "{{route('getNotification')}}"
+    let cashier_product_url = "{{route('cashier-product.show', '=')}}"
+    let no_notification_text = "{{translate_title('No notifications', $lang)}}"
+</script>
+<script src="{{asset('js/pusher_commands.js')}}"></script>
 <script>
     let items_selected_text = "{{translate_title('items selected', $lang)}}"
     let search_client_text = "{{translate_title('Поиск', $lang)}}"
