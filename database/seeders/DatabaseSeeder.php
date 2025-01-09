@@ -25,7 +25,8 @@ class DatabaseSeeder extends Seeder
             ProductsCategoriesTranslationSeeder::class,
             UserSeeder::class,
             UnitSeeder::class,
-            UnitTranslationSeeder::class
+            UnitTranslationSeeder::class,
+            CashbackTypeSeeder::class
         ]);
     }
 }

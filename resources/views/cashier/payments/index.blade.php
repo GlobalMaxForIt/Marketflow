@@ -219,7 +219,6 @@
         let taken_back_text =  "{{translate_title('Taken back', $lang)}}"
         let return_icon = "{{asset('img/return.svg')}}"
         let page_name = 'payment'
-        let token = "{{$user->token}}"
         let return_success_text = "{{translate_title('Возврат сделан', $lang)}}"
         let return_modal_title = document.getElementById('return_modal_title')
         let returned_back_modal_title = document.getElementById('returned_back_modal_title')
@@ -227,8 +226,12 @@
         let order_selected_product_info = ''
         let payment_pay_url = "{{route('paymentPay')}}"
         let gift_card_url = "{{route('giftCard')}}"
+        let cashback_url = "{{route('cashback')}}"
         let get_check_aside_url = "{{route('getCheckAside')}}"
         let cashbox_big_url = "{{route('confirmReturn')}}"
+        let client_cashback_sum = 0
+        let cashback_text_1 = "{{translate_title('This client has', $lang)}}"
+        let cashback_text = "{{translate_title('cashback', $lang)}}"
     </script>
     <script>
         let payment_input_month = document.getElementById('payment_input_month')

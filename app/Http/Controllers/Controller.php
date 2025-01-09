@@ -52,4 +52,20 @@ class Controller extends BaseController
         ], 200, [], JSON_INVALID_UTF8_SUBSTITUTE); // $error_type
 
     }
+    public function getNotification(){
+        $current_user = Auth::user();
+        $unreadnotifications = $current_user->notifications()->whereNull('read_at')->get();
+        $unreadnotifications_quantity = $current_user->notifications()->whereNull('read_at')->count();
+
+        $first_name = $current_user->name?$current_user->name.' ':'';
+        $last_name = $current_user->surname?$current_user->surname.' ':'';
+        $middle_name = $current_user->middlename?$current_user->middlename:'';
+        $current_user_name = $first_name.''.$last_name.''.$middle_name;
+        return [
+            'current_user'=>$current_user,
+            'current_user_name'=>$current_user_name,
+            'unreadnotifications'=>$unreadnotifications,
+            'unreadnotifications_quantity'=>$unreadnotifications_quantity,
+        ];
+    }
 }

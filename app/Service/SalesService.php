@@ -5,6 +5,8 @@ namespace App\Service;
 
 use App\Constants;
 use App\Events\PostNotification;
+use App\Models\Cashback;
+use App\Models\CashbackType;
 use App\Models\Clients;
 use App\Models\Discount;
 use App\Models\giftCard;
@@ -91,7 +93,7 @@ class SalesService
                         'message'=>$message,
                     ];
                     Notification::send($users, new StockNotification($product_data));
-                    event(new PostNotification($message, $this_store_users_id));
+                    event(new PostNotification($product_data, $this_store_users_id));
                 }
                 $product->save();
             }
@@ -110,20 +112,24 @@ class SalesService
         $sales->discount = $order_discount_price;
         $sales->client_discount_price = (int)$client_dicount_price;
         $total_price = $all_price - $order_discount_price - (int)$client_dicount_price;
-
-        $gift_card_code = $gift_card->name;
-        if($gift_card->price){
-            $price = $gift_card->price;
-        }else{
-            $price = (int)$total_price * $gift_card->percent/100;
+        $gift_data = [];
+        $price = 0;
+        $gift_card_code = '';
+        if($gift_card){
+            $gift_card_code = $gift_card->name;
+            if($gift_card->price){
+                $price = (int)$gift_card->price;
+            }else{
+                $price = (int)((int)$total_price * $gift_card->percent/100);
+            }
+            $gift_data = [
+                'price'=>$price,
+                'percent'=>$gift_card->percent??'',
+            ];
+            $sales->gift_card_sum = $price;
+            $sales->gift_card_percent = $gift_card->percent;
         }
-        $gift_data = [
-            'price'=>$price,
-            'percent'=>$gift_card->percent??'',
-        ];
         $total_price = $total_price - $price;
-        $sales->gift_card_sum = $price;
-        $sales->gift_card_percent = $gift_card->percent;
         $sales->paid_amount = $paid_amount;
         $sales->return_amount = $return_amount;
         $sales->total_amount = $total_price;
@@ -150,6 +156,20 @@ class SalesService
             $sales_reports->revenue = $all_price;
             $sales_reports->profit = $all_price - $all_cost_price;
             $sales_reports->save();
+        }
+        $cashback = Cashback::where('client_id', $client_id)->first();
+        if($cashback){
+            $cashback->client_expenses = (int)$cashback->client_expenses + $total_price;
+            $cashback_type = $cashback->cashback_type;
+            $cashback_for_bilion = (int)$cashback->client_expenses/1000000;
+            if($cashback_for_bilion >0){
+                $current_cashback_sum = (int)($cashback_for_bilion*((int)$cashback_type->percent/100));
+                if($current_cashback_sum>0){
+                    $cashback->all_sum = $current_cashback_sum;
+                    $cashback->left_sum = $current_cashback_sum - (int)$cashback->taken_sum;
+                    $cashback->save();
+                }
+            }
         }
         $sales_id = (string)$sales->id;
         if(strlen($sales_id)<8){

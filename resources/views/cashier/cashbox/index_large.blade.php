@@ -97,7 +97,7 @@
                                                             <option value="" selected disabled>{{translate_title('Select a client', $lang)}}</option>
                                                             <optgroup label="Clients">
                                                                 @foreach($clients_for_discount as $client_for_discount)
-                                                                    <option value="{{$client_for_discount['client_id']}} {{$client_for_discount['percent']}} /{{$client_for_discount['client_full_name']}} /{{$client_for_discount['phone']}} /{{$client_for_discount['client_all_total_sum']}}">{{$client_for_discount['client_full_name']}}</option>
+                                                                    <option value="{{$client_for_discount['client_id']}} {{$client_for_discount['percent']}} /{{$client_for_discount['client_full_name']}} /{{$client_for_discount['phone']}} /{{$client_for_discount['client_all_total_sum']}} /{{$client_for_discount['cashback']}}">{{$client_for_discount['client_full_name']}}</option>
                                                                 @endforeach
                                                             </optgroup>
                                                         </select>
@@ -525,6 +525,7 @@
         let set_gift_card_text = "{{translate_title('The gift card successfully set', $lang)}}"
         let taken_back_text = ""
         let client_total_sales = 0
+        let client_cashback_sum = 0
         let clientPhoneNumber = document.getElementById('clientPhoneNumber')
         let selected_checklist_id = ''
         let checklist_changed = false
@@ -538,8 +539,11 @@
         let returned_back_modal_title = ''
         let payment_pay_url = "{{route('paymentPay')}}"
         let gift_card_url = "{{route('giftCard')}}"
+        let cashback_url = "{{route('cashback')}}"
         let get_check_aside_url = "{{route('getCheckAside')}}"
         let cashbox_big_url = "{{route('confirmReturn')}}"
+        let cashback_text_1 = "{{translate_title('This client has', $lang)}}"
+        let cashback_text = "{{translate_title('cashback', $lang)}}"
 
         let set_checklist_button_delete = document.getElementById('set_checklist_button_delete')
         if(set_checklist_button_delete != undefined && set_checklist_button_delete != null) {
@@ -547,26 +551,35 @@
         }
 
         $('#client_select_id_2').on('change', function () {
+            client_cashback_sum = 0
             let discountInfo = client_select_id_2.value.split(" ")
             let discountClientInfo = client_select_id_2.value.split("/")
-            if(discountInfo[1] != undefined && discountInfo[1] != null){
-                discountValue = discountInfo[1]
-                client_id = discountInfo[0]
+            if(discountClientInfo[1] != undefined && discountClientInfo[2] != undefined && discountClientInfo[3] != undefined && discountClientInfo[4] != undefined &&
+                discountClientInfo[1] != null && discountClientInfo[2] != null && discountClientInfo[3] != null && discountClientInfo[4] != null){
+                if(discountInfo[1] != undefined && discountInfo[1] != null){
+                    discountValue = discountInfo[1]
+                    client_id = discountInfo[0]
+                }
+                if(parseInt(discountValue) != 0){
+                    percent_v = (100 - discountValue)/100
+                }
+                if(discountClientInfo[1] != undefined && discountClientInfo[1] != null){
+                    clientFullName.innerText = ' '+discountClientInfo[1]
+                }
+                if(discountClientInfo[2] != undefined && discountClientInfo[2] != null){
+                    clientPhoneNumber.innerText = ' '+discountClientInfo[2]
+                }
+                if(discountClientInfo[3] != undefined && discountClientInfo[3] != null){
+                    client_total_sales = discountClientInfo[3]
+                }
+                if(discountClientInfo[4] != undefined && discountClientInfo[4] != null){
+                    client_cashback_sum = discountClientInfo[4]
+                }
+                cashback_input.value = format_entered_sum(client_cashback_sum)
+                cashback = client_cashback_sum
+                confirm_client_discount_func(discountValue)
+                setClientPrices()
             }
-            if(parseInt(discountValue) != 0){
-                percent_v = (100 - discountValue)/100
-            }
-            if(discountClientInfo[1] != undefined && discountClientInfo[1] != null){
-                clientFullName.innerText = ' '+discountClientInfo[1]
-            }
-            if(discountClientInfo[2] != undefined && discountClientInfo[2] != null){
-                clientPhoneNumber.innerText = ' '+discountClientInfo[2]
-            }
-            if(discountClientInfo[3] != undefined && discountClientInfo[3] != null){
-                client_total_sales = discountClientInfo[3]
-            }
-            confirm_client_discount_func(discountValue)
-            setClientPrices()
         })
         let checklistData = []
 
@@ -646,7 +659,6 @@
                         checklist_changed = true
                         set_checklist_button_delete.disabled = false
                         selected_checklist_id = checklist_id
-
                     }
                 }
             }

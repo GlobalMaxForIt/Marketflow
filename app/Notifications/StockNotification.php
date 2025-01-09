@@ -52,8 +52,6 @@ class StockNotification extends Notification
             'product'=>$this->data['product_image'],
             'product_id'=>$this->data['product_id'],
             'message'=>$this->data['message'],
-            'created_at'=>$this->data['created_at'],
-            'updated_at'=>$this->data['updated_at'],
         ];
     }
 }

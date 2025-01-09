@@ -33,6 +33,7 @@ class IndexController extends Controller
             'accepted_orders'=>$accepted_orders,
             'lang'=>$lang,
             'user'=>$user,
+            'notifications'=>$this->getNotification(),
             'current_page'=>$this->current_page
         ]);
     }

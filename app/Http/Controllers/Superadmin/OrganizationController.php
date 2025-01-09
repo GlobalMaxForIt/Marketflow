@@ -68,7 +68,7 @@ class OrganizationController extends Controller
             'organizations'=>$organizations,
             'title'=>$this->title,
             'lang'=>$lang,
-            'user'=>$user,
+            'notifications'=>$this->getNotification(),
             'user'=>$user,
             'current_page'=>$this->current_page
         ]);
@@ -143,6 +143,7 @@ class OrganizationController extends Controller
             'images'=>$images_,
             'title'=>$this->title,
             'lang'=>$lang,
+            'notifications'=>$this->getNotification(),
             'user'=>$user,
             'current_page'=>$this->current_page
         ]);

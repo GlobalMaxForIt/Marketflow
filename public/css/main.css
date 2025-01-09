@@ -1032,6 +1032,9 @@ input[type=number]::-webkit-outer-spin-button {
 .height_38{
     height: 38px;
 }
+.height_34{
+    height: 34px;
+}
 .height_10{
     height: 10px;
 }
@@ -1998,7 +2001,7 @@ del{
     color: black !important;
 }
 .opacity_60{
-    opacity: 0.6;
+    opacity: 0.6 !important;
 }
 .opacity_80{
     opacity: 0.8;
@@ -2625,7 +2628,7 @@ body[data-layout-color="dark"] .client_selected_product_row:hover, body[data-lay
 .input-display_password, .input-display-lg, input[aria-controls="all_products_list_for_selling"]{
     color: black !important;
 }
-#gift_card_input{
+#gift_card_input, #cashback_input{
     width: 74%;
     font-size: 14px;
 }
@@ -2787,9 +2790,29 @@ body[data-layout-color="dark"] .modal-body input[type="password"],
 body[data-layout-color="dark"] .modal-body input[type="email"] {
     color: white !important
 }
-#_display_content h6, #gift_card_sum{
+#_display_content h6, #gift_card_sum, #cashback_sum{
     margin-bottom: 0px !important;
 }
-#gift_card_sum{
+#gift_card_sum, #cashback_sum{
     color: #FB850E;
+}
+body[data-layout-color="light"] .unread-notification-content, body[data-layout-color="light"] .dropdown-menu{
+    background-color: white !important;
+}
+body[data-layout-color="dark"] .unread-notification-content, body[data-layout-color="dark"] .dropdown-menu{
+    background-color: #4D586B !important;
+}
+body[data-layout-color="light"] .dropdown-item:focus, .dropdown-item:hover{
+    background-color: rgb(0, 0, 0, 0.2) !important;
+}
+body[data-layout-color="dark"] .dropdown-item:focus, .dropdown-item:hover{
+    background-color: rgba(255, 255, 255, 0.2) !important;
+}
+#current_user_notifications .notify-icon{
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+#current_user_notifications{
+    overflow-y: auto;
 }

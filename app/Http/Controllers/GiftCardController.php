@@ -28,7 +28,7 @@ class GiftCardController extends Controller
     {
         $user = Auth::user();
         $gift_cards = GiftCard::where('store_id', $user->store_id)->get();
-        return view('gift-cards.index', ['gift_cards'=> $gift_cards, 'lang'=>$this->lang, 'user'=>$user]);
+        return view('gift-cards.index', ['gift_cards'=> $gift_cards, 'notifications'=>$this->getNotification(), 'lang'=>$this->lang, 'user'=>$user]);
     }
 
     /**
@@ -36,7 +36,7 @@ class GiftCardController extends Controller
      */
     public function create()
     {
-        return view('gift-cards.create', ['lang'=>$this->lang]);
+        return view('gift-cards.create', ['lang'=>$this->lang, 'notifications'=>$this->getNotification()]);
     }
 
     /**
@@ -98,7 +98,7 @@ class GiftCardController extends Controller
         }else{
             $start_end_date = '';
         }
-        return view('gift-cards.edit', ['gift_card'=> $gift_card, 'start_end_date'=>$start_end_date, 'user'=>$user, 'lang'=>$this->lang]);
+        return view('gift-cards.edit', ['gift_card'=> $gift_card, 'notifications'=>$this->getNotification(), 'start_end_date'=>$start_end_date, 'user'=>$user, 'lang'=>$this->lang]);
     }
 
     /**
@@ -151,6 +151,52 @@ class GiftCardController extends Controller
     }
 
     public function giftCard(Request $request){
+        $user = Auth::user();
+        date_default_timezone_set("Asia/Tashkent");
+        $gift_card_code = $request->gift_card_code;
+        $get_total_sum = $request->get_total_sum;
+        $time_now = date('Y-m-d');
+        $lang = App::getLocale();
+        $gift_card = GiftCard::where('name', $gift_card_code)->where('start_date', '<=', $time_now)->where('end_date', '>=', $time_now)->where('store_id', $user->store_id)->first();
+        $data = [];
+        $status = false;
+//        $users = User::where('store_id', $user->store_id)->get();
+//        $this_store_users_id = User::where('store_id', $user->store_id)->pluck('id');
+//        $message_data = 'Apple 1kg '.translate_title('has left ', $lang). ' 5';
+//
+//        event(new PostNotification($message_data, $this_store_users_id));
+//        Notification::send($users, new OrderNotification($data));
+
+
+        if($gift_card){
+            if((int)$get_total_sum >= (int)$gift_card->min_price){
+                if($gift_card->price){
+                    $price = (int)$gift_card->price;
+                }else{
+                    $price = (int)((int)$get_total_sum * $gift_card->percent/100);
+                }
+                $message = translate_title('Successfully set', $this->lang).' '. number_format($price, 0, '', ' ');
+                $data = [
+                    'price'=>$price,
+                    'percent'=>$gift_card->percent??'',
+                ];
+                $status = true;
+            }else{
+                $message = $gift_card_code.' '.translate_title('Sale minimum price must be', $this->lang).' '. number_format($gift_card->min_price, 0,'',' ');
+            }
+        }else{
+            $message = translate_title('this gift card is not found or expired', $this->lang);
+        }
+
+        $response = [
+            'code'=>$gift_card_code,
+            'data'=>$data,
+            'status'=>$status,
+            'message'=>$message
+        ];
+        return response()->json($response, 200);
+    }
+    public function cashback(Request $request){
         $user = Auth::user();
         date_default_timezone_set("Asia/Tashkent");
         $gift_card_code = $request->gift_card_code;

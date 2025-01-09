@@ -73,6 +73,7 @@ class DiscountController extends Controller
             'clients'=>$clients,
             'clients_for_discount'=>$clients_for_discount,
             'lang'=>$lang,
+            'notifications'=>$this->getNotification(),
             'user'=>$user,
             'current_page'=>$this->current_page
         ]);
@@ -145,6 +146,7 @@ class DiscountController extends Controller
             'categories'=>$categories,
             'lang'=>$lang,
             'user'=>$user,
+            'notifications'=>$this->getNotification(),
             'current_page'=>$this->current_page
         ]);
     }
@@ -297,6 +299,7 @@ class DiscountController extends Controller
             'quantity'=>$quantity,
             'title'=>$this->title,
             'lang'=>$lang,
+            'notifications'=>$this->getNotification(),
             'user'=>$user,
             'current_page'=>$this->current_page
         ]);

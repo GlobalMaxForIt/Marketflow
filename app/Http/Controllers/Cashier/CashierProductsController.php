@@ -119,6 +119,7 @@ class CashierProductsController extends Controller
             'title'=>$this->title,
             'lang'=>$language,
             'user'=>$user,
+            'notifications'=>$this->getNotification(),
             'current_page'=>$this->current_page
         ]);
     }
@@ -222,6 +223,7 @@ class CashierProductsController extends Controller
             'products_categories'=>$products_categories,
             'images'=>$images, 'title'=>$this->title,
             'units'=>$units,
+            'notifications'=>$this->getNotification(),
             'lang'=>$lang, 'user'=>$user,
             'current_page'=>$this->current_page
         ]);
@@ -232,6 +234,16 @@ class CashierProductsController extends Controller
         $language = App::getLocale();
         $user = Auth::user();
         $product = Products::where('id', $id)->where('store_id', $user->store_id)->first();
+        foreach($user->unreadnotifications as $notification){
+            if($notification->type == "App\Notifications\StockNotification"){
+                if(!empty($notification->data)){
+                    if($notification->data['product_id'] == $product->id){
+                        $notification->read_at = date('Y-m-d H:i:s');
+                        $notification->save();
+                    }
+                }
+            }
+        }
         if($product){
             $images = [];
             $product_info = $product->product_info;
@@ -336,7 +348,7 @@ class CashierProductsController extends Controller
         }else{
             return redirect()->back()->with('status', 'array_products');
         }
-        return view('cashier.products.show', ['array_product'=>$array_product, 'lang'=>$language, 'user'=>$user, 'current_page'=>$this->current_page]);
+        return view('cashier.products.show', ['array_product'=>$array_product, 'lang'=>$language, 'notifications'=>$this->getNotification(), 'user'=>$user, 'current_page'=>$this->current_page]);
     }
 
     /**

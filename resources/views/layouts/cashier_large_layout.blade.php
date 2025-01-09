@@ -1,8 +1,7 @@
 @php
-    $current_user = \Illuminate\Support\Facades\Auth::user();
     $locale = app()->getLocale();
 @endphp
-        <!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -45,8 +44,6 @@
     <link rel="stylesheet" href="{{asset('css/datatable_style.css')}}">
 
     <script src="{{ asset('js/jquery.min.js') }}"></script>
-
-    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 
     <script src="{{ asset('libs/toastr/build/toastr.min.js') }}"></script>
 
@@ -169,11 +166,11 @@
                 <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown"
                    href="#" role="button" aria-haspopup="false" aria-expanded="false">
                     <i class="fe-bell noti-icon"></i>
-                    @if(count($current_user->unreadnotifications)>0)
-                        <span class="badge bg-danger rounded-circle noti-icon-badge">{{count($current_user->unreadnotifications)}}</span>
+                    @if($notifications['unreadnotifications_quantity']>0)
+                        <span class="badge bg-danger rounded-circle noti-icon-badge" id="unread_notifications_quantity">{{$notifications['unreadnotifications_quantity']}}</span>
                     @endif
                 </a>
-                <div class="dropdown-menu dropdown-menu-end dropdown-lg">
+                <div class="dropdown-menu dropdown-menu-end dropdown-lg unread-notification-content">
 
                     <!-- item-->
                     <div class="dropdown-item noti-title">
@@ -186,12 +183,35 @@
                         </h5>
                     </div>
 
-                    <div class="noti-scroll" data-simplebar id="current_user_notifications">
-                        <a href="javascript:void(0);"
-                           class="dropdown-item text-center text-primary notify-item notify-all">
-                            {{ translate_title('No notifications', $lang)}}
-                            <i class="fe-arrow-right"></i>
-                        </a>
+                    <div class="noti-scroll" id="current_user_notifications">
+                        @forelse($notifications['unreadnotifications'] as $notification)
+                            @if($notification->type == "App\Notifications\StockNotification")
+                                @if(!empty($notification->data))
+                                    @if(isset($notification->data['product_id']))
+                                        <a href="{{route('cashier-product.show', $notification->data['product_id'])}}" class="dropdown-item notify-item">
+                                            <div class="notify-icon" style="background-image: url({{isset($notification->data['product'])?$notification->data['product']:''}})"></div>
+                                            <p class="notify-details">
+                                                @if(isset($notification->data['message']))
+                                                    {{strlen($notification->data['message'])>24?substr($notification->data['message'], 0, 24).'...':$notification->data['message']}}
+                                                @endif
+                                            </p>
+                                            <p class="text-muted mb-0 user-msg">
+                                                @if(isset($notification->data['user']))
+                                                    <small>{{$notification->data['user']?$notification->data['user']:''}}</small>
+                                                @endif
+                                            </p>
+                                        </a>
+                                    @endif
+                                    <hr style="margin: 0px">
+                                @endif
+                            @endif
+                        @empty
+                            <a href="javascript:void(0);"
+                               class="dropdown-item text-center text-primary notify-item notify-all">
+                                {{ translate_title('No notifications', $lang)}}
+                                <i class="fe-arrow-right"></i>
+                            </a>
+                        @endforelse
                     </div>
                     <!-- All-->
                     <a href="#"
@@ -237,16 +257,16 @@
 
             <!-- User box -->
             <div class="user-box text-center">
-                @if($current_user)
+                @if($notifications['current_user'])
                     @php
-                        if(!$current_user->image){
-                            $current_user->image = 'no';
+                        if(!$notifications['current_user']->image){
+                            $notifications['current_user']->image = 'no';
                         }
-                            $sms_avatar = storage_path('app/public/users/'.$current_user->image);
+                            $sms_avatar = storage_path('app/public/users/'.$notifications['current_user']->image);
                     @endphp
                     @if(file_exists($sms_avatar))
                         <div class="d-flex justify-content-center">
-                            <div class="rounded-circle avatar-md" style="background-image: url('{{asset('storage/users/'.$current_user->image)}}'); background-position:center; background-size:cover"></div>
+                            <div class="rounded-circle avatar-md" style="background-image: url('{{asset('storage/users/'.$notifications['current_user']->image)}}'); background-position:center; background-size:cover"></div>
                         </div>
                     @else
                         <div class="d-flex justify-content-center">
@@ -257,8 +277,8 @@
                 <div class="dropdown">
                     <a href="#" class="user-name dropdown-toggle h5 mt-2 mb-1 d-block"
                        data-bs-toggle="dropdown" aria-expanded="false">
-                        @if($current_user)
-                            {{$current_user->name?$current_user->name:''}} {{$current_user->surname?$current_user->surname:''}} {{$current_user->middlename?$current_user->middlename:''}}
+                        @if($notifications['current_user_name'])
+                            {{$notifications['current_user_name']}}
                         @endif
                     </a>
                     <div class="dropdown-menu user-pro-dropdown">
@@ -331,6 +351,12 @@
                         <a href="{{route('cashier-discount.index')}}">
                             <i class="mdi mdi-percent me-1"></i>
                             <span> {{translate_title('Discount', $lang)}} </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('cashback.index')}}">
+                            <i class="mdi mdi-cash-refund me-1"></i>
+                            <span> {{translate_title('Cashback', $lang)}} </span>
                         </a>
                     </li>
                     <li>
@@ -634,6 +660,9 @@
                     <div class="text-start mb-2 d-none" id="gift_card_sum_text">
                         <h6 class="me-auto">{{translate_title('Gift card sum', $lang)}}</h6>
                     </div>
+                    <div class="text-start mb-2 d-none" id="cashback_sum_text">
+                        <h6 class="me-auto">{{translate_title('Cashback sum', $lang)}}</h6>
+                    </div>
                     <div class="text-start">
                         <h4 class="me-auto">{{translate_title('Payment sum', $lang)}}</h4>
                     </div>
@@ -648,6 +677,12 @@
                     <div class="d-flex justify-content-center align-items-center mb-2 d-none" id="gift_card_sum_content">
                         <h6 id="gift_card_sum">0</h6>
                         <a type="button" class="btn delete_button btn-sm waves-effect ms-1" onclick="removeGiftCard()">
+                            <img src="{{asset('img/trash_icon.png')}}" alt="" height="18px">
+                        </a>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center mb-2 d-none" id="cashback_sum_content">
+                        <h6 id="cashback_sum">0</h6>
+                        <a type="button" class="btn delete_button btn-sm waves-effect ms-1" onclick="removeCashback()">
                             <img src="{{asset('img/trash_icon.png')}}" alt="" height="18px">
                         </a>
                     </div>
@@ -683,7 +718,31 @@
                         </div>
                         <div class="d-flex justify-content-between d-none mt-2" id="gift_card_content">
                             <input id="gift_card_input" class="input-display-lg form-control" placeholder="Enter promocode" value="" type="text">
-                            <button class="btn modal_confirm_ height_38" onclick="giftCardConfirm()" id="giftCardConfirmButton">ok</button>
+                            <button class="btn modal_confirm_ height_34" onclick="giftCardConfirm()" id="giftCardConfirmButton">ok</button>
+                        </div>
+                    </div>
+                    <div id="cashback_display_content">
+                        <div class="d-flex position-relative justify-content-between">
+                            <div>
+                                <h6 class="font-14">{{translate_title('Cashback', $lang)}}</h6>
+                                <div class="d-flex align-items-center mt-1">
+                                    <div class="square-switch">
+                                        <input type="checkbox" id="cashback_change_func" switch="none"/>
+                                        <label for="cashback_change_func" data-on-label="On"
+                                               data-off-label="Off"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between d-none mt-2" id="cashback_content">
+                                <input id="cashback_input" class="input-display-lg form-control" placeholder="Enter promocode" value="" type="text">
+                                <button class="btn modal_confirm_ height_34" onclick="cashbackConfirm()" id="cashbackConfirmButton">ok</button>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between d-none" id="client_left_cashback_sum_content">
+                            <span></span>
+                            <span></span>
+                            <h6>{{translate_title('Cashback left', $lang)}}</h6>
+                            <h6 id="client_left_cashback_sum" class="me-1">0</h6>
                         </div>
                     </div>
                 </div>
@@ -924,16 +983,21 @@
 
 <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 <script>
-    @if(isset($user))
-        let current_user_id = "{{$user->id}}"
-        let token = "{{$user->token}}"
+    @if($notifications['current_user'])
+        let current_user_id = "{{$notifications['current_user']->id}}"
+        let token = "{{$notifications['current_user']->token}}"
     @else
         let current_user_id = ""
         let token = ""
     @endif
+    let unread_notifications_quantity = document.getElementById('unread_notifications_quantity')
+    let current_user_notifications = document.getElementById('current_user_notifications')
+    let current_user_no_notifications = document.getElementById('current_user_no_notifications')
     let get_notifications_url = "{{route('getNotification')}}"
     let cashier_product_url = "{{route('cashier-product.show', '=')}}"
     let no_notification_text = "{{translate_title('No notifications', $lang)}}"
+    let cashback_confirm_text = "{{translate_title('Cashback is set successfully', $lang)}}"
+    let cashback_must_not_be_zero_text = "{{translate_title('Cashback musn\'t be 0 sum', $lang)}}"
 </script>
 <script src="{{asset('js/pusher_commands.js')}}"></script>
 <script>
@@ -943,10 +1007,14 @@
     let gift_card_change_func = document.getElementById('gift_card_change_func')
     let gift_card_content = document.getElementById('gift_card_content')
     let gift_card_sum_content = document.getElementById('gift_card_sum_content')
+
+    let cashback_change_func = document.getElementById('cashback_change_func')
+    let cashback_content = document.getElementById('cashback_content')
+    let cashback_sum_content = document.getElementById('cashback_sum_content')
+
     let keyboard_selected_lang = localStorage.getItem('selected_lang')
     let keyboard_ru = document.getElementById('keyboard_ru')
     let keyboard_en = document.getElementById('keyboard_en')
-
     if(keyboard_selected_lang == 'ru'){
         keyboard_lang_change_func.click()
     }
@@ -1014,6 +1082,36 @@
                 gift_card_sum_text.classList.remove('d-none')
             }else{
                 gift_card_sum_text.classList.add('d-none')
+            }
+        }
+    }
+    cashback_change_func.addEventListener('change', function (e) {
+        if(e.target.value == 'on'){
+            cashbackChangerFunc()
+        }
+    })
+
+    function cashbackChangerFunc(){
+        if(cashback_content.classList.contains('d-none')){
+            cashback_content.classList.remove('d-none')
+        }else{
+            cashback_content.classList.add('d-none')
+        }
+        if(client_left_cashback_sum_content.classList.contains('d-none')){
+            client_left_cashback_sum_content.classList.remove('d-none')
+        }else{
+            client_left_cashback_sum_content.classList.add('d-none')
+        }
+        if(cashback_sum.innerText.length>1){
+            if(cashback_sum_content.classList.contains('d-none')){
+                cashback_sum_content.classList.remove('d-none')
+            }else{
+                cashback_sum_content.classList.add('d-none')
+            }
+            if(cashback_sum_text.classList.contains('d-none')){
+                cashback_sum_text.classList.remove('d-none')
+            }else{
+                cashback_sum_text.classList.add('d-none')
             }
         }
     }

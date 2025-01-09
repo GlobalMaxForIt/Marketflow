@@ -67,4 +67,7 @@ class User extends Authenticatable
     public function organization(){
         return $this->hasOne(PersonalInfo::class, 'id', 'organization_id');
     }
+    public function unread_notifications(){
+        return $this->hasOne(Notification::class, 'id', 'organization_id');
+    }
 }

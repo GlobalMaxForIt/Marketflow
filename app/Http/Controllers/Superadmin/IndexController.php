@@ -28,6 +28,7 @@ class IndexController extends Controller
         return view('superadmin.index', [
             'title'=>$this->title,
             'user'=>$user,
+            'notifications'=>$this->getNotification(),
             'ordered_orders'=>$ordered_orders,
             'performed_orders'=>$performed_orders,
             'cancelled_orders'=>$cancelled_orders,

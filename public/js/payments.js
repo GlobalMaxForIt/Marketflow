@@ -58,6 +58,12 @@ function setItem(item, index){
     }else{
         sale_quantity_html = `<span class="font-14 color_red">${taken_back_text}</span>`
     }
+    if(isNaN(parseInt(item.price))){
+        item.price = 0
+    }
+    if(isNaN(parseInt(item.all_price))){
+        item.all_price = 0
+    }
     if(item.price <= 0){
         setPaymentHistoryHtmlWithouthDiscount(item, index)
     }else if(parseInt(item.price.replace(/\s+/g, "")) > parseInt(item.all_price.replace(/\s+/g, ""))){
@@ -72,6 +78,12 @@ function setReturnedItem(item, index){
         sale_quantity_html = `<h6>${item.quantity} ${item.items.unit}</h6>`
     }else{
         sale_quantity_html = `<span class="font-14 color_red">${taken_back_text}</span>`
+    }
+    if(isNaN(parseInt(item.price))){
+        item.price = 0
+    }
+    if(isNaN(parseInt(item.all_price))){
+        item.all_price = 0
     }
     if(item.price <= 0){
         setReturnedPaymentHistoryHtmlWithouthDiscount(item, index)

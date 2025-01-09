@@ -9,10 +9,12 @@ let entered_cash_sum = '0'
 let entered_card_sum = '0'
 let entered_debt_sum = '0'
 let entered_gift_card = '0'
+let entered_cashback = '0'
 let cash_sum = 0
 let card_sum = 0
 let debt_sum = 0
 let gift_card = 0
+let cashback = 0
 let accepting_sum_int = 0
 let change_sum_int = 0
 let klaviaturaNumber = 0
@@ -26,6 +28,9 @@ let change_sum = document.getElementById('change_sum')
 let calculators = document.getElementById('calculators')
 let debt_display = document.getElementById('debt_display')
 let gift_card_input = document.getElementById('gift_card_input')
+let cashback_input = document.getElementById('cashback_input')
+let client_left_cashback_sum = document.getElementById('client_left_cashback_sum')
+let client_left_cashback_sum_content = document.getElementById('client_left_cashback_sum_content')
 let selected_product_name = document.getElementById('selected_product_name')
 let selected_product_price = document.getElementById('selected_product_price')
 let selected_product_amount = document.getElementById('selected_product_amount')
@@ -35,7 +40,10 @@ let changeAmountAndPriceId = document.getElementById('changeAmountAndPriceId')
 let dotKeyboard = document.getElementById('dotKeyboard')
 let gift_card_sum_text = document.getElementById('gift_card_sum_text')
 let gift_card_sum = document.getElementById('gift_card_sum')
+let cashback_sum_text = document.getElementById('cashback_sum_text')
+let cashback_sum = document.getElementById('cashback_sum')
 let giftCardConfirmButton = document.getElementById('giftCardConfirmButton')
+let cashbackConfirmButton = document.getElementById('cashbackConfirmButton')
 let return_modal_button_click = document.querySelector('#return_modal_button_click')
 let dot_has = false
 let orderProductData = {}
@@ -80,6 +88,7 @@ let selected_display_clicked = false
 let selected_display_card_clicked = false
 let selected_debt_display_clicked = false
 let gift_card_display_clicked = false
+let cashback_display_clicked = false
 let is_edit_product_modal_opened_for_price = false
 let is_edit_product_modal_opened_for_amount = false
 
@@ -87,6 +96,10 @@ let is_payment_modal_opened_for_cash = false
 let is_payment_modal_opened_for_card = false
 let is_payment_modal_opened_for_debt = false
 let is_payment_modal_opened_for_gift_card = false
+let is_payment_modal_opened_for_cashback = false
+
+let debt_display_content = document.getElementById('debt_display_content')
+let cashback_display_content = document.getElementById('cashback_display_content')
 
 
 function format_entered_sum(numbers){
@@ -97,7 +110,7 @@ function format_entered_sum(numbers){
     }
 }
 
-function setValues(cash_sum_, card_sum_, debt_sum_, gift_card_){
+function setValues(cash_sum_, card_sum_, debt_sum_, gift_card_, cashback_){
     switch (display_or_display_card_or_debt) {
         case "display":
             display.value = format_entered_sum(cash_sum_)
@@ -110,6 +123,9 @@ function setValues(cash_sum_, card_sum_, debt_sum_, gift_card_){
             break;
         case "gift_card_input":
             gift_card_input.value = gift_card_
+            break;
+        case "cashback_input":
+            cashback_input.value = format_entered_sum(cashback_)
             break;
     }
     if(parseInt(getTotalSum) > (cash_sum_ + card_sum_ + debt_sum_)){
@@ -166,6 +182,17 @@ function selected_payment_input_func(){
                         display_edit_payment = gift_card_input
                     })
                 }, 444)
+            }else if(cashback_display_clicked){
+                setTimeout(function(){
+                    cashback_input.focus()
+                    cashback_input.addEventListener('blur', function () {
+                        if(cashback_display_clicked) {
+                            cashback_input.focus()
+                        }
+                        display_or_display_card_or_debt = 'cashback_input'
+                        display_edit_payment = cashback_input
+                    })
+                }, 444)
             }else{
                 setTimeout(function(){
                     display.focus()
@@ -187,6 +214,7 @@ if(display != undefined && display != null){
         selected_display_card_clicked = false
         selected_debt_display_clicked = false
         gift_card_display_clicked = false
+        cashback_display_clicked = false
         selected_payment_input_func()
     })
 }
@@ -196,6 +224,7 @@ if(display_card != undefined && display_card != null){
         selected_display_card_clicked = true
         selected_debt_display_clicked = false
         gift_card_display_clicked = false
+        cashback_display_clicked = false
         selected_payment_input_func()
     })
 }
@@ -205,6 +234,7 @@ if(debt_display != undefined && debt_display != null){
         selected_display_clicked = false
         selected_display_card_clicked = false
         gift_card_display_clicked = false
+        cashback_display_clicked = false
         selected_debt_display_clicked = true
         selected_payment_input_func()
     })
@@ -215,7 +245,18 @@ if(gift_card_input != undefined && gift_card_input != null){
         selected_display_clicked = false
         selected_display_card_clicked = false
         selected_debt_display_clicked = false
+        cashback_display_clicked = false
         gift_card_display_clicked = true
+        selected_payment_input_func()
+    })
+}
+if(cashback_input != undefined && cashback_input != null){
+    cashback_input.addEventListener('click', function () {
+        selected_display_clicked = false
+        selected_display_card_clicked = false
+        selected_debt_display_clicked = false
+        gift_card_display_clicked = false
+        cashback_display_clicked = true
         selected_payment_input_func()
     })
 }
@@ -277,8 +318,28 @@ function appendNumber(number) {
             }
             gift_card = parseInt(entered_gift_card)
             break;
+        case "cashback_input":
+            if (cashback_input.value == '0') {
+                entered_cashback = parseInt(number)
+            } else {
+                if(!is_payment_modal_opened_for_cashback){
+                    entered_cashback = String(entered_cashback) + number
+                }else{
+                    entered_cashback = String(number)
+                    is_payment_modal_opened_for_cashback = false
+                }
+            }
+            if(parseInt(entered_cashback) > parseInt(client_cashback_sum)){
+                toastr.warning(cashback_text_1+' '+client_cashback_sum+' '+cashback_text)
+                cashback = client_cashback_sum
+                client_left_cashback_sum.innerText = '0 '+ sum_text
+            }else{
+                cashback = entered_cashback
+                client_left_cashback_sum.innerText = parseInt(client_cashback_sum) - parseInt(entered_cashback) +' '+sum_text
+            }
+            break;
     }
-    setValues(cash_sum, card_sum, debt_sum, gift_card, display_or_display_card_or_debt)
+    setValues(cash_sum, card_sum, debt_sum, gift_card, cashback, display_or_display_card_or_debt)
 }
 
 // Function to clear the display
@@ -298,8 +359,12 @@ function clearDisplay() {
         case "gift_card_input":
             gift_card = 0
             break;
+        case "cashback_input":
+            cashback = 0
+            client_left_cashback_sum.innerText = parseInt(client_cashback_sum) +' '+sum_text
+            break;
     }
-    setValues(cash_sum, card_sum, debt_sum, gift_card, display_or_display_card_or_debt)
+    setValues(cash_sum, card_sum, debt_sum, gift_card, cashback, display_or_display_card_or_debt)
 }
 
 // Function to remove the last digit (Backspace)
@@ -343,8 +408,25 @@ function backspace() {
                 gift_card = parseInt(entered_gift_card)
             }
             break;
+        case "cashback_input":
+            if (cashback_input.value.length > 1) {
+                entered_cashback = String(entered_cashback).slice(0, -1)
+                cashback = parseInt(entered_cashback)
+            } else {
+                entered_cashback = '0'
+                cashback = parseInt(entered_cashback)
+            }
+            if(parseInt(entered_cashback) > parseInt(client_cashback_sum)){
+                toastr.warning(cashback_text_1+' '+client_cashback_sum+' '+cashback_text)
+                cashback = client_cashback_sum
+                client_left_cashback_sum.innerText = '0' +' '+sum_text
+            }else{
+                cashback = entered_cashback
+                client_left_cashback_sum.innerText = parseInt(client_cashback_sum) - parseInt(cashback) +' '+sum_text
+            }
+            break;
     }
-    setValues(cash_sum, card_sum, debt_sum, gift_card, display_or_display_card_or_debt)
+    setValues(cash_sum, card_sum, debt_sum, gift_card, cashback, display_or_display_card_or_debt)
 }
 
 // Function to append numbers to the display
@@ -874,12 +956,12 @@ function backspaceEditProduct() {
         selected_product_stock.innerText = stock_int - parseFloat(selected_product_amount.value)
     }
 }
-let debt_display_content = document.getElementById('debt_display_content')
 function paymentFunc() {
     is_payment_modal_opened_for_cash = true
     is_payment_modal_opened_for_card = true
     is_payment_modal_opened_for_debt = true
     is_payment_modal_opened_for_gift_card = true
+    is_payment_modal_opened_for_cashback = true
 
     setTimeout(function () {
         display.focus()
@@ -893,13 +975,19 @@ function paymentFunc() {
         if(debt_display_content.classList.contains('d-none')){
             debt_display_content.classList.remove('d-none')
         }
+        if(cashback_display_content.classList.contains('d-none')){
+            cashback_display_content.classList.remove('d-none')
+        }
     }else{
         if(!debt_display_content.classList.contains('d-none')){
             debt_display_content.classList.add('d-none')
         }
+        if(!cashback_display_content.classList.contains('d-none')){
+            cashback_display_content.classList.add('d-none')
+        }
     }
     autoSetCardSum()
-    setValues(cash_sum, card_sum, debt_sum, gift_card, display_or_display_card_or_debt)
+    setValues(cash_sum, card_sum, debt_sum, gift_card, cashback, display_or_display_card_or_debt)
     selected_display_clicked = true
     selected_payment_input_func()
 }
@@ -916,7 +1004,7 @@ if(display != undefined && display != null){
         entered_cash_sum = klaviaturaNumber
         cash_sum = parseInt(klaviaturaNumber)
         autoSetCardSum()
-        setValues(cash_sum, card_sum, debt_sum, gift_card, display_or_display_card_or_debt='display')
+        setValues(cash_sum, card_sum, debt_sum, gift_card, cashback, display_or_display_card_or_debt='display')
     });
 }
 
@@ -932,7 +1020,7 @@ if(display_card != undefined && display_card != null){
         entered_card_sum = klaviaturaNumber
         card_sum = parseInt(klaviaturaNumber)
         autoSetDebtSum()
-        setValues(cash_sum, card_sum, debt_sum, gift_card, display_or_display_card_or_debt='display_card')
+        setValues(cash_sum, card_sum, debt_sum, gift_card, cashback, display_or_display_card_or_debt='display_card')
     });
 }
 if(debt_display != undefined && debt_display != null){
@@ -946,23 +1034,49 @@ if(debt_display != undefined && debt_display != null){
         }
         entered_debt_sum = klaviaturaNumber
         debt_sum = parseInt(klaviaturaNumber)
-        setValues(cash_sum, card_sum, debt_sum, gift_card, display_or_display_card_or_debt='debt_display')
+        setValues(cash_sum, card_sum, debt_sum, gift_card, cashback, display_or_display_card_or_debt='debt_display')
     });
 }
 if(gift_card_input != undefined && gift_card_input != null){
     gift_card_input.addEventListener('input', (e) => {
         klaviaturaNumber = 0
         if(!is_payment_modal_opened_for_gift_card){
-            klaviaturaNumber = formatInput(gift_card_input).replace(/\s+/g, '')
+            klaviaturaNumber = gift_card_input.value
         }else{
             klaviaturaNumber = e.data
             is_payment_modal_opened_for_gift_card = false
         }
         entered_gift_card = klaviaturaNumber
         gift_card = parseInt(klaviaturaNumber)
-        setValues(cash_sum, card_sum, debt_sum, gift_card, display_or_display_card_or_debt='gift_card_input')
+        setValues(cash_sum, card_sum, debt_sum, gift_card, cashback, display_or_display_card_or_debt='gift_card_input')
     });
 }
+if(cashback_input != undefined && cashback_input != null){
+    cashback_input.addEventListener('input', (e) => {
+        klaviaturaNumber = 0
+        if(!is_payment_modal_opened_for_cashback){
+            klaviaturaNumber = formatInput(cashback_input).replace(/\s+/g, '')
+        }else{
+            klaviaturaNumber = 0
+            if(e.data != null && e.data != undefined){
+                klaviaturaNumber = parseInt(e.data)
+                is_payment_modal_opened_for_cashback = false
+            }
+        }
+        entered_cashback = parseInt(klaviaturaNumber)
+        if(parseInt(entered_cashback) >= parseInt(client_cashback_sum)){
+            toastr.warning(cashback_text_1+' '+client_cashback_sum+' '+cashback_text)
+            cashback = client_cashback_sum
+            client_left_cashback_sum.innerText = '0' +' '+sum_text
+        }else{
+            cashback = entered_cashback
+            client_left_cashback_sum.innerText = parseInt(client_cashback_sum) - parseInt(cashback) +' '+sum_text
+        }
+        setValues(cash_sum, card_sum, debt_sum, gift_card, cashback, display_or_display_card_or_debt='cashback_input')
+    });
+}
+
+
 let gift_card_sum_html = ''
 let gift_card_price = 0
 function giftCardConfirm(){
@@ -1011,6 +1125,10 @@ function giftCardConfirm(){
                             gift_card_sum_content.classList.remove('d-none')
                         }
                         giftCardConfirmButton.disabled = true
+                        gift_card_input.disabled = true
+                        if(!gift_card_input.classList.contains('opacity_60')){
+                            gift_card_input.classList.add('opacity_60')
+                        }
                         gift_card_price = parseInt(data__.data.price)
                         if(data__.data.percent){
                             gift_card_sum_html = `(${data__.data.percent} %) ${gift_card_price} ${sum_text}`
@@ -1039,6 +1157,32 @@ function giftCardConfirm(){
     })
 }
 
+let cashback_sum_html = ''
+let cashback_price = 0
+function cashbackConfirm(){
+    if(parseInt(cashback)>0){
+        if(cashback_sum_text.classList.contains('d-none')){
+            cashback_sum_text.classList.remove('d-none')
+        }
+        if(cashback_sum_content.classList.contains('d-none')){
+            cashback_sum_content.classList.remove('d-none')
+        }
+        cashbackConfirmButton.disabled = true
+        cashback_input.disabled = true
+        if(!cashback_input.classList.contains('opacity_60')){
+            cashback_input.classList.add('opacity_60')
+        }
+        cashback_price = parseInt(cashback)
+        cashback_sum_html = `${format_entered_sum(cashback_price)} ${sum_text}`
+        cashback_sum.innerText = cashback_sum_html
+        toastr.success(cashback_confirm_text)
+        getTotalSum = parseInt(getTotalSum) - cashback_price
+        setWithOrWithouthGiftCard()
+    }else{
+        toastr.warning(cashback_must_not_be_zero_text)
+    }
+}
+
 function removeGiftCard(){
     if(!gift_card_sum_text.classList.contains('d-none')){
         gift_card_sum_text.classList.add('d-none')
@@ -1046,11 +1190,33 @@ function removeGiftCard(){
     if(!gift_card_sum_content.classList.contains('d-none')){
         gift_card_sum_content.classList.add('d-none')
     }
+    if(gift_card_input.classList.contains('opacity_60')){
+        gift_card_input.classList.remove('opacity_60')
+    }
     giftCardConfirmButton.disabled = false
+    gift_card_input.disabled = false
     gift_card_sum.innerText = ''
 
     getTotalSum = parseInt(getTotalSum) + gift_card_price
     gift_card_price = 0
+    setWithOrWithouthGiftCard()
+}
+
+function removeCashback(){
+    if(!cashback_sum_text.classList.contains('d-none')){
+        cashback_sum_text.classList.add('d-none')
+    }
+    if(!cashback_sum_content.classList.contains('d-none')){
+        cashback_sum_content.classList.add('d-none')
+    }
+    cashbackConfirmButton.disabled = false
+    cashback_input.disabled = false
+    if(cashback_input.classList.contains('opacity_60')){
+        cashback_input.classList.remove('opacity_60')
+    }
+    cashback_sum.innerText = ''
+    getTotalSum = parseInt(getTotalSum) + cashback_price
+    cashback_price = 0
     setWithOrWithouthGiftCard()
 }
 
@@ -1060,7 +1226,20 @@ function setWithOrWithouthGiftCard(){
     cash_sum = entered_cash_sum
     card_sum = 0
     debt_sum = 0
-    setValues(cash_sum, card_sum, debt_sum, gift_card, display_or_display_card_or_debt)
+    setValues(cash_sum, card_sum, debt_sum, gift_card, cashback, display_or_display_card_or_debt)
+    selected_payment_input_func()
+    display.value = format_entered_sum(cash_sum)
+    display_card.value = '0'
+    debt_display.value = '0'
+}
+
+function setWithOrWithouthCashback(){
+    entered_cash_sum = getTotalSum
+    payment_sum.innerText = format_entered_sum(entered_cash_sum)
+    cash_sum = entered_cash_sum
+    card_sum = 0
+    debt_sum = 0
+    setValues(cash_sum, card_sum, debt_sum, gift_card, cashback, display_or_display_card_or_debt)
     selected_payment_input_func()
     display.value = format_entered_sum(cash_sum)
     display_card.value = '0'
@@ -1074,8 +1253,7 @@ function formatInput(param){
     value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 
     // Formatlangan qiymatni input maydoniga qaytaramiz
-
-    if(value != '' && value != '0'){
+    if(value != '' && value != '0' && value != null && value != undefined){
         param.value = value;
     }else{
         param.value = '0'
@@ -1137,6 +1315,7 @@ function paymentPayFunc(text) {
                         'cash_sum':cash_sum,
                         'debt_sum':debt_sum,
                         'gift_card':gift_card,
+                        'cashback':cashback_price,
                         'text':text,
                         'checklist_changed':checklist_changed
                         // 'client_dicount_price':clientDicountPrice,

@@ -109,6 +109,7 @@ class LanguageController extends Controller
             'current_page' => $this->current_page,
             'lang'=>$lang,
             'user'=>$user,
+            'notifications'=>$this->getNotification(),
         ]);
 
 
@@ -135,6 +136,7 @@ class LanguageController extends Controller
             'sort_search' => $sort_search,
             'title'=>$this->title,
             'current_page' => $this->current_page,
+            'notifications'=>$this->getNotification(),
             'lang'=>$lang
         ]);
     }
@@ -180,7 +182,8 @@ class LanguageController extends Controller
             'title'=>$this->title,
             'current_page' => $this->current_page,
             'user'=>$user,
-            'lang'=>$lang
+            'lang'=>$lang,
+            'notifications'=>$this->getNotification()
             ]);
     }
 
@@ -225,6 +228,7 @@ class LanguageController extends Controller
             'language'=>$language,
             'title'=>$this->title,
             'user'=>$user,
+            'notifications'=>$this->getNotification(),
             'current_page' => $this->current_page,
             'lang'=>$lang
         ]);

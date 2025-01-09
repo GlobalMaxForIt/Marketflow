@@ -1,7 +1,4 @@
-@php
-    $current_user = \Illuminate\Support\Facades\Auth::user();
-@endphp
-    <!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -236,8 +233,8 @@
                 <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown"
                    href="#" role="button" aria-haspopup="false" aria-expanded="false">
                     <i class="fe-bell noti-icon"></i>
-                    @if(count($current_user->unreadnotifications)>0)
-                        <span class="badge bg-danger rounded-circle noti-icon-badge">{{count($current_user->unreadnotifications)}}</span>
+                    @if($notifications['unreadnotifications_quantity']>0)
+                        <span class="badge bg-danger rounded-circle noti-icon-badge" id="unread_notifications_quantity">{{$notifications['unreadnotifications_quantity']}}</span>
                     @endif
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-lg">
@@ -253,23 +250,26 @@
                         </h5>
                     </div>
 
-                    <div class="noti-scroll" data-simplebar>
-                        @forelse($current_user->unreadnotifications as $notification)
-                            @if($notification->type == "App\Notifications\OrderNotification")
+
+                    <div class="noti-scroll" data-simplebar id="current_user_notifications">
+                        @forelse($notifications['unreadnotifications'] as $notification)
+                            @if($notification->type == "App\Notifications\StockNotification")
                                 @if(!empty($notification->data))
-                                    <a href="#" class="dropdown-item notify-item">
-                                        <div class="notify-icon" style="background-image: url({{isset($notification->data['product_images'])?$notification->data['product_images']:''}})"></div>
-                                        <p class="notify-details">
-                                            @if(isset($notification->data['product_name']))
-                                                {{strlen($notification->data['product_name'])>24?substr($notification->data['product_name'], 0, 24):$notification->data['product_name']}}...  <b>{{$notification->data['order_all_price']}}</b>
-                                            @endif
-                                        </p>
-                                        <p class="text-muted mb-0 user-msg">
-                                            @if(isset($notification->data['user']))
-                                                <small>{{$notification->data['user']?$notification->data['user']:''}}</small>
-                                            @endif
-                                        </p>
-                                    </a>
+                                    @if(isset($notification->data['product_id']))
+                                        <a href="{{route('cashier-product.show', $notification->data['product_id'])}}" class="dropdown-item notify-item">
+                                            <div class="notify-icon" style="background-image: url({{isset($notification->data['product'])?$notification->data['product']:''}})"></div>
+                                            <p class="notify-details">
+                                                @if(isset($notification->data['message']))
+                                                    {{strlen($notification->data['message'])>24?substr($notification->data['message'], 0, 24).'...':$notification->data['message']}}
+                                                @endif
+                                            </p>
+                                            <p class="text-muted mb-0 user-msg">
+                                                @if(isset($notification->data['user']))
+                                                    <small>{{$notification->data['user']?$notification->data['user']:''}}</small>
+                                                @endif
+                                            </p>
+                                        </a>
+                                    @endif
                                     <hr style="margin: 0px">
                                 @endif
                             @endif
@@ -320,24 +320,28 @@
 
             <!-- User box -->
             <div class="user-box text-center">
-                @if($current_user)
+                @if($notifications['current_user'])
                     @php
-                        if(!$current_user->image){
-                            $current_user->image = 'no';
+                        if(!$notifications['current_user']->image){
+                            $notifications['current_user']->image = 'no';
                         }
-                            $sms_avatar = storage_path('app/public/users/'.$current_user->image);
+                            $sms_avatar = storage_path('app/public/users/'.$notifications['current_user']->image);
                     @endphp
                     @if(file_exists($sms_avatar))
-                        <img class="rounded-circle img-thumbnail avatar-md" src="{{asset('storage/users/'.$current_user->image)}}" alt="">
+                        <div class="d-flex justify-content-center">
+                            <div class="rounded-circle avatar-md" style="background-image: url('{{asset('storage/users/'.$notifications['current_user']->image)}}'); background-position:center; background-size:cover"></div>
+                        </div>
                     @else
-                        <img class="rounded-circle img-thumbnail avatar-md" src="{{asset('images/man.jpg')}}" alt="">
+                        <div class="d-flex justify-content-center">
+                            <div class="rounded-circle avatar-md" style="background-image: url('{{asset('images/man.jpg')}}'); background-position:center; background-size:cover"></div>
+                        </div>
                     @endif
                 @endif
                 <div class="dropdown">
                     <a href="#" class="user-name dropdown-toggle h5 mt-2 mb-1 d-block"
                        data-bs-toggle="dropdown" aria-expanded="false">
-                        @if($current_user)
-                            {{$current_user->name?$current_user->name:''}} {{$current_user->surname?$current_user->surname:''}} {{$current_user->middlename?$current_user->middlename:''}}
+                        @if($notifications['current_user_name'])
+                            {{$notifications['current_user_name']}}
                         @endif
                     </a>
                     <div class="dropdown-menu user-pro-dropdown">
@@ -689,10 +693,9 @@
 
 <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 <script>
-
-    @if(isset($user))
-        let current_user_id = "{{$user->id}}"
-        let token = "{{$user->token}}"
+    @if(isset($notification['current_user']))
+        let current_user_id = "{{$notification['current_user']->id}}"
+        let token = "{{$notification['current_user']->token}}"
     @else
         let current_user_id = ""
         let token = ""
@@ -700,6 +703,9 @@
     let get_notifications_url = "{{route('getNotification')}}"
     let cashier_product_url = "{{route('cashier-product.show', '=')}}"
     let no_notification_text = "{{translate_title('No notifications', $lang)}}"
+    let unread_notifications_quantity = document.getElementById('unread_notifications_quantity')
+    let current_user_notifications = document.getElementById('current_user_notifications')
+    let current_user_no_notifications = document.getElementById('current_user_no_notifications')
 </script>
 <script src="{{asset('js/pusher_commands.js')}}"></script>
 <script>

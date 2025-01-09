@@ -26,6 +26,7 @@ use App\Http\Controllers\GiftCardController;
 Route::group(['middleware'=>'auth:sanctum'], function () {
     Route::post('payment-pay', [CashboxController::class, 'paymentPay'])->name('paymentPay');
     Route::post('gift-card', [GiftCardController::class, 'giftCard'])->name('giftCard');
+    Route::post('cashback', [GiftCardController::class, 'cashback'])->name('cashback');
     Route::get('get-check-aside', [CashboxController::class, 'getCheckAside'])->name('getCheckAside');
     Route::post('confirm-return', [PaymentsController::class, 'confirmReturn'])->name('confirmReturn');
     Route::post('get-notification', [HomeController::class, 'getNotification'])->name('getNotification');

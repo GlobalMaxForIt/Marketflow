@@ -67,6 +67,7 @@ class CompanyController extends Controller
             'title'=>$this->title,
             'lang'=>$lang,
             'user'=>$user,
+            'notifications'=>$this->getNotification(),
             'current_page'=>$this->current_page
         ]);
     }
@@ -138,6 +139,7 @@ class CompanyController extends Controller
         return view('superadmin.companies.edit', [
             'company'=>$company,
             'images'=>$images_,
+            'notifications'=>$this->getNotification(),
             'title'=>$this->title,
             'lang'=>$lang,
             'user'=>$user,

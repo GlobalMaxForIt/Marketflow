@@ -35,6 +35,7 @@ class ClientsController extends Controller
             'clients'=>$clients,
             'title'=>$this->title,
             'lang'=>$lang,
+            'notifications'=>$this->getNotification(),
             'current_page'=>$this->current_page
         ]);
     }
@@ -85,6 +86,7 @@ class ClientsController extends Controller
         $client = Clients::find($id);
         return view('clients.edit', [
             'client'=>$client,
+            'notifications'=>$this->getNotification(),
             'title'=>$this->title,
             'lang'=>$lang,
             'current_page'=>$this->current_page

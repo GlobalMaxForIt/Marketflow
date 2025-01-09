@@ -115,9 +115,12 @@ function showClientDiscount(discount_content_element){
 function hideClientDiscount(discount_content_element) {
     if(discount_content_element != undefined && discount_content_element != null){
         if(!discount_content_element.classList.contains('d-none')){
+            console.log(discount_content_element)
             discount_content_element.classList.add('d-none')
+            discount_content_element.classList.add('daaaa')
         }
     }
+    console.log(discount_content_element)
 }
 if(localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null){
     localStorage.removeItem('order_data')
@@ -144,10 +147,29 @@ function confirm_client_discount_func(discountValue_){
     clientDiscount.innerHTML = discountValue_+' %'
 
     setClientPrices()
+    if(clientDiscountContent.classList.contains('d-none')){
+        clientDiscountContent.classList.remove('d-none')
+    }
     if(discountValue_>0){
-        showClientDiscount(clientDiscountContent)
+        showOnlyClientDiscount()
     }else{
-        hideClientDiscount(clientDiscountContent)
+        hideOnlyClientDiscount()
+    }
+}
+function hideOnlyClientDiscount(){
+    if(!clientDiscount.classList.contains('d-none')){
+        clientDiscount.classList.add('d-none')
+    }
+    if(removeClientDiscount.classList.contains('d-none')){
+        removeClientDiscount.classList.remove('d-none')
+    }
+}
+function showOnlyClientDiscount(){
+    if(removeClientDiscount.classList.contains('d-none')){
+        removeClientDiscount.classList.remove('d-none')
+    }
+    if(clientDiscount.classList.contains('d-none')){
+        clientDiscount.classList.remove('d-none')
     }
 }
 function format_entered_sum_func(numbers){
@@ -163,6 +185,9 @@ function setClientPrices() {
     if (percent_v != 0) {
         clientDicountPrice = (all_sum * (1 - percent_v)).toFixed(2)
         total_all_left_sum = (all_sum * percent_v).toFixed(2)
+    }else{
+        clientDicountPrice = 0
+        total_all_left_sum = all_sum.toFixed(2)
     }
     total_sum.innerText = all_sum_withouth_discount
     clients_discount__sum.value = clientDicountPrice
@@ -184,6 +209,8 @@ function removeClientDiscountFunc(){
     clients_discount__sum.value = 0
     clients_total_discount__sum.value = 0
     total__sum.value = 0
+    cashback = 0
+    cashback_input.value = 0
 }
 
 removeClientDiscount.addEventListener('click', function () {

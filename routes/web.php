@@ -7,8 +7,10 @@ use App\Http\Controllers\GiftCardController;
 use App\Http\Controllers\Cashier\CashierProductsController;
 use App\Http\Controllers\Cashier\CashierDiscountController;
 use App\Http\Controllers\Cashier\PaymentsController;
+use App\Http\Controllers\Cashier\CashbackController;
 use App\Http\Controllers\Cashier\CashboxController;
 use App\Http\Controllers\Superadmin\ProductsController;
+use App\Http\Controllers\Superadmin\CashbackTypeController;
 use App\Http\Controllers\Superadmin\ProductsCategoriesController;
 use App\Http\Controllers\Superadmin\ProductsSubCategoriesController;
 use App\Http\Controllers\Superadmin\DiscountController;
@@ -60,6 +62,7 @@ Route::group(['middleware'=>['isSuperAdmin', 'language'], 'prefix'=>'super-admin
     Route::resource('organizations', OrganizationController::class);
     Route::resource('stores', StoreController::class);
     Route::resource('companies', CompanyController::class);
+    Route::resource('cashback-type', CashbackTypeController::class);
 
     Route::resource('products-categories', ProductsCategoriesController::class);
     Route::resource('products-sub-categories', ProductsSubCategoriesController::class);
@@ -98,12 +101,13 @@ Route::group(['middleware'=>['isCashier', 'language'], 'prefix'=>'cashier'], fun
     Route::get('cashbox-large', [CashboxController::class, 'indexLarge'])->name('indexLarge');
     Route::resource('cashier-discount', CashierDiscountController::class);
     Route::get('payments', [PaymentsController::class, 'index'])->name('payments');
+    Route::resource('cashback', CashbackController::class);
 });
 Route::group(['middleware'=>['isManager', 'language'], 'prefix'=>'manager'], function(){
     Route::get('/', [\App\Http\Controllers\Manager\IndexController::class, 'index'])->name('manager.index');
 });
 Route::group(['middleware'=>['isSupplier', 'language'], 'prefix'=>'supplier'], function(){
-    Route::get('/', [\App\Http\Controllers\Supplier\IndexController::class, 'index'])->name('supplier.index');
+//    Route::get('/', [\App\Http\Controllers\Supplier\IndexController::class, 'index'])->name('supplier.index');
 });
 
 

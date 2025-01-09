@@ -114,6 +114,7 @@ class ProductsController extends Controller
             'title'=>$this->title,
             'lang'=>$language,
             'user'=>$user,
+            'notifications'=>$this->getNotification(),
             'current_page'=>$this->current_page
         ]);
     }
@@ -212,6 +213,7 @@ class ProductsController extends Controller
             'images'=>$images, 'title'=>$this->title,
             'units'=>$units,
             'lang'=>$lang,
+            'notifications'=>$this->getNotification(),
             'user'=>$user,
             'current_page'=>$this->current_page
         ]);
@@ -319,7 +321,7 @@ class ProductsController extends Controller
         }else{
             return redirect()->back()->with('status', 'array_products');
         }
-        return view('superadmin.products.show', ['array_product'=>$array_product, 'user'=>$user, 'lang'=>$language, 'current_page'=>$this->current_page]);
+        return view('superadmin.products.show', ['array_product'=>$array_product, 'notifications'=>$this->getNotification(), 'user'=>$user, 'lang'=>$language, 'current_page'=>$this->current_page]);
     }
 
     /**

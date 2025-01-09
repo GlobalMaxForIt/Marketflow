@@ -25,6 +25,7 @@ class IndexController extends Controller
             'title'=>$this->title,
             'lang'=>$lang,
             'user'=>$user,
+            'notifications'=>$this->getNotification(),
             'current_page'=>$this->current_page
         ]);
     }

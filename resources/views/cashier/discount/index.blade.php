@@ -292,8 +292,8 @@
                         <select class="form-control" name="client_id" data-toggle="select2" data-width="100%" required id="client_select_id">
                             <option value="" selected disabled>{{translate_title('Select a client', $lang)}}</option>
                             <optgroup label="Clients">
-                                @foreach($clients as $client)
-                                    <option value="{{$client['id']}}">{{$client['name']}}</option>
+                                @foreach($clients_for_discount as $client_for_discount)
+                                    <option value="{{$client_for_discount['id']}}">{{$client_for_discount['name'].' '.$client_for_discount['surname']}}</option>
                                 @endforeach
                             </optgroup>
                         </select>

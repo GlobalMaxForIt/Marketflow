@@ -33,7 +33,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $user = Auth::user();
+        $user__ = Auth::user();
         $users_ = User::all();
         $users = [];
         $lang = App::getLocale();
@@ -114,8 +114,9 @@ class UserController extends Controller
             'organizations'=>$organizations,
             'title'=>$this->title,
             'roles'=>$roles,
-            'user'=>$user,
+            'user'=>$user__,
             'lang'=>$lang,
+            'notifications'=>$this->getNotification(),
             'current_page'=>$this->current_page
         ]);
     }
@@ -295,6 +296,7 @@ class UserController extends Controller
             'companies'=>$companies,
             'organizations'=>$organizations,
             'title'=>$this->title,
+            'notifications'=>$this->getNotification(),
             'lang'=>$lang,
             'current_page'=>$this->current_page
         ]);
@@ -397,6 +399,7 @@ class UserController extends Controller
             'this_user'=>$user,
             'title'=>$this->title,
             'lang'=>$lang,
+            'notifications'=>$this->getNotification(),
             'current_page'=>$this->current_page
         ]);
     }

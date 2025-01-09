@@ -39,6 +39,7 @@ class TableTranslationController extends Controller
             'title'=>$this->title,
             'lang'=>$lang,
             'user'=>$user,
+            'notifications'=>$this->getNotification(),
             'current_page'=>$this->current_page
         ]);
     }
@@ -53,6 +54,7 @@ class TableTranslationController extends Controller
             'title'=>$this->title,
             'lang'=>$lang,
             'user'=>$user,
+            'notifications'=>$this->getNotification(),
             'current_page'=>$this->current_page
         ]);
     }
@@ -80,6 +82,7 @@ class TableTranslationController extends Controller
                     'current_page'=>$this->current_page,
                     'title'=>$this->title,
                     'user'=>$user,
+                    'notifications'=>$this->getNotification(),
                     'lang'=>$lang
                 ]);
                 break;
@@ -97,6 +100,7 @@ class TableTranslationController extends Controller
                     'current_page'=>$this->current_page,
                     'title'=>$this->title,
                     'user'=>$user,
+                    'notifications'=>$this->getNotification(),
                     'lang'=>$lang
                 ]);
                 break;
@@ -114,6 +118,7 @@ class TableTranslationController extends Controller
                     'current_page'=>$this->current_page,
                     'title'=>$this->title,
                     'user'=>$user,
+                    'notifications'=>$this->getNotification(),
                     'lang'=>$lang
                 ]);
                 break;
@@ -131,6 +136,7 @@ class TableTranslationController extends Controller
                     'current_page'=>$this->current_page,
                     'title'=>$this->title,
                     'user'=>$user,
+                    'notifications'=>$this->getNotification(),
                     'lang'=>$lang
                 ]);
                 break;
@@ -148,6 +154,7 @@ class TableTranslationController extends Controller
                     'current_page'=>$this->current_page,
                     'title'=>$this->title,
                     'user'=>$user,
+                    'notifications'=>$this->getNotification(),
                     'lang'=>$lang
                 ]);
                 break;

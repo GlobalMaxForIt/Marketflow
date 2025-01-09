@@ -64,21 +64,31 @@ class PaymentsController extends Controller
         $return_modals = ReturnModel::all()->groupBy('sale_id');
         foreach ($return_modals as $key => $return_modal_){
             $return_modal_all_sum = 0;
+            $all_sales_info_modal_data = [];
+            $all_sales_info_gift_card_data = [];
             $sales_modal = Sales::find($key);
-            foreach($return_modal_ as $return_modal){
-                $return_modal_all_sum = $return_modal_all_sum + (int)$return_modal->price;
-                $sale_item_modal = $return_modal->salesItem;
-                $all_sales_info_modal[] = $this->getSaleItem($sale_item_modal, $return_modal);
-                if($allSale->gift_card_sum){
-                    $all_sales_info_gift_card[] = [
-                        'percent'=>$allSale->gift_card_percent,
-                        'sum'=>$allSale->gift_card_sum
-                    ];
-                }else{
-                    $all_sales_info_gift_card[] = [];
+            if($sales_modal){
+                foreach($return_modal_ as $return_modal){
+                    $return_modal_all_sum = $return_modal_all_sum + (int)$return_modal->price;
+                    $sale_item_modal = $return_modal->salesItem;
+                    $array[] = $return_modal->salesItem;
+                    $array_return[] = $return_modal;
+                    if($sale_item_modal){
+                        $all_sales_info_modal_data[] = $this->getSaleItem($sale_item_modal, $return_modal);
+                    }
+                    if($allSale->gift_card_sum){
+                        $all_sales_info_gift_card_data[] = [
+                            'percent'=>$allSale->gift_card_percent,
+                            'sum'=>$allSale->gift_card_sum
+                        ];
+                    }else{
+                        $all_sales_info_gift_card_data[] = [];
+                    }
                 }
+                $all_sales_info_modal[] = $all_sales_info_modal_data;
+                $all_sales_info_gift_card[] = $all_sales_info_gift_card_data;
+                $all_sales_modal[] = $this->getSalesModal($sales_modal, $return_modal_all_sum);
             }
-            $all_sales_modal[] = $this->getSalesModal($sales_modal, $return_modal_all_sum);
         }
         return view('cashier.payments.index', [
             'lang'=>$lang,
@@ -91,6 +101,7 @@ class PaymentsController extends Controller
             'all_sales_info_modal'=>$all_sales_info_modal,
             'all_sales_info_gift_card'=>$all_sales_info_gift_card,
             'title'=>$this->title,
+            'notifications'=>$this->getNotification(),
             'current_page'=>$this->current_page,
             'quantity'=>[
                 'all_sales'=>count($all_sales),
@@ -126,27 +137,31 @@ class PaymentsController extends Controller
         return $all_sale;
     }
     public function getSalesModal($sale, $return_modal_all_sum){
-        $client_id = $sale->client_id;
-        $client_full_name = '';
-        $client_info = [];
-        if($client_id){
-            $client = Clients::find($client_id);
-            if($client){
-                $client_info = $this->clientService->getClientFullInfo($client);
-                $client_full_name = $this->clientService->getClientFullname($client);
+        if($sale){
+            $client_id = $sale->client_id;
+            $client_full_name = '';
+            $client_info = [];
+            if($client_id){
+                $client = Clients::find($client_id);
+                if($client){
+                    $client_info = $this->clientService->getClientFullInfo($client);
+                    $client_full_name = $this->clientService->getClientFullname($client);
+                }
             }
+            $all_sale = [
+                'id'=>$sale->id,
+                'cashier'=>$sale->cashier,
+                'store'=>$sale->store,
+                'code'=>'#'.$sale->code,
+                'client_full_name'=>$client_full_name,
+                'client_info'=>$client_info,
+                'price'=>$return_modal_all_sum>0?number_format($return_modal_all_sum, 0, '', ' '):'no',
+                'updated_at'=>$sale->updated_at
+            ];
+            return $all_sale;
+        }else{
+            return [];
         }
-        $all_sale = [
-            'id'=>$sale->id,
-            'cashier'=>$sale->cashier,
-            'store'=>$sale->store,
-            'code'=>'#'.$sale->code,
-            'client_full_name'=>$client_full_name,
-            'client_info'=>$client_info,
-            'price'=>$return_modal_all_sum>0?number_format($return_modal_all_sum, 0, '', ' '):'no',
-            'updated_at'=>$sale->updated_at
-        ];
-        return $all_sale;
     }
     public function getSalesItem($sale){
         $products_data = [];
@@ -176,20 +191,26 @@ class PaymentsController extends Controller
     }
 
     public function getSaleItem($salesItem, $return_modal){
+        $product_data = [];
         $items = [];
-        $product = $salesItem->product;
-        $sales_item_all_price = $return_modal->price;
-        if($product){
-            $items = $this->productsService->getShortProduct($product, $salesItem->quantity);
+        $product = '';
+        $sales_item_all_price = 0;
+        $sales_item_quantity = 0;
+        if($salesItem){
+            $product = $salesItem->product;
+            $sales_item_all_price = $return_modal->price;
+            $sales_item_quantity = $salesItem->quantity?rtrim(rtrim($return_modal->quantity, '0'), '.'):0;
+            if($product){
+                $items = $this->productsService->getShortProduct($product, $salesItem->quantity);
+            }
+            $product_data = [
+                'id'=>$salesItem->id,
+                'items'=>$items,
+                'all_price'=>number_format($sales_item_all_price, 0, '', ' '),
+                'quantity'=>$sales_item_quantity,
+                'price'=>0,
+            ];
         }
-        $sales_item_quantity = $salesItem->quantity?rtrim(rtrim($return_modal->quantity, '0'), '.'):0;
-        $product_data[] = [
-            'id'=>$salesItem->id,
-            'items'=>$items,
-            'all_price'=>number_format($sales_item_all_price, 0, '', ' '),
-            'quantity'=>$sales_item_quantity,
-            'price'=>0,
-        ];
         return $product_data;
     }
 

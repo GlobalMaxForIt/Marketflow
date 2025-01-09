@@ -79,6 +79,7 @@ class StoreController extends Controller
             'title'=>$this->title,
             'lang'=>$lang,
             'user'=>$user,
+            'notifications'=>$this->getNotification(),
             'current_page'=>$this->current_page
         ]);
     }
@@ -163,6 +164,7 @@ class StoreController extends Controller
             'images'=>$images_,
             'organizations'=>$organizations,
             'title'=>$this->title,
+            'notifications'=>$this->getNotification(),
             'lang'=>$lang,
             'user'=>$user,
             'current_page'=>$this->current_page

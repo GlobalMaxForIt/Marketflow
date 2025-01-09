@@ -143,6 +143,7 @@ class CashboxController extends Controller
             'user'=>$user,
             'clients'=>$clients,
             'cashiers'=>$cashiers,
+            'notifications'=>$this->getNotification(),
             'clients_for_discount'=>$clients_for_discount,
             'clients_discount'=>$clients_discount,
             'lang'=>$lang,
@@ -160,24 +161,40 @@ class CashboxController extends Controller
         $cashiers = User::select('id','name', 'surname')->where('store_id', $user->store_id)->get();
         $clients_ = Clients::all();
         $clients = [];
+        $clients_for_discount = [];
         foreach($clients_ as $client){
             $clients[] = $this->clientService->getClientFullInfo($client);
-        }
-        $discount_clients_id = Discount::distinct('client_id')->whereNotNull('client_id')->pluck('client_id')->toArray();
-        $clients_for_discount = [];
-        $clients__ = Clients::whereIn('id', $discount_clients_id)->get();
-        foreach($clients__ as $client__){
             $client_all_total_sum = 0;
-            if($client__->discount){
-                $clients_for_discount[] = [
-                    'client_all_total_sum'=>$client_all_total_sum,
-                    'client_full_name'=>$this->clientService->getClientFullname($client__),
-                    'percent'=>(int)$client__->discount->percent,
-                    'client_id'=>(int)$client__->id,
-                    'phone'=>$client__->phone,
-                ];
+            $cashback = $client->cashback;
+            $cashback_sum = 0;
+            if($cashback){
+                $cashback_sum = (int)$cashback->left_sum;
             }
+            $clients_for_discount[] = [
+                'client_all_total_sum'=>$client_all_total_sum,
+                'client_full_name'=>$this->clientService->getClientFullname($client),
+                'percent'=>$client->discount?(int)$client->discount->percent:0,
+                'client_id'=>(int)$client->id,
+                'cashback'=>$cashback_sum,
+                'phone'=>$client->phone,
+            ];
         }
+
+//        $discount_clients_id = Discount::distinct('client_id')->whereNotNull('client_id')->pluck('client_id')->toArray();
+//        $clients__ = Clients::whereIn('id', $discount_clients_id)->get();
+//        foreach($clients_ as $client__){
+//            $client_all_total_sum = 0;
+//            if($client__->discount){
+//                $clients_for_discount[] = [
+//                    'client_all_total_sum'=>$client_all_total_sum,
+//                    'client_full_name'=>$this->clientService->getClientFullname($client__),
+//                    'percent'=>$client__->discount?(int)$client__->discount->percent:0,
+//                    'client_id'=>(int)$client__->id,
+//                    'phone'=>$client__->phone,
+//                ];
+//            }
+//        }
+
         $discount_clients = Discount::distinct('client_id')->whereNotNull('client_id')->pluck('client_id');
         $clients_discount_ = Clients::whereIn('id', $discount_clients)->get();
         $clients_discount = [];
@@ -217,6 +234,7 @@ class CashboxController extends Controller
             'clients_for_discount'=>$clients_for_discount,
             'clients_discount'=>$clients_discount,
             'lang'=>$lang,
+            'notifications'=>$this->getNotification(),
             'current_page'=>$this->current_page
         ]);
     }
@@ -280,6 +298,7 @@ class CashboxController extends Controller
             'user'=>$user,
             'clients'=>$clients,
             'cashiers'=>$cashiers,
+            'notifications'=>$this->getNotification(),
             'clients_for_discount'=>$clients_for_discount,
             'clients_discount'=>$clients_discount,
             'lang'=>$lang,
@@ -389,6 +408,7 @@ class CashboxController extends Controller
             'user'=>$user,
             'clients'=>$clients,
             'cashiers'=>$cashiers,
+            'notifications'=>$this->getNotification(),
             'clients_for_discount'=>$clients_for_discount,
             'clients_discount'=>$clients_discount,
             'lang'=>$lang,
@@ -459,7 +479,6 @@ class CashboxController extends Controller
         }
         $sales->store_id = $user->store_id;
         $sales->cashier_id = $user->id;
-        $client_id = $request->client_id;
         $paid_amount = $request->paid_amount;
         $return_amount = $request->return_amount;
         $client_dicount_price = $request->client_dicount_price;
@@ -467,9 +486,10 @@ class CashboxController extends Controller
         $card_sum = $request->card_sum;
         $cash_sum = $request->cash_sum;
         $gift_card_code = $request->gift_card;
+        $client_id = $request->client_id;
         $time_now = date('Y-m-d');
         $gift_card = GiftCard::where('name', $gift_card_code)->where('start_date', '<=', $time_now)->where('end_date', '>=', $time_now)->where('store_id', $user->store_id)->first();
-        if(!$gift_card){
+        if(!$gift_card && $gift_card_code){
             $message = translate_title('this gift card is not found or expired', $this->lang);
             $response = [
                 'code'=>'',

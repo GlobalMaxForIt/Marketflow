@@ -23,6 +23,7 @@ class IndexController extends Controller
         return view('suppliers.index', [
             'title'=>$this->title,
             'lang'=>$lang,
+            'notifications'=>$this->getNotification(),
             'current_page'=>$this->current_page
         ]);
     }

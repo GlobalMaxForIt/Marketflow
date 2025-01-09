@@ -21,6 +21,9 @@ class Clients extends Model
     public function sales(){
         return $this->hasmany(Sales::class, 'client_id', 'id');
     }
+    public function cashback(){
+        return $this->hasOne(Cashback::class, 'client_id', 'id');
+    }
     public function salesShort(){
         return $this->hasmany(Sales::class, 'client_id', 'id')->select('id', 'total_amount', 'created_at');
     }

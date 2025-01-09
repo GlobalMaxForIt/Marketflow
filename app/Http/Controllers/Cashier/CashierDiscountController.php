@@ -71,6 +71,7 @@ class CashierDiscountController extends Controller
             'title'=>$this->title,
             'clients'=>$clients,
             'user'=>$user,
+            'notifications'=>$this->getNotification(),
             'clients_for_discount'=>$clients_for_discount,
             'lang'=>$lang,
             'current_page'=>$this->current_page
@@ -144,6 +145,7 @@ class CashierDiscountController extends Controller
             'categories'=>$categories,
             'lang'=>$lang,
             'user'=>$user,
+            'notifications'=>$this->getNotification(),
             'current_page'=>$this->current_page
         ]);
     }
@@ -294,6 +296,7 @@ class CashierDiscountController extends Controller
             'subcategory_id'=>$subcategory_id,
             'start_end_date'=>$start_end_date,
             'quantity'=>$quantity,
+            'notifications'=>$this->getNotification(),
             'title'=>$this->title,
             'lang'=>$lang,
             'user'=>$user,

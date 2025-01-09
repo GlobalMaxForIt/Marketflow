@@ -13,7 +13,7 @@ use Illuminate\Queue\SerializesModels;
 class PostNotification implements ShouldBroadcast
 {
 
-    public $message;
+    public $product_data;
     public $users_id;
 
     use Dispatchable, InteractsWithSockets, SerializesModels;
@@ -21,9 +21,9 @@ class PostNotification implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct($message, $users_id)
+    public function __construct($product_data, $users_id)
     {
-        $this->message = $message;
+        $this->product_data = $product_data;
         $this->users_id = $users_id;
     }
 
@@ -40,7 +40,7 @@ class PostNotification implements ShouldBroadcast
     public function broadcastWith()
     {
         return [
-            'message' => $this->message,
+            'product_data' => $this->product_data,
             'users_id' => $this->users_id,
         ];
     }

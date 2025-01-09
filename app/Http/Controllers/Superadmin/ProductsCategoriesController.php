@@ -45,6 +45,7 @@ class ProductsCategoriesController extends Controller
             'title'=>$this->title,
             'lang'=>$language,
             'user'=>$user,
+            'notifications'=>$this->getNotification(),
             'current_page'=>$this->current_page
         ]);
     }
@@ -96,6 +97,7 @@ class ProductsCategoriesController extends Controller
             'products_category'=>$products_category,
             'title'=>$this->title,
             'lang'=>$lang,
+            'notifications'=>$this->getNotification(),
             'user'=>$user,
             'current_page'=>$this->current_page
         ]);

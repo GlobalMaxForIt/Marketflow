@@ -1,5 +1,4 @@
 @php
-    $current_user = \Illuminate\Support\Facades\Auth::user();
     $locale = app()->getLocale();
 @endphp
     <!doctype html>
@@ -276,9 +275,9 @@
 <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 <script>
 
-    @if(isset($user))
-        let current_user_id = "{{$user->id}}"
-        let token = "{{$user->token}}"
+    @if($notifications['current_user'])
+        let current_user_id = "{{$notifications['current_user']->id}}"
+        let token = "{{$notifications['current_user']->token}}"
     @else
         let current_user_id = ""
         let token = ""
@@ -286,6 +285,9 @@
     let get_notifications_url = "{{route('getNotification')}}"
     let cashier_product_url = "{{route('cashier-product.show', '=')}}"
     let no_notification_text = "{{translate_title('No notifications', $lang)}}"
+    let unread_notifications_quantity = document.getElementById('unread_notifications_quantity')
+    let current_user_notifications = document.getElementById('current_user_notifications')
+    let current_user_no_notifications = document.getElementById('current_user_no_notifications')
 </script>
 <script src="{{asset('js/pusher_commands.js')}}"></script>
 <script>

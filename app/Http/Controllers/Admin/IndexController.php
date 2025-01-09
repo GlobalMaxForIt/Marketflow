@@ -35,7 +35,8 @@ class IndexController extends Controller
             'accepted_orders'=>$accepted_orders,
             'lang'=>$lang,
             'user'=>$user,
-            'current_page'=>$this->current_page
+            'current_page'=>$this->current_page,
+            'notifications'=>$this->getNotification()
         ]);
     }
 
@@ -45,6 +46,7 @@ class IndexController extends Controller
             'title'=>$this->title,
             'lang'=>$this->lang,
             'user'=>$user,
+            'notifications'=>$this->getNotification()
         ]);
     }
 }
