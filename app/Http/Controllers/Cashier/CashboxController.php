@@ -165,6 +165,9 @@ class CashboxController extends Controller
         foreach($clients_ as $client){
             $clients[] = $this->clientService->getClientFullInfo($client);
             $client_all_total_sum = 0;
+            if($client->cashback){
+                $client_all_total_sum = (int)$client->cashback->client_expenses;
+            }
             $cashback = $client->cashback;
             $cashback_sum = 0;
             if($cashback){
@@ -485,6 +488,7 @@ class CashboxController extends Controller
         $debt_sum = $request->debt_sum;
         $card_sum = $request->card_sum;
         $cash_sum = $request->cash_sum;
+        $cashback = $request->cashback;
         $gift_card_code = $request->gift_card;
         $client_id = $request->client_id;
         $time_now = date('Y-m-d');
@@ -500,7 +504,7 @@ class CashboxController extends Controller
             ];
             return response()->json($response, 200);
         }
-        $response = $this->salesService->salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $gift_card, $text, $checklist_changed, $debt_sum, $user);
+        $response = $this->salesService->salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $gift_card, $text, $checklist_changed, $debt_sum, $user, $cashback);
         return response()->json($response, 200);
     }
 

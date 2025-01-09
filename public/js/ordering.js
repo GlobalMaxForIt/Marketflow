@@ -449,6 +449,7 @@ function paymentPayFunc() {
                         'order_data':order_data,
                         'cashier_id':1,
                         'client_id':client_id,
+                        'cashback':cashback,
                         'client_dicount_price':clientDicountPrice,
                         'general_dicount_price':clientDicountPrice,
                         // 'client_dicount_price':clientDicountPrice,

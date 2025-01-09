@@ -35,7 +35,7 @@ class SalesService
         $this->productsService = $productsService;
     }
 
-    public function salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $gift_card, $text, $checklist_changed, $debt_sum, $user){
+    public function salesItemsSave($sales, $client_dicount_price, $client_id, $order_data, $paid_amount, $return_amount, $card_sum, $cash_sum, $gift_card, $text, $checklist_changed, $debt_sum, $user, $cashback){
         $lang = App::getLocale();
         $sales->client_id = $client_id;
         if($text == 'checklist'){
@@ -134,6 +134,7 @@ class SalesService
         $sales->return_amount = $return_amount;
         $sales->total_amount = $total_price;
         $sales->debt_amount = $debt_sum;
+        $sales->cashback_sum = $cashback;
         $sales->save();
         if((int)$card_sum > 0){
             $sales_payments = new SalesPayments();

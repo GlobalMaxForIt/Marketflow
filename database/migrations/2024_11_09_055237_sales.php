@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedInteger('client_id')->nullable();
             $table->unsignedInteger('gift_card_percent')->nullable();
             $table->unsignedInteger('gift_card_sum')->nullable();
+            $table->unsignedInteger('cashback_sum')->nullable();
             $table->decimal('price', 10, 2)->default(0);
             $table->decimal('discount', 10, 2)->nullable();
             $table->decimal('total_amount', 10, 2)->default(0);

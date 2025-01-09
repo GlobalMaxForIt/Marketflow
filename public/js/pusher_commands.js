@@ -35,17 +35,19 @@ if(unread_notifications_quantity != undefined && unread_notifications_quantity !
     }
 }
 function getAllNotifications(product_data){
-    if(unread_notifications_quantity != undefined && unread_notifications_quantity != null){
+    if(unread_notifications_quantity == undefined && unread_notifications_quantity == null){
         let unread_notifications_quantity = document.getElementById('unread_notifications_quantity')
     }
-    if(current_user_notifications != undefined && current_user_notifications != null){
+    if(current_user_notifications == undefined && current_user_notifications == null){
         let current_user_notifications = document.getElementById('current_user_notifications')
     }
-    if(current_user_no_notifications != undefined && current_user_no_notifications != null){
+    if(current_user_no_notifications == undefined && current_user_no_notifications == null){
         let current_user_no_notifications = document.getElementById('current_user_no_notifications')
     }
-    if(!current_user_no_notifications.classList.contains('d-none')){
-        current_user_no_notifications.classList.add('d-none')
+    if(current_user_no_notifications != undefined && current_user_no_notifications != null){
+        if(!current_user_no_notifications.classList.contains('d-none')){
+            current_user_no_notifications.classList.add('d-none')
+        }
     }
     currentUnread = currentUnread+1
     notification_html = ''
@@ -58,7 +60,9 @@ function getAllNotifications(product_data){
             </p>
         </a>
         <hr style="margin: 0px">`
-        current_user_notifications.insertAdjacentHTML('beforeend', notification_html);
+        if(current_user_notifications != undefined && current_user_notifications != null) {
+            current_user_notifications.insertAdjacentHTML('beforeend', notification_html);
+        }
         if(unread_notifications_quantity != undefined && unread_notifications_quantity != null) {
             if(unread_notifications_quantity.classList.contains('d-none')){
                 unread_notifications_quantity.classList.remove('d-none')

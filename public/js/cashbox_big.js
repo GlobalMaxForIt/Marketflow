@@ -14,7 +14,6 @@ let cash_sum = 0
 let card_sum = 0
 let debt_sum = 0
 let gift_card = 0
-let cashback = 0
 let accepting_sum_int = 0
 let change_sum_int = 0
 let klaviaturaNumber = 0

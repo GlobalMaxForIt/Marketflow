@@ -67,6 +67,7 @@ let notify_product_text = ''
 let selected__product__id = ''
 let selected_products_id = []
 let selected_products_quantity = []
+let is_removed_total_sum = false
 
 function showHasItems(){
     if(has_items != undefined && has_items != null){
@@ -195,7 +196,9 @@ function setClientPrices() {
     clients_total_discount__sum.value = (productsPrice - total_all_left_sum).toFixed(2)
     total_discount.innerText = (productsPrice - total_all_left_sum).toFixed(2)
     total__sum.value = total_all_left_sum
-    clients_total__sum.value = new Intl.NumberFormat('ru-RU').format(parseInt(client_total_sales), 10)
+    if(!is_removed_total_sum){
+        clients_total__sum.value = new Intl.NumberFormat('ru-RU').format(parseInt(client_total_sales), 10)
+    }
 }
 
 function removeClientDiscountFunc(){
@@ -207,15 +210,17 @@ function removeClientDiscountFunc(){
     client_select_id_2.value = ''
     clientDicountPrice = 0
     clients_discount__sum.value = 0
+    clients_total__sum.value = 0
+    is_removed_total_sum = true
     clients_total_discount__sum.value = 0
     total__sum.value = 0
     cashback = 0
     cashback_input.value = 0
 }
-
 removeClientDiscount.addEventListener('click', function () {
     removeClientDiscountFunc()
     setClientPrices()
+    is_removed_total_sum = false
 })
 
 function truncuateCashboxFunc(){
