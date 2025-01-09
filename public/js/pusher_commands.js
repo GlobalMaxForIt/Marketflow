@@ -7,11 +7,7 @@ var pusher = new Pusher('c269e7cb3a6819f86947', {
 
 let notification_html = ''
 let currentUnread = 0
-// $product_data = [
-//     'product_image'=>$small_image,
-//     'product_id'=>$product->id,
-//     'message'=>$message,
-// ];
+
 var channel = pusher.subscribe('post-order');
 channel.bind('post-event', function(data) {
     if(data.users_id != null && data.users_id != undefined){

@@ -2816,3 +2816,6 @@ body[data-layout-color="dark"] .dropdown-item:focus, .dropdown-item:hover{
 #current_user_notifications{
     overflow-y: auto;
 }
+#gift_card_sum_text, #cashback_sum_text{
+    height: 32px;
+}

@@ -116,12 +116,10 @@ function showClientDiscount(discount_content_element){
 function hideClientDiscount(discount_content_element) {
     if(discount_content_element != undefined && discount_content_element != null){
         if(!discount_content_element.classList.contains('d-none')){
-            console.log(discount_content_element)
             discount_content_element.classList.add('d-none')
             discount_content_element.classList.add('daaaa')
         }
     }
-    console.log(discount_content_element)
 }
 if(localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null){
     localStorage.removeItem('order_data')
@@ -239,9 +237,27 @@ function truncuateCashboxFunc(){
     all_sum = 0
     all_sum_withouth_discount = 0
     clients_discount__sum.value = 0.00
+    clients_total__sum.value = 0
     $(document).ready(function() {
         $('#client_select_id_2').val(null).trigger('change');
     });
+    if(!gift_card_content.classList.contains('d-none')){
+        gift_card_content.classList.add('d-none')
+    }
+    removeGiftCard()
+
+    if(!cashback_content.classList.contains('d-none')){
+        cashback_content.classList.add('d-none')
+    }
+    removeCashback()
+
+    if(!cashback_display_content.classList.contains('d-none')){
+        cashback_display_content.classList.add('d-none')
+    }
+    if(!debt_display_content.classList.contains('d-none')){
+        debt_display_content.classList.add('d-none')
+    }
+
     hideClientDiscount(clientDiscountContent)
     hideHasItems()
     order_data = []

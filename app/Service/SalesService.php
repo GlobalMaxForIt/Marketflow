@@ -76,7 +76,9 @@ class SalesService
                 $all_cost_price = $all_cost_price + $product->cost * (float)$orderData['quantity'];
                 $sales_items->price = $order_data_price;
                 $sales_items->save();
-                $product->stock = $product->stock - (float)$orderData['quantity'];
+                if($text != 'checklist'){
+                    $product->stock = $product->stock - (float)$orderData['quantity'];
+                }
                 if((float)$product->stock<=5){
                     $message = $product->name.' '. $product->amount.' '.translate_title('has left ', $lang). ' '.$product->stock;
                     $this_store_users_id = User::where('store_id', $user->store_id)->pluck('id');
@@ -158,19 +160,18 @@ class SalesService
             $sales_reports->profit = $all_price - $all_cost_price;
             $sales_reports->save();
         }
-        $cashback = Cashback::where('client_id', $client_id)->first();
-        if($cashback){
-            $cashback->client_expenses = (int)$cashback->client_expenses + $total_price;
-            $cashback_type = $cashback->cashback_type;
-            $cashback_for_bilion = (int)$cashback->client_expenses/1000000;
-            if($cashback_for_bilion >0){
-                $current_cashback_sum = (int)($cashback_for_bilion*((int)$cashback_type->percent/100));
-                if($current_cashback_sum>0){
-                    $cashback->all_sum = $current_cashback_sum;
-                    $cashback->left_sum = $current_cashback_sum - (int)$cashback->taken_sum;
-                    $cashback->save();
-                }
+        $cashback_modal = Cashback::where('client_id', $client_id)->first();
+        if($cashback_modal){
+            $client_expenses = (int)$cashback_modal->client_expenses + $total_price;
+            $cashback_modal->client_expenses = $client_expenses;
+            $cashback_type = $cashback_modal->cashback_type;
+            $current_cashback_sum = (int)($client_expenses*((int)$cashback_type->percent/100));
+            if($current_cashback_sum>0){
+                $cashback_modal->all_sum = $current_cashback_sum;
+                $cashback_modal->taken_sum = (int)$cashback_modal->taken_sum + (int)$cashback;
+                $cashback_modal->left_sum = $current_cashback_sum - (int)$cashback_modal->taken_sum;
             }
+            $cashback_modal->save();
         }
         $sales_id = (string)$sales->id;
         if(strlen($sales_id)<8){

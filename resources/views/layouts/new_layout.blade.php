@@ -265,7 +265,8 @@
                     </div>
 
                     <div class="noti-scroll" data-simplebar id="current_user_notifications">
-                        @forelse($notifications['unreadnotifications'] as $notification)
+
+                        @foreach($notifications['unreadnotifications'] as $notification)
                             @if($notification->type == "App\Notifications\StockNotification")
                                 @if(!empty($notification->data))
                                     @if(isset($notification->data['product_id']))
@@ -286,13 +287,12 @@
                                     <hr style="margin: 0px">
                                 @endif
                             @endif
-                        @empty
-                            <a href="javascript:void(0);"
-                               class="dropdown-item text-center text-primary notify-item notify-all">
-                                {{ translate_title('No notifications', $lang)}}
-                                <i class="fe-arrow-right"></i>
-                            </a>
-                        @endforelse
+                        @endforeach
+                        <a href="javascript:void(0);" id="current_user_no_notifications"
+                           class="dropdown-item text-center text-primary notify-item notify-all @if($notifications['unreadnotifications']->isEmpty()) d-none @endif">
+                            {{ translate_title('No notifications', $lang)}}
+                            <i class="fe-arrow-right"></i>
+                        </a>
                     </div>
                     <!-- All-->
                     <a href="{{route('order.index', 2)}}"

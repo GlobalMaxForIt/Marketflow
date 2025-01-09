@@ -246,7 +246,6 @@ class PaymentsController extends Controller
         date_default_timezone_set("Asia/Tashkent");
         $datas = $request->data;
         $id = $request->id;
-
         $all_price = 0;
         $all_cost_price = 0;
         $order_discount_price = 0;
