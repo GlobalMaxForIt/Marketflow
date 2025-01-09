@@ -251,7 +251,7 @@
                 <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown"
                    href="#" role="button" aria-haspopup="false" aria-expanded="false">
                     <i class="fe-bell noti-icon"></i>
-                    <span class="badge bg-danger rounded-circle noti-icon-badge @if($notifications['unreadnotifications_quantity']>0) d-none @endif" id="unread_notifications_quantity">{{$notifications['unreadnotifications_quantity']}}</span>
+                    <span class="badge bg-danger rounded-circle noti-icon-badge @if($notifications['unreadnotifications_quantity']<=0) d-none @endif" id="unread_notifications_quantity">{{$notifications['unreadnotifications_quantity']}}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-lg">
 
