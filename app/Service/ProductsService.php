@@ -159,46 +159,48 @@ class ProductsService
         $lang = App::getLocale();
         $allProducts = [];
         foreach ($products_ as $product) {
-            if($product->discount){
-                if($product->discount->percent&& $product->price){
-                    $discount = $this->getDiscount($product->discount->percent, $product->price);
-                    $discount_percent = $product->discount->percent;
+            if((float)$product->stock>0){
+                if($product->discount){
+                    if($product->discount->percent&& $product->price){
+                        $discount = $this->getDiscount($product->discount->percent, $product->price);
+                        $discount_percent = $product->discount->percent;
+                    }else{
+                        $discount = 0;
+                        $discount_percent = 0;
+                    }
                 }else{
                     $discount = 0;
                     $discount_percent = 0;
                 }
-            }else{
-                $discount = 0;
-                $discount_percent = 0;
-            }
-            $product_small_image = storage_path('app/public/products/small/'.$product->image);
-            if(file_exists($product_small_image)){
-                $small_image = asset('storage/products/small/'.$product->image);
-            }else{
-                $small_image = asset('icon/no_photo.jpg');
-            }
-            $unit_translation = '';
-            if($product->unit){
-                $unit_translation = table_translate_title($product->unit, 'unit', $lang);
-            }
+                $product_small_image = storage_path('app/public/products/small/'.$product->image);
+                if(file_exists($product_small_image)){
+                    $small_image = asset('storage/products/small/'.$product->image);
+                }else{
+                    $small_image = asset('icon/no_photo.jpg');
+                }
+                $unit_translation = '';
+                if($product->unit){
+                    $unit_translation = table_translate_title($product->unit, 'unit', $lang);
+                }
 
-            $array_products = [
-                'id'=>$product->id,
-                'products_categories'=>$product->products_categories,
-                'short_name'=>$this->truncateString($product->name),
-                'name'=>$product->name,
-                'amount'=>$product->amount,
-                'unit'=>$unit_translation,
-                'unit_id'=>$product->unit_id,
-                'price'=>number_format((int)$product->price, 0, '', ' '),
-                'discount'=>number_format($discount, 0, '', ' '),
-                'discount_percent'=>$discount_percent,
-                'last_price'=>number_format((int)$product->price - $discount, 0, '', ' '),
-                'barcode'=>$product->barcode,
-                'image'=>$small_image,
-                'stock'=>$product->stock,
-            ];
-            $allProducts[] = $array_products;
+                $array_products = [
+                    'id'=>$product->id,
+                    'products_categories'=>$product->products_categories,
+                    'short_name'=>$this->truncateString($product->name),
+                    'name'=>$product->name,
+                    'amount'=>$product->amount,
+                    'unit'=>$unit_translation,
+                    'unit_id'=>$product->unit_id,
+                    'price'=>number_format((int)$product->price, 0, '', ' '),
+                    'discount'=>number_format($discount, 0, '', ' '),
+                    'discount_percent'=>$discount_percent,
+                    'last_price'=>number_format((int)$product->price - $discount, 0, '', ' '),
+                    'barcode'=>$product->barcode,
+                    'image'=>$small_image,
+                    'stock'=>$product->stock,
+                ];
+                $allProducts[] = $array_products;
+            }
         }
         return $allProducts;
     }

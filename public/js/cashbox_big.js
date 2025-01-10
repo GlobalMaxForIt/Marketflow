@@ -659,9 +659,19 @@ function appendEditProduct(number) {
     }
     dot_has = false
     if(amount_or_price == 'amount'){
+        if (orderProduct_stock - parseFloat(display_edit_product.value.replace(/\s/g, '')) < 0) {
+            display_edit_product.value = orderProduct_stock
+            toastr.warning('0 '+notify_text_left_in_stock)
+        }
         selected_product_price_value = parseInt(orderProduct_last_price * parseFloat(display_edit_product.value.replace(/\s/g, '')))
         selected_product_price.value = format_entered_sum(selected_product_price_value)
     }else{
+        if (orderProduct_stock - parseInt(selected_product_price.value.replace(/\s/g, ''))/orderProduct_last_price  < 0) {
+            display_edit_product.value = orderProduct_stock
+            selected_product_price_value = parseInt(orderProduct_last_price*orderProduct_stock)
+            selected_product_price.value = format_entered_sum(selected_product_price_value);
+            toastr.warning('0 '+notify_text_left_in_stock)
+        }
         selected_product_amount.value = (parseInt(selected_product_price.value.replace(/\s/g, ''))/orderProduct_last_price).toFixed(2)
     }
     if(selected_product_stock != undefined && selected_product_stock != null){
@@ -673,7 +683,7 @@ function appendDotEditProduct(){
     dot_has = true
 }
 function changePriceByAmount(amount__value, last__value){
-    if(stock_int > 0 || page_name == 'payment') {
+    if(orderProduct_stock > 0 || page_name == 'payment') {
         if(is_edit_product_modal_opened_for_amount) {
             if(amount__value != ''){
                 selected_product_amount.value = last__value
@@ -684,7 +694,7 @@ function changePriceByAmount(amount__value, last__value){
                     selected_product_amount.value = '0'
                 }
             }
-            selected_product_price_value = orderProduct_last_price * parseFloat(last__value)
+            selected_product_price_value = parseInt(orderProduct_last_price * parseFloat(last__value))
             selected_product_price.value = format_entered_sum(selected_product_price_value)
             dot_has = false
             is_edit_product_modal_opened_for_amount = false
@@ -707,7 +717,14 @@ function changePriceByAmount(amount__value, last__value){
                 }
                 dot_has = false
             }
-            selected_product_price_value = orderProduct_last_price * parseFloat(amount__value.replace(/\s/g, ''))
+            selected_product_price_value = parseInt(orderProduct_last_price * parseFloat(amount__value.replace(/\s/g, '')))
+            selected_product_price.value = format_entered_sum(selected_product_price_value)
+        }
+
+        if(orderProduct_stock - parseFloat(selected_product_amount.value) < 0) {
+            selected_product_amount.value = orderProduct_stock
+            toastr.warning('0 '+notify_text_left_in_stock)
+            selected_product_price_value = parseInt(orderProduct_last_price * parseFloat(selected_product_amount.value))
             selected_product_price.value = format_entered_sum(selected_product_price_value)
         }
         if(selected_product_stock != undefined && selected_product_stock != null){
@@ -717,7 +734,7 @@ function changePriceByAmount(amount__value, last__value){
 }
 
 function changeAmountByPrice(price__value, last__value){
-    if(stock_int > 0 || page_name == 'payment') {
+    if(orderProduct_stock > 0 || page_name == 'payment') {
         if(is_edit_product_modal_opened_for_price) {
             if(last__value == undefined || last__value == null){
                 last__value = '0'
@@ -733,6 +750,12 @@ function changeAmountByPrice(price__value, last__value){
             selected_product_amount.value = parseInt((parseInt(selected_product_price_value) / orderProduct_last_price)*100)/100
         }else{
             selected_product_amount.value = '0';
+        }
+        if (orderProduct_stock - parseFloat(selected_product_price_value/orderProduct_last_price)<0) {
+            selected_product_amount.value = orderProduct_stock
+            selected_product_price_value = parseInt(orderProduct_last_price*orderProduct_stock)
+            selected_product_price.value = format_entered_sum(selected_product_price_value);
+            toastr.warning('0 '+notify_text_left_in_stock)
         }
         if(selected_product_stock != undefined && selected_product_stock != null){
             selected_product_stock.innerText = orderProduct_stock - parseFloat(selected_product_amount.value)
@@ -764,7 +787,7 @@ function changeAmountAndPrice(){
     orderProduct_quantity = parseFloat(selected_product_amount.value)
     orderProduct_last_price = selected_product_price_value
     orderProduct_stock = orderProduct_stock - orderProduct_quantity
-    if(orderProduct_stock > 0) {
+    if(orderProduct_stock >= 0) {
         if (order_data.length > 0) {
             for (let i = 0; i < order_data.length; i++) {
                 if (order_data[i].id == orderProduct_id) {
@@ -812,15 +835,13 @@ function changeAmountAndPrice(){
 
         notify_product_text = orderProductData.name+' '+orderProduct_amount + ' '+notify_text
         toastr.success(notify_product_text)
-    }else{
-        toastr.warning(orderProductData.name+' '+orderProduct_amount +' '+orderProduct_stock+' '+notify_text_left_in_stock)
     }
-    if(Object.keys(orderProductData).length>0){
-        selected_product_name.innerText = orderProductData.name + ' '+orderProductData.amount
-        selected_product_unit.innerText = orderProductData.unit
-        selectedProductAmount = parseFloat(selected_product_amount.value)
-        orderProduct_last_price = parseInt(selected_product_price_value/selectedProductAmount)
-    }
+    // if(Object.keys(orderProductData).length>=0){
+    //     selected_product_name.innerText = orderProductData.name + ' '+orderProductData.amount
+    //     selected_product_unit.innerText = orderProductData.unit
+    //     selectedProductAmount = parseFloat(selected_product_amount.value)
+    //     orderProduct_last_price = parseInt(selected_product_price_value/selectedProductAmount)
+    // }
     if(orderProduct_quantity>0){
         if(order_selected_product_name != '' && order_selected_product_name != null && order_selected_product_name != undefined){
             order_selected_product_name.innerText = orderProductData.name+' '+orderProduct_amount

@@ -281,12 +281,12 @@ function addToOrder(id, name, price, discount, discount_percent, last_price, amo
                     if(selected_products_quantity[i]>0) {
                         successfullyAddToOrder(i, id, name, price, discount, discount_percent, last_price, amount, barcode, stock, unit, unit_id, quantity, code, this_element, fast_selling)
                     }else{
-                        toastr.warning(name+' '+amount +' '+selected_products_quantity[i]+' '+notify_text_left_in_stock)
+                        is_exist = false
                     }
                 }
             }
             if(!is_exist){
-                toastr.warning(name+' '+amount +' '+stock_int+' '+notify_text_left_in_stock)
+                toastr.warning(name+' '+amount +' 0 '+notify_text_left_in_stock)
             }
         }
     }, 444)
