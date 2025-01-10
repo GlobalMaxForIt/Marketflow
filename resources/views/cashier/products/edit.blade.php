@@ -270,8 +270,14 @@
             }, 244);
         });
 
+
         function handleBarcode(barcode_) {
-            barcode.value = barcode_
+            let barcodeNumbers = barcode_.match(/\d+$/);
+            if (barcodeNumbers) {
+                barcode.value = barcodeNumbers[0];
+            } else {
+                barcode.value = ''; // Agar raqam topilmasa bo'sh qiymat
+            }
         }
     </script>
     <script src="{{asset('js/product.js')}}"></script>

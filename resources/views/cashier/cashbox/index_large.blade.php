@@ -671,6 +671,7 @@
     {{--    <script src="{{asset('js/cities.js')}}"></script>--}}
     <script src="{{asset('js/large_ordering.js')}}"></script>
     <script>
+        let barcode = ''
         let barcodeInput = document.getElementById('barcode_input')
         barcodeInput.focus()
         let scannedBarcode = ''
@@ -687,7 +688,14 @@
             }, 244);
         });
 
-        function handleBarcode(barcode) {
+        function handleBarcode(barcode_) {
+            let barcodeNumbers = barcode_.match(/\d+$/);
+            if (barcodeNumbers) {
+                barcode = barcodeNumbers[0];
+            } else {
+                barcode = ''; // Agar raqam topilmasa bo'sh qiymat
+            }
+
             for(let p=0; p<json_products.length; p++){
                 if(json_products[p].barcode == barcode){
                     addToOrder(json_products[p].id, json_products[p].name, json_products[p].price, json_products[p].discount, json_products[p].discount_percent, json_products[p].last_price, json_products[p].amount, json_products[p].barcode, json_products[p].stock, json_products[p].unit, json_products[p].unit_id, 1, null, null, null)
