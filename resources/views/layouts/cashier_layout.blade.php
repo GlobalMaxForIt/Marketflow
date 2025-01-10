@@ -60,6 +60,12 @@
 
 <script>
     let cashback = 0
+
+    let p=0;
+    let current_product_element = ''
+    let current_product_element_id_name = ''
+    let current_product_element_quantity = 0
+    let current_product_element_stock = 0
 </script>
 <body class="loading" data-layout-color="light" data-layout-mode="default" data-layout-size="fluid" id="body_layout"
       data-topbar-color="light" data-leftbar-position="fixed" data-leftbar-color="light" data-leftbar-size='default'

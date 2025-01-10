@@ -1280,11 +1280,19 @@ function autoSetDebtSum(){
     display_card.value = format_entered_sum(card_sum)
     debt_display.value = format_entered_sum(debt_sum)
 }
-let p=0;
-let current_product_element = ''
-let current_product_element_id_name = ''
-let current_product_element_quantity = ''
-let current_product_element_stock = ''
+
+function returnToStock(){
+    for(p=0; p<order_data.length; p++){
+        current_product_element_quantity = 0
+        current_product_element_stock = 0
+        current_product_element_id_name = 'stock__'+order_data[p].id
+        current_product_element_quantity = parseFloat(order_data[p].quantity)
+        current_product_element_stock = parseFloat(order_data[p].stock)
+        current_product_element = document.getElementById(current_product_element_id_name)
+        current_product_element.innerText = current_product_element_stock
+    }
+}
+
 function paymentPayFunc(text) {
     if(loader != undefined && loader != null){
         if(loader.classList.contains("d-none")){
@@ -1296,14 +1304,6 @@ function paymentPayFunc(text) {
             myDiv.classList.remove("d-none")
         }
     }
-    for(p=0; p<order_data.length; p++){
-        current_product_element_id_name = 'stock__'+order_data[p].id
-        current_product_element_quantity = parseFloat(order_data[p].quantity)
-        current_product_element_stock = parseFloat(order_data[p].stock)
-        current_product_element = document.getElementById(current_product_element_id_name)
-        current_product_element.innerText = current_product_element_stock + current_product_element_quantity
-    }
-
     $(document).ready(function () {
         if(order_data.length>0){
             try{
@@ -1351,6 +1351,7 @@ function paymentPayFunc(text) {
                                 localStorage.removeItem('order_data')
                             }
                             toastr.success(set_aside_success_text+' '+data.code)
+                            returnToStock()
                             truncuateCashboxFunc()
                         }else{
                             setTimeout(function () {

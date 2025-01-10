@@ -67,6 +67,12 @@
 
 <script>
     let cashback = 0
+
+    let p=0;
+    let current_product_element = ''
+    let current_product_element_id_name = ''
+    let current_product_element_quantity = 0
+    let current_product_element_stock = 0
 </script>
 <body class="loading" data-layout-color="light" data-layout-mode="default" data-layout-size="fluid" id="body_layout"
       data-topbar-color="light" data-leftbar-position="fixed" data-leftbar-color="light" data-leftbar-size='default'
@@ -523,9 +529,9 @@
                             <div class="d-flex align-items-end justify-content-end">
                                 <div class="language_changer_content">
                                     <div class="square-switch">
-                                        <input type="checkbox" id="keyboard_lang_change_func" switch="none" checked/>
-                                        <label for="keyboard_lang_change_func" data-on-label="EN"
-                                               data-off-label="RU"></label>
+                                        <input type="checkbox" id="keyboard_lang_change_func" switch="none"/>
+                                        <label for="keyboard_lang_change_func" data-on-label="RU"
+                                               data-off-label="EN"></label>
                                     </div>
                                 </div>
                             </div>
@@ -1014,7 +1020,12 @@
     let keyboard_ru = document.getElementById('keyboard_ru')
     let keyboard_en = document.getElementById('keyboard_en')
     if(keyboard_selected_lang == 'ru'){
-        keyboard_lang_change_func.click()
+        openRuKeyboardFunc()
+        keyboard_lang_change_func.checked = true
+    }
+    if(keyboard_selected_lang == 'en'){
+        openEnKeyboardFunc()
+        keyboard_lang_change_func.checked = false
     }
 
     keyboard_lang_change_func.addEventListener('change', function (e) {
@@ -1022,6 +1033,7 @@
             keyboardChangerFunc()
         }
     })
+
     function keyboardChangerFunc(){
         if(keyboard_selected_lang != undefined && keyboard_selected_lang != null){
             if(keyboard_selected_lang == 'en'){

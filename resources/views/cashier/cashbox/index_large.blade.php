@@ -615,8 +615,10 @@
         getCheckAsideFunc()
         let old_selected_checklist_id = ''
         let selected_checklist_is_active = false
+
         function checklistFunc(checklist_data, checklist_id, checklist_code, selected_checklist){
             let checklist_items_ = document.getElementsByClassName('checklist_item')
+            returnToStock()
             truncuateCashboxFunc()
             for(let k=0; k<checklist_items_.length; k++){
                 if(checklist_items_[k].classList.contains('active')){

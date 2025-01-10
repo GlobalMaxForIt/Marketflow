@@ -265,29 +265,31 @@ function truncuateCashboxFunc(){
     order_data_content.innerHTML = order_data_html
 }
 function addToOrder(id, name, price, discount, discount_percent, last_price, amount, barcode, stock, unit, unit_id, quantity, code, this_element, fast_selling) {
-    checklist_changed = false
-    stock_int = parseFloat(stock)
-    selected__product__id = id
-    is_exist = false
-    order_json = {}
-    current_data = {}
-    element_id = ''
-    if(!selected_products_id.includes(id)){
-        successfullyAddToOrder('', id, name, price, discount, discount_percent, last_price, amount, barcode, stock, unit, unit_id, quantity, code, this_element, fast_selling)
-    }else{
-        for(let i=0; i<selected_products_id.length; i++){
-            if(selected_products_id[i] == id) {
-                if(selected_products_quantity[i]>0) {
-                    successfullyAddToOrder(i, id, name, price, discount, discount_percent, last_price, amount, barcode, stock, unit, unit_id, quantity, code, this_element, fast_selling)
-                }else{
-                    toastr.warning(name+' '+amount +' '+selected_products_quantity[i]+' '+notify_text_left_in_stock)
+    setTimeout(function () {
+        checklist_changed = false
+        stock_int = parseFloat(stock)
+        selected__product__id = id
+        is_exist = false
+        order_json = {}
+        current_data = {}
+        element_id = ''
+        if(!selected_products_id.includes(id)){
+            successfullyAddToOrder('', id, name, price, discount, discount_percent, last_price, amount, barcode, stock, unit, unit_id, quantity, code, this_element, fast_selling)
+        }else{
+            for(let i=0; i<selected_products_id.length; i++){
+                if(selected_products_id[i] == id) {
+                    if(selected_products_quantity[i]>0) {
+                        successfullyAddToOrder(i, id, name, price, discount, discount_percent, last_price, amount, barcode, stock, unit, unit_id, quantity, code, this_element, fast_selling)
+                    }else{
+                        toastr.warning(name+' '+amount +' '+selected_products_quantity[i]+' '+notify_text_left_in_stock)
+                    }
                 }
             }
+            if(!is_exist){
+                toastr.warning(name+' '+amount +' '+stock_int+' '+notify_text_left_in_stock)
+            }
         }
-        if(!is_exist){
-            toastr.warning(name+' '+amount +' '+stock_int+' '+notify_text_left_in_stock)
-        }
-    }
+    }, 444)
 }
 function successfullyAddToOrder(index_, id, name, price, discount, discount_percent, last_price, amount, barcode, stock, unit, unit_id, quantity, code, this_element, fast_selling){
     if (order_data.length > 0) {
