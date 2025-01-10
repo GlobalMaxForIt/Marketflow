@@ -1281,6 +1281,10 @@ function autoSetDebtSum(){
     debt_display.value = format_entered_sum(debt_sum)
 }
 let p=0;
+let current_product_element = ''
+let current_product_element_id_name = ''
+let current_product_element_quantity = ''
+let current_product_element_stock = ''
 function paymentPayFunc(text) {
     if(loader != undefined && loader != null){
         if(loader.classList.contains("d-none")){
@@ -1292,106 +1296,94 @@ function paymentPayFunc(text) {
             myDiv.classList.remove("d-none")
         }
     }
-    for(p=0; p<order_data; p++){
-
+    for(p=0; p<order_data.length; p++){
+        current_product_element_id_name = 'stock__'+order_data[p].id
+        current_product_element_quantity = parseFloat(order_data[p].quantity)
+        current_product_element_stock = parseFloat(order_data[p].stock)
+        current_product_element = document.getElementById(current_product_element_id_name)
+        current_product_element.innerText = current_product_element_stock + current_product_element_quantity
     }
-    console.log(order_data)
 
-    // $(document).ready(function () {
-    //     if(order_data.length>0){
-    //         try{
-    //             $.ajax({
-    //                 url: payment_pay_url,
-    //                 method: 'POST',
-    //                 headers: {
-    //                     'Authorization': 'Bearer ' + token.trim()
-    //                 },
-    //                 dataType: 'json', // Javobni JSON formatida tahlil qilish
-    //                 data:{
-    //                     'order_data':order_data,
-    //                     'client_id':client_id,
-    //                     'sale_id':selected_checklist_id,
-    //                     'client_dicount_price':clientDicountPrice,
-    //                     'paid_amount':accepting_sum_int,
-    //                     'return_amount':change_sum_int,
-    //                     'card_sum':card_sum,
-    //                     'cash_sum':cash_sum,
-    //                     'debt_sum':debt_sum,
-    //                     'gift_card':gift_card,
-    //                     'cashback':cashback_price,
-    //                     'text':text,
-    //                     'checklist_changed':checklist_changed
-    //                     // 'client_dicount_price':clientDicountPrice,
-    //                 },
-    //                 success: function (data) {
-    //                     hideHasItems()
-    //                     if(data.status == true){
-    //                         setTimeout(function () {
-    //                             if(loader != undefined && loader != null){
-    //                                 if(!loader.classList.contains("d-none")){
-    //                                     loader.classList.add("d-none")
-    //                                 }
-    //                             }
-    //                             if(myDiv != undefined && myDiv != null){
-    //                                 if(!myDiv.classList.contains("d-none")){
-    //                                     myDiv.classList.add("d-none")
-    //                                 }
-    //                             }
-    //                             getCheckAsideFunc()
-    //                         }, 244)
-    //                         if(localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null){
-    //                             localStorage.removeItem('order_data')
-    //                         }
-    //                         toastr.success(payment_success_text+' '+data.code)
-    //                         truncuateCashboxFunc()
-    //                     }else if(data.status == false && data.code){
-    //                         setTimeout(function () {
-    //                             if(loader != undefined && loader != null){
-    //                                 if(!loader.classList.contains("d-none")){
-    //                                     loader.classList.add("d-none")
-    //                                 }
-    //                             }
-    //                             if(myDiv != undefined && myDiv != null){
-    //                                 if(!myDiv.classList.contains("d-none")){
-    //                                     myDiv.classList.add("d-none")
-    //                                 }
-    //                             }
-    //                             getCheckAsideFunc()
-    //                         }, 244)
-    //                         if(localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null){
-    //                             localStorage.removeItem('order_data')
-    //                         }
-    //                         toastr.success(set_aside_success_text+' '+data.code)
-    //                         truncuateCashboxFunc()
-    //                     }else{
-    //                         setTimeout(function () {
-    //                             if(loader != undefined && loader != null){
-    //                                 if(!loader.classList.contains("d-none")){
-    //                                     loader.classList.add("d-none")
-    //                                 }
-    //                             }
-    //                             if(myDiv != undefined && myDiv != null){
-    //                                 if(!myDiv.classList.contains("d-none")){
-    //                                     myDiv.classList.add("d-none")
-    //                                 }
-    //                             }
-    //                         }, 244)
-    //                         toastr.warning(data.message)
-    //                     }
-    //                 },
-    //                 error: function (xhr, status, error) {
-    //                     // Handle errors here
-    //                     console.log(xhr.responseText); // Log the error response from the server
-    //                     toastr.error('An error occurred: ' + xhr.status + ' ' + error); // Show error message
-    //                 }
-    //             })
-    //         }catch (e) {
-    //             console.log(e)
-    //         }
-    //     }else{
-    //         toastr.warning(ordered_fail_text)
-    //     }
-    // })
+    $(document).ready(function () {
+        if(order_data.length>0){
+            try{
+                $.ajax({
+                    url: payment_pay_url,
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + token.trim()
+                    },
+                    dataType: 'json', // Javobni JSON formatida tahlil qilish
+                    data:{
+                        'order_data':order_data,
+                        'client_id':client_id,
+                        'sale_id':selected_checklist_id,
+                        'client_dicount_price':clientDicountPrice,
+                        'paid_amount':accepting_sum_int,
+                        'return_amount':change_sum_int,
+                        'card_sum':card_sum,
+                        'cash_sum':cash_sum,
+                        'debt_sum':debt_sum,
+                        'gift_card':gift_card,
+                        'cashback':cashback_price,
+                        'text':text,
+                        'checklist_changed':checklist_changed
+                        // 'client_dicount_price':clientDicountPrice,
+                    },
+                    success: function (data) {
+                        hideHasItems()
+                        if(data.status == true){
+                            setTimeout(function () {
+                                hideLoaderFunc()
+                                getCheckAsideFunc()
+                            }, 244)
+                            if(localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null){
+                                localStorage.removeItem('order_data')
+                            }
+                            toastr.success(payment_success_text+' '+data.code)
+                            truncuateCashboxFunc()
+                        }else if(data.status == false && data.code){
+                            setTimeout(function () {
+                                hideLoaderFunc()
+                                getCheckAsideFunc()
+                            }, 244)
+                            if(localStorage.getItem('order_data') != undefined && localStorage.getItem('order_data') != null){
+                                localStorage.removeItem('order_data')
+                            }
+                            toastr.success(set_aside_success_text+' '+data.code)
+                            truncuateCashboxFunc()
+                        }else{
+                            setTimeout(function () {
+                                hideLoaderFunc()
+                            }, 244)
+                            toastr.warning(data.message)
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle errors here
+                        console.log(xhr.responseText); // Log the error response from the server
+                        toastr.error('An error occurred: ' + xhr.status + ' ' + error); // Show error message
+                    }
+                })
+            }catch (e) {
+                console.log(e)
+            }
+        }else{
+            toastr.warning(ordered_fail_text)
+        }
+    })
+}
+function hideLoaderFunc(){
+    if(loader != undefined && loader != null){
+        if(!loader.classList.contains("d-none")){
+            loader.classList.add("d-none")
+        }
+    }
+    if(myDiv != undefined && myDiv != null){
+        if(!myDiv.classList.contains("d-none")){
+            myDiv.classList.add("d-none")
+        }
+    }
 }
 function deleteCheckFunc() {
     if(loader != undefined && loader != null){
