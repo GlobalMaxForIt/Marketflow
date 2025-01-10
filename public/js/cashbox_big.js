@@ -832,8 +832,11 @@ function changeAmountAndPrice(){
         if(element_id != null && element_id != undefined && element_id != '') {
             element_id.innerText = parseFloat(stock_int)
         }
-
-        notify_product_text = orderProductData.name+' '+orderProduct_amount + ' '+notify_text
+        if(orderProduct_amount != null && orderProduct_amount != undefined){
+            notify_product_text = orderProductData.name+' '+orderProduct_amount + ' '+notify_text
+        }else{
+            notify_product_text = orderProductData.name+' '+notify_text
+        }
         toastr.success(notify_product_text)
     }
     // if(Object.keys(orderProductData).length>=0){

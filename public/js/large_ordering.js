@@ -264,6 +264,9 @@ function truncuateCashboxFunc(){
     order_data_html = setOrderHtml(order_data)
     order_data_content.innerHTML = order_data_html
 }
+
+addToOrder( 1, null, null, null)
+
 function addToOrder(id, name, price, discount, discount_percent, last_price, amount, barcode, stock, unit, unit_id, quantity, code, this_element, fast_selling) {
     setTimeout(function () {
         checklist_changed = false
@@ -369,7 +372,11 @@ function successfullyAddToOrder(index_, id, name, price, discount, discount_perc
         order_data_content.innerHTML = order_data_html
     }
     if(code == null || code == undefined || !code){
-        notify_product_text = name+' '+amount + notify_text
+        if(amount != null && amount != undefined){
+            notify_product_text = name+' '+amount +' '+ notify_text
+        }else{
+            notify_product_text = name+' '+ notify_text
+        }
         if(fast_selling != 'fast_selling'){
             toastr.success(notify_product_text)
         }
