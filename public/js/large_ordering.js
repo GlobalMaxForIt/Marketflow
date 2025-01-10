@@ -265,8 +265,6 @@ function truncuateCashboxFunc(){
     order_data_content.innerHTML = order_data_html
 }
 
-addToOrder( 1, null, null, null)
-
 function addToOrder(id, name, price, discount, discount_percent, last_price, amount, barcode, stock, unit, unit_id, quantity, code, this_element, fast_selling) {
     setTimeout(function () {
         checklist_changed = false
@@ -397,6 +395,7 @@ function minusStockFunc(stock_int_, this_element_, id_){
 }
 
 function setOrderHtml(order_data_){
+    console.log(order_data_)
     all_sum = 0
     all_sum_withouth_discount = 0
     servicePrice = 0
